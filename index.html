@@ -96,9 +96,41 @@
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item md-nav__item--active">
 <input class="md-nav__toggle md-toggle" data-md-toggle="toc" id="__toc" type="checkbox"/>
+<label class="md-nav__link md-nav__link--active" for="__toc">
+          Introduction
+          <span class="md-nav__icon md-icon"></span>
+</label>
 <a class="md-nav__link md-nav__link--active" href=".">
         Introduction
       </a>
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#about">
+    About
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#prerequisites">
+    Prerequisites
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#structure">
+    Structure
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#tech-stack">
+    Tech Stack
+  </a>
+</li>
+</ul>
+</nav>
 </li>
 <li class="md-nav__item md-nav__item--nested">
 <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" id="__nav_2" type="checkbox"/>
@@ -139,6 +171,32 @@
 <div class="md-sidebar__scrollwrap">
 <div class="md-sidebar__inner">
 <nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#about">
+    About
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#prerequisites">
+    Prerequisites
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#structure">
+    Structure
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#tech-stack">
+    Tech Stack
+  </a>
+</li>
+</ul>
 </nav>
 </div>
 </div>
@@ -146,7 +204,19 @@
 <div class="md-content" data-md-component="content">
 <article class="md-content__inner md-typeset">
 <h1 id="welcome-to-learn-engine-dev">Welcome To Learn Engine Dev</h1>
-<p>Welcome to a tutorial for creating a simple game engine from scratch!  The tech stack will consist of the following:</p>
+<h2 id="about">About</h2>
+<p>Welcome to a tutorial series for creating a simple game engine from scratch!  Making a game engine is no easy task and each system we create could have multiple tutorials of its own.  But fear not, we will walk through building an engine each system at a time.</p>
+<h2 id="prerequisites">Prerequisites</h2>
+<p>Programming skills of all level are welcome, but to get the most out of this tutorial series you should have the following traits:</p>
+<ul>
+<li>Comfortable writing code in C++</li>
+<li>Proficient with Python</li>
+<li>High Level Understanding of OpenGL</li>
+</ul>
+<h2 id="structure">Structure</h2>
+<p>Each section of this tutorial series is broken up into chapters which can be found on the menu to the left.  Each chapter has source code attributed to it which can be found within the <a href="https://github.com/Chukobyte/learn-engine-dev">github repo</a>.</p>
+<h2 id="tech-stack">Tech Stack</h2>
+<p>The tech stack will consist of the following:</p>
 <ul>
 <li>C++ 14</li>
 <li>OpenGL 3.3</li>
