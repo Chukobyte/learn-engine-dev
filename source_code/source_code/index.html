@@ -7,7 +7,7 @@
 <meta content="width=device-width,initial-scale=1" name="viewport"/>
 <link href="../../assets/images/favicon.png" rel="icon"/>
 <meta content="mkdocs-1.1.2, mkdocs-material-7.1.4" name="generator"/>
-<title>Embedding Python - Learn Engine Dev</title>
+<title>Source Code - Learn Engine Dev</title>
 <link href="../../assets/stylesheets/main.bde7dde4.min.css" rel="stylesheet"/>
 <link href="../../assets/stylesheets/palette.ef6f36e2.min.css" rel="stylesheet"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
@@ -20,7 +20,7 @@
 <input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
 <label class="md-overlay" for="__drawer"></label>
 <div data-md-component="skip">
-<a class="md-skip" href="#embedding-python">
+<a class="md-skip" href="#source-code">
           Skip to content
         </a>
 </div>
@@ -44,7 +44,7 @@
 <div class="md-header__topic" data-md-component="header-topic">
 <span class="md-ellipsis">
             
-              Embedding Python
+              Source Code
             
           </span>
 </div>
@@ -99,8 +99,8 @@
         Introduction
       </a>
 </li>
-<li class="md-nav__item md-nav__item--active md-nav__item--nested">
-<input checked="" class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" id="__nav_2" type="checkbox"/>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" id="__nav_2" type="checkbox"/>
 <label class="md-nav__link" for="__nav_2">
         Getting Started
         <span class="md-nav__icon md-icon"></span>
@@ -111,53 +111,17 @@
           Getting Started
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
-<li class="md-nav__item md-nav__item--active">
-<input class="md-nav__toggle md-toggle" data-md-toggle="toc" id="__toc" type="checkbox"/>
-<label class="md-nav__link md-nav__link--active" for="__toc">
-          Embedding Python
-          <span class="md-nav__icon md-icon"></span>
-</label>
-<a class="md-nav__link md-nav__link--active" href="./">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../getting_started/embedding_python/">
         Embedding Python
       </a>
-<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
-<label class="md-nav__title" for="__toc">
-<span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
-<li class="md-nav__item">
-<a class="md-nav__link" href="#hello-python">
-    Hello Python
-  </a>
-<nav aria-label="Hello Python" class="md-nav">
-<ul class="md-nav__list">
-<li class="md-nav__item">
-<a class="md-nav__link" href="#build">
-    Build
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#hello-world-embedded-python-edition">
-    Hello World Embedded Python Edition
-  </a>
 </li>
 </ul>
 </nav>
 </li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#pyhelper-class">
-    PyHelper Class
-  </a>
-</li>
-</ul>
-</nav>
-</li>
-</ul>
-</nav>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="../../source_code/source_code/">
+<li class="md-nav__item md-nav__item--active">
+<input class="md-nav__toggle md-toggle" data-md-toggle="toc" id="__toc" type="checkbox"/>
+<a class="md-nav__link md-nav__link--active" href="./">
         Source Code
       </a>
 </li>
@@ -170,195 +134,21 @@
 <div class="md-sidebar__scrollwrap">
 <div class="md-sidebar__inner">
 <nav aria-label="Table of contents" class="md-nav md-nav--secondary">
-<label class="md-nav__title" for="__toc">
-<span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
-<li class="md-nav__item">
-<a class="md-nav__link" href="#hello-python">
-    Hello Python
-  </a>
-<nav aria-label="Hello Python" class="md-nav">
-<ul class="md-nav__list">
-<li class="md-nav__item">
-<a class="md-nav__link" href="#build">
-    Build
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#hello-world-embedded-python-edition">
-    Hello World Embedded Python Edition
-  </a>
-</li>
-</ul>
-</nav>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#pyhelper-class">
-    PyHelper Class
-  </a>
-</li>
-</ul>
 </nav>
 </div>
 </div>
 </div>
 <div class="md-content" data-md-component="content">
 <article class="md-content__inner md-typeset">
-<h1 id="embedding-python">Embedding Python</h1>
-<h2 id="hello-python">Hello Python</h2>
-<p>For this tutorial, we'll be using Python 3.7 but feel free to try other versions as well.  Python must be downloaded and installed locally before continuing.  The <code>python37.dll</code> should be included in the root directory of the project.</p>
-<h3 id="build">Build</h3>
-<p>For building the application we will be using <a href="https://www.gnu.org/software/make/">make</a>.  To make the paths for dependencies configurable we'll set environment variables.  <code>PYTHON_HOME</code> should be set to the path of the python 3.7 installation on your system.  The Makefile should look like the following:</p>
-<pre><code class="language-makefile">CC := gcc # C Compiler
-CXX := g++ # C++ compiler
-I_FLAGS := -I"${PYTHON_HOME}/include"
-L_FLAGS := -lmingw32 -lpython37 -static-libgcc -static-libstdc++
-C_FLAGS := -w -std=c++14 -Wfatal-errors
-LIBRARIES := -L"${PYTHON_HOME}/libs"
-
-PROJECT_NAME := learn_engine_dev
-BUILD_OBJECT := $(PROJECT_NAME).exe
-
-SRC = $(wildcard *.cpp)
-
-OBJ = $(SRC:.cpp=.o)
-
-# MAIN
-
-.PHONY: all build clean
-
-all: clean format build
-
-# Compiles if .o is missing
-%.o: %.cpp
-    @echo "Compiling " $&lt; " into " $@
-    @$(CXX) -c $(C_FLAGS) $&lt; -o $@ $(I_FLAGS)
-
-
-build: $(OBJ) $(OBJ_C)
-    @echo "Linking " $@
-    @$(CXX) -o $(BUILD_OBJECT) $^ $(I_FLAGS) $(L_FLAGS) $(LIBRARIES)
-
-format:
-    astyle -n --style=google --recursive src/*.cpp src/*.h
-
-clean:
-ifneq ("$(wildcard $(BUILD_OBJECT))","")
-    del $(BUILD_OBJECT)
-endif
-    $(foreach object, $(OBJ) $(OBJ_C), @del $(subst /,\, $(object));)
-
-run:
-    ./$(BUILD_OBJECT)
-</code></pre>
-<p><em>One other thing to note is that <a href="http://astyle.sourceforge.net/astyle.html">astyle</a> is used for formatting c++ code.</em></p>
-<h3 id="hello-world-embedded-python-edition">Hello World Embedded Python Edition</h3>
-<p>It's time to finally write python code within our engine!  Before we start diving deeper into creating a scripting system for python, let's first obtain a small win by having out engine print out a statement via python.  Full documentation from python for embedding can be found <a href="https://docs.python.org/3/extending/embedding.html">here</a>.</p>
-<pre><code class="language-c++">#define PY_SSIZE_T_CLEAN
-#include &lt;Python.h&gt;
-
-int main(int argv, char** args) {
-    Py_SetProgramName(L"learn_engine_dev");
-    Py_Initialize();
-
-    PyRun_SimpleString("print('hello world (from python)')");
-
-    Py_Finalize();
-
-    return 0;
-}
-</code></pre>
-<p>This should print out <em>'hello world (from python)'</em>.  There's a few things we can setup before initializing the python interpreter but for now we'll just set the python application name with <code>Py_SetProgramName</code>. <code>Py_Initialize</code> initializes the python interpreter.</p>
-<p>Next we call <code>PyRun_SimpleString</code> to execute this python statement:</p>
-<pre><code class="language-py">print('hello world (from python)')
-</code></pre>
-<p>Last but not least we terminate the python interpreter by calling <code>Py_Finalize()</code>.  Not too bad of a start but we can definitely do better.  You can check you code by looking at the source <a href="https://github.com/Chukobyte/learn-engine-dev/tree/main/src/1.getting_started/1.0.hello_python">here</a>.</p>
-<p>We will want to execute scripts and functions from our engine and also be able to call functions within our engine from a python script.  We will get to that soon, but next we will create a helper class to help make embedding python easier.</p>
-<h2 id="pyhelper-class">PyHelper Class</h2>
-<p>Coming soon.</p>
-<pre><code class="language-c++">#ifndef PYHELPER_HPP
-#define PYHELPER_HPP
-#pragma once
-
-#define PY_SSIZE_T_CLEAN
-#include &lt;Python.h&gt;
-#include &lt;iostream&gt;
-
-class CPyInstance {
-public:
-    CPyInstance() {
-        Py_SetProgramName(L"learn_engine_dev");
-        Py_Initialize();
-    }
-
-    ~CPyInstance() {
-        Py_Finalize();
-    }
-};
-
-class CPyObject {
-private:
-    PyObject* pyObj;
-public:
-    CPyObject(): pyObj(nullptr) {}
-
-    CPyObject(PyObject* p) : pyObj(p) {}
-
-    ~CPyObject() {
-        Release();
-    }
-
-    PyObject* GetObj() {
-        return pyObj;
-    }
-
-    PyObject* SetObj(PyObject* p) {
-        return (pyObj=p);
-    }
-
-    PyObject* AddRef() {
-        if(pyObj) {
-            Py_INCREF(pyObj);
-        }
-        return pyObj;
-    }
-
-    void Release() {
-        if(pyObj) {
-            Py_DECREF(pyObj);
-        }
-        pyObj = nullptr;
-    }
-
-    PyObject* operator-&gt;() {
-        return pyObj;
-    }
-
-    bool Is() const {
-        return pyObj ? true : false;
-    }
-
-    operator PyObject*() {
-        return pyObj;
-    }
-
-    PyObject* operator=(PyObject* p) {
-        pyObj = p;
-        return pyObj;
-    }
-};
-
-#endif //PYHELPER_HPP
-</code></pre>
+<h1 id="source-code">Source Code</h1>
+<p>The full source code of the tutorials are on github and can be found <a href="https://github.com/Chukobyte/learn-engine-dev">here</a>.</p>
 </article>
 </div>
 </div>
 </main>
 <footer class="md-footer">
 <nav aria-label="Footer" class="md-footer__inner md-grid">
-<a class="md-footer__link md-footer__link--prev" href="../.." rel="prev">
+<a class="md-footer__link md-footer__link--prev" href="../../getting_started/embedding_python/" rel="prev">
 <div class="md-footer__button md-icon">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"></path></svg>
 </div>
@@ -367,21 +157,8 @@ public:
 <span class="md-footer__direction">
                 Previous
               </span>
-              Introduction
+              Embedding Python
             </div>
-</div>
-</a>
-<a class="md-footer__link md-footer__link--next" href="../../source_code/source_code/" rel="next">
-<div class="md-footer__title">
-<div class="md-ellipsis">
-<span class="md-footer__direction">
-                Next
-              </span>
-              Source Code
-            </div>
-</div>
-<div class="md-footer__button md-icon">
-<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"></path></svg>
 </div>
 </a>
 </nav>
