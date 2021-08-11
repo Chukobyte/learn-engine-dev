@@ -211,147 +211,147 @@
 <p>For this tutorial, we'll be using Python 3.7 but feel free to try other versions as well.  Python must be downloaded and installed locally before continuing.  The <code>python37.dll</code> should be included in the root directory of the project.</p>
 <h3 id="build">Build</h3>
 <p>For building the application we will be using <a href="https://www.gnu.org/software/make/">make</a>.  To make the paths for dependencies configurable we'll set environment variables.  <code>PYTHON_HOME</code> should be set to the path of the python 3.7 installation on your system.  The Makefile should look like the following:</p>
-<pre><code class="language-makefile">CC := gcc # C Compiler
-CXX := g++ # C++ compiler
-I_FLAGS := -I"${PYTHON_HOME}/include"
-L_FLAGS := -lmingw32 -lpython37 -static-libgcc -static-libstdc++
-C_FLAGS := -w -std=c++14 -Wfatal-errors
-LIBRARIES := -L"${PYTHON_HOME}/libs"
+<div class="highlight"><pre><span></span><code><span class="nv">CC</span> <span class="o">:=</span> gcc <span class="c1"># C Compiler</span>
+<span class="nv">CXX</span> <span class="o">:=</span> g++ <span class="c1"># C++ compiler</span>
+<span class="nv">I_FLAGS</span> <span class="o">:=</span> -I<span class="s2">"</span><span class="si">${</span><span class="nv">PYTHON_HOME</span><span class="si">}</span><span class="s2">/include"</span>
+<span class="nv">L_FLAGS</span> <span class="o">:=</span> -lmingw32 -lpython37 -static-libgcc -static-libstdc++
+<span class="nv">C_FLAGS</span> <span class="o">:=</span> -w -std<span class="o">=</span>c++14 -Wfatal-errors
+<span class="nv">LIBRARIES</span> <span class="o">:=</span> -L<span class="s2">"</span><span class="si">${</span><span class="nv">PYTHON_HOME</span><span class="si">}</span><span class="s2">/libs"</span>
 
-PROJECT_NAME := learn_engine_dev
-BUILD_OBJECT := $(PROJECT_NAME).exe
+<span class="nv">PROJECT_NAME</span> <span class="o">:=</span> learn_engine_dev
+<span class="nv">BUILD_OBJECT</span> <span class="o">:=</span> <span class="k">$(</span>PROJECT_NAME<span class="k">)</span>.exe
 
-SRC = $(wildcard *.cpp)
+<span class="nv">SRC</span> <span class="o">=</span> <span class="k">$(</span>wildcard *.cpp<span class="k">)</span>
 
-OBJ = $(SRC:.cpp=.o)
+<span class="nv">OBJ</span> <span class="o">=</span> <span class="k">$(</span>SRC:.cpp<span class="o">=</span>.o<span class="k">)</span>
 
-# MAIN
+<span class="c"># MAIN</span>
 
-.PHONY: all build clean
+<span class="nf">.PHONY</span><span class="o">:</span> <span class="n">all</span> <span class="n">build</span> <span class="n">clean</span>
 
-all: clean format build
+<span class="nf">all</span><span class="o">:</span> <span class="n">clean</span> <span class="n">format</span> <span class="n">build</span>
 
-# Compiles if .o is missing
-%.o: %.cpp
-    @echo "Compiling " $&lt; " into " $@
-    @$(CXX) -c $(C_FLAGS) $&lt; -o $@ $(I_FLAGS)
+<span class="c"># Compiles if .o is missing</span>
+<span class="nf">%.o</span><span class="o">:</span> %.<span class="n">cpp</span>
+    @echo <span class="s2">"Compiling "</span> $&lt; <span class="s2">" into "</span> <span class="nv">$@</span>
+    @<span class="k">$(</span>CXX<span class="k">)</span> -c <span class="k">$(</span>C_FLAGS<span class="k">)</span> $&lt; -o <span class="nv">$@</span> <span class="k">$(</span>I_FLAGS<span class="k">)</span>
 
 
-build: $(OBJ) $(OBJ_C)
-    @echo "Linking " $@
-    @$(CXX) -o $(BUILD_OBJECT) $^ $(I_FLAGS) $(L_FLAGS) $(LIBRARIES)
+<span class="nf">build</span><span class="o">:</span> <span class="k">$(</span><span class="nv">OBJ</span><span class="k">)</span> <span class="k">$(</span><span class="nv">OBJ_C</span><span class="k">)</span>
+    @echo <span class="s2">"Linking "</span> <span class="nv">$@</span>
+    @<span class="k">$(</span>CXX<span class="k">)</span> -o <span class="k">$(</span>BUILD_OBJECT<span class="k">)</span> $^ <span class="k">$(</span>I_FLAGS<span class="k">)</span> <span class="k">$(</span>L_FLAGS<span class="k">)</span> <span class="k">$(</span>LIBRARIES<span class="k">)</span>
 
-format:
-    astyle -n --style=google --recursive src/*.cpp src/*.h
+<span class="nf">format</span><span class="o">:</span>
+    astyle -n --style<span class="o">=</span>google --recursive src/*.cpp src/*.h
 
-clean:
-ifneq ("$(wildcard $(BUILD_OBJECT))","")
-    del $(BUILD_OBJECT)
-endif
-    $(foreach object, $(OBJ) $(OBJ_C), @del $(subst /,\, $(object));)
+<span class="nf">clean</span><span class="o">:</span>
+<span class="cp">ifneq ("$(wildcard $(BUILD_OBJECT))","")</span>
+    del <span class="k">$(</span>BUILD_OBJECT<span class="k">)</span>
+<span class="cp">endif</span>
+    <span class="k">$(</span>foreach object, <span class="k">$(</span>OBJ<span class="k">)</span> <span class="k">$(</span>OBJ_C<span class="k">)</span>, @del <span class="k">$(</span>subst /,<span class="se">\,</span> <span class="k">$(</span>object<span class="k">))</span><span class="p">;</span><span class="k">)</span>
 
-run:
-    ./$(BUILD_OBJECT)
-</code></pre>
+<span class="nf">run</span><span class="o">:</span>
+    ./<span class="k">$(</span>BUILD_OBJECT<span class="k">)</span>
+</code></pre></div>
 <p><em>One other thing to note is that <a href="http://astyle.sourceforge.net/astyle.html">astyle</a> is used for formatting c++ code.</em></p>
 <h3 id="hello-world-embedded-python-edition">Hello World Embedded Python Edition</h3>
 <p>It's time to finally write python code within our engine!  Before we start diving deeper into creating a scripting system for python, let's first obtain a small win by having out engine print out a statement via python.  Full documentation from python for embedding can be found <a href="https://docs.python.org/3/extending/embedding.html">here</a>.</p>
-<pre><code class="language-c++">#define PY_SSIZE_T_CLEAN
-#include &lt;Python.h&gt;
+<div class="highlight"><pre><span></span><code><span class="cp">#define PY_SSIZE_T_CLEAN</span>
+<span class="cp">#include</span> <span class="cpf">&lt;Python.h&gt;</span><span class="cp"></span>
 
-int main(int argv, char** args) {
-    Py_SetProgramName(L"learn_engine_dev");
-    Py_Initialize();
+<span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argv</span><span class="p">,</span> <span class="kt">char</span><span class="o">**</span> <span class="n">args</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">Py_SetProgramName</span><span class="p">(</span><span class="sa">L</span><span class="s">"learn_engine_dev"</span><span class="p">);</span>
+    <span class="n">Py_Initialize</span><span class="p">();</span>
 
-    PyRun_SimpleString("print('hello world (from python)')");
+    <span class="n">PyRun_SimpleString</span><span class="p">(</span><span class="s">"print('hello world (from python)')"</span><span class="p">);</span>
 
-    Py_Finalize();
+    <span class="n">Py_Finalize</span><span class="p">();</span>
 
-    return 0;
-}
-</code></pre>
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
 <p>This should print out <em>'hello world (from python)'</em>.  There's a few things we can setup before initializing the python interpreter but for now we'll just set the python application name with <code>Py_SetProgramName</code>. <code>Py_Initialize</code> initializes the python interpreter.</p>
-<p>Next we call <code>PyRun_SimpleString</code> to execute this python statement:</p>
-<pre><code class="language-py">print('hello world (from python)')
-</code></pre>
+<p>Next we call <code>PyRun_SimpleString</code> to execute this python statement:
+<div class="highlight"><pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="s1">'hello world (from python)'</span><span class="p">)</span>
+</code></pre></div></p>
 <p>Last but not least we terminate the python interpreter by calling <code>Py_Finalize()</code>.  Not too bad of a start but we can definitely do better.  You can check you code by looking at the source <a href="https://github.com/Chukobyte/learn-engine-dev/tree/main/src/1.getting_started/1.0.hello_python">here</a>.</p>
 <p>We will want to execute scripts and functions from our engine and also be able to call functions within our engine from a python script.  We will get to that soon, but next we will create a helper class to help make embedding python easier.</p>
 <h2 id="pyhelper-class">PyHelper Class</h2>
 <p>Coming soon.</p>
-<pre><code class="language-c++">#ifndef PYHELPER_HPP
-#define PYHELPER_HPP
-#pragma once
+<div class="highlight"><pre><span></span><code><span class="cp">#ifndef PYHELPER_HPP</span>
+<span class="cp">#define PYHELPER_HPP</span>
+<span class="cp">#pragma once</span>
 
-#define PY_SSIZE_T_CLEAN
-#include &lt;Python.h&gt;
-#include &lt;iostream&gt;
+<span class="cp">#define PY_SSIZE_T_CLEAN</span>
+<span class="cp">#include</span> <span class="cpf">&lt;Python.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp"></span>
 
-class CPyInstance {
-public:
-    CPyInstance() {
-        Py_SetProgramName(L"learn_engine_dev");
-        Py_Initialize();
-    }
+<span class="k">class</span> <span class="nc">CPyInstance</span> <span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+    <span class="n">CPyInstance</span><span class="p">()</span> <span class="p">{</span>
+        <span class="n">Py_SetProgramName</span><span class="p">(</span><span class="sa">L</span><span class="s">"learn_engine_dev"</span><span class="p">);</span>
+        <span class="n">Py_Initialize</span><span class="p">();</span>
+    <span class="p">}</span>
 
-    ~CPyInstance() {
-        Py_Finalize();
-    }
-};
+    <span class="o">~</span><span class="n">CPyInstance</span><span class="p">()</span> <span class="p">{</span>
+        <span class="n">Py_Finalize</span><span class="p">();</span>
+    <span class="p">}</span>
+<span class="p">};</span>
 
-class CPyObject {
-private:
-    PyObject* pyObj;
-public:
-    CPyObject(): pyObj(nullptr) {}
+<span class="k">class</span> <span class="nc">CPyObject</span> <span class="p">{</span>
+<span class="k">private</span><span class="o">:</span>
+    <span class="n">PyObject</span><span class="o">*</span> <span class="n">pyObj</span><span class="p">;</span>
+<span class="k">public</span><span class="o">:</span>
+    <span class="n">CPyObject</span><span class="p">()</span><span class="o">:</span> <span class="n">pyObj</span><span class="p">(</span><span class="k">nullptr</span><span class="p">)</span> <span class="p">{}</span>
 
-    CPyObject(PyObject* p) : pyObj(p) {}
+    <span class="n">CPyObject</span><span class="p">(</span><span class="n">PyObject</span><span class="o">*</span> <span class="n">p</span><span class="p">)</span> <span class="o">:</span> <span class="n">pyObj</span><span class="p">(</span><span class="n">p</span><span class="p">)</span> <span class="p">{}</span>
 
-    ~CPyObject() {
-        Release();
-    }
+    <span class="o">~</span><span class="n">CPyObject</span><span class="p">()</span> <span class="p">{</span>
+        <span class="n">Release</span><span class="p">();</span>
+    <span class="p">}</span>
 
-    PyObject* GetObj() {
-        return pyObj;
-    }
+    <span class="n">PyObject</span><span class="o">*</span> <span class="n">GetObj</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="n">pyObj</span><span class="p">;</span>
+    <span class="p">}</span>
 
-    PyObject* SetObj(PyObject* p) {
-        return (pyObj=p);
-    }
+    <span class="n">PyObject</span><span class="o">*</span> <span class="n">SetObj</span><span class="p">(</span><span class="n">PyObject</span><span class="o">*</span> <span class="n">p</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">pyObj</span><span class="o">=</span><span class="n">p</span><span class="p">);</span>
+    <span class="p">}</span>
 
-    PyObject* AddRef() {
-        if(pyObj) {
-            Py_INCREF(pyObj);
-        }
-        return pyObj;
-    }
+    <span class="n">PyObject</span><span class="o">*</span> <span class="n">AddRef</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">pyObj</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">Py_INCREF</span><span class="p">(</span><span class="n">pyObj</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="n">pyObj</span><span class="p">;</span>
+    <span class="p">}</span>
 
-    void Release() {
-        if(pyObj) {
-            Py_DECREF(pyObj);
-        }
-        pyObj = nullptr;
-    }
+    <span class="kt">void</span> <span class="n">Release</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">pyObj</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">Py_DECREF</span><span class="p">(</span><span class="n">pyObj</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="n">pyObj</span> <span class="o">=</span> <span class="k">nullptr</span><span class="p">;</span>
+    <span class="p">}</span>
 
-    PyObject* operator-&gt;() {
-        return pyObj;
-    }
+    <span class="n">PyObject</span><span class="o">*</span> <span class="k">operator</span><span class="o">-&gt;</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="n">pyObj</span><span class="p">;</span>
+    <span class="p">}</span>
 
-    bool Is() const {
-        return pyObj ? true : false;
-    }
+    <span class="kt">bool</span> <span class="n">Is</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="n">pyObj</span> <span class="o">?</span> <span class="nb">true</span> <span class="o">:</span> <span class="nb">false</span><span class="p">;</span>
+    <span class="p">}</span>
 
-    operator PyObject*() {
-        return pyObj;
-    }
+    <span class="k">operator</span> <span class="n">PyObject</span><span class="o">*</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="n">pyObj</span><span class="p">;</span>
+    <span class="p">}</span>
 
-    PyObject* operator=(PyObject* p) {
-        pyObj = p;
-        return pyObj;
-    }
-};
+    <span class="n">PyObject</span><span class="o">*</span> <span class="k">operator</span><span class="o">=</span><span class="p">(</span><span class="n">PyObject</span><span class="o">*</span> <span class="n">p</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">pyObj</span> <span class="o">=</span> <span class="n">p</span><span class="p">;</span>
+        <span class="k">return</span> <span class="n">pyObj</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">};</span>
 
-#endif //PYHELPER_HPP
-</code></pre>
+<span class="cp">#endif </span><span class="c1">//PYHELPER_HPP</span>
+</code></pre></div>
 </article>
 </div>
 </div>
