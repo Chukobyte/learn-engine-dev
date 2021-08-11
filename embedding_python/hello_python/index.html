@@ -228,7 +228,7 @@
 
 <span class="nf">all</span><span class="o">:</span> <span class="n">clean</span> <span class="n">format</span> <span class="n">build</span>
 
-<span class="c"># Compiles if .o is missing</span>
+<span class="c"># Compiles if .o is missing or changes to the .cpp file</span>
 <span class="nf">%.o</span><span class="o">:</span> %.<span class="n">cpp</span>
     @echo <span class="s2">"Compiling "</span> $&lt; <span class="s2">" into "</span> <span class="nv">$@</span>
     @<span class="k">$(</span>CXX<span class="k">)</span> -c <span class="k">$(</span>C_FLAGS<span class="k">)</span> $&lt; -o <span class="nv">$@</span> <span class="k">$(</span>I_FLAGS<span class="k">)</span>
