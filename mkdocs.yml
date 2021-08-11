@@ -1,0 +1,12 @@
+site_name: Learn Engine Dev
+
+nav:
+  - Introduction: index.md
+  - Getting Started:
+      - Embedding Python: getting_started/embedding_python.md
+
+plugins:
+  - search
+  - mermaid2
+
+theme: material

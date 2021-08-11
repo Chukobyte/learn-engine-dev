@@ -1,0 +1,12 @@
+*.o
+*.exe
+*.dll
+
+.idea
+
+temp
+export_package
+site
+
+__pycache__
+venv
