@@ -1,8 +1,8 @@
 # Hello Python
 
-## About
+## Dependencies
 
-For this tutorial, we'll be using Python 3.7 but feel free to try other versions as well.  Python must be downloaded and installed locally before continuing.  The `python37.dll` should be included in the root directory of the project.
+For this tutorial, we'll be using Python 3.7 but feel free to try other versions as well.  Python must be downloaded and installed locally before continuing.  I'm using windows for this current iteration of the tutorial but will add in instructions to build on linux in the future.  With that being said, for windows the `python37.dll` should be included in the root directory of the project.
 
 ## Build
 
