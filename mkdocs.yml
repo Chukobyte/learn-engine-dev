@@ -4,6 +4,7 @@ nav:
   - Introduction: index.md
   - Getting Started:
       - Embedding Python: getting_started/embedding_python.md
+  - Source Code: source_code/source_code.md
 
 plugins:
   - search

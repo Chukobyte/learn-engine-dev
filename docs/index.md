@@ -7,5 +7,3 @@ Welcome to a tutorial for creating a simple game engine from scratch!  The tech 
 * SDL2
 * SDL2_mixer (audio)
 * Python 3.7 (embedded for scripting)
-
-Use the left panel to navigate the documentation.

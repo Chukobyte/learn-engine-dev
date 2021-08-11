@@ -81,7 +81,9 @@ Next we call `PyRun_SimpleString` to execute this python statement:
 print('hello world (from python)')
 ```
 
-Last but not least we terminate the python interpreter by calling `Py_Finalize()`.  Not too bad of a start but we can definitely do better.  We will want to execute scripts and functions from our engine and also be able to call functions within our engine from a python script.  We will get to that soon, but next we will create a helper class to help make embedding python easier.
+Last but not least we terminate the python interpreter by calling `Py_Finalize()`.  Not too bad of a start but we can definitely do better.  You can check you code by looking at the source [here](https://github.com/Chukobyte/learn-engine-dev/tree/main/src/1.getting_started/1.0.hello_python).
+
+We will want to execute scripts and functions from our engine and also be able to call functions within our engine from a python script.  We will get to that soon, but next we will create a helper class to help make embedding python easier.
 
 ## PyHelper Class
 
