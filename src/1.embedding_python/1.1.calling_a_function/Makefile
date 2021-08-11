@@ -18,7 +18,7 @@ OBJ = $(SRC:.cpp=.o)
 
 all: clean format build
 
-# Compiles if .o is missing
+# Compiles if .o is missing or changes to the .cpp file
 %.o: %.cpp
 	@echo "Compiling " $< " into " $@
 	@$(CXX) -c $(C_FLAGS) $< -o $@ $(I_FLAGS)
