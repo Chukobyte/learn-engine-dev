@@ -347,7 +347,7 @@
 
 <span class="cp">#endif </span><span class="c1">//PYHELPER_HPP</span>
 </code></pre></div>
-<p>There are two classes created in <code>PyHelper.hpp</code>.  <code>CPyInstance</code> responsibility is to initialize the python interpreter, perform any additional setup, and shutdown the intepreter once finished.  <code>CPyObject</code> is wrapper class for <code>PyObject</code> which is a python object.  Instead of having to explicitly decrement with <code>Py_DECREF</code> we instead use this <code>CPyObject</code> which decrements the reference count once the object is out of scope.</p>
+<p>There are two classes created in <code>PyHelper.hpp</code>.  <code>CPyInstance</code> responsibility is to initialize the python interpreter, perform any additional setup, and shutdown the intepreter once finished.  <code>CPyObject</code> is a wrapper class for <code>PyObject</code> which is a python object.  Instead of having to explicitly decrement with <code>Py_DECREF</code> we instead use this <code>CPyObject</code> which decrements the reference count once the object is out of scope.</p>
 <p>Now that we have a helper class, let's put it to use.</p>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">play</span><span class="p">(</span><span class="n">message</span> <span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
     <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">message</span><span class="si">}</span><span class="s2"> (from python)!"</span><span class="p">)</span>
