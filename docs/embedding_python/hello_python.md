@@ -40,7 +40,7 @@ build: $(OBJ) $(OBJ_C)
     @$(CXX) -o $(BUILD_OBJECT) $^ $(I_FLAGS) $(L_FLAGS) $(LIBRARIES)
 
 format:
-    astyle -n --style=google --recursive src/*.cpp src/*.h
+    astyle -n --style=google --recursive *.cpp
 
 clean:
 ifneq ("$(wildcard $(BUILD_OBJECT))","")
@@ -56,7 +56,7 @@ run:
 
 ## Hello World
 
-It's time to finally write python code within our engine!  Before we start diving deeper into creating a scripting system for python, let's first obtain a small win by having out engine print out a statement via python.  Full documentation from python for embedding can be found [here](https://docs.python.org/3/extending/embedding.html).
+It's time to finally write python code within our engine!  Before we start diving deeper into creating a scripting system for python, let's first obtain a small win by having out engine print out a statement via python.  Full documentation for embedding python within a c++ application can be found [here](https://docs.python.org/3/extending/embedding.html).
 
 ```c++
 #define PY_SSIZE_T_CLEAN
@@ -74,20 +74,20 @@ int main(int argv, char** args) {
 }
 ```
 
-This should print out *'hello world (from python)'*.  There's a few things we can setup before initializing the python interpreter but for now we'll just set the python application name with `Py_SetProgramName`. `Py_Initialize` initializes the python interpreter.
+This should print out *'hello world (from python)'*.  There's other things we can setup before initializing the python interpreter but for now we'll just set the python application name with `Py_SetProgramName`. `Py_Initialize` initializes the python interpreter.
 
 Next we call `PyRun_SimpleString` to execute this python statement:
 ```py
 print('hello world (from python)')
 ```
 
-Last but not least we terminate the python interpreter by calling `Py_Finalize()`.  Not too bad of a start but we can definitely do better.  You can check you code by looking at the source [here](https://github.com/Chukobyte/learn-engine-dev/tree/main/src/1.embedding_python/1.0.hello_python).
+Last but not least we terminate the python interpreter by calling `Py_Finalize()`.  Not too bad of a start but we can definitely do better.  You view the code by looking at the source [here](https://github.com/Chukobyte/learn-engine-dev/tree/main/src/1.embedding_python/1.0.hello_python).
 
-We will want to execute scripts and functions from our engine and also be able to call functions within our engine from a python script.  Let's work on that next!
+We will want to execute scripts and python functions from our engine and also be able to call c++ functions from a python script.  Let's work on that next!
 
 ## Execute A Python Function From C++
 
-Executing python statements with `PyRun_SimpleString` is simple but it won't scale well once we stat adding more logic in python.  Let's create a new python script and call a function from it!
+Executing python statements with `PyRun_SimpleString` is simple but it won't scale well once we start adding more logic in python.  Let's create a new python script and call a function from it!
 
 ```py
 def play() -> int:
@@ -128,7 +128,7 @@ int main(int argv, char** args) {
 }
 ```
 
-This is pretty straightforward, we're getting a python string object with `PyUnicode_FromString` as we'll need that to import the python module from our script.  The folder name is `python_api` and the python script is `game.py`.  Next we'll import the module with `PyImport_Import`.  `Py_DECREF` is called as we'll need to decrement the reference count of python objects to delete the objects in the python interpreter and prevent memory leaks!
+This is pretty straightforward, we're getting a python string object with `PyUnicode_FromString` as we'll need that to import the python module from our script.  The folder path is `assets/scripts` and the python script is `game.py`.  Next we'll import the module with `PyImport_Import`.  `Py_DECREF` is called as we'll need to decrement the reference count of python objects to delete the objects in the python interpreter and prevent memory leaks!
 
 Now that we have imported the module we can get the reference to a function with `PyObject_GetAttrString`.  With this reference we'll call the function with `PyObject_CallObject`.  The function `play` returns an integer and we store this within `pValue`.  After that we just decrement the remaining python objects we no longer need.  The source for this section can be found [here](https://github.com/Chukobyte/learn-engine-dev/tree/main/src/1.embedding_python/1.1.calling_a_function).
 
