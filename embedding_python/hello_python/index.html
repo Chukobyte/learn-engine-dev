@@ -289,7 +289,7 @@
     <span class="n">Py_Initialize</span><span class="p">();</span>
 
     <span class="c1">// Load Module</span>
-    <span class="n">PyObject</span><span class="o">*</span> <span class="n">pModuleName</span> <span class="o">=</span> <span class="n">PyUnicode_FromString</span><span class="p">(</span><span class="s">"python_api.game"</span><span class="p">);</span>
+    <span class="n">PyObject</span><span class="o">*</span> <span class="n">pModuleName</span> <span class="o">=</span> <span class="n">PyUnicode_FromString</span><span class="p">(</span><span class="s">"assets.scripts.game"</span><span class="p">);</span>
     <span class="n">PyObject</span><span class="o">*</span> <span class="n">pModule</span> <span class="o">=</span> <span class="n">PyImport_Import</span><span class="p">(</span><span class="n">pModuleName</span><span class="p">);</span>
     <span class="n">Py_DECREF</span><span class="p">(</span><span class="n">pModuleName</span><span class="p">);</span>
     <span class="n">assert</span><span class="p">(</span><span class="n">pModule</span> <span class="o">!=</span> <span class="k">nullptr</span> <span class="o">&amp;&amp;</span> <span class="s">"Not able to load python module!"</span><span class="p">);</span>
