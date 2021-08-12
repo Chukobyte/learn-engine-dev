@@ -136,6 +136,11 @@
     PyHelper Class
   </a>
 </li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#creating-a-python-instance-in-c">
+    Creating A Python Instance in C++
+  </a>
+</li>
 </ul>
 </nav>
 </li>
@@ -164,6 +169,11 @@
 <li class="md-nav__item">
 <a class="md-nav__link" href="#pyhelper-class">
     PyHelper Class
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#creating-a-python-instance-in-c">
+    Creating A Python Instance in C++
   </a>
 </li>
 </ul>
@@ -285,6 +295,75 @@
 <span class="p">}</span>
 </code></pre></div>
 <p>This is similar to the code snippet we've created in the previous section, but instead of using <code>PyObject</code> we are using <code>CPyObject</code>.  <code>Py_BuildValue</code> builds a tuple of arguements that we can then pass to a python function.  With the argument defined, we can now call <code>PyObject_CallObject</code> with an argument.</p>
+<h2 id="creating-a-python-instance-in-c">Creating A Python Instance in C++</h2>
+<p>We're able to import modules and call functions, but there may be times where we'll want to interact with an instance of a python class.  Furthermore, we don't want to have to import a module and query its attributes each time we want to use a function as that will effect performance.  In this section we'll create a class to manage active python objects.</p>
+<div class="highlight"><pre><span></span><code><span class="cp">#ifndef PYTHON_OBJECT_MANAGER_H</span>
+<span class="cp">#define PYTHON_OBJECT_MANAGER_H</span>
+
+<span class="cp">#include</span> <span class="cpf">&lt;string&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;unordered_map&gt;</span><span class="cp"></span>
+
+<span class="cp">#include</span> <span class="cpf">"./pyhelper.hpp"</span><span class="cp"></span>
+
+<span class="k">struct</span> <span class="nc">PythonModuleObject</span> <span class="p">{</span>
+    <span class="n">CPyObject</span> <span class="k">module</span><span class="p">;</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">unordered_map</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">,</span> <span class="n">CPyObject</span><span class="o">&gt;</span> <span class="n">classes</span><span class="p">;</span>
+<span class="p">};</span>
+
+<span class="k">class</span> <span class="nc">PythonObjectManager</span> <span class="p">{</span>
+  <span class="k">private</span><span class="o">:</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">unordered_map</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">,</span> <span class="n">PythonModuleObject</span><span class="o">&gt;</span> <span class="n">modules</span><span class="p">;</span>
+
+    <span class="n">CPyObject</span> <span class="nf">GetClass</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">classPath</span><span class="p">,</span> <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">className</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">modules</span><span class="p">.</span><span class="n">find</span><span class="p">(</span><span class="n">classPath</span><span class="p">)</span> <span class="o">==</span> <span class="n">modules</span><span class="p">.</span><span class="n">end</span><span class="p">())</span> <span class="p">{</span>
+            <span class="n">CPyObject</span> <span class="n">pModuleName</span> <span class="o">=</span> <span class="n">PyUnicode_FromString</span><span class="p">(</span><span class="n">classPath</span><span class="p">.</span><span class="n">c_str</span><span class="p">());</span>
+            <span class="n">CPyObject</span> <span class="n">pModule</span> <span class="o">=</span> <span class="n">PyImport_Import</span><span class="p">(</span><span class="n">pModuleName</span><span class="p">);</span>
+            <span class="n">assert</span><span class="p">(</span><span class="n">pModule</span> <span class="o">!=</span> <span class="k">nullptr</span> <span class="o">&amp;&amp;</span> <span class="s">"Python module is NULL!"</span><span class="p">);</span>
+            <span class="n">modules</span><span class="p">.</span><span class="n">emplace</span><span class="p">(</span><span class="n">classPath</span><span class="p">,</span> <span class="n">PythonModuleObject</span><span class="p">{</span>
+                <span class="p">.</span><span class="k">module</span> <span class="o">=</span> <span class="n">pModule</span><span class="p">,</span>
+                <span class="p">.</span><span class="n">classes</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="p">});</span>
+        <span class="p">}</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">modules</span><span class="p">[</span><span class="n">classPath</span><span class="p">].</span><span class="n">classes</span><span class="p">.</span><span class="n">find</span><span class="p">(</span><span class="n">className</span><span class="p">)</span> <span class="o">==</span> <span class="n">modules</span><span class="p">[</span><span class="n">classPath</span><span class="p">].</span><span class="n">classes</span><span class="p">.</span><span class="n">end</span><span class="p">())</span> <span class="p">{</span>
+            <span class="n">CPyObject</span> <span class="n">pModuleDict</span> <span class="o">=</span> <span class="n">PyModule_GetDict</span><span class="p">(</span><span class="n">modules</span><span class="p">[</span><span class="n">classPath</span><span class="p">].</span><span class="k">module</span><span class="p">);</span>
+            <span class="n">CPyObject</span> <span class="n">pClass</span> <span class="o">=</span> <span class="n">PyDict_GetItemString</span><span class="p">(</span><span class="n">pModuleDict</span><span class="p">,</span> <span class="n">className</span><span class="p">.</span><span class="n">c_str</span><span class="p">());</span>
+            <span class="n">assert</span><span class="p">(</span><span class="n">pClass</span> <span class="o">!=</span> <span class="k">nullptr</span> <span class="o">&amp;&amp;</span> <span class="s">"Python class is NULL!"</span><span class="p">);</span>
+            <span class="n">modules</span><span class="p">[</span><span class="n">classPath</span><span class="p">].</span><span class="n">classes</span><span class="p">.</span><span class="n">emplace</span><span class="p">(</span><span class="n">className</span><span class="p">,</span> <span class="n">pClass</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="n">modules</span><span class="p">[</span><span class="n">classPath</span><span class="p">].</span><span class="n">classes</span><span class="p">[</span><span class="n">className</span><span class="p">];</span>
+    <span class="p">}</span>
+  <span class="k">public</span><span class="o">:</span>
+    <span class="n">CPyObject</span> <span class="n">CreateClassInstance</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">classPath</span><span class="p">,</span> <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">className</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">CPyObject</span> <span class="n">pClass</span> <span class="o">=</span> <span class="n">GetClass</span><span class="p">(</span><span class="n">classPath</span><span class="p">,</span> <span class="n">className</span><span class="p">);</span>
+        <span class="n">CPyObject</span> <span class="n">pClassInstance</span> <span class="o">=</span> <span class="n">PyObject_CallObject</span><span class="p">(</span><span class="n">pClass</span><span class="p">,</span> <span class="k">nullptr</span><span class="p">);</span>
+        <span class="n">assert</span><span class="p">(</span><span class="n">pClassInstance</span> <span class="o">!=</span> <span class="k">nullptr</span> <span class="o">&amp;&amp;</span> <span class="s">"Class instance is NULL!"</span><span class="p">);</span>
+        <span class="n">pClassInstance</span><span class="p">.</span><span class="n">AddRef</span><span class="p">();</span>
+        <span class="k">return</span> <span class="n">pClassInstance</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">};</span>
+
+<span class="cp">#endif </span><span class="c1">// PYTHON_OBJECT_MANAGER_H</span>
+</code></pre></div>
+<p>Within <code>python_object_manager.h</code> we first create <code>PythonModuleObject</code> which is a struct to hold a python module's object data.  It will hold all the python class objects loaded for the module.</p>
+<p>Next is the main class which is <code>PythonObjectManager</code>.  The <code>GetClass</code> function will return a class object for a module.  We use this within <code>CreateClassInstance</code> to create a python instance of a class.</p>
+<div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">Player</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">talk</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Player says '</span><span class="si">{</span><span class="n">message</span><span class="si">}</span><span class="s2">'!"</span><span class="p">)</span>
+</code></pre></div>
+<p>The script <code>game.py</code> has been updated to include a class named <code>Player</code>.  We can finally create an instance of this class and call a function from this instance from c++.</p>
+<div class="highlight"><pre><span></span><code><span class="cp">#include</span> <span class="cpf">"./scripting/python_object_manager.h"</span><span class="cp"></span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argv</span><span class="p">,</span> <span class="kt">char</span><span class="o">**</span> <span class="n">args</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">CPyInstance</span> <span class="n">pyInstance</span><span class="p">;</span>
+    <span class="n">PythonObjectManager</span> <span class="n">pObjectManager</span><span class="p">;</span>
+
+    <span class="n">CPyObject</span> <span class="n">pClassInstance</span> <span class="o">=</span> <span class="n">pObjectManager</span><span class="p">.</span><span class="n">CreateClassInstance</span><span class="p">(</span><span class="s">"assets.scripts.game"</span><span class="p">,</span> <span class="s">"Player"</span><span class="p">);</span>
+    <span class="n">PyObject_CallMethod</span><span class="p">(</span><span class="n">pClassInstance</span><span class="p">,</span> <span class="s">"talk"</span><span class="p">,</span> <span class="s">"(s)"</span><span class="p">,</span> <span class="s">"Hello!"</span><span class="p">);</span>
+
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>There is even less code in <code>main</code> even though we're creating an instance!  The only thing to really point out is <code>PyObject_CallMethod</code> which calls a function on an instance of a class.  Now that we have a solid foundation for python scripting it's time to take a dip in the world of rendering with OpenGL.</p>
 </article>
 </div>
 </div>
