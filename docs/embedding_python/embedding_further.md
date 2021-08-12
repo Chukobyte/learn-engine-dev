@@ -21,7 +21,7 @@ With that said, let's create `PyHelper.hpp` which encapsulates this functionalit
 #include <iostream>
 
 class CPyInstance {
-public:
+  public:
     CPyInstance() {
         Py_SetProgramName(L"learn_engine_dev");
         Py_Initialize();
@@ -33,9 +33,9 @@ public:
 };
 
 class CPyObject {
-private:
+  private:
     PyObject* pyObj;
-public:
+  public:
     CPyObject(): pyObj(nullptr) {}
 
     CPyObject(PyObject* p) : pyObj(p) {}
@@ -85,6 +85,43 @@ public:
 };
 
 #endif //PYHELPER_HPP
+
 ```
 
-More coming soon.
+There are two classes created in `PyHelper.hpp`.  `CPyInstance` responsibility is to initialize the python interpreter, perform any additional setup, and shutdown the intepreter once finished.  `CPyObject` is wrapper class for `PyObject` which is a python object.  Instead of having to explicitly decrement with `Py_DECREF` we instead use this `CPyObject` which decrements the reference count once the object is out of scope.
+
+
+
+Now that we have a helper class, let's put it to use.
+
+```py
+def play(message : str) -> int:
+    print(f"{message} (from python)!")
+    return 0
+```
+
+We have updated our python function to now accept an argument.
+
+```c++
+#include "./scripting/pyhelper.hpp"
+
+int main(int argv, char** args) {
+    CPyInstance pyInstance;
+
+    // Load Module
+    CPyObject pModuleName = PyUnicode_FromString("assets.scripts.game");
+    CPyObject pModule = PyImport_Import(pModuleName);
+    assert(pModule != nullptr && "Not able to load python module!");
+
+    // Function
+    CPyObject pFunc = PyObject_GetAttrString(pModule, "play");
+    assert(pFunc != nullptr && "Not able to find function named 'play'!");
+    CPyObject pArgs = Py_BuildValue("(s)", "hello world!");
+    assert(pArgs != nullptr);
+    CPyObject pValue = PyObject_CallObject(pFunc, pArgs);
+
+    return 0;
+}
+```
+
+This is similar to the code snippet we've created in the previous section, but instead of using `PyObject` we are using `CPyObject`.  `Py_BuildValue` builds a tuple of arguements that we can then pass to a python function.  With the argument defined, we can now call `PyObject_CallObject` with an argument.

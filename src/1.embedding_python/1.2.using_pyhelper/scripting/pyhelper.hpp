@@ -7,7 +7,7 @@
 #include <iostream>
 
 class CPyInstance {
-public:
+  public:
     CPyInstance() {
         Py_SetProgramName(L"learn_engine_dev");
         Py_Initialize();
@@ -19,9 +19,9 @@ public:
 };
 
 class CPyObject {
-private:
+  private:
     PyObject* pyObj;
-public:
+  public:
     CPyObject(): pyObj(nullptr) {}
 
     CPyObject(PyObject* p) : pyObj(p) {}

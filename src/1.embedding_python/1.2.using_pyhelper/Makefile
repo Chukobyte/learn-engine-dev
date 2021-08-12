@@ -29,7 +29,7 @@ build: $(OBJ) $(OBJ_C)
 	@$(CXX) -o $(BUILD_OBJECT) $^ $(I_FLAGS) $(L_FLAGS) $(LIBRARIES)
 
 format:
-	astyle -n --style=google --recursive src/*.cpp src/*.h
+	astyle -n --style=google --recursive *.cpp *.hpp
 
 clean:
 ifneq ("$(wildcard $(BUILD_OBJECT))","")

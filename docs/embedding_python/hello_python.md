@@ -107,7 +107,7 @@ int main(int argv, char** args) {
     Py_Initialize();
 
     // Load Module
-    PyObject* pModuleName = PyUnicode_FromString("python_api.game");
+    PyObject* pModuleName = PyUnicode_FromString("assets.scripts.game");
     PyObject* pModule = PyImport_Import(pModuleName);
     Py_DECREF(pModuleName);
     assert(pModule != nullptr && "Not able to load python module!");
