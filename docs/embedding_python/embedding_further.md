@@ -124,7 +124,7 @@ int main(int argv, char** args) {
 }
 ```
 
-This is similar to the code snippet we've created in the previous section, but instead of using `PyObject` we are using `CPyObject`.  `Py_BuildValue` builds a tuple of arguements that we can then pass to a python function.  With the argument defined, we can now call `PyObject_CallObject` with an argument.
+This is similar to the code snippet we've created in the previous section, but instead of using `PyObject` we are using `CPyObject`.  `Py_BuildValue` builds a tuple of arguements that we can then pass to a python function.  With the argument defined, we can now call `PyObject_CallObject` with an argument.  If you would like to double check your code you can view the source code for this section [here](https://github.com/Chukobyte/learn-engine-dev/tree/main/src/1.embedding_python/1.2.using_pyhelper).
 
 ## Creating A Python Instance in C++
 
@@ -205,4 +205,4 @@ int main(int argv, char** args) {
 }
 ```
 
-There is even less code in `main` even though we're creating an instance!  The only thing to really point out is `PyObject_CallMethod` which calls a function on an instance of a class.  Now that we have a solid foundation for python scripting it's time to take a dip in the world of rendering with OpenGL.
+There is even less code in `main` even though we're creating an instance!  The only thing to really point out is `PyObject_CallMethod` which calls a function on an instance of a class.  Source code for this section can be viewed [here](https://github.com/Chukobyte/learn-engine-dev/tree/main/src/1.embedding_python/1.3.create_python_instance).  Now that we have a solid foundation for python scripting it's time to take a dip in the world of rendering with OpenGL.
