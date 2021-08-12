@@ -88,7 +88,7 @@ class CPyObject {
 
 ```
 
-There are two classes created in `PyHelper.hpp`.  `CPyInstance` responsibility is to initialize the python interpreter, perform any additional setup, and shutdown the intepreter once finished.  `CPyObject` is wrapper class for `PyObject` which is a python object.  Instead of having to explicitly decrement with `Py_DECREF` we instead use this `CPyObject` which decrements the reference count once the object is out of scope.
+There are two classes created in `PyHelper.hpp`.  `CPyInstance` responsibility is to initialize the python interpreter, perform any additional setup, and shutdown the intepreter once finished.  `CPyObject` is a wrapper class for `PyObject` which is a python object.  Instead of having to explicitly decrement with `Py_DECREF` we instead use this `CPyObject` which decrements the reference count once the object is out of scope.
 
 
 
@@ -128,7 +128,7 @@ This is similar to the code snippet we've created in the previous section, but i
 
 ## Creating A Python Instance in C++
 
-We're able to import modules and call functions, but there may be times where we'll want to interact with an instance of a python class.  Furthermore, we don't want to have to import a module and query its attributes each time we want to use a function as that will effect performance.  In this section we'll create a class to manage active python objects.
+We're able to import modules and call functions, but there may be times where we'll want to interact with an instance of a python class.  Furthermore, we don't want to have to import a module and query its attributes each time we want to use a function as that will affect performance.  In this section we'll create a class to manage active python objects.
 
 ```c++
 #ifndef PYTHON_OBJECT_MANAGER_H
