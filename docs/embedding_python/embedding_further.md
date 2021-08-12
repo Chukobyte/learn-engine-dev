@@ -125,3 +125,84 @@ int main(int argv, char** args) {
 ```
 
 This is similar to the code snippet we've created in the previous section, but instead of using `PyObject` we are using `CPyObject`.  `Py_BuildValue` builds a tuple of arguements that we can then pass to a python function.  With the argument defined, we can now call `PyObject_CallObject` with an argument.
+
+## Creating A Python Instance in C++
+
+We're able to import modules and call functions, but there may be times where we'll want to interact with an instance of a python class.  Furthermore, we don't want to have to import a module and query its attributes each time we want to use a function as that will effect performance.  In this section we'll create a class to manage active python objects.
+
+```c++
+#ifndef PYTHON_OBJECT_MANAGER_H
+#define PYTHON_OBJECT_MANAGER_H
+
+#include <string>
+#include <unordered_map>
+
+#include "./pyhelper.hpp"
+
+struct PythonModuleObject {
+    CPyObject module;
+    std::unordered_map<std::string, CPyObject> classes;
+};
+
+class PythonObjectManager {
+  private:
+    std::unordered_map<std::string, PythonModuleObject> modules;
+
+    CPyObject GetClass(const std::string &classPath, const std::string &className) {
+        if (modules.find(classPath) == modules.end()) {
+            CPyObject pModuleName = PyUnicode_FromString(classPath.c_str());
+            CPyObject pModule = PyImport_Import(pModuleName);
+            assert(pModule != nullptr && "Python module is NULL!");
+            modules.emplace(classPath, PythonModuleObject{
+                .module = pModule,
+                .classes = {}
+            });
+        }
+        if (modules[classPath].classes.find(className) == modules[classPath].classes.end()) {
+            CPyObject pModuleDict = PyModule_GetDict(modules[classPath].module);
+            CPyObject pClass = PyDict_GetItemString(pModuleDict, className.c_str());
+            assert(pClass != nullptr && "Python class is NULL!");
+            modules[classPath].classes.emplace(className, pClass);
+        }
+        return modules[classPath].classes[className];
+    }
+  public:
+    CPyObject CreateClassInstance(const std::string &classPath, const std::string &className) {
+        CPyObject pClass = GetClass(classPath, className);
+        CPyObject pClassInstance = PyObject_CallObject(pClass, nullptr);
+        assert(pClassInstance != nullptr && "Class instance is NULL!");
+        pClassInstance.AddRef();
+        return pClassInstance;
+    }
+};
+
+#endif // PYTHON_OBJECT_MANAGER_H
+```
+
+Within `python_object_manager.h` we first create `PythonModuleObject` which is a struct to hold a python module's object data.  It will hold all the python class objects loaded for the module.
+
+Next is the main class which is `PythonObjectManager`.  The `GetClass` function will return a class object for a module.  We use this within `CreateClassInstance` to create a python instance of a class.
+
+```py
+class Player:
+    def talk(self, message: str) -> None:
+        print(f"Player says '{message}'!")
+```
+
+The script `game.py` has been updated to include a class named `Player`.  We can finally create an instance of this class and call a function from this instance from c++.
+
+```c++
+#include "./scripting/python_object_manager.h"
+
+int main(int argv, char** args) {
+    CPyInstance pyInstance;
+    PythonObjectManager pObjectManager;
+
+    CPyObject pClassInstance = pObjectManager.CreateClassInstance("assets.scripts.game", "Player");
+    PyObject_CallMethod(pClassInstance, "talk", "(s)", "Hello!");
+
+    return 0;
+}
+```
+
+There is even less code in `main` even though we're creating an instance!  The only thing to really point out is `PyObject_CallMethod` which calls a function on an instance of a class.  Now that we have a solid foundation for python scripting it's time to take a dip in the world of rendering with OpenGL.

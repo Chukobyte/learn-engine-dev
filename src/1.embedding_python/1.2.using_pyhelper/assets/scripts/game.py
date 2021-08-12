@@ -1,3 +1,3 @@
-def play(message : str) -> int:
-	print(f"{message} (from python)!")
-	return 0
+def play(message: str) -> int:
+    print(f"{message} (from python)!")
+    return 0

@@ -1,3 +1,3 @@
 def play() -> int:
-	print("Game played!")
-	return 0
+    print("Game played!")
+    return 0
