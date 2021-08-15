@@ -2,22 +2,33 @@
 
 ## Dependencies
 
-For this tutorial, we'll be using Python 3.7 but feel free to try other versions as well.  Python must be downloaded and installed locally before continuing.  I'm using windows for this current iteration of the tutorial but will add in instructions to build on linux in the future.  With that being said, for windows the `python37.dll` should be included in the root directory of the project.
+For this tutorial, we'll be using Python 3.7 but feel free to try other versions as well.  Python must be downloaded and installed locally before continuing.  Windows users be sure to include the `python37.dll`  within root directory of each chapter.
 
 ## Build
 
-For building the application we will be using [make](https://www.gnu.org/software/make/).  To make the paths for dependencies configurable we'll set environment variables.  `PYTHON_HOME` should be set to the path of the python 3.7 installation on your system.  The Makefile should look like the following:
+For building the application we will be using [make](https://www.gnu.org/software/make/).  To make the paths for dependencies configurable we'll set environment variables.  `PYTHON_INCLUDE` should be set to the path of the python 3.7 installation's include folder.  `PYTHON_LIBS` should be set to the python3.7 installation's lib folder.  The Makefile should look like the following:
 
 ```makefile
+PROJECT_NAME := learn_engine_dev
+
+# OS Specific Stuff
+ifeq ($(OS),Windows_NT)
+    OS_TYPE := windows
+    BUILD_OBJECT := $(PROJECT_NAME).exe
+    L_FLAGS := -lmingw32 -lpython37 -static-libgcc -static-libstdc++
+    DELETE_CMD := del
+else
+    OS_TYPE := linux
+    BUILD_OBJECT := $(PROJECT_NAME)
+    L_FLAGS := -lpython3.7m -lcrypt -lpthread -ldl  -lutil -lm -static-libgcc -static-libstdc++
+    DELETE_CMD := rm
+endif
+
 CC := gcc # C Compiler
 CXX := g++ # C++ compiler
-I_FLAGS := -I"${PYTHON_HOME}/include"
-L_FLAGS := -lmingw32 -lpython37 -static-libgcc -static-libstdc++
+I_FLAGS := -I"${PYTHON_INCLUDE}"
+LIBRARIES := -L"${PYTHON_LIBS}"
 C_FLAGS := -w -std=c++14 -Wfatal-errors
-LIBRARIES := -L"${PYTHON_HOME}/libs"
-
-PROJECT_NAME := learn_engine_dev
-BUILD_OBJECT := $(PROJECT_NAME).exe
 
 SRC = $(wildcard *.cpp)
 
@@ -34,25 +45,21 @@ all: clean format build
     @echo "Compiling " $< " into " $@
     @$(CXX) -c $(C_FLAGS) $< -o $@ $(I_FLAGS)
 
-
 build: $(OBJ) $(OBJ_C)
     @echo "Linking " $@
     @$(CXX) -o $(BUILD_OBJECT) $^ $(I_FLAGS) $(L_FLAGS) $(LIBRARIES)
 
-format:
-    astyle -n --style=google --recursive *.cpp
-
 clean:
 ifneq ("$(wildcard $(BUILD_OBJECT))","")
-    del $(BUILD_OBJECT)
+    $(DELETE_CMD) $(BUILD_OBJECT)
 endif
-    $(foreach object, $(OBJ) $(OBJ_C), @del $(subst /,\, $(object));)
+    $(foreach object, $(OBJ) $(OBJ_C), @$(DELETE_CMD) $(subst /,\, $(object));)
 
 run:
     ./$(BUILD_OBJECT)
 ```
 
-*One other thing to note is that [astyle](http://astyle.sourceforge.net/astyle.html) is used for formatting c++ code.*
+*You can remove the `@` from in fron of the compile and build target commands to view the full command.*
 
 ## Hello World
 
@@ -105,6 +112,8 @@ A simple python function that prints the statement *'Game played!'* to the conso
 int main(int argv, char** args) {
     Py_SetProgramName(L"learn_engine_dev");
     Py_Initialize();
+    PyRun_SimpleString("import sys");
+    PyRun_SimpleString("sys.path.append(\".\")");
 
     // Load Module
     PyObject* pModuleName = PyUnicode_FromString("assets.scripts.game");
@@ -128,7 +137,7 @@ int main(int argv, char** args) {
 }
 ```
 
-This is pretty straightforward, we're getting a python string object with `PyUnicode_FromString` as we'll need that to import the python module from our script.  The folder path is `assets/scripts` and the python script is `game.py`.  Next we'll import the module with `PyImport_Import`.  `Py_DECREF` is called as we'll need to decrement the reference count of python objects to delete the objects in the python interpreter and prevent memory leaks!
+This is pretty straightforward, the first things to point out are the two `PyRun_SimpleString` calls.  This is to add the current path to the system path in order for the python module paths to be relative to the current path.  Next we're getting a python string object with `PyUnicode_FromString` as we'll need that to import the python module from our script.  The folder path is `assets/scripts` and the python script is `game.py`.  Next we'll import the module with `PyImport_Import`, which thanks to the appending the current path to the system path we're able to find without including the full path.  `Py_DECREF` is called as we'll need to decrement the reference count of python objects to delete the objects in the python interpreter and prevent memory leaks!
 
 Now that we have imported the module we can get the reference to a function with `PyObject_GetAttrString`.  With this reference we'll call the function with `PyObject_CallObject`.  The function `play` returns an integer and we store this within `pValue`.  After that we just decrement the remaining python objects we no longer need.  The source for this section can be found [here](https://github.com/Chukobyte/learn-engine-dev/tree/main/src/1.embedding_python/1.1.calling_a_function).
 
