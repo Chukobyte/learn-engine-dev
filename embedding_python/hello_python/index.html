@@ -287,7 +287,7 @@
 <h2 id="dependencies">Dependencies</h2>
 <p>For this tutorial, we'll be using Python 3.7 but feel free to try other versions as well.  Python must be downloaded and installed locally before continuing.  Windows users be sure to include the <code>python37.dll</code> in the same directory as the <code>learn_engine_dev</code> executable.</p>
 <h2 id="build">Build</h2>
-<p>For building the engine in a cross platform way we will be using <a href="https://www.gnu.org/software/make/">make</a>.  To make the paths for dependencies configurable we'll set environment variables throughout the tutorial, but feel free to hardcode the values.</p>
+<p>For building the engine in a cross platform way we will be using <a href="https://www.gnu.org/software/make/">make</a>.  To make the paths for dependencies configurable we'll set environment variables throughout the tutorial, but feel free to hardcode these values for your convenience.</p>
 <p>For python there are two environment variables:</p>
 <ul>
 <li><code>PYTHON_INCLUDE</code> The python installation's include folder.  Should contain <code>Python.h</code>.</li>
@@ -342,7 +342,7 @@
 <span class="nf">run</span><span class="o">:</span>
     ./<span class="k">$(</span>BUILD_OBJECT<span class="k">)</span>
 </code></pre></div>
-<p><em>You can remove the <code>@</code> from in front of the compile and build target commands to view the full command.</em></p>
+<p><em>Note: You can echo the full compile and linking commands to the console by removing <code>@</code> on lines 51 and 55.</em></p>
 <h2 id="hello-world">Hello World</h2>
 <p>It's time to finally write python code within our engine!  Before we start diving deeper into creating a scripting system for python, let's first obtain a small win by having out engine print out a statement via python.  Full documentation for embedding python within a c++ application can be found <a href="https://docs.python.org/3/extending/embedding.html">here</a>.</p>
 <div class="highlight"><pre><span></span><code><span class="cp">#define PY_SSIZE_T_CLEAN</span>
