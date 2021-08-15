@@ -1,7 +1,15 @@
+ifeq ($(OS),Windows_NT)
+    OS_TYPE := windows
+else
+    OS_TYPE := linux
+endif
+
 CC := gcc # C Compiler
 CXX := g++ # C++ compiler
-I_FLAGS := -I"${PYTHON_HOME}/include"
-L_FLAGS := -lmingw32 -lpython37 -static-libgcc -static-libstdc++
+#I_FLAGS := -I"${PYTHON_HOME}/include"
+I_FLAGS := -I"/usr/include/python3.7"
+#L_FLAGS := -lmingw32 -lpython37 -static-libgcc -static-libstdc++
+L_FLAGS := -static-libgcc -static-libstdc++
 C_FLAGS := -w -std=c++14 -Wfatal-errors
 LIBRARIES := -L"${PYTHON_HOME}/libs"
 
@@ -26,6 +34,7 @@ all: clean format build
 
 build: $(OBJ) $(OBJ_C)
 	@echo "Linking " $@
+	@echo "OS Type = $(OS_TYPE)"
 	@$(CXX) -o $(BUILD_OBJECT) $^ $(I_FLAGS) $(L_FLAGS) $(LIBRARIES)
 
 format:
