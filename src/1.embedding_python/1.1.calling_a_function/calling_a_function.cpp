@@ -5,6 +5,8 @@
 int main(int argv, char** args) {
     Py_SetProgramName(L"learn_engine_dev");
     Py_Initialize();
+    PyRun_SimpleString("import sys");
+    PyRun_SimpleString("sys.path.append(\".\")");
 
     // Load Module
     PyObject* pModuleName = PyUnicode_FromString("assets.scripts.game");
