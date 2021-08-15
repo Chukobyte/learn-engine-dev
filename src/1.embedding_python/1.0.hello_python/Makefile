@@ -4,20 +4,19 @@ PROJECT_NAME := learn_engine_dev
 ifeq ($(OS),Windows_NT)
     OS_TYPE := windows
     BUILD_OBJECT := $(PROJECT_NAME).exe
-    I_FLAGS := -I"${PYTHON_HOME}/include"
     L_FLAGS := -lmingw32 -lpython37 -static-libgcc -static-libstdc++
-    LIBRARIES := -L"${PYTHON_HOME}/libs"
 else
     OS_TYPE := linux
     BUILD_OBJECT := $(PROJECT_NAME)
-    I_FLAGS := -I"/usr/include/python3.7"
     L_FLAGS := -lpython3.7m -lcrypt -lpthread -ldl  -lutil -lm -static-libgcc -static-libstdc++
-    LIBRARIES := -L/usr/lib/python3.7/config-3.7m-x86_64-linux-gnu -L/usr/lib
 endif
 
 CC := gcc # C Compiler
 CXX := g++ # C++ compiler
+I_FLAGS := -I"${PYTHON_INCLUDE}"
+LIBRARIES := -L"${PYTHON_LIBS}"
 C_FLAGS := -w -std=c++14 -Wfatal-errors
+
 
 
 SRC = $(wildcard *.cpp)
