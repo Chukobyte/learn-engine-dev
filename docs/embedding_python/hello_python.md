@@ -59,7 +59,7 @@ run:
     ./$(BUILD_OBJECT)
 ```
 
-*You can remove the `@` from in fron of the compile and build target commands to view the full command.*
+*You can remove the `@` from in front of the compile and build target commands to view the full command.*
 
 ## Hello World
 
