@@ -2,7 +2,7 @@
 
 ## About
 
-Welcome to a tutorial series for creating a simple game engine from scratch!  Making a game engine is no easy task and each system we create could have multiple tutorials of its own.  But fear not, we will walk through building an engine each system at a time.
+Welcome to a tutorial series for creating a simple game engine from scratch!  Making a game engine is no easy task and each system we create could have multiple tutorials of its own.  But fear not, we will walk through building an engine each system at a time.  Currently only for Windows and Linux, but may expand to other platforms in the future.
 
 ## Prerequisites
 

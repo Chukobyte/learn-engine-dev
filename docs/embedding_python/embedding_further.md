@@ -25,6 +25,8 @@ class CPyInstance {
     CPyInstance() {
         Py_SetProgramName(L"learn_engine_dev");
         Py_Initialize();
+        PyRun_SimpleString("import sys");
+        PyRun_SimpleString("sys.path.append(\".\")");
     }
 
     ~CPyInstance() {
