@@ -285,18 +285,29 @@
 <article class="md-content__inner md-typeset">
 <h1 id="hello-python">Hello Python</h1>
 <h2 id="dependencies">Dependencies</h2>
-<p>For this tutorial, we'll be using Python 3.7 but feel free to try other versions as well.  Python must be downloaded and installed locally before continuing.  I'm using windows for this current iteration of the tutorial but will add in instructions to build on linux in the future.  With that being said, for windows the <code>python37.dll</code> should be included in the root directory of the project.</p>
+<p>For this tutorial, we'll be using Python 3.7 but feel free to try other versions as well.  Python must be downloaded and installed locally before continuing.  Windows users be sure to include the <code>python37.dll</code>  within root directory of each chapter.</p>
 <h2 id="build">Build</h2>
-<p>For building the application we will be using <a href="https://www.gnu.org/software/make/">make</a>.  To make the paths for dependencies configurable we'll set environment variables.  <code>PYTHON_HOME</code> should be set to the path of the python 3.7 installation on your system.  The Makefile should look like the following:</p>
-<div class="highlight"><pre><span></span><code><span class="nv">CC</span> <span class="o">:=</span> gcc <span class="c1"># C Compiler</span>
-<span class="nv">CXX</span> <span class="o">:=</span> g++ <span class="c1"># C++ compiler</span>
-<span class="nv">I_FLAGS</span> <span class="o">:=</span> -I<span class="s2">"</span><span class="si">${</span><span class="nv">PYTHON_HOME</span><span class="si">}</span><span class="s2">/include"</span>
-<span class="nv">L_FLAGS</span> <span class="o">:=</span> -lmingw32 -lpython37 -static-libgcc -static-libstdc++
-<span class="nv">C_FLAGS</span> <span class="o">:=</span> -w -std<span class="o">=</span>c++14 -Wfatal-errors
-<span class="nv">LIBRARIES</span> <span class="o">:=</span> -L<span class="s2">"</span><span class="si">${</span><span class="nv">PYTHON_HOME</span><span class="si">}</span><span class="s2">/libs"</span>
+<p>For building the application we will be using <a href="https://www.gnu.org/software/make/">make</a>.  To make the paths for dependencies configurable we'll set environment variables.  <code>PYTHON_INCLUDE</code> should be set to the path of the python 3.7 installation's include folder.  <code>PYTHON_LIBS</code> should be set to the python3.7 installation's lib folder.  The Makefile should look like the following:</p>
+<div class="highlight"><pre><span></span><code><span class="nv">PROJECT_NAME</span> <span class="o">:=</span> learn_engine_dev
 
-<span class="nv">PROJECT_NAME</span> <span class="o">:=</span> learn_engine_dev
-<span class="nv">BUILD_OBJECT</span> <span class="o">:=</span> <span class="k">$(</span>PROJECT_NAME<span class="k">)</span>.exe
+<span class="c"># OS Specific Stuff</span>
+<span class="cp">ifeq ($(OS),Windows_NT)</span>
+    OS_TYPE :<span class="o">=</span> windows
+    BUILD_OBJECT :<span class="o">=</span> <span class="k">$(</span>PROJECT_NAME<span class="k">)</span>.exe
+    L_FLAGS :<span class="o">=</span> -lmingw32 -lpython37 -static-libgcc -static-libstdc++
+    DELETE_CMD :<span class="o">=</span> del
+<span class="cp">else</span>
+    OS_TYPE :<span class="o">=</span> linux
+    BUILD_OBJECT :<span class="o">=</span> <span class="k">$(</span>PROJECT_NAME<span class="k">)</span>
+    L_FLAGS :<span class="o">=</span> -lpython3.7m -lcrypt -lpthread -ldl  -lutil -lm -static-libgcc -static-libstdc++
+    DELETE_CMD :<span class="o">=</span> rm
+<span class="cp">endif</span>
+
+<span class="nv">CC</span> <span class="o">:=</span> gcc <span class="c1"># C Compiler</span>
+<span class="nv">CXX</span> <span class="o">:=</span> g++ <span class="c1"># C++ compiler</span>
+<span class="nv">I_FLAGS</span> <span class="o">:=</span> -I<span class="s2">"</span><span class="si">${</span><span class="nv">PYTHON_INCLUDE</span><span class="si">}</span><span class="s2">"</span>
+<span class="nv">LIBRARIES</span> <span class="o">:=</span> -L<span class="s2">"</span><span class="si">${</span><span class="nv">PYTHON_LIBS</span><span class="si">}</span><span class="s2">"</span>
+<span class="nv">C_FLAGS</span> <span class="o">:=</span> -w -std<span class="o">=</span>c++14 -Wfatal-errors
 
 <span class="nv">SRC</span> <span class="o">=</span> <span class="k">$(</span>wildcard *.cpp<span class="k">)</span>
 
@@ -313,24 +324,20 @@
     @echo <span class="s2">"Compiling "</span> $&lt; <span class="s2">" into "</span> <span class="nv">$@</span>
     @<span class="k">$(</span>CXX<span class="k">)</span> -c <span class="k">$(</span>C_FLAGS<span class="k">)</span> $&lt; -o <span class="nv">$@</span> <span class="k">$(</span>I_FLAGS<span class="k">)</span>
 
-
 <span class="nf">build</span><span class="o">:</span> <span class="k">$(</span><span class="nv">OBJ</span><span class="k">)</span> <span class="k">$(</span><span class="nv">OBJ_C</span><span class="k">)</span>
     @echo <span class="s2">"Linking "</span> <span class="nv">$@</span>
     @<span class="k">$(</span>CXX<span class="k">)</span> -o <span class="k">$(</span>BUILD_OBJECT<span class="k">)</span> $^ <span class="k">$(</span>I_FLAGS<span class="k">)</span> <span class="k">$(</span>L_FLAGS<span class="k">)</span> <span class="k">$(</span>LIBRARIES<span class="k">)</span>
 
-<span class="nf">format</span><span class="o">:</span>
-    astyle -n --style<span class="o">=</span>google --recursive *.cpp
-
 <span class="nf">clean</span><span class="o">:</span>
 <span class="cp">ifneq ("$(wildcard $(BUILD_OBJECT))","")</span>
-    del <span class="k">$(</span>BUILD_OBJECT<span class="k">)</span>
+    <span class="k">$(</span>DELETE_CMD<span class="k">)</span> <span class="k">$(</span>BUILD_OBJECT<span class="k">)</span>
 <span class="cp">endif</span>
-    <span class="k">$(</span>foreach object, <span class="k">$(</span>OBJ<span class="k">)</span> <span class="k">$(</span>OBJ_C<span class="k">)</span>, @del <span class="k">$(</span>subst /,<span class="se">\,</span> <span class="k">$(</span>object<span class="k">))</span><span class="p">;</span><span class="k">)</span>
+    <span class="k">$(</span>foreach object, <span class="k">$(</span>OBJ<span class="k">)</span> <span class="k">$(</span>OBJ_C<span class="k">)</span>, @<span class="k">$(</span>DELETE_CMD<span class="k">)</span> <span class="k">$(</span>subst /,<span class="se">\,</span> <span class="k">$(</span>object<span class="k">))</span><span class="p">;</span><span class="k">)</span>
 
 <span class="nf">run</span><span class="o">:</span>
     ./<span class="k">$(</span>BUILD_OBJECT<span class="k">)</span>
 </code></pre></div>
-<p><em>One other thing to note is that <a href="http://astyle.sourceforge.net/astyle.html">astyle</a> is used for formatting c++ code.</em></p>
+<p><em>You can remove the <code>@</code> from in fron of the compile and build target commands to view the full command.</em></p>
 <h2 id="hello-world">Hello World</h2>
 <p>It's time to finally write python code within our engine!  Before we start diving deeper into creating a scripting system for python, let's first obtain a small win by having out engine print out a statement via python.  Full documentation for embedding python within a c++ application can be found <a href="https://docs.python.org/3/extending/embedding.html">here</a>.</p>
 <div class="highlight"><pre><span></span><code><span class="cp">#define PY_SSIZE_T_CLEAN</span>
@@ -367,6 +374,8 @@
 <span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argv</span><span class="p">,</span> <span class="kt">char</span><span class="o">**</span> <span class="n">args</span><span class="p">)</span> <span class="p">{</span>
     <span class="n">Py_SetProgramName</span><span class="p">(</span><span class="sa">L</span><span class="s">"learn_engine_dev"</span><span class="p">);</span>
     <span class="n">Py_Initialize</span><span class="p">();</span>
+    <span class="n">PyRun_SimpleString</span><span class="p">(</span><span class="s">"import sys"</span><span class="p">);</span>
+    <span class="n">PyRun_SimpleString</span><span class="p">(</span><span class="s">"sys.path.append(</span><span class="se">\"</span><span class="s">.</span><span class="se">\"</span><span class="s">)"</span><span class="p">);</span>
 
     <span class="c1">// Load Module</span>
     <span class="n">PyObject</span><span class="o">*</span> <span class="n">pModuleName</span> <span class="o">=</span> <span class="n">PyUnicode_FromString</span><span class="p">(</span><span class="s">"assets.scripts.game"</span><span class="p">);</span>
@@ -389,7 +398,7 @@
     <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
 <span class="p">}</span>
 </code></pre></div>
-<p>This is pretty straightforward, we're getting a python string object with <code>PyUnicode_FromString</code> as we'll need that to import the python module from our script.  The folder path is <code>assets/scripts</code> and the python script is <code>game.py</code>.  Next we'll import the module with <code>PyImport_Import</code>.  <code>Py_DECREF</code> is called as we'll need to decrement the reference count of python objects to delete the objects in the python interpreter and prevent memory leaks!</p>
+<p>This is pretty straightforward, the first things to point out are the two <code>PyRun_SimpleString</code> calls.  This is to add the current path to the system path in order for the python module paths to be relative to the current path.  Next we're getting a python string object with <code>PyUnicode_FromString</code> as we'll need that to import the python module from our script.  The folder path is <code>assets/scripts</code> and the python script is <code>game.py</code>.  Next we'll import the module with <code>PyImport_Import</code>, which thanks to the appending the current path to the system path we're able to find without including the full path.  <code>Py_DECREF</code> is called as we'll need to decrement the reference count of python objects to delete the objects in the python interpreter and prevent memory leaks!</p>
 <p>Now that we have imported the module we can get the reference to a function with <code>PyObject_GetAttrString</code>.  With this reference we'll call the function with <code>PyObject_CallObject</code>.  The function <code>play</code> returns an integer and we store this within <code>pValue</code>.  After that we just decrement the remaining python objects we no longer need.  The source for this section can be found <a href="https://github.com/Chukobyte/learn-engine-dev/tree/main/src/1.embedding_python/1.1.calling_a_function">here</a>.</p>
 <p>We're able to call a python function from c++ and receive it's return value, but incrementing and decrementing the reference count will become tedious.  Next we will embed python further into our engine and create classes to generalize some of our usages of the Python API.</p>
 </article>
