@@ -1,12 +1,16 @@
+PROJECT_NAME := learn_engine_dev
+
 # OS Specific Stuff
 ifeq ($(OS),Windows_NT)
     OS_TYPE := windows
+    BUILD_OBJECT := $(PROJECT_NAME).exe
     I_FLAGS := -I"${PYTHON_HOME}/include"
     L_FLAGS := -lmingw32 -lpython37 -static-libgcc -static-libstdc++
 else
     OS_TYPE := linux
+    BUILD_OBJECT := $(PROJECT_NAME)
     I_FLAGS := -I"/usr/include/python3.7"
-    L_FLAGS := -static-libgcc -static-libstdc++
+    L_FLAGS := -lpython37 -static-libgcc -static-libstdc++
 endif
 
 CC := gcc # C Compiler
@@ -14,8 +18,6 @@ CXX := g++ # C++ compiler
 C_FLAGS := -w -std=c++14 -Wfatal-errors
 LIBRARIES := -L"${PYTHON_HOME}/libs"
 
-PROJECT_NAME := learn_engine_dev
-BUILD_OBJECT := $(PROJECT_NAME).exe
 
 SRC = $(wildcard *.cpp)
 
@@ -35,7 +37,6 @@ all: clean format build
 
 build: $(OBJ) $(OBJ_C)
 	@echo "Linking " $@
-	@echo "OS Type = $(OS_TYPE)"
 	@$(CXX) -o $(BUILD_OBJECT) $^ $(I_FLAGS) $(L_FLAGS) $(LIBRARIES)
 
 format:
