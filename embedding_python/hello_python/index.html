@@ -406,7 +406,7 @@
 <p>This is pretty straightforward, the first things to point out are the two <code>PyRun_SimpleString</code> calls.  The first python statement:</p>
 <div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">sys</span>
 </code></pre></div>
-<p>Simply imports the <code>sys</code> module to the interpreter.  The next python statement:
+<p>Simply imports the <code>sys</code> module into the interpreter.  The next python statement:
 <div class="highlight"><pre><span></span><code><span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">"."</span><span class="p">)</span>
 </code></pre></div></p>
 <p>This adds the current path to the system path in order for python modules to be imported based on the current path.  We would have to provide the full path otherwise.</p>
