@@ -2,11 +2,11 @@
 
 ## About
 
-Welcome to a tutorial series for creating a simple game engine from scratch!  Making a game engine is no easy task and each system we create could have multiple tutorials of its own.  But fear not, we will walk through building an engine each system at a time.  This tutorial series currently only supports windows and linux, but may expand to other platforms in the future.
+Welcome to a tutorial series for creating a simple game engine from scratch!  Making a game engine is no easy task and each system we create could have multiple tutorials of its own.  But fear not, we will walk through building an engine each system at a time.  This tutorial series currently supports windows and linux, but may expand to other platforms in the future.
 
 ## Prerequisites
 
-Programming skills of all level are welcome, but to get the most out of this tutorial series you should have the following traits:
+Programming skills of all levels are welcome, but to get the most out of this tutorial series you should have the following traits:
 
 * Comfortable writing code in C++
 * Proficient with Python

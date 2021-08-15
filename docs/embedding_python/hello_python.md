@@ -2,11 +2,16 @@
 
 ## Dependencies
 
-For this tutorial, we'll be using Python 3.7 but feel free to try other versions as well.  Python must be downloaded and installed locally before continuing.  Windows users be sure to include the `python37.dll`  within root directory of each chapter.
+For this tutorial, we'll be using Python 3.7 but feel free to try other versions as well.  Python must be downloaded and installed locally before continuing.  Windows users be sure to include the `python37.dll` in the same directory as the `learn_engine_dev` executable.
 
 ## Build
 
-For building the application we will be using [make](https://www.gnu.org/software/make/).  To make the paths for dependencies configurable we'll set environment variables.  `PYTHON_INCLUDE` should be set to the path of the python 3.7 installation's include folder.  `PYTHON_LIBS` should be set to the python3.7 installation's lib folder.  The Makefile should look like the following:
+For building the engine in a cross platform way we will be using [make](https://www.gnu.org/software/make/).  To make the paths for dependencies configurable we'll set environment variables throughout the tutorial, but feel free to hardcode these values for your convenience.
+
+For python there are two environment variables:
+
+* `PYTHON_INCLUDE` The python installation's include folder.  Should contain `Python.h`.
+* `PYTHON_LIBS` The python installation's lib folder.  Should contain the python `a.` file used during linking.
 
 ```makefile
 PROJECT_NAME := learn_engine_dev
@@ -59,7 +64,7 @@ run:
     ./$(BUILD_OBJECT)
 ```
 
-*You can remove the `@` from in front of the compile and build target commands to view the full command.*
+*Note: You can echo the full compile and linking commands to the console by removing `@` on lines 51 and 55.*
 
 ## Hello World
 
@@ -137,8 +142,21 @@ int main(int argv, char** args) {
 }
 ```
 
-This is pretty straightforward, the first things to point out are the two `PyRun_SimpleString` calls.  This is to add the current path to the system path in order for the python module paths to be relative to the current path.  Next we're getting a python string object with `PyUnicode_FromString` as we'll need that to import the python module from our script.  The folder path is `assets/scripts` and the python script is `game.py`.  Next we'll import the module with `PyImport_Import`, which thanks to the appending the current path to the system path we're able to find without including the full path.  `Py_DECREF` is called as we'll need to decrement the reference count of python objects to delete the objects in the python interpreter and prevent memory leaks!
+This is pretty straightforward, the first things to point out are the two `PyRun_SimpleString` calls.  The first python statement:
+
+```py
+import sys
+```
+
+Simply imports the `sys` module into the interpreter.  The next python statement:
+```py
+sys.path.append(".")
+```
+
+This adds the current path to the system path in order for python modules to be imported based on the current path.  We would have to provide the full path otherwise.
+
+Next we're getting a python string object with `PyUnicode_FromString` as we'll need that to import the python module from our script.  The folder path is `assets/scripts` and the python script is `game.py`.  After getting the module name we'll now import the module it's pointing to with `PyImport_Import`.  `Py_DECREF` is called as we'll need to decrement the reference count of python objects to delete them within python interpreter and prevent memory leaks!
 
 Now that we have imported the module we can get the reference to a function with `PyObject_GetAttrString`.  With this reference we'll call the function with `PyObject_CallObject`.  The function `play` returns an integer and we store this within `pValue`.  After that we just decrement the remaining python objects we no longer need.  The source for this section can be found [here](https://github.com/Chukobyte/learn-engine-dev/tree/main/src/1.embedding_python/1.1.calling_a_function).
 
-We're able to call a python function from c++ and receive it's return value, but incrementing and decrementing the reference count will become tedious.  Next we will embed python further into our engine and create classes to generalize some of our usages of the Python API.
+We're able to call a python function from c++ and receive its return value, but incrementing and decrementing the reference count will become tedious.  In the next section we will embed python further into our engine and create classes to generalize some of our usages of the Python API.
