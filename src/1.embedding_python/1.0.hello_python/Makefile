@@ -19,8 +19,6 @@ I_FLAGS := -I"${PYTHON_INCLUDE}"
 LIBRARIES := -L"${PYTHON_LIBS}"
 C_FLAGS := -w -std=c++14 -Wfatal-errors
 
-
-
 SRC = $(wildcard *.cpp)
 
 OBJ = $(SRC:.cpp=.o)
