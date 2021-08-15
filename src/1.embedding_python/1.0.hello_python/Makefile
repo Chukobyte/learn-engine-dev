@@ -1,15 +1,16 @@
+# OS Specific Stuff
 ifeq ($(OS),Windows_NT)
     OS_TYPE := windows
+    I_FLAGS := -I"${PYTHON_HOME}/include"
+    L_FLAGS := -lmingw32 -lpython37 -static-libgcc -static-libstdc++
 else
     OS_TYPE := linux
+    I_FLAGS := -I"/usr/include/python3.7"
+    L_FLAGS := -static-libgcc -static-libstdc++
 endif
 
 CC := gcc # C Compiler
 CXX := g++ # C++ compiler
-#I_FLAGS := -I"${PYTHON_HOME}/include"
-I_FLAGS := -I"/usr/include/python3.7"
-#L_FLAGS := -lmingw32 -lpython37 -static-libgcc -static-libstdc++
-L_FLAGS := -static-libgcc -static-libstdc++
 C_FLAGS := -w -std=c++14 -Wfatal-errors
 LIBRARIES := -L"${PYTHON_HOME}/libs"
 
