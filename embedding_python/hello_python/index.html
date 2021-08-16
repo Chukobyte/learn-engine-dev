@@ -374,7 +374,7 @@ gtag('send','pageview');
     @echo <span class="s2">"Compiling "</span> $&lt; <span class="s2">" into "</span> <span class="nv">$@</span>
     @<span class="k">$(</span>CXX<span class="k">)</span> -c <span class="k">$(</span>C_FLAGS<span class="k">)</span> $&lt; -o <span class="nv">$@</span> <span class="k">$(</span>I_FLAGS<span class="k">)</span>
 
-<span class="nf">build</span><span class="o">:</span> <span class="k">$(</span><span class="nv">OBJ</span><span class="k">)</span> <span class="k">$(</span><span class="nv">OBJ_C</span><span class="k">)</span>
+<span class="nf">build</span><span class="o">:</span> <span class="k">$(</span><span class="nv">OBJ</span><span class="k">)</span>
     @echo <span class="s2">"Linking "</span> <span class="nv">$@</span>
     @<span class="k">$(</span>CXX<span class="k">)</span> -o <span class="k">$(</span>BUILD_OBJECT<span class="k">)</span> $^ <span class="k">$(</span>I_FLAGS<span class="k">)</span> <span class="k">$(</span>L_FLAGS<span class="k">)</span> <span class="k">$(</span>LIBRARIES<span class="k">)</span>
 
@@ -382,7 +382,7 @@ gtag('send','pageview');
 <span class="cp">ifneq ("$(wildcard $(BUILD_OBJECT))","")</span>
     <span class="k">$(</span>DELETE_CMD<span class="k">)</span> <span class="k">$(</span>BUILD_OBJECT<span class="k">)</span>
 <span class="cp">endif</span>
-    <span class="k">$(</span>foreach object, <span class="k">$(</span>OBJ<span class="k">)</span> <span class="k">$(</span>OBJ_C<span class="k">)</span>, @<span class="k">$(</span>DELETE_CMD<span class="k">)</span> <span class="k">$(</span>subst /,<span class="se">\,</span> <span class="k">$(</span>object<span class="k">))</span><span class="p">;</span><span class="k">)</span>
+    <span class="k">$(</span>foreach object, <span class="k">$(</span>OBJ<span class="k">)</span>, @<span class="k">$(</span>DELETE_CMD<span class="k">)</span> <span class="k">$(</span>subst /,<span class="se">\,</span> <span class="k">$(</span>object<span class="k">))</span><span class="p">;</span><span class="k">)</span>
 
 <span class="nf">run</span><span class="o">:</span>
     ./<span class="k">$(</span>BUILD_OBJECT<span class="k">)</span>
