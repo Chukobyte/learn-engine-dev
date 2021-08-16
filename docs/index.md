@@ -25,3 +25,4 @@ The engine will be built with the following technologies:
 * **SDL2** - Windowing and input
 * **SDL2_mixer** - Audio
 * **Python 3.7** - Scripting language for game logic
+* **AStyle** - Used for formatting C++ code

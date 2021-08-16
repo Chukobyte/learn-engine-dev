@@ -9,10 +9,10 @@
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
 
-gtag('config', '{{ analytics[0] }}');
-gtag('send','pageview');
+  gtag('config', '{{ analytics[0] }}');
+  gtag('send','pageview');
 
-/* Register handler to log search on blur */
+  /* Register handler to log search on blur */
   document.addEventListener("DOMContentLoaded", () => {
     if (document.forms.search) {
       var query = document.forms.search.query

@@ -27,6 +27,7 @@ nav:
   - Embedding Python:
       - Hello Python: embedding_python/hello_python.md
       - Embedding Further: embedding_python/embedding_further.md
+      - Custom Python Module: embedding_python/custom_python_module.md
   - OpenGL Rendering:
       - Creating A Renderer: opengl_rendering/creating_a_renderer.md
   - Implementing Audio:
