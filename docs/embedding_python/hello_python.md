@@ -50,7 +50,7 @@ all: clean format build
     @echo "Compiling " $< " into " $@
     @$(CXX) -c $(C_FLAGS) $< -o $@ $(I_FLAGS)
 
-build: $(OBJ) $(OBJ_C)
+build: $(OBJ)
     @echo "Linking " $@
     @$(CXX) -o $(BUILD_OBJECT) $^ $(I_FLAGS) $(L_FLAGS) $(LIBRARIES)
 
@@ -58,7 +58,7 @@ clean:
 ifneq ("$(wildcard $(BUILD_OBJECT))","")
     $(DELETE_CMD) $(BUILD_OBJECT)
 endif
-    $(foreach object, $(OBJ) $(OBJ_C), @$(DELETE_CMD) $(subst /,\, $(object));)
+    $(foreach object, $(OBJ), @$(DELETE_CMD) $(subst /,\, $(object));)
 
 run:
     ./$(BUILD_OBJECT)
