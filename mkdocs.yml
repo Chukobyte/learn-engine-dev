@@ -1,4 +1,26 @@
 site_name: Learn Engine Dev
+repo_url: https://github.com/Chukobyte/learn-engine-dev
+edit_uri: ""
+site_description: Learn Engine Dev is tutorial series for developing a cross platform game engine from scratch.
+site_author: Chukobyte
+copyright: 'Copyright &copy; 2021 Chukobyte'
+
+google_analytics:
+  - "G-7S3213MH0R"
+  - "auto"
+
+plugins:
+  - search
+  - mermaid2
+
+theme:
+  name: material
+  custom_dir: 'docs/theme'
+
+markdown_extensions:
+  - pymdownx.highlight
+  - pymdownx.superfences
+  - pymdownx.inlinehilite
 
 nav:
   - Introduction: index.md
@@ -15,13 +37,3 @@ nav:
       - Building An ECS: entity_component_system/building_an_ecs.md
   - Source Code: source_code/source_code.md
 
-plugins:
-  - search
-  - mermaid2
-
-theme: material
-
-markdown_extensions:
-  - pymdownx.highlight
-  - pymdownx.superfences
-  - pymdownx.inlinehilite
