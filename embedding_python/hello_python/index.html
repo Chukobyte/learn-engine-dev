@@ -416,15 +416,15 @@
 <p>Next we call <code>PyRun_SimpleString</code> to execute this python statement:
 <div class="highlight"><pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="s1">'hello world (from python)'</span><span class="p">)</span>
 </code></pre></div></p>
-<p>Last but not least we terminate the python interpreter by calling <code>Py_Finalize()</code>.  Not too bad of a start but we can definitely do better.  You view the code by looking at the source <a href="https://github.com/Chukobyte/learn-engine-dev/tree/main/src/1.embedding_python/1.0.hello_python">here</a>.</p>
-<p>We will want to execute scripts and python functions from our engine and also be able to call c++ functions from a python script.  Let's work on that next!</p>
+<p>Last but not least we terminate the python interpreter by calling <code>Py_Finalize()</code>.  Not too bad of a start but we can definitely do better!  You view the code by looking at the source <a href="https://github.com/Chukobyte/learn-engine-dev/tree/main/src/1.embedding_python/1.0.hello_python">here</a>.</p>
+<p>We will want to execute scripts and python functions from our engine and also be able to call C++ functions from a python script.  Let's work on that next!</p>
 <h2 id="execute-a-python-function-from-c">Execute A Python Function From C++</h2>
-<p>Executing python statements with <code>PyRun_SimpleString</code> is simple but it won't scale well once we start adding more logic in python.  Let's create a new python script and call a function from it!</p>
+<p>Executing python statements with <code>PyRun_SimpleString</code> is simple but it won't scale very well once we start adding more logic in python.  Let's create a new python script and call a function from it!</p>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">play</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
     <span class="nb">print</span><span class="p">(</span><span class="s2">"Game played!"</span><span class="p">)</span>
     <span class="k">return</span> <span class="mi">0</span>
 </code></pre></div>
-<p>A simple python function that prints the statement <em>'Game played!'</em> to the console.  Next let's call this function in c++.</p>
+<p>A simple python function that prints the statement <em>'Game played!'</em> to the console.  Next let's call this function in C++.</p>
 <div class="highlight"><pre><span></span><code><span class="cp">#define PY_SSIZE_T_CLEAN</span>
 <span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp"></span>
 <span class="cp">#include</span> <span class="cpf">&lt;Python.h&gt;</span><span class="cp"></span>
