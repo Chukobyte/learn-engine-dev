@@ -9,7 +9,7 @@
 <meta content="Chukobyte" name="author"/>
 <link href="../../assets/images/favicon.png" rel="icon"/>
 <meta content="mkdocs-1.1.2, mkdocs-material-7.1.4" name="generator"/>
-<title>Hello Python - Learn Engine Dev</title>
+<title>Custom Python Module - Learn Engine Dev</title>
 <link href="../../assets/stylesheets/main.bde7dde4.min.css" rel="stylesheet"/>
 <link href="../../assets/stylesheets/palette.ef6f36e2.min.css" rel="stylesheet"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
@@ -45,7 +45,7 @@
 <input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
 <label class="md-overlay" for="__drawer"></label>
 <div data-md-component="skip">
-<a class="md-skip" href="#hello-python">
+<a class="md-skip" href="#custom-python-module">
           Skip to content
         </a>
 </div>
@@ -69,7 +69,7 @@
 <div class="md-header__topic" data-md-component="header-topic">
 <span class="md-ellipsis">
             
-              Hello Python
+              Custom Python Module
             
           </span>
 </div>
@@ -156,14 +156,24 @@
           Embedding Python
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../hello_python/">
+        Hello Python
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../embedding_further/">
+        Embedding Further
+      </a>
+</li>
 <li class="md-nav__item md-nav__item--active">
 <input class="md-nav__toggle md-toggle" data-md-toggle="toc" id="__toc" type="checkbox"/>
 <label class="md-nav__link md-nav__link--active" for="__toc">
-          Hello Python
+          Custom Python Module
           <span class="md-nav__icon md-icon"></span>
 </label>
 <a class="md-nav__link md-nav__link--active" href="./">
-        Hello Python
+        Custom Python Module
       </a>
 <nav aria-label="Table of contents" class="md-nav md-nav--secondary">
 <label class="md-nav__title" for="__toc">
@@ -172,37 +182,12 @@
     </label>
 <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="#dependencies">
-    Dependencies
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#build">
-    Build
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#hello-world">
-    Hello World
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#execute-a-python-function-from-c">
-    Execute A Python Function From C++
+<a class="md-nav__link" href="#python-modules-class">
+    Python Modules Class
   </a>
 </li>
 </ul>
 </nav>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="../embedding_further/">
-        Embedding Further
-      </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="../custom_python_module/">
-        Custom Python Module
-      </a>
 </li>
 </ul>
 </nav>
@@ -307,23 +292,8 @@
     </label>
 <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="#dependencies">
-    Dependencies
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#build">
-    Build
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#hello-world">
-    Hello World
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#execute-a-python-function-from-c">
-    Execute A Python Function From C++
+<a class="md-nav__link" href="#python-modules-class">
+    Python Modules Class
   </a>
 </li>
 </ul>
@@ -333,146 +303,95 @@
 </div>
 <div class="md-content" data-md-component="content">
 <article class="md-content__inner md-typeset">
-<h1 id="hello-python">Hello Python</h1>
-<h2 id="dependencies">Dependencies</h2>
-<p>For this tutorial, we'll be using Python 3.7 but feel free to try other versions as well.  Python must be downloaded and installed locally before continuing.  Windows users be sure to include the <code>python37.dll</code> in the same directory as the <code>learn_engine_dev</code> executable.</p>
-<h2 id="build">Build</h2>
-<p>For building the engine in a cross platform way we will be using <a href="https://www.gnu.org/software/make/">make</a>.  To make the paths for dependencies configurable we'll set environment variables throughout the tutorial, but feel free to hardcode these values for your convenience.</p>
-<p>For python there are two environment variables:</p>
-<ul>
-<li><code>PYTHON_INCLUDE</code> The python installation's include folder.  Should contain <code>Python.h</code>.</li>
-<li><code>PYTHON_LIBS</code> The python installation's lib folder.  Should contain the python <code>a.</code> file used during linking.</li>
-</ul>
-<div class="highlight"><pre><span></span><code><span class="nv">PROJECT_NAME</span> <span class="o">:=</span> learn_engine_dev
+<h1 id="custom-python-module">Custom Python Module</h1>
+<h2 id="python-modules-class">Python Modules Class</h2>
+<p>We have successfully called functions from python modules and class instances but we have yet to call C++ code from python.  The best way to do that is to start defining our engine api.  To keep things simple and concise for now we'll just define one python module named <code>engine</code> which contains two functions.  The first function <code>get_version</code> doesn't take any parameters and will just return a hard coded string that represents our engine version.  Our second function <code>print_log</code> will simply take a string as a parameter and print it out to the console.  Now that we have an idea of what to do let's create our class for defining and implementing custom python modules.</p>
+<div class="highlight"><pre><span></span><code><span class="cp">#ifndef PYTHON_MODULES_H</span>
+<span class="cp">#define PYTHON_MODULES_H</span>
 
-<span class="c"># OS Specific Stuff</span>
-<span class="cp">ifeq ($(OS),Windows_NT)</span>
-    OS_TYPE :<span class="o">=</span> windows
-    BUILD_OBJECT :<span class="o">=</span> <span class="k">$(</span>PROJECT_NAME<span class="k">)</span>.exe
-    L_FLAGS :<span class="o">=</span> -lmingw32 -lpython37 -static-libgcc -static-libstdc++
-    DELETE_CMD :<span class="o">=</span> del
-<span class="cp">else</span>
-    OS_TYPE :<span class="o">=</span> linux
-    BUILD_OBJECT :<span class="o">=</span> <span class="k">$(</span>PROJECT_NAME<span class="k">)</span>
-    L_FLAGS :<span class="o">=</span> -lpython3.7m -lcrypt -lpthread -ldl  -lutil -lm -static-libgcc -static-libstdc++
-    DELETE_CMD :<span class="o">=</span> rm
-<span class="cp">endif</span>
+<span class="cp">#define PY_SSIZE_T_CLEAN</span>
 
-<span class="nv">CC</span> <span class="o">:=</span> gcc <span class="c1"># C Compiler</span>
-<span class="nv">CXX</span> <span class="o">:=</span> g++ <span class="c1"># C++ compiler</span>
-<span class="nv">I_FLAGS</span> <span class="o">:=</span> -I<span class="s2">"</span><span class="si">${</span><span class="nv">PYTHON_INCLUDE</span><span class="si">}</span><span class="s2">"</span>
-<span class="nv">LIBRARIES</span> <span class="o">:=</span> -L<span class="s2">"</span><span class="si">${</span><span class="nv">PYTHON_LIBS</span><span class="si">}</span><span class="s2">"</span>
-<span class="nv">C_FLAGS</span> <span class="o">:=</span> -w -std<span class="o">=</span>c++14 -Wfatal-errors
-
-<span class="nv">SRC</span> <span class="o">=</span> <span class="k">$(</span>wildcard src/*.cpp<span class="k">)</span>
-
-<span class="nv">OBJ</span> <span class="o">=</span> <span class="k">$(</span>SRC:.cpp<span class="o">=</span>.o<span class="k">)</span>
-
-<span class="c"># MAIN</span>
-
-<span class="nf">.PHONY</span><span class="o">:</span> <span class="n">all</span> <span class="n">build</span> <span class="n">clean</span>
-
-<span class="nf">all</span><span class="o">:</span> <span class="n">clean</span> <span class="n">format</span> <span class="n">build</span>
-
-<span class="c"># Compiles if .o is missing or changes to the .cpp file</span>
-<span class="nf">%.o</span><span class="o">:</span> %.<span class="n">cpp</span>
-    @echo <span class="s2">"Compiling "</span> $&lt; <span class="s2">" into "</span> <span class="nv">$@</span>
-    @<span class="k">$(</span>CXX<span class="k">)</span> -c <span class="k">$(</span>C_FLAGS<span class="k">)</span> $&lt; -o <span class="nv">$@</span> <span class="k">$(</span>I_FLAGS<span class="k">)</span>
-
-<span class="nf">build</span><span class="o">:</span> <span class="k">$(</span><span class="nv">OBJ</span><span class="k">)</span>
-    @echo <span class="s2">"Linking "</span> <span class="nv">$@</span>
-    @<span class="k">$(</span>CXX<span class="k">)</span> -o <span class="k">$(</span>BUILD_OBJECT<span class="k">)</span> $^ <span class="k">$(</span>I_FLAGS<span class="k">)</span> <span class="k">$(</span>L_FLAGS<span class="k">)</span> <span class="k">$(</span>LIBRARIES<span class="k">)</span>
-
-<span class="nf">clean</span><span class="o">:</span>
-<span class="cp">ifneq ("$(wildcard $(BUILD_OBJECT))","")</span>
-    <span class="k">$(</span>DELETE_CMD<span class="k">)</span> <span class="k">$(</span>BUILD_OBJECT<span class="k">)</span>
-<span class="cp">endif</span>
-    <span class="k">$(</span>foreach object, <span class="k">$(</span>OBJ<span class="k">)</span>, @<span class="k">$(</span>DELETE_CMD<span class="k">)</span> <span class="k">$(</span>subst /,<span class="se">\,</span> <span class="k">$(</span>object<span class="k">))</span><span class="p">;</span><span class="k">)</span>
-
-<span class="nf">run</span><span class="o">:</span>
-    ./<span class="k">$(</span>BUILD_OBJECT<span class="k">)</span>
-
-<span class="nf">format</span><span class="o">:</span>
-    astyle -n --style<span class="o">=</span>google --recursive src/*.cpp
-</code></pre></div>
-<p><em>Note: You can echo the full compile and linking commands to the console by removing <code>@</code> on lines 51 and 55.</em></p>
-<h2 id="hello-world">Hello World</h2>
-<p>It's time to finally write python code within our engine!  Before we start diving deeper into creating a scripting system for python, let's first obtain a small win by having out engine print out a statement via python.  Full documentation for embedding python within a c++ application can be found <a href="https://docs.python.org/3/extending/embedding.html">here</a>.</p>
-<div class="highlight"><pre><span></span><code><span class="cp">#define PY_SSIZE_T_CLEAN</span>
 <span class="cp">#include</span> <span class="cpf">&lt;Python.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;string&gt;</span><span class="cp"></span>
 
-<span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argv</span><span class="p">,</span> <span class="kt">char</span><span class="o">**</span> <span class="n">args</span><span class="p">)</span> <span class="p">{</span>
-    <span class="n">Py_SetProgramName</span><span class="p">(</span><span class="sa">L</span><span class="s">"learn_engine_dev"</span><span class="p">);</span>
-    <span class="n">Py_Initialize</span><span class="p">();</span>
+<span class="k">class</span> <span class="nc">EnginePythonModule</span> <span class="p">{</span>
+  <span class="k">public</span><span class="o">:</span>
+    <span class="k">static</span> <span class="n">PyObject</span><span class="o">*</span> <span class="n">get_version</span><span class="p">(</span><span class="n">PyObject</span><span class="o">*</span> <span class="n">self</span><span class="p">,</span> <span class="n">PyObject</span><span class="o">*</span> <span class="n">args</span><span class="p">);</span>
+    <span class="k">static</span> <span class="n">PyObject</span><span class="o">*</span> <span class="nf">print_log</span><span class="p">(</span><span class="n">PyObject</span><span class="o">*</span> <span class="n">self</span><span class="p">,</span> <span class="n">PyObject</span><span class="o">*</span> <span class="n">args</span><span class="p">,</span> <span class="n">PyObject</span><span class="o">*</span> <span class="n">kwargs</span><span class="p">);</span>
+<span class="p">};</span>
 
-    <span class="n">PyRun_SimpleString</span><span class="p">(</span><span class="s">"print('hello world (from python)')"</span><span class="p">);</span>
+<span class="k">static</span> <span class="k">struct</span> <span class="nc">PyMethodDef</span> <span class="n">engineModuleMethods</span><span class="p">[]</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="p">{</span>
+        <span class="s">"get_version"</span><span class="p">,</span> <span class="n">EnginePythonModule</span><span class="o">::</span><span class="n">get_version</span><span class="p">,</span>
+        <span class="n">METH_VARARGS</span><span class="p">,</span> <span class="s">"Gets version of the engine."</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+        <span class="s">"print_log"</span><span class="p">,</span> <span class="p">(</span><span class="n">PyCFunction</span><span class="p">)</span> <span class="n">EnginePythonModule</span><span class="o">::</span><span class="n">print_log</span><span class="p">,</span>
+        <span class="n">METH_VARARGS</span> <span class="o">|</span> <span class="n">METH_KEYWORDS</span><span class="p">,</span> <span class="s">"Logs a message to the console."</span>
+    <span class="p">},</span>
 
-    <span class="n">Py_Finalize</span><span class="p">();</span>
+    <span class="p">{</span><span class="k">nullptr</span><span class="p">,</span> <span class="k">nullptr</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span><span class="k">nullptr</span> <span class="p">},</span>
+<span class="p">};</span>
 
-    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="k">static</span> <span class="k">struct</span> <span class="nc">PyModuleDef</span> <span class="n">engineModuleDefinition</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="n">PyModuleDef_HEAD_INIT</span><span class="p">,</span> <span class="s">"engine"</span><span class="p">,</span> <span class="k">nullptr</span><span class="p">,</span> <span class="mi">-1</span><span class="p">,</span> <span class="n">engineModuleMethods</span><span class="p">,</span>
+    <span class="k">nullptr</span><span class="p">,</span> <span class="k">nullptr</span><span class="p">,</span> <span class="k">nullptr</span><span class="p">,</span> <span class="k">nullptr</span>
+<span class="p">};</span>
+
+<span class="k">static</span> <span class="kt">char</span> <span class="o">*</span><span class="n">enginePrintLogKWList</span><span class="p">[]</span> <span class="o">=</span> <span class="p">{</span><span class="s">"message"</span><span class="p">,</span> <span class="k">nullptr</span><span class="p">};</span>
+
+<span class="k">static</span> <span class="n">PyObject</span><span class="o">*</span> <span class="nf">PyInit_engine</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="n">PyModule_Create</span><span class="p">(</span><span class="o">&amp;</span><span class="n">engineModuleDefinition</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="cp">#endif </span><span class="c1">//PYTHON_MODULES_H</span>
+</code></pre></div>
+<p>The <code>EnginePythonModule</code> class defines the two functions that we went over earlier.  Notice that <code>print_log</code> has an extra parameter for <code>kwargs</code> as the parameter will have a keyword named <code>message</code>.  After that we  define a struct which contains our module function definitions.  Take note how <code>print_log</code> has to cast it's function to <code>PyCFuntion</code> to support keyword arguments.  Next we define our module definition for <code>engine</code> which we passed in our previously created <code>engineModuleMethods</code> struct.  <code>enginePrintLogKWList</code> contains the keywords for our <code>print_log</code> function.  <code>message</code> is passed in by reference so we can set the value to what's passed in as the <code>message</code> keyword argument.  Lastly <code>PyInit_engine</code> will be used to create our module.  We will return to <code>PyInit_engine</code> later as we'll need to import the <code>engine</code> module before initializing the python interpreter.</p>
+<p>With the header out of the way let's write the implementation of our two functions.</p>
+<div class="highlight"><pre><span></span><code><span class="cp">#include</span> <span class="cpf">"python_modules.h"</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp"></span>
+
+<span class="n">PyObject</span><span class="o">*</span> <span class="nf">EnginePythonModule::get_version</span><span class="p">(</span><span class="n">PyObject</span> <span class="o">*</span><span class="n">self</span><span class="p">,</span> <span class="n">PyObject</span> <span class="o">*</span><span class="n">args</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="n">Py_BuildValue</span><span class="p">(</span><span class="s">"s"</span><span class="p">,</span> <span class="s">"v0.0.1"</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="n">PyObject</span><span class="o">*</span> <span class="nf">EnginePythonModule::print_log</span><span class="p">(</span><span class="n">PyObject</span> <span class="o">*</span><span class="n">self</span><span class="p">,</span> <span class="n">PyObject</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="n">PyObject</span> <span class="o">*</span><span class="n">kwargs</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kt">char</span> <span class="o">*</span><span class="n">message</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">PyArg_ParseTupleAndKeywords</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">,</span> <span class="s">"s"</span><span class="p">,</span> <span class="n">enginePrintLogKWList</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">message</span><span class="p">))</span> <span class="p">{</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"[INFO] "</span> <span class="o">&lt;&lt;</span> <span class="n">message</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+        <span class="n">Py_RETURN_NONE</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="k">nullptr</span><span class="p">;</span>
 <span class="p">}</span>
 </code></pre></div>
-<p>This should print out <em>'hello world (from python)'</em>.  There's other things we can setup before initializing the python interpreter but for now we'll just set the python application name with <code>Py_SetProgramName</code>. <code>Py_Initialize</code> initializes the python interpreter.</p>
-<p>Next we call <code>PyRun_SimpleString</code> to execute this python statement:
-<div class="highlight"><pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="s1">'hello world (from python)'</span><span class="p">)</span>
-</code></pre></div></p>
-<p>Last but not least we terminate the python interpreter by calling <code>Py_Finalize()</code>.  Not too bad of a start but we can definitely do better.  You view the code by looking at the source <a href="https://github.com/Chukobyte/learn-engine-dev/tree/main/src/1.embedding_python/1.0.hello_python">here</a>.</p>
-<p>We will want to execute scripts and python functions from our engine and also be able to call c++ functions from a python script.  Let's work on that next!</p>
-<h2 id="execute-a-python-function-from-c">Execute A Python Function From C++</h2>
-<p>Executing python statements with <code>PyRun_SimpleString</code> is simple but it won't scale well once we start adding more logic in python.  Let's create a new python script and call a function from it!</p>
-<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">play</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">"Game played!"</span><span class="p">)</span>
-    <span class="k">return</span> <span class="mi">0</span>
-</code></pre></div>
-<p>A simple python function that prints the statement <em>'Game played!'</em> to the console.  Next let's call this function in c++.</p>
-<div class="highlight"><pre><span></span><code><span class="cp">#define PY_SSIZE_T_CLEAN</span>
-<span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp"></span>
-<span class="cp">#include</span> <span class="cpf">&lt;Python.h&gt;</span><span class="cp"></span>
-
-<span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argv</span><span class="p">,</span> <span class="kt">char</span><span class="o">**</span> <span class="n">args</span><span class="p">)</span> <span class="p">{</span>
+<p><code>get_version</code> is really simple as it is just returning a string which contain 'v0.0.1' with <code>Py_BuildValue</code>.  The next function <code>print_log</code> is slightly more complicated but not by much. We use <code>PyArg_ParseTupleKeywords</code> to get the values of the argument passed in.  <code>enginePrintLogKWList</code> is passed in as we have the defined <code>message</code> as a keyword argument.</p>
+<p>With our new module defined and implemented, we have to now import it into the python interpreter.  Update the construtor in <code>pyhelper.hpp</code> to add our newly created module with <code>PyImport_AppendInittab</code>.  This should be called before <code>Py_Initialize</code>.</p>
+<div class="highlight"><pre><span></span><code><span class="n">CPyInstance</span><span class="p">()</span> <span class="p">{</span>
     <span class="n">Py_SetProgramName</span><span class="p">(</span><span class="sa">L</span><span class="s">"learn_engine_dev"</span><span class="p">);</span>
+    <span class="n">PyImport_AppendInittab</span><span class="p">(</span><span class="s">"engine"</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">PyInit_engine</span><span class="p">);</span>
     <span class="n">Py_Initialize</span><span class="p">();</span>
     <span class="n">PyRun_SimpleString</span><span class="p">(</span><span class="s">"import sys"</span><span class="p">);</span>
     <span class="n">PyRun_SimpleString</span><span class="p">(</span><span class="s">"sys.path.append(</span><span class="se">\"</span><span class="s">.</span><span class="se">\"</span><span class="s">)"</span><span class="p">);</span>
-
-    <span class="c1">// Load Module</span>
-    <span class="n">PyObject</span><span class="o">*</span> <span class="n">pModuleName</span> <span class="o">=</span> <span class="n">PyUnicode_FromString</span><span class="p">(</span><span class="s">"assets.scripts.game"</span><span class="p">);</span>
-    <span class="n">PyObject</span><span class="o">*</span> <span class="n">pModule</span> <span class="o">=</span> <span class="n">PyImport_Import</span><span class="p">(</span><span class="n">pModuleName</span><span class="p">);</span>
-    <span class="n">Py_DECREF</span><span class="p">(</span><span class="n">pModuleName</span><span class="p">);</span>
-    <span class="n">assert</span><span class="p">(</span><span class="n">pModule</span> <span class="o">!=</span> <span class="k">nullptr</span> <span class="o">&amp;&amp;</span> <span class="s">"Not able to load python module!"</span><span class="p">);</span>
-
-    <span class="c1">// Function</span>
-    <span class="n">PyObject</span><span class="o">*</span> <span class="n">pFunc</span> <span class="o">=</span> <span class="n">PyObject_GetAttrString</span><span class="p">(</span><span class="n">pModule</span><span class="p">,</span> <span class="s">"play"</span><span class="p">);</span>
-    <span class="n">assert</span><span class="p">(</span><span class="n">pFunc</span> <span class="o">!=</span> <span class="k">nullptr</span> <span class="o">&amp;&amp;</span> <span class="s">"Not able to find function named 'play'!"</span><span class="p">);</span>
-    <span class="n">PyObject</span><span class="o">*</span> <span class="n">pValue</span> <span class="o">=</span> <span class="n">PyObject_CallObject</span><span class="p">(</span><span class="n">pFunc</span><span class="p">,</span> <span class="k">nullptr</span><span class="p">);</span>
-    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"Python script exit code = "</span> <span class="o">&lt;&lt;</span> <span class="n">PyLong_AsLong</span><span class="p">(</span><span class="n">pValue</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
-
-    <span class="n">Py_DECREF</span><span class="p">(</span><span class="n">pValue</span><span class="p">);</span>
-    <span class="n">Py_DECREF</span><span class="p">(</span><span class="n">pFunc</span><span class="p">);</span>
-    <span class="n">Py_DECREF</span><span class="p">(</span><span class="n">pModule</span><span class="p">);</span>
-
-    <span class="n">Py_Finalize</span><span class="p">();</span>
-
-    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
 <span class="p">}</span>
 </code></pre></div>
-<p>This is pretty straightforward, the first things to point out are the two <code>PyRun_SimpleString</code> calls.  The first python statement:</p>
-<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">sys</span>
+<p><em>Don't forget to include the header for <code>python_modules.h</code>!</em></p>
+<p>We can finally call C++ code from python. Let's update our <code>game.py</code> script to import the <code>engine</code> module and call the two functions we defined in C++ earlier.</p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">engine</span>
+
+<span class="k">class</span> <span class="nc">Player</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">talk</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">engine_version</span> <span class="o">=</span> <span class="n">engine</span><span class="o">.</span><span class="n">get_version</span><span class="p">()</span>
+        <span class="n">engine</span><span class="o">.</span><span class="n">print_log</span><span class="p">(</span><span class="n">message</span><span class="o">=</span><span class="sa">f</span><span class="s2">"Engine version = </span><span class="si">{</span><span class="n">engine_version</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 </code></pre></div>
-<p>Simply imports the <code>sys</code> module into the interpreter.  The next python statement:
-<div class="highlight"><pre><span></span><code><span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">"."</span><span class="p">)</span>
-</code></pre></div></p>
-<p>This adds the current path to the system path in order for python modules to be imported based on the current path.  We would have to provide the full path otherwise.</p>
-<p>Next we're getting a python string object with <code>PyUnicode_FromString</code> as we'll need that to import the python module from our script.  The folder path is <code>assets/scripts</code> and the python script is <code>game.py</code>.  After getting the module name we'll now import the module it's pointing to with <code>PyImport_Import</code>.  <code>Py_DECREF</code> is called as we'll need to decrement the reference count of python objects to delete them within python interpreter and prevent memory leaks!</p>
-<p>Now that we have imported the module we can get the reference to a function with <code>PyObject_GetAttrString</code>.  With this reference we'll call the function with <code>PyObject_CallObject</code>.  The function <code>play</code> returns an integer and we store this within <code>pValue</code>.  After that we just decrement the remaining python objects we no longer need.  The source for this section can be found <a href="https://github.com/Chukobyte/learn-engine-dev/tree/main/src/1.embedding_python/1.1.calling_a_function">here</a>.</p>
-<p>We're able to call a python function from c++ and receive its return value, but incrementing and decrementing the reference count will become tedious.  In the next section we will embed python further into our engine and create classes to generalize some of our usages of the Python API.</p>
+<p>We're going to keep things easy and just use the same function <code>talk</code> that was used in the previous section.  There are a few differences now, the first line imports our <code>engine</code> module to be used by the python script.  We're going to ignore the <code>message</code> parameter of the <code>talk</code> function.  Next we call <code>engine.get_version()</code> which returns from our C++ function we defined early a hard coded version string.  We then call <code>engine.print_log()</code> to print a log statement to the console.</p>
+<p>We will keep our <code>main</code> function defined in our C++ code the same as changes aren't needed.  The Final output when we run the engine will be <code>Engine version = v0.0.1</code>.  All the code for this section can be found <a href="https://github.com/Chukobyte/learn-engine-dev/tree/main/src/1.embedding_python/1.4.create_custom_module">here</a>.  Now that we have a good foundation for the scripting system, it's time to focus next on building a renderer.</p>
 </article>
 </div>
 </div>
 </main>
 <footer class="md-footer">
 <nav aria-label="Footer" class="md-footer__inner md-grid">
-<a class="md-footer__link md-footer__link--prev" href="../.." rel="prev">
+<a class="md-footer__link md-footer__link--prev" href="../embedding_further/" rel="prev">
 <div class="md-footer__button md-icon">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"></path></svg>
 </div>
@@ -481,17 +400,17 @@
 <span class="md-footer__direction">
                 Previous
               </span>
-              Introduction
+              Embedding Further
             </div>
 </div>
 </a>
-<a class="md-footer__link md-footer__link--next" href="../embedding_further/" rel="next">
+<a class="md-footer__link md-footer__link--next" href="../../opengl_rendering/creating_a_renderer/" rel="next">
 <div class="md-footer__title">
 <div class="md-ellipsis">
 <span class="md-footer__direction">
                 Next
               </span>
-              Embedding Further
+              Creating A Renderer
             </div>
 </div>
 <div class="md-footer__button md-icon">
