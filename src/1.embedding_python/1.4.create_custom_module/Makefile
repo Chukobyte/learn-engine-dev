@@ -19,7 +19,7 @@ I_FLAGS := -I"${PYTHON_INCLUDE}"
 LIBRARIES := -L"${PYTHON_LIBS}"
 C_FLAGS := -w -std=c++14 -Wfatal-errors
 
-SRC = $(wildcard *.cpp scripting/*.cpp)
+SRC = $(wildcard src/*.cpp src/scripting/*.cpp)
 
 OBJ = $(SRC:.cpp=.o)
 
@@ -48,4 +48,4 @@ run:
 	./$(BUILD_OBJECT)
 
 format:
-	astyle -n --style=google --recursive *.cpp *.h
+	astyle -n --style=google --recursive src/*.cpp src/*.hpp src/*.h

@@ -35,7 +35,7 @@ I_FLAGS := -I"${PYTHON_INCLUDE}"
 LIBRARIES := -L"${PYTHON_LIBS}"
 C_FLAGS := -w -std=c++14 -Wfatal-errors
 
-SRC = $(wildcard *.cpp)
+SRC = $(wildcard src/*.cpp)
 
 OBJ = $(SRC:.cpp=.o)
 
@@ -62,6 +62,9 @@ endif
 
 run:
     ./$(BUILD_OBJECT)
+
+format:
+    astyle -n --style=google --recursive src/*.cpp
 ```
 
 *Note: You can echo the full compile and linking commands to the console by removing `@` on lines 51 and 55.*
