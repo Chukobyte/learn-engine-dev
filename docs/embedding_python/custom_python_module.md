@@ -2,7 +2,7 @@
 
 ## Python Modules Class
 
-We have successfully called functions from python modules and class instances but we have yet to call C++ code from python.  The best way to do that is to start defining our engine API.  To keep things simple and concise for now we'll just define one python module as `engine` which contains two functions.  The first function `get_version` doesn't take any parameters and will just return a hard coded string that represents our engine version.  Our second function `print_log` will simply take a string as a parameter and print it out to the console.  Now that we have an idea of what to do let's create our class for defining and implementing custom python modules.
+We have successfully called functions from python modules and class instances but we have yet to call C++ code from python.  The best way to do that is to start defining our engine api.  To keep things simple and concise for now we'll just define one python module named `engine` which contains two functions.  The first function `get_version` doesn't take any parameters and will just return a hard coded string that represents our engine version.  Our second function `print_log` will simply take a string as a parameter and print it out to the console.  Now that we have an idea of what to do let's create our class for defining and implementing custom python modules.
 
 ```c++
 #ifndef PYTHON_MODULES_H
@@ -46,9 +46,9 @@ static PyObject* PyInit_engine(void) {
 #endif //PYTHON_MODULES_H
 ```
 
-The `EnginePythonModule` class defines the two functions that we went over earlier.  Notice that `print_log` has an extra parameter for `kwargs` as the parameter will have a keyword named `message`.  After that we  define a struct which contains our module function definitions.  Take note how `print_log` has to cast it's function to `PyCFuntion` to support keyword arguments.  Next we define our module definition for `engine` which we passed in our previously created `engineModuleMethods` struct.  `enginePrintLogKWList` contains the keywords for our `print_log` function.  Lastly `PyInit_engine` will be used to create our module.  We will return to `PyInit_engine` later as we'll need to import the `engine` module before initializing the python interpreter.
+The `EnginePythonModule` class defines the two functions that we went over earlier.  Notice that `print_log` has an extra parameter for `kwargs` as the parameter will have a keyword named `message`.  After that we  define a struct which contains our module function definitions.  Take note how `print_log` has to cast it's function to `PyCFuntion` to support keyword arguments.  Next we define our module definition for `engine` which we passed in our previously created `engineModuleMethods` struct.  `enginePrintLogKWList` contains the keywords for our `print_log` function.  `message` is passed in by reference so we can set the value to what's passed in as the `message` keyword argument.  Lastly `PyInit_engine` will be used to create our module.  We will return to `PyInit_engine` later as we'll need to import the `engine` module before initializing the python interpreter.
 
-With the header out of the way, time to write the implementation of the two functions.
+With the header out of the way let's write the implementation of our two functions.
 
 ```c++
 #include "python_modules.h"
@@ -97,4 +97,4 @@ class Player:
 
 We're going to keep things easy and just use the same function `talk` that was used in the previous section.  There are a few differences now, the first line imports our `engine` module to be used by the python script.  We're going to ignore the `message` parameter of the `talk` function.  Next we call `engine.get_version()` which returns from our C++ function we defined early a hard coded version string.  We then call `engine.print_log()` to print a log statement to the console.
 
-We will keep our `main` function defined in our C++ code the same as changes aren't needed.  The Final output when we run the engine will be `Engine version = v0.0.1`.  Now that we have a good foundation for the scripting system, it's time to focus next on building a renderer.
+We will keep our `main` function defined in our C++ code the same as changes aren't needed.  The Final output when we run the engine will be `Engine version = v0.0.1`.  All the code for this section can be found [here](https://github.com/Chukobyte/learn-engine-dev/tree/main/src/1.embedding_python/1.4.create_custom_module).  Now that we have a good foundation for the scripting system, it's time to focus next on building a renderer.
