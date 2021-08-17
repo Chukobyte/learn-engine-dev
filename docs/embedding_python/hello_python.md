@@ -96,13 +96,13 @@ Next we call `PyRun_SimpleString` to execute this python statement:
 print('hello world (from python)')
 ```
 
-Last but not least we terminate the python interpreter by calling `Py_Finalize()`.  Not too bad of a start but we can definitely do better.  You view the code by looking at the source [here](https://github.com/Chukobyte/learn-engine-dev/tree/main/src/1.embedding_python/1.0.hello_python).
+Last but not least we terminate the python interpreter by calling `Py_Finalize()`.  Not too bad of a start but we can definitely do better!  You view the code by looking at the source [here](https://github.com/Chukobyte/learn-engine-dev/tree/main/src/1.embedding_python/1.0.hello_python).
 
-We will want to execute scripts and python functions from our engine and also be able to call c++ functions from a python script.  Let's work on that next!
+We will want to execute scripts and python functions from our engine and also be able to call C++ functions from a python script.  Let's work on that next!
 
 ## Execute A Python Function From C++
 
-Executing python statements with `PyRun_SimpleString` is simple but it won't scale well once we start adding more logic in python.  Let's create a new python script and call a function from it!
+Executing python statements with `PyRun_SimpleString` is simple but it won't scale very well once we start adding more logic in python.  Let's create a new python script and call a function from it!
 
 ```py
 def play() -> int:
@@ -110,7 +110,7 @@ def play() -> int:
     return 0
 ```
 
-A simple python function that prints the statement *'Game played!'* to the console.  Next let's call this function in c++.
+A simple python function that prints the statement *'Game played!'* to the console.  Next let's call this function in C++.
 
 ```c++
 #define PY_SSIZE_T_CLEAN
