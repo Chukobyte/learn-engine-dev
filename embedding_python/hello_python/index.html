@@ -350,12 +350,10 @@
     OS_TYPE :<span class="o">=</span> windows
     BUILD_OBJECT :<span class="o">=</span> <span class="k">$(</span>PROJECT_NAME<span class="k">)</span>.exe
     L_FLAGS :<span class="o">=</span> -lmingw32 -lpython37 -static-libgcc -static-libstdc++
-    DELETE_CMD :<span class="o">=</span> del
 <span class="cp">else</span>
     OS_TYPE :<span class="o">=</span> linux
     BUILD_OBJECT :<span class="o">=</span> <span class="k">$(</span>PROJECT_NAME<span class="k">)</span>
     L_FLAGS :<span class="o">=</span> -lpython3.7m -lcrypt -lpthread -ldl  -lutil -lm -static-libgcc -static-libstdc++
-    DELETE_CMD :<span class="o">=</span> rm
 <span class="cp">endif</span>
 
 <span class="nv">CC</span> <span class="o">:=</span> gcc <span class="c1"># C Compiler</span>
@@ -387,7 +385,11 @@
 <span class="cp">ifneq ("$(wildcard $(BUILD_OBJECT))","")</span>
     <span class="k">$(</span>DELETE_CMD<span class="k">)</span> <span class="k">$(</span>BUILD_OBJECT<span class="k">)</span>
 <span class="cp">endif</span>
-    <span class="k">$(</span>foreach object, <span class="k">$(</span>OBJ<span class="k">)</span>, @<span class="k">$(</span>DELETE_CMD<span class="k">)</span> <span class="k">$(</span>subst /,<span class="se">\,</span> <span class="k">$(</span>object<span class="k">))</span><span class="p">;</span><span class="k">)</span>
+<span class="cp">ifeq ($(OS_TYPE),windows)</span>
+    <span class="k">$(</span>foreach object, <span class="k">$(</span>OBJ<span class="k">)</span>, del <span class="k">$(</span>subst /,<span class="se">\,</span><span class="k">$(</span>object<span class="k">))</span><span class="p">;</span><span class="k">)</span>
+<span class="cp">else</span>
+    <span class="k">$(</span>foreach object, <span class="k">$(</span>OBJ<span class="k">)</span>, rm <span class="k">$(</span>object<span class="k">)</span><span class="p">;</span><span class="k">)</span>
+<span class="cp">endif</span>
 
 <span class="nf">run</span><span class="o">:</span>
     ./<span class="k">$(</span>BUILD_OBJECT<span class="k">)</span>
