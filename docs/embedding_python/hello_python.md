@@ -21,12 +21,10 @@ ifeq ($(OS),Windows_NT)
     OS_TYPE := windows
     BUILD_OBJECT := $(PROJECT_NAME).exe
     L_FLAGS := -lmingw32 -lpython37 -static-libgcc -static-libstdc++
-    DELETE_CMD := del
 else
     OS_TYPE := linux
     BUILD_OBJECT := $(PROJECT_NAME)
     L_FLAGS := -lpython3.7m -lcrypt -lpthread -ldl  -lutil -lm -static-libgcc -static-libstdc++
-    DELETE_CMD := rm
 endif
 
 CC := gcc # C Compiler
@@ -58,7 +56,11 @@ clean:
 ifneq ("$(wildcard $(BUILD_OBJECT))","")
     $(DELETE_CMD) $(BUILD_OBJECT)
 endif
-    $(foreach object, $(OBJ), @$(DELETE_CMD) $(subst /,\, $(object));)
+ifeq ($(OS_TYPE),windows)
+    $(foreach object, $(OBJ), del $(subst /,\,$(object));)
+else
+    $(foreach object, $(OBJ), rm $(object);)
+endif
 
 run:
     ./$(BUILD_OBJECT)
