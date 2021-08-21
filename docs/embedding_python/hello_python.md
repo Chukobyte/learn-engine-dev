@@ -6,7 +6,7 @@ For this tutorial, we'll be using Python 3.7 but feel free to try other versions
 
 ## Build
 
-For building the engine in a cross platform way we will be using [make](https://www.gnu.org/software/make/).  To make the paths for dependencies configurable we'll set environment variables throughout the tutorial, but feel free to hardcode these values for your convenience.
+For building the engine in a cross platform way we will be using [make](https://www.gnu.org/software/make/).  I won't being going into the specifics of Makefiles in this series, but you can find a pretty solid tutorial [here](https://makefiletutorial.com/).  To make the paths for dependencies configurable we'll set environment variables throughout the tutorial, but feel free to hardcode these values for your convenience.
 
 For python there are two environment variables:
 
