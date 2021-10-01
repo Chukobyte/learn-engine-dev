@@ -8,6 +8,7 @@
 #include "./texture.h"
 #include "./font.h"
 #include "./color.h"
+#include "../math/rect2.h"
 
 struct SpriteBatchItem {
     Texture *texture2D = nullptr;
@@ -27,15 +28,15 @@ struct FontBatchItem {
 };
 
 struct ZIndexDrawBatch {
-    std::vector<SpriteDrawBatch> spriteDrawBatches;
-    std::vector<FontDrawBatch> fontDrawBatches;
+    std::vector<SpriteBatchItem> spriteDrawBatches;
+    std::vector<FontBatchItem> fontDrawBatches;
 };
 
 class RendererBatcher {
   private:
     std::map<int, ZIndexDrawBatch> drawBatches;
 
-    void BatchDrawSprite(SpriteDrawBatch spriteBatchItem, int zIndex);
+    void BatchDrawSprite(SpriteBatchItem spriteBatchItem, int zIndex);
 
     void BatchDrawFont(FontBatchItem fontBatchItem, int zIndex);
 

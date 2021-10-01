@@ -1,12 +1,9 @@
-#ifndef MATH_H
-#define MATH_H
+#ifndef RECT2_H
+#define RECT2_H
 
 #include <iostream>
-#include <glm/glm.hpp>
 
-using Vector2 = glm::vec2;
-using Vector3 = glm::vec3;
-using Color = glm::vec3;
+#include "vector2.h"
 
 class Rect2 {
   public:
@@ -34,4 +31,4 @@ class Rect2 {
     friend std::ostream& operator<<(std::ostream& os, const Rect2 &r);
 };
 
-#endif //MATH_H
+#endif //RECT2_H
