@@ -15,7 +15,8 @@ CC := gcc # C Compiler
 CXX := g++ # C++ compiler
 I_FLAGS := -I"./include" -I"${PYTHON_INCLUDE}"
 LIBRARIES := -L"${PYTHON_LIBS}"
-C_FLAGS := -w -std=c++14 -Wfatal-errors
+C_FLAGS := -w -Wfatal-errors
+CPP_FLAGS := $(C_FLAGS) -std=c++14
 
 SRC = $(wildcard src/*.cpp  src/core/utils/*.cpp src/core/math/*.cpp src/core/rendering/*.cpp include/stb_image/stb_image.cpp)
 SRC_C = $(wildcard include/glad/glad.c)
@@ -32,7 +33,7 @@ all: clean format build
 # Compiles if .o is missing or changes to the .cpp file
 %.o: %.cpp
 	@echo "Compiling " $< " into " $@
-	@$(CXX) -c $(C_FLAGS) $< -o $@ $(I_FLAGS)
+	@$(CXX) -c $(CPP_FLAGS) $< -o $@ $(I_FLAGS)
 
 %.o: %.c
 	@echo "Compiling " $< " into " $@
