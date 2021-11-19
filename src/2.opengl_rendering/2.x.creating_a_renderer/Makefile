@@ -13,13 +13,15 @@ endif
 
 CC := gcc # C Compiler
 CXX := g++ # C++ compiler
-I_FLAGS := -I"./include" -I"${PYTHON_INCLUDE}"
+INCLUDE_DIR := ../../../include
+GAME_LIB_DIR := $(INCLUDE_DIR)/game_lib
+I_FLAGS := -I"$(INCLUDE_DIR)" -I"${PYTHON_INCLUDE}"
 LIBRARIES := -L"${PYTHON_LIBS}"
 C_FLAGS := -w -Wfatal-errors
-CPP_FLAGS := $(C_FLAGS) -std=c++14
+CPP_FLAGS := $(CPP_FLAGS) -std=c++14
 
-SRC = $(wildcard src/*.cpp  src/core/utils/*.cpp src/core/math/*.cpp src/core/rendering/*.cpp include/stb_image/stb_image.cpp)
-SRC_C = $(wildcard include/glad/glad.c)
+SRC = $(wildcard src/*.cpp  $(GAME_LIB_DIR)/python/*.cpp $(GAME_LIB_DIR)/math/*.cpp $(GAME_LIB_DIR)/rendering/*.cpp $(GAME_LIB_DIR)/utils/*.cpp $(INCLUDE_DIR)/stb_image/stb_image.cpp)
+SRC_C = $(wildcard $(INCLUDE_DIR)/glad/glad.c)
 
 OBJ = $(SRC:.cpp=.o)
 OBJ_C = $(SRC_C:.c=.o)
@@ -37,7 +39,7 @@ all: clean format build
 
 %.o: %.c
 	@echo "Compiling " $< " into " $@
-	@$(CC) -c $(C_FLAGS) $< -o $@ $(I_FLAGS)
+	@$(CC) -c $(CPP_FLAGS) $< -o $@ $(I_FLAGS)
 
 build: $(OBJ) $(OBJ_C)
 	@echo "Linking " $@

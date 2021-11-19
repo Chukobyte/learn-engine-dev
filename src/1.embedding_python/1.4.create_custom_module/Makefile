@@ -13,11 +13,13 @@ endif
 
 CC := gcc # C Compiler
 CXX := g++ # C++ compiler
-I_FLAGS := -I"${PYTHON_INCLUDE}"
+INCLUDE_DIR := ../../../include
+GAME_LIB_DIR := $(INCLUDE_DIR)/game_lib
+I_FLAGS := -I"${INCLUDE_DIR}" -I"${PYTHON_INCLUDE}"
 LIBRARIES := -L"${PYTHON_LIBS}"
 C_FLAGS := -w -std=c++14 -Wfatal-errors
 
-SRC = $(wildcard src/*.cpp src/scripting/*.cpp)
+SRC = $(wildcard src/*.cpp $(GAME_LIB_DIR)/python/*.cpp)
 
 OBJ = $(SRC:.cpp=.o)
 
@@ -30,7 +32,7 @@ all: clean format build
 # Compiles if .o is missing or changes to the .cpp file
 %.o: %.cpp
 	@echo "Compiling " $< " into " $@
-	@$(CXX) -c $(C_FLAGS) $< -o $@ $(I_FLAGS)
+	@$(CXX) -c $(CPP_FLAGS) $< -o $@ $(I_FLAGS)
 
 build: $(OBJ)
 	@echo "Linking " $@

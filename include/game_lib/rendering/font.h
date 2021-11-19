@@ -11,15 +11,15 @@
 
 #include <glad/glad.h>
 
-#include "../math/vector2.h"
+#include "./game_lib/math/math.h"
 
 #include "../utils/file_helper.h"
 #include "../utils/logger.h"
 
 struct Character {
     GLuint textureID;
-    IVector2 size;
-    IVector2 bearing;
+    Vector2 size;
+    Vector2 bearing;
     unsigned int advance;
 };
 
@@ -105,8 +105,8 @@ class Font {
                 // store character for later use
                 Character character = {
                     .textureID = textTexture,
-                    .size = IVector2(face->glyph->bitmap.width, face->glyph->bitmap.rows),
-                    .bearing = IVector2(face->glyph->bitmap_left, face->glyph->bitmap_top),
+                    .size = Vector2(face->glyph->bitmap.width, face->glyph->bitmap.rows),
+                    .bearing = Vector2(face->glyph->bitmap_left, face->glyph->bitmap_top),
                     .advance = static_cast<unsigned int>(face->glyph->advance.x)
                 };
                 characters.insert(std::pair<char, Character>(c, character));
@@ -159,8 +159,8 @@ class Font {
                 // store character for later use
                 Character character = {
                     .textureID = textTexture,
-                    .size = IVector2(face->glyph->bitmap.width, face->glyph->bitmap.rows),
-                    .bearing = IVector2(face->glyph->bitmap_left, face->glyph->bitmap_top),
+                    .size = glm::ivec2(face->glyph->bitmap.width, face->glyph->bitmap.rows),
+                    .bearing = glm::ivec2(face->glyph->bitmap_left, face->glyph->bitmap_top),
                     .advance = static_cast<unsigned int>(face->glyph->advance.x)
                 };
                 characters.insert(std::pair<char, Character>(c, character));

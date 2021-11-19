@@ -1,6 +1,6 @@
-#include "rect2.h"
+#include "rectangle.h"
 
-std::ostream& operator<<(std::ostream& os, const Rect2 &r) {
+std::ostream& operator<<(std::ostream& os, const Rectangle &r) {
     os << "(" << r.x << ", " << r.y << ", " << r.w << ", " << r.h << ")";
     return os;
 }

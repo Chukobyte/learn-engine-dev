@@ -1,5 +1,5 @@
-#include "./core/scripting/python_object_manager.h"
-#include "./core/rendering/texture.h"
+#include "./game_lib/python/python_object_manager.h"
+#include "./game_lib/rendering/texture.h"
 
 int main(int argv, char** args) {
     CPyInstance pyInstance;

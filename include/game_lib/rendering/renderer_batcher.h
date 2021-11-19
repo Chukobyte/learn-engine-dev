@@ -5,15 +5,17 @@
 #include <map>
 #include <string>
 
+#include <glm/glm.hpp>
+
 #include "./texture.h"
 #include "./font.h"
 #include "./color.h"
-#include "../math/rect2.h"
+#include "../math/rectangle.h"
 
 struct SpriteBatchItem {
     Texture *texture2D = nullptr;
-    Rect2 sourceRectangle;
-    Rect2 destinationRectangle;
+    Rectangle sourceRectangle;
+    Rectangle destinationRectangle;
     float rotation = 0.0f;
     Color color = Color(1.0f, 1.0f, 1.0f, 1.0f);
 };

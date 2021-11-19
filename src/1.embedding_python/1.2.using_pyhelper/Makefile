@@ -15,7 +15,7 @@ CC := gcc # C Compiler
 CXX := g++ # C++ compiler
 I_FLAGS := -I"${PYTHON_INCLUDE}"
 LIBRARIES := -L"${PYTHON_LIBS}"
-C_FLAGS := -w -std=c++14 -Wfatal-errors
+CPP_FLAGS := -w -std=c++14 -Wfatal-errors
 
 SRC = $(wildcard src/*.cpp)
 
@@ -30,7 +30,7 @@ all: clean format build
 # Compiles if .o is missing or changes to the .cpp file
 %.o: %.cpp
 	@echo "Compiling " $< " into " $@
-	@$(CXX) -c $(C_FLAGS) $< -o $@ $(I_FLAGS)
+	@$(CXX) -c $(CPP_FLAGS) $< -o $@ $(I_FLAGS)
 
 build: $(OBJ)
 	@echo "Linking " $@
