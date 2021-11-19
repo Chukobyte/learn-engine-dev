@@ -17,7 +17,7 @@ INCLUDE_DIR := ../../../include
 GAME_LIB_DIR := $(INCLUDE_DIR)/game_lib
 I_FLAGS := -I"${INCLUDE_DIR}" -I"${PYTHON_INCLUDE}"
 LIBRARIES := -L"${PYTHON_LIBS}"
-C_FLAGS := -w -std=c++14 -Wfatal-errors
+CPP_FLAGS := -w -std=c++14 -Wfatal-errors
 
 SRC = $(wildcard src/*.cpp $(GAME_LIB_DIR)/python/*.cpp)
 
