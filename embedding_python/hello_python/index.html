@@ -360,7 +360,7 @@
 <span class="nv">CXX</span> <span class="o">:=</span> g++ <span class="c1"># C++ compiler</span>
 <span class="nv">I_FLAGS</span> <span class="o">:=</span> -I<span class="s2">"</span><span class="si">${</span><span class="nv">PYTHON_INCLUDE</span><span class="si">}</span><span class="s2">"</span>
 <span class="nv">LIBRARIES</span> <span class="o">:=</span> -L<span class="s2">"</span><span class="si">${</span><span class="nv">PYTHON_LIBS</span><span class="si">}</span><span class="s2">"</span>
-<span class="nv">C_FLAGS</span> <span class="o">:=</span> -w -std<span class="o">=</span>c++14 -Wfatal-errors
+<span class="nv">CPP_FLAGS</span> <span class="o">:=</span> -w -std<span class="o">=</span>c++14 -Wfatal-errors
 
 <span class="nv">SRC</span> <span class="o">=</span> <span class="k">$(</span>wildcard src/*.cpp<span class="k">)</span>
 
@@ -375,7 +375,7 @@
 <span class="c"># Compiles if .o is missing or changes to the .cpp file</span>
 <span class="nf">%.o</span><span class="o">:</span> %.<span class="n">cpp</span>
     @echo <span class="s2">"Compiling "</span> $&lt; <span class="s2">" into "</span> <span class="nv">$@</span>
-    @<span class="k">$(</span>CXX<span class="k">)</span> -c <span class="k">$(</span>C_FLAGS<span class="k">)</span> $&lt; -o <span class="nv">$@</span> <span class="k">$(</span>I_FLAGS<span class="k">)</span>
+    @<span class="k">$(</span>CXX<span class="k">)</span> -c <span class="k">$(</span>CPP_FLAGS<span class="k">)</span> $&lt; -o <span class="nv">$@</span> <span class="k">$(</span>I_FLAGS<span class="k">)</span>
 
 <span class="nf">build</span><span class="o">:</span> <span class="k">$(</span><span class="nv">OBJ</span><span class="k">)</span>
     @echo <span class="s2">"Linking "</span> <span class="nv">$@</span>
