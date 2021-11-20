@@ -1,12 +1,13 @@
-#include "./game_lib/python/python_object_manager.h"
-#include "./game_lib/rendering/texture.h"
+#include "game_engine.h"
 
 int main(int argv, char** args) {
-    CPyInstance pyInstance;
-    PythonObjectManager pObjectManager;
+    GameEngine gameEngine;
 
-    CPyObject pClassInstance = pObjectManager.CreateClassInstance("assets.scripts.game", "Player");
-    PyObject_CallMethod(pClassInstance, "talk", "(s)", "Hello!");
+    while (gameEngine.IsRunning()) {
+        gameEngine.ProcessInput();
+        gameEngine.Update();
+        gameEngine.Render();
+    }
 
     return 0;
 }

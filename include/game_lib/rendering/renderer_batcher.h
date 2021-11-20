@@ -4,20 +4,21 @@
 #include <vector>
 #include <map>
 #include <string>
-
-#include <glm/glm.hpp>
+#include <functional>
 
 #include "./texture.h"
 #include "./font.h"
 #include "./color.h"
-#include "../math/rectangle.h"
+#include "./game_lib/math/math.h"
 
 struct SpriteBatchItem {
     Texture *texture2D = nullptr;
-    Rectangle sourceRectangle;
-    Rectangle destinationRectangle;
+    Rect2 sourceRectangle;
+    Rect2 destinationRectangle;
     float rotation = 0.0f;
     Color color = Color(1.0f, 1.0f, 1.0f, 1.0f);
+    bool flipX = false;
+    bool flipY = false;
 };
 
 struct FontBatchItem {
@@ -34,15 +35,18 @@ struct ZIndexDrawBatch {
     std::vector<FontBatchItem> fontDrawBatches;
 };
 
+using RenderFlushFunction = std::function<void(const int zIndex, const ZIndexDrawBatch &zIndexDrawBatch)>;
+
 class RendererBatcher {
   private:
     std::map<int, ZIndexDrawBatch> drawBatches;
 
+  public:
     void BatchDrawSprite(SpriteBatchItem spriteBatchItem, int zIndex);
 
     void BatchDrawFont(FontBatchItem fontBatchItem, int zIndex);
 
-    void Flush();
+    void Flush(const RenderFlushFunction &renderFlushFunction);
 };
 
 #endif //RENDERER_BATCHER_H

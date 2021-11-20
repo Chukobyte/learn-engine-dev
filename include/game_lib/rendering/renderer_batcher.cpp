@@ -14,11 +14,11 @@ void RendererBatcher::BatchDrawFont(FontBatchItem fontBatchItem, int zIndex) {
     drawBatches[zIndex].fontDrawBatches.emplace_back(fontBatchItem);
 }
 
-void RendererBatcher::Flush() {
+void RendererBatcher::Flush(const RenderFlushFunction &renderFlushFunction) {
     for (const auto &pair : drawBatches) {
-        ZIndexDrawBatch zIndexDrawBatch = pair.second;
-        for (const SpriteBatchItem &spriteBatchItem : zIndexDrawBatch.spriteDrawBatches) {}
-        for (const FontBatchItem &fontBatchItem : zIndexDrawBatch.fontDrawBatches) {}
+        const int zIndex = pair.first;
+        const ZIndexDrawBatch &zIndexDrawBatch = pair.second;
+        renderFlushFunction(zIndex, zIndexDrawBatch);
     }
     drawBatches.clear();
 }

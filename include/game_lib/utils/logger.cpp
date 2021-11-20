@@ -4,7 +4,10 @@
 #include <bits/stdc++.h>
 #include <glad/glad.h>
 
-Logger *Logger::instance = nullptr;
+Logger* Logger::GetInstance() {
+    static Logger *instance = new Logger();
+    return instance;
+}
 
 void Logger::SetLogLevel(LogLevel level) {
     logLevel = level;
@@ -64,5 +67,12 @@ void Logger::LogOpenGLError(const std::string &context) const {
     GLuint err =glGetError();
     if (err > 0) {
         std::cout << "0x" << std::hex << err << " glGetError() in " << context << std::endl;
+    }
+}
+
+void Logger::Assert(bool passingCondition, const std::string &logMessage, const int exitCodeOnError) {
+    if (!passingCondition) {
+        std::cerr << "[ERROR] " << logMessage << std::endl;
+        exit(exitCodeOnError);
     }
 }

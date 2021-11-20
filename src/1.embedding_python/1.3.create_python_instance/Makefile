@@ -5,10 +5,12 @@ ifeq ($(OS),Windows_NT)
     OS_TYPE := windows
     BUILD_OBJECT := $(PROJECT_NAME).exe
     L_FLAGS := -lmingw32 -lpython37 -static-libgcc -static-libstdc++
+    DELETE_CMD := del
 else
     OS_TYPE := linux
     BUILD_OBJECT := $(PROJECT_NAME)
     L_FLAGS := -lpython3.7m -lcrypt -lpthread -ldl  -lutil -lm -static-libgcc -static-libstdc++
+    DELETE_CMD := rm
 endif
 
 CC := gcc # C Compiler

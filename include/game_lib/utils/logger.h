@@ -13,19 +13,13 @@ enum _LogLevel {
 
 class Logger {
   private:
-    static Logger *instance;
-    Logger() {}
+    Logger() = default;
     void LogEntry(const std::string &logLevelPrefix, const std::string &logMessage) const;
-  public:
 
+  public:
     LogLevel logLevel = LogLevel_INFO;
 
-    static Logger* GetInstance() {
-        if (!instance) {
-            instance = new Logger();
-        }
-        return instance;
-    }
+    static Logger* GetInstance();
 
     void SetLogLevel(LogLevel level);
 
@@ -36,6 +30,8 @@ class Logger {
     void Warn(const std::string &logMessage) const;
     void Info(const std::string &logMessage) const;
     void Error(const std::string &logMessage) const;
+
+    static void Assert(bool passingCondition, const std::string &logMessage, const int exitCodeOnError = 1);
 
     void LogOpenGLError(const std::string &context) const;
 };

@@ -4,19 +4,21 @@ PROJECT_NAME := learn_engine_dev
 ifeq ($(OS),Windows_NT)
     OS_TYPE := windows
     BUILD_OBJECT := $(PROJECT_NAME).exe
-    L_FLAGS := -lmingw32 -lpython37 -static-libgcc -static-libstdc++
+    L_FLAGS := -lmingw32 -lSDL2main -lSDL2 -lpython37 -static-libgcc -static-libstdc++
+    DELETE_CMD := del
 else
     OS_TYPE := linux
     BUILD_OBJECT := $(PROJECT_NAME)
     L_FLAGS := -lpython3.7m -lcrypt -lpthread -ldl  -lutil -lm -static-libgcc -static-libstdc++
+    DELETE_CMD := rm
 endif
 
 CC := gcc # C Compiler
 CXX := g++ # C++ compiler
 INCLUDE_DIR := ../../../include
 GAME_LIB_DIR := $(INCLUDE_DIR)/game_lib
-I_FLAGS := -I"$(INCLUDE_DIR)" -I"${PYTHON_INCLUDE}"
-LIBRARIES := -L"${PYTHON_LIBS}"
+I_FLAGS := -I"$(INCLUDE_DIR)" -I"${SDL2_HOME}/include" -I"${PYTHON_INCLUDE}"
+LIBRARIES := -L"${SDL2_HOME}/lib" -L"${PYTHON_LIBS}"
 C_FLAGS := -w -Wfatal-errors
 CPP_FLAGS := $(CPP_FLAGS) -std=c++14
 
@@ -59,4 +61,4 @@ run:
 	./$(BUILD_OBJECT)
 
 format:
-	astyle -n --style=google --recursive src/*.cpp src/*.h
+	astyle -n --style=google --recursive src/*.h src/*.cpp $(GAME_LIB_DIR)/*.cpp $(GAME_LIB_DIR)/*.h $(GAME_LIB_DIR)/*.hpp
