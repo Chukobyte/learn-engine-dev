@@ -350,10 +350,12 @@
     OS_TYPE :<span class="o">=</span> windows
     BUILD_OBJECT :<span class="o">=</span> <span class="k">$(</span>PROJECT_NAME<span class="k">)</span>.exe
     L_FLAGS :<span class="o">=</span> -lmingw32 -lpython37 -static-libgcc -static-libstdc++
+    DELETE_CMD :<span class="o">=</span> del
 <span class="cp">else</span>
     OS_TYPE :<span class="o">=</span> linux
     BUILD_OBJECT :<span class="o">=</span> <span class="k">$(</span>PROJECT_NAME<span class="k">)</span>
     L_FLAGS :<span class="o">=</span> -lpython3.7m -lcrypt -lpthread -ldl  -lutil -lm -static-libgcc -static-libstdc++
+    DELETE_CMD :<span class="o">=</span> rm
 <span class="cp">endif</span>
 
 <span class="nv">CC</span> <span class="o">:=</span> gcc <span class="c1"># C Compiler</span>
