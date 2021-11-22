@@ -10,7 +10,6 @@
 
 class AssetManager {
   private:
-    static AssetManager *instance;
     std::map<std::string, Texture*> textures;
     Logger *logger = nullptr;
 

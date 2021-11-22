@@ -28,6 +28,9 @@ nav:
       - Hello Python: embedding_python/hello_python.md
       - Embedding Further: embedding_python/embedding_further.md
       - Custom Python Module: embedding_python/custom_python_module.md
+  - Game Loop & SDL:
+      - Game Loop Introduction: game_loop_and_sdl/game_loop_introduction.md
+      - Initialize SDL: game_loop_and_sdl/initialize_sdl.md
   - OpenGL Rendering:
       - Creating A Renderer: opengl_rendering/creating_a_renderer.md
   - Implementing Audio:

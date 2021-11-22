@@ -63,7 +63,7 @@ class Font {
     void LoadFont(FT_Library freeTypeLibrary, const char* fileName, int size) {
         static Logger *logger = Logger::GetInstance();
         if(!FileHelper::DoesFileExist(fileName)) {
-            logger->Error("Freetype failed at path: " + std::string(fileName));
+            logger->Error("Freetype failed at path: %s", fileName);
         }
         FT_Face face;
         if(FT_New_Face(freeTypeLibrary, fileName, 0, &face)) {

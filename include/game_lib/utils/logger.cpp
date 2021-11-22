@@ -1,8 +1,6 @@
 #include "logger.h"
 
-#include <iostream>
 #include <bits/stdc++.h>
-#include <glad/glad.h>
 
 Logger* Logger::GetInstance() {
     static Logger *instance = new Logger();
@@ -35,44 +33,42 @@ LogLevel Logger::GetLogLevel() const {
     return logLevel;
 }
 
-void Logger::Debug(const std::string &logMessage) const {
+void Logger::Debug(const char *fmt, ...) const {
     if (logLevel <= LogLevel_DEBUG) {
-        LogEntry("[DEBUG] ", logMessage);
+        const std::string &logMessage = "[DEBUG] " + std::string(fmt) + "\n";
+        va_list args;
+        va_start(args, fmt);
+        vprintf(logMessage.c_str(), args);
+        va_end(args);
     }
 }
 
-void Logger::Warn(const std::string &logMessage) const {
+void Logger::Warn(const char *fmt, ...) const {
     if (logLevel <= LogLevel_WARN) {
-        LogEntry("[WARN] ", logMessage);
+        const std::string &logMessage = "[WARN] " + std::string(fmt) + "\n";
+        va_list args;
+        va_start(args, fmt);
+        vprintf(logMessage.c_str(), args);
+        va_end(args);
     }
 }
 
-void Logger::Info(const std::string &logMessage) const {
+void Logger::Info(const char *fmt, ...) const {
     if (logLevel <= LogLevel_INFO) {
-        LogEntry("[INFO] ", logMessage);
+        const std::string &logMessage = "[INFO] " + std::string(fmt) + "\n";
+        va_list args;
+        va_start(args, fmt);
+        vprintf(logMessage.c_str(), args);
+        va_end(args);
     }
 }
 
-void Logger::Error(const std::string &logMessage) const {
+void Logger::Error(const char *fmt, ...) const {
     if (logLevel <= LogLevel_ERROR) {
-        LogEntry("[ERROR] ", logMessage);
-    }
-}
-
-void Logger::LogEntry(const std::string &logLevelPrefix, const std::string &logMessage) const {
-    std::cout << logLevelPrefix << logMessage << std::endl;
-}
-
-void Logger::LogOpenGLError(const std::string &context) const {
-    GLuint err =glGetError();
-    if (err > 0) {
-        std::cout << "0x" << std::hex << err << " glGetError() in " << context << std::endl;
-    }
-}
-
-void Logger::Assert(bool passingCondition, const std::string &logMessage, const int exitCodeOnError) {
-    if (!passingCondition) {
-        std::cerr << "[ERROR] " << logMessage << std::endl;
-        exit(exitCodeOnError);
+        const std::string &logMessage = "[ERROR] " + std::string(fmt) + "\n";
+        va_list args;
+        va_start(args, fmt);
+        vprintf(logMessage.c_str(), args);
+        va_end(args);
     }
 }

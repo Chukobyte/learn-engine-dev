@@ -22,7 +22,7 @@ LIBRARIES := -L"${SDL2_HOME}/lib" -L"${PYTHON_LIBS}"
 C_FLAGS := -w -Wfatal-errors
 CPP_FLAGS := $(CPP_FLAGS) -std=c++14
 
-SRC = $(wildcard src/*.cpp  $(GAME_LIB_DIR)/python/*.cpp $(GAME_LIB_DIR)/math/*.cpp $(GAME_LIB_DIR)/rendering/*.cpp $(GAME_LIB_DIR)/utils/*.cpp $(INCLUDE_DIR)/stb_image/stb_image.cpp)
+SRC = $(wildcard src/create_a_renderer.cpp src/*.cpp  $(GAME_LIB_DIR)/python/*.cpp $(GAME_LIB_DIR)/math/*.cpp $(GAME_LIB_DIR)/rendering/*.cpp $(GAME_LIB_DIR)/utils/*.cpp $(INCLUDE_DIR)/stb_image/stb_image.cpp)
 SRC_C = $(wildcard $(INCLUDE_DIR)/glad/glad.c)
 
 OBJ = $(SRC:.cpp=.o)
@@ -41,7 +41,7 @@ all: clean format build
 
 %.o: %.c
 	@echo "Compiling " $< " into " $@
-	@$(CC) -c $(CPP_FLAGS) $< -o $@ $(I_FLAGS)
+	@$(CC) -c $(C_FLAGS) $< -o $@ $(I_FLAGS)
 
 build: $(OBJ) $(OBJ_C)
 	@echo "Linking " $@
@@ -49,12 +49,12 @@ build: $(OBJ) $(OBJ_C)
 
 clean:
 ifneq ("$(wildcard $(BUILD_OBJECT))","")
-	$(DELETE_CMD) $(BUILD_OBJECT)
+	@$(DELETE_CMD) $(BUILD_OBJECT)
 endif
 ifeq ($(OS_TYPE),windows)
-	$(foreach object, $(OBJ), del $(subst /,\,$(object));)
+	@$(foreach object, $(OBJ), $(DELETE_CMD) $(subst /,\,$(object));)
 else
-	$(foreach object, $(OBJ), rm $(object);)
+	@$(foreach object, $(OBJ), $(DELETE_CMD) $(object);)
 endif
 
 run:

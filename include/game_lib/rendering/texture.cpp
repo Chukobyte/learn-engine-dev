@@ -34,7 +34,7 @@ void Texture::Initialize(const char* fileName) {
     if(IsValid()) {
         Generate();
     } else {
-        logger->Error("Texture failed to load at: " + std::string(fileName));
+        logger->Error("Texture failed to load at: %s", fileName);
     }
 }
 
@@ -78,7 +78,7 @@ unsigned int Texture::GetWrapFromString(const std::string &wrap) const {
     } else if (wrap == "repeat") {
         return GL_REPEAT;
     }
-    logger->Error("'" + wrap + "' is an invalid wrap value!");
+    logger->Error("'%s' is an invalid wrap value!", wrap.c_str());
     return wrapS;
 }
 
@@ -88,13 +88,12 @@ unsigned int Texture::GetFilterFromString(const std::string &filter) const {
     } else if (filter == "linear") {
         return GL_LINEAR;
     }
-    logger->Error("'" + filter + "' is an invalid filter value!");
+    logger->Error("'%s' is an invalid filter value!", filter.c_str());
     return filterMin;
 }
 
 void Texture::Bind() const {
     glBindTexture(GL_TEXTURE_2D, this->ID);
-    logger->LogOpenGLError("glBindTexture");
 }
 
 std::string Texture::GetFilePath() const {
