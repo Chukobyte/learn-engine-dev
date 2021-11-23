@@ -510,7 +510,6 @@
 <p>Using log levels with a higher priority will print all logs for that level and below.  For example, a log level of <code>ERROR</code> will only print error logs and a log level of <code>INFO</code> will print info, warn, and error logs.</p>
 <h2 id="engine-context">Engine Context</h2>
 <p><code>EngineContext</code> will store engine related properties and state.  There will be parts of our game engine that need access to properties such as if the game engine is running or the engine name.  We wouldn't want to have to pass the top level <code>GameEngine</code> class (that we haven't defined yet) to places that need it, so we're going to separate engine properties and state into it's own class <code>GameEngineContext</code>.  <code>GameEngineContext</code> will also be a singleton just like our <code>Logger</code> class.</p>
-<p><em>engine_context.h</em></p>
 <div class="highlight"><pre><span></span><code><span class="cp">#ifndef GAME_ENGINE_CONTEXT_H</span>
 <span class="cp">#define GAME_ENGINE_CONTEXT_H</span>
 
@@ -536,7 +535,6 @@
 
 <span class="cp">#endif </span><span class="c1">//GAME_ENGINE_CONTEXT_H</span>
 </code></pre></div>
-<p><em>engine_context.cpp</em></p>
 <div class="highlight"><pre><span></span><code><span class="cp">#include</span> <span class="cpf">"game_engine_context.h"</span><span class="cp"></span>
 
 <span class="n">GameEngineContext</span><span class="o">*</span> <span class="nf">GameEngineContext::GetInstance</span><span class="p">()</span> <span class="p">{</span>
