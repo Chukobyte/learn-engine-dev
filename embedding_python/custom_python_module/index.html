@@ -200,11 +200,36 @@
 <li class="md-nav__item md-nav__item--nested">
 <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" id="__nav_3" type="checkbox"/>
 <label class="md-nav__link" for="__nav_3">
+        Game Loop &amp; SDL
+        <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Game Loop &amp; SDL" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_3">
+<span class="md-nav__icon md-icon"></span>
+          Game Loop &amp; SDL
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../game_loop_and_sdl/game_loop_introduction/">
+        Game Loop Introduction
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../game_loop_and_sdl/initialize_sdl/">
+        Initialize SDL
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" id="__nav_4" type="checkbox"/>
+<label class="md-nav__link" for="__nav_4">
         OpenGL Rendering
         <span class="md-nav__icon md-icon"></span>
 </label>
 <nav aria-label="OpenGL Rendering" class="md-nav" data-md-level="1">
-<label class="md-nav__title" for="__nav_3">
+<label class="md-nav__title" for="__nav_4">
 <span class="md-nav__icon md-icon"></span>
           OpenGL Rendering
         </label>
@@ -218,13 +243,13 @@
 </nav>
 </li>
 <li class="md-nav__item md-nav__item--nested">
-<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" id="__nav_4" type="checkbox"/>
-<label class="md-nav__link" for="__nav_4">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5" id="__nav_5" type="checkbox"/>
+<label class="md-nav__link" for="__nav_5">
         Implementing Audio
         <span class="md-nav__icon md-icon"></span>
 </label>
 <nav aria-label="Implementing Audio" class="md-nav" data-md-level="1">
-<label class="md-nav__title" for="__nav_4">
+<label class="md-nav__title" for="__nav_5">
 <span class="md-nav__icon md-icon"></span>
           Implementing Audio
         </label>
@@ -238,13 +263,13 @@
 </nav>
 </li>
 <li class="md-nav__item md-nav__item--nested">
-<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5" id="__nav_5" type="checkbox"/>
-<label class="md-nav__link" for="__nav_5">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_6" id="__nav_6" type="checkbox"/>
+<label class="md-nav__link" for="__nav_6">
         Serializing With JSON
         <span class="md-nav__icon md-icon"></span>
 </label>
 <nav aria-label="Serializing With JSON" class="md-nav" data-md-level="1">
-<label class="md-nav__title" for="__nav_5">
+<label class="md-nav__title" for="__nav_6">
 <span class="md-nav__icon md-icon"></span>
           Serializing With JSON
         </label>
@@ -258,13 +283,13 @@
 </nav>
 </li>
 <li class="md-nav__item md-nav__item--nested">
-<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_6" id="__nav_6" type="checkbox"/>
-<label class="md-nav__link" for="__nav_6">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_7" id="__nav_7" type="checkbox"/>
+<label class="md-nav__link" for="__nav_7">
         Entity Component System
         <span class="md-nav__icon md-icon"></span>
 </label>
 <nav aria-label="Entity Component System" class="md-nav" data-md-level="1">
-<label class="md-nav__title" for="__nav_6">
+<label class="md-nav__title" for="__nav_7">
 <span class="md-nav__icon md-icon"></span>
           Entity Component System
         </label>
@@ -399,7 +424,7 @@
 <p>We will keep our <code>main</code> function defined in our C++ code the same as changes aren't needed except to update the path of <code>PythonObjectManager</code> header:</p>
 <div class="highlight"><pre><span></span><code><span class="cp">#include</span> <span class="cpf">"./game_lib/python/python_object_manager.h"</span><span class="cp"></span>
 </code></pre></div>
-<p>The Final output when we run the engine will be <code>[INFO] Engine version = v0.0.1</code>.  All the code for this section can be found <a href="https://github.com/Chukobyte/learn-engine-dev/tree/main/src/1.embedding_python/1.4.create_custom_module">here</a>.  Now that we have a good foundation for the scripting system, it's time to focus next on building a renderer.</p>
+<p>The Final output when we run the engine will be <code>[INFO] Engine version = v0.0.1</code>.  All the code for this section can be found <a href="https://github.com/Chukobyte/learn-engine-dev/tree/main/src/1.embedding_python/1.4.create_custom_module">here</a>.  Now that we have a good foundation for the scripting system, it's time to focus next on creating the game loop.</p>
 </article>
 </div>
 </div>
@@ -419,13 +444,13 @@
             </div>
 </div>
 </a>
-<a class="md-footer__link md-footer__link--next" href="../../opengl_rendering/creating_a_renderer/" rel="next">
+<a class="md-footer__link md-footer__link--next" href="../../game_loop_and_sdl/game_loop_introduction/" rel="next">
 <div class="md-footer__title">
 <div class="md-ellipsis">
 <span class="md-footer__direction">
                 Next
               </span>
-              Creating A Renderer
+              Game Loop Introduction
             </div>
 </div>
 <div class="md-footer__button md-icon">
