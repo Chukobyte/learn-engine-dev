@@ -16,9 +16,7 @@ In the next section we will define a `GameEngine` class, but we have a few more 
 
 ## Logger
 
-We will create a logger class to be used everywhere throughout the engine.  `Logger` will essentially be a wrapper for the `printf` function.
-
-*logger.h*
+As we add more functionality and systems to the game it will be useful to make logging statements for debugging, erorr, etc...  The `Logger` class will be used for this purpose throughout the engine.
 
 ```cpp
 #ifndef LOGGER_H
@@ -60,8 +58,6 @@ class Logger {
 
 #endif //LOGGER_H
 ```
-
-*logger.cpp*
 
 ```c++
 #include "logger.h"
@@ -142,7 +138,7 @@ void Logger::Error(const char *fmt, ...) const {
 
 Right off the bat, the first thing to mention is that the `Logger` class is a [singleton](https://en.wikipedia.org/wiki/Singleton_pattern).  This means there can only be one instance of the `Logger` class can be active throughout the life of the application.  We will be using this pattern for other classes as well.  The function `GetInstance()` is used to obtain the single instance of `Logger`.
 
-The functions `Error`, `Warn`, `Info`, and `Debug` are used to print logging statements matching the log level of the function name.  Log level can be set with either `SetLogLevel` or `SetLogLevelFromString`.  More details about the 4 log levels can be found below:
+The functions `Error`, `Warn`, `Info`, and `Debug` are essentially wrappers for the `printf` function and are used to print logging statements matching the log level of the function name.  Log level can be set with either `SetLogLevel` or `SetLogLevelFromString`.  More details about the 4 log levels can be found below:
 
 | Log Level | Description                                                      | Priority  |
 |:---------:|:----------------------------------------------------------------:|:---------:|
@@ -156,8 +152,6 @@ Using log levels with a higher priority will print all logs for that level and b
 ## Engine Context
 
 `EngineContext` will store engine related properties and state.  There will be parts of our game engine that need access to properties such as if the game engine is running or the engine name.  We wouldn't want to have to pass the top level `GameEngine` class (that we haven't defined yet) to places that need it, so we're going to separate engine properties and state into it's own class `GameEngineContext`.  `GameEngineContext` will also be a singleton just like our `Logger` class.
-
-*engine_context.h*
 
 ```c++
 #ifndef GAME_ENGINE_CONTEXT_H
@@ -186,8 +180,6 @@ class GameEngineContext {
 #endif //GAME_ENGINE_CONTEXT_H
 ```
 
-*engine_context.cpp*
-
 ```c++
 #include "game_engine_context.h"
 
@@ -213,4 +205,4 @@ bool GameEngineContext::IsRunning() const {
 }
 ```
 
-Nothing much to explain here.  The public functions are used to query the properties and state of the game engine.  Now that we have a few classes defined, it's time to tackle setting up SDL!
+Nothing much to explain here.  The public functions are used to get the game engine version, name, and set/get whether the engine is running.  Now that we have a few classes defined, it's time to tackle setting up SDL!

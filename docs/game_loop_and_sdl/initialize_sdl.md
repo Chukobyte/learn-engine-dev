@@ -89,7 +89,11 @@ bool GameEngine::IsRunning() const {
 }
 ```
 
-The constructor calls the `Initialize` function which initializes SDL via [SDL_Init](https://wiki.libsdl.org/SDL_Init).  We pass in `SDL_INIT_EVERYTHING` which initializes all SDL subsystems.  After initializing the engine we will set `GameEngineContext` running property to `true` in the next section, but for now we are commenting it out.  The destructor calls [SDL_Quit](https://wiki.libsdl.org/SDL_Quit) which shuts down all SDL subsystems.  Last but not least the `IsRunning` function just returns the value of `GameEngineContext` running.
+The constructor calls the `Initialize` function which initializes SDL via [SDL_Init](https://wiki.libsdl.org/SDL_Init).  We pass in `SDL_INIT_EVERYTHING` which initializes all SDL subsystems.  After initializing the engine we will set `GameEngineContext` running property to `true` in the next section, but for now we are commenting it out.  The destructor calls [SDL_Quit](https://wiki.libsdl.org/SDL_Quit) which shuts down all SDL subsystems.
+
+The `Update` function will be used to update things such as physics, A.I., game state, etc...  We will want our game to run at a target frames per second and the current `TARGET_FPS` variable controls that.  `lastFrameTime` is used to keep track of what the frame time was the previous frame.  [SDL_Delay](https://wiki.libsdl.org/SDL_Delay) is used to not completely occupy the cpu during a game loop.  Experiment by commenting out [SDL_Delay](https://wiki.libsdl.org/SDL_Delay) and compare the cpu utilization with and without using it.
+
+Last but not least the `IsRunning` function just returns the value of `GameEngineContext` running.
 
 ## Main Loop
 
@@ -262,6 +266,8 @@ bool Timer::IsPaused() const {
     return isPaused && hasStarted;
 }
 ```
+
+`waitTime` refers to how long the timer will run for and `loops` determines if the timer restarts after timing out.  I think all the functions are self-explanatory and we will see the `Timer` class in use next!
 
 ### FPS Counter
 

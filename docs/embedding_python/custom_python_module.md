@@ -107,4 +107,4 @@ We will keep our `main` function defined in our C++ code the same as changes are
 #include "./game_lib/python/python_object_manager.h"
 ```
 
-The Final output when we run the engine will be `[INFO] Engine version = v0.0.1`.  All the code for this section can be found [here](https://github.com/Chukobyte/learn-engine-dev/tree/main/src/1.embedding_python/1.4.create_custom_module).  Now that we have a good foundation for the scripting system, it's time to focus next on building a renderer.
+The Final output when we run the engine will be `[INFO] Engine version = v0.0.1`.  All the code for this section can be found [here](https://github.com/Chukobyte/learn-engine-dev/tree/main/src/1.embedding_python/1.4.create_custom_module).  Now that we have a good foundation for the scripting system, it's time to focus next on creating the game loop.
