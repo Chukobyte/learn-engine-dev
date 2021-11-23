@@ -9,7 +9,7 @@ ifeq ($(OS),Windows_NT)
 else
     OS_TYPE := linux
     BUILD_OBJECT := $(PROJECT_NAME)
-    L_FLAGS := -lpython3.7m -lcrypt -lpthread -ldl  -lutil -lm -static-libgcc -static-libstdc++
+    L_FLAGS := -lSDL2 -lGL -lpython3.7m -lcrypt -lpthread -ldl  -lutil -lm -static-libgcc -static-libstdc++
     DELETE_CMD := rm
 endif
 
@@ -17,8 +17,8 @@ CC := gcc # C Compiler
 CXX := g++ # C++ compiler
 INCLUDE_DIR := ../../../include
 GAME_LIB_DIR := $(INCLUDE_DIR)/game_lib
-I_FLAGS := -I"$(INCLUDE_DIR)" -I"${SDL2_HOME}/include" -I"${PYTHON_INCLUDE}"
-LIBRARIES := -L"${SDL2_HOME}/lib" -L"${PYTHON_LIBS}"
+I_FLAGS := -I"$(INCLUDE_DIR)" -I"${SDL2_INCLUDE}" -I"${PYTHON_INCLUDE}"
+LIBRARIES := -L"${SDL2_LIBS}" -L"${PYTHON_LIBS}"
 CPP_FLAGS := -w -Wfatal-errors -std=c++14
 
 SRC = $(wildcard src/*.cpp  $(GAME_LIB_DIR)/python/*.cpp $(GAME_LIB_DIR)/utils/logger.cpp $(GAME_LIB_DIR)/utils/timer.cpp)
