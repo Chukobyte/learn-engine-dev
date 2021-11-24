@@ -128,7 +128,7 @@ Last but not least, we should check performance to ensure we are getting the fra
 
 ### Timer
 
-The `Timer` class is the straight forward.
+The `Timer` class is straight forward.
 
 ```c++
 #ifndef TIMER_H
