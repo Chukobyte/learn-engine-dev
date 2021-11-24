@@ -13,12 +13,12 @@ class Timer {
     bool hasStarted;
 
   public:
-    Timer(Uint32 waitTimeInMilliseconds, bool loops = false);
+    Timer(Uint32 waitTimeInMilliseconds, bool doesLoop = false);
     Uint32 GetWaitTime() const;
     Uint32 GetTimeLeft() const;
     void SetWaitTime(Uint32 waitTimeInMilliseconds);
     bool DoesLoop() const;
-    void SetLoop(bool loops);
+    void SetLoop(bool doesLoop);
     void Start();
     void Stop();
     void Pause();

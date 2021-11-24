@@ -2,9 +2,9 @@
 
 #include <iostream>
 
-Timer::Timer(Uint32 waitTimeInMilliseconds, bool loops) {
-    this->waitTime = waitTimeInMilliseconds;
-    this->loops = loops;
+Timer::Timer(Uint32 waitTimeInMilliseconds, bool doesLoop) {
+    waitTime = waitTimeInMilliseconds;
+    loops = doesLoop;
     startTicks = 0;
     pausedTicks = 0;
     isPaused = false;
@@ -31,8 +31,8 @@ bool Timer::DoesLoop() const {
     return loops;
 }
 
-void Timer::SetLoop(bool loops) {
-    this->loops = loops;
+void Timer::SetLoop(bool doesLoop) {
+    loops = doesLoop;
 }
 
 void Timer::Start() {
