@@ -2,22 +2,26 @@
 
 #include <stb_image/stb_image.h>
 
-Texture::Texture(const char* filePath) {
+Texture::Texture(const char* filePath) : logger(Logger::GetInstance()) {
     Initialize(filePath);
 }
 
 Texture::Texture(const char* filePath, unsigned int wrapS, unsigned int wrapT, unsigned int filterMin, unsigned int filterMax) :
-    wrapS(wrapS), wrapT(wrapT), filterMin(filterMin), filterMax(filterMax) {
+    wrapS(wrapS),
+    wrapT(wrapT),
+    filterMin(filterMin),
+    filterMax(filterMax),
+    logger(Logger::GetInstance()) {
     Initialize(filePath);
 }
 
 Texture::Texture(const char* filePath, const std::string &wrapS, const std::string &wrapT, const std::string &filterMin, const std::string &filterMax) :
-    wrapS(GetWrapFromString(wrapS)), wrapT(GetWrapFromString(wrapT)), filterMin(GetFilterFromString(filterMin)), filterMax(GetFilterFromString(filterMax)) {
+    wrapS(GetWrapFromString(wrapS)),
+    wrapT(GetWrapFromString(wrapT)),
+    filterMin(GetFilterFromString(filterMin)),
+    filterMax(GetFilterFromString(filterMax)),
+    logger(Logger::GetInstance()) {
     Initialize(filePath);
-}
-
-Texture::Texture(void *buffer, size_t bufferSize) {
-    Initialize(buffer, bufferSize);
 }
 
 Texture::~Texture() {
@@ -26,7 +30,6 @@ Texture::~Texture() {
 }
 
 void Texture::Initialize(const char* filePath) {
-    logger = Logger::GetInstance();
     fileName = std::string(filePath);
     // load image, create texture, and generate mipmaps
     stbi_set_flip_vertically_on_load(false);
@@ -35,17 +38,6 @@ void Texture::Initialize(const char* filePath) {
         Generate();
     } else {
         logger->Error("Texture failed to load at: %s", filePath);
-    }
-}
-
-void Texture::Initialize(void *buffer, size_t bufferSize) {
-    // load image, create texture, and generate mipmaps
-    stbi_set_flip_vertically_on_load(false);
-    data = stbi_load_from_memory((unsigned char*) buffer, bufferSize, &width, &height, &nrChannels, 0);
-    if(IsValid()) {
-        Generate();
-    } else {
-        logger->Error("Texture failed to load at texture from memory!");
     }
 }
 

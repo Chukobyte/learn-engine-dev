@@ -16,6 +16,8 @@ class RenderContext {
                                       | SDL_WINDOW_ALLOW_HIGHDPI
                                   );
     SDL_GLContext glContext;
+    unsigned int currentWindowWidth;
+    unsigned int currentWindowHeight;
 
     static RenderContext* GetInstance();
 };

@@ -2,6 +2,22 @@
 
 ## Textures
 
+### Glad
+
+As you already know, we will be using the OpenGL graphics API for our renderer.  [Glad](https://github.com/Dav1dde/glad), which is an OpenGL loading library, will be used to by Simple Engine access OpenGL functions.  We will modify the build of the engine by adding the generated `glad.c` file to Makefile.
+
+```makefile
+SRC_C = $(wildcard $(INCLUDE_DIR)/glad/glad.c)
+```
+
+### stb_image
+
+[stb_image](https://github.com/nothings/stb/blob/master/stb_image.h) is an image loading library which is part of a larger library named [stb](https://github.com/nothings/stb).  All function from the [stb_image](https://github.com/nothings/stb/blob/master/stb_image.h) library that Simple Engine will use will have the prefix `stbi_`.
+
+### Texture Class
+
+Instances of the `Texture` class will be used to render sprites to the screen.
+
 ```c++
 #ifndef TEXTURE_H
 #define TEXTURE_H
@@ -195,6 +211,71 @@ bool Texture::IsValid() const {
 }
 ```
 
-## Font
+Explanation coming soon...
 
 ## Asset Manager
+
+Now that we have the concept of a texture defined in the Simple Engine, we will need something to maintain textures as well as other assets.
+
+```c++
+#ifndef ASSET_MANAGER_H
+#define ASSET_MANAGER_H
+
+#include <unordered_map>
+#include <string>
+
+#include "./game_lib/utils/logger.h"
+#include "./game_lib/rendering/texture.h"
+
+
+class AssetManager {
+  private:
+    std::unordered_map<std::string, Texture*> textures;
+    Logger *logger = nullptr;
+
+    AssetManager();
+  public:
+    static AssetManager* GetInstance();
+
+    void LoadTexture(const std::string &id, const std::string &filePath);
+
+    Texture* GetTexture(const std::string &id);
+
+    bool HasTexture(const std::string &id) const;
+};
+
+#endif //ASSET_MANAGER_H
+```
+
+```c++
+#include "asset_manager.h"
+#include <cassert>
+
+AssetManager::AssetManager() : logger(Logger::GetInstance()) {}
+
+AssetManager* AssetManager::GetInstance() {
+    static AssetManager *instance = new AssetManager();
+    return instance;
+}
+
+void AssetManager::LoadTexture(const std::string &id, const std::string &filePath) {
+    Texture *texture = new Texture(filePath.c_str());
+    assert(texture->IsValid() && "Failed to load texture!");
+    if (HasTexture(id)) {
+        logger->Warn("Already have texture, not loading...");
+        return;
+    }
+    textures.emplace(id, texture);
+}
+
+Texture *AssetManager::GetTexture(const std::string &id) {
+    assert(HasTexture(id) && "Failed to get texture!");
+    return textures[id];
+}
+
+bool AssetManager::HasTexture(const std::string &id) const {
+    return textures.count(id) > 0;
+}
+```
+
+Explanation coming soon...

@@ -3,7 +3,10 @@
 #include <SDL2/SDL.h>
 
 GameEngine::GameEngine() :
+    projectProperties(ProjectProperties::GetInstance()),
     engineContext(GameEngineContext::GetInstance()),
+    renderContext(RenderContext::GetInstance()),
+    assetManager(AssetManager::GetInstance()),
     fpsCounter(FPSCounter::GetInstance()),
     logger(Logger::GetInstance()) {
     Initialize();
@@ -16,6 +19,7 @@ GameEngine::~GameEngine() {
 
 void GameEngine::Initialize() {
     InitializeSDL();
+    InitializeRendering();
     logger->Info("%s Engine v%s", engineContext->GetEngineName(), engineContext->GetEngineVersion());
     engineContext->SetRunning(true);
 }
@@ -27,7 +31,51 @@ void GameEngine::InitializeSDL() {
     }
 }
 
-void GameEngine::ProcessInput() {}
+void GameEngine::InitializeRendering() {
+    // OpenGL attributes
+    SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
+    SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);
+    SDL_GL_SetAttribute(SDL_GL_STENCIL_SIZE, 8);
+
+    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
+    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 3);
+    SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
+
+    renderContext->window = SDL_CreateWindow(
+                                projectProperties->GetGameTitle().c_str(),
+                                SDL_WINDOWPOS_CENTERED,
+                                SDL_WINDOWPOS_CENTERED,
+                                projectProperties->GetWindowWidth(),
+                                projectProperties->GetWindowHeight(),
+                                renderContext->windowFlags);
+    renderContext->glContext = SDL_GL_CreateContext(renderContext->window);
+    renderContext->currentWindowWidth = projectProperties->GetWindowWidth();
+    renderContext->currentWindowHeight = projectProperties->GetWindowHeight();
+
+    if (!gladLoadGLLoader((GLADloadproc)SDL_GL_GetProcAddress)) {
+        logger->Error("Couldn't initialize glad");
+    }
+}
+
+void GameEngine::ProcessInput() {
+    SDL_Event event;
+    while (SDL_PollEvent(&event)) {
+        switch(event.type) {
+        case SDL_QUIT:
+            engineContext->SetRunning(false);
+            break;
+        case SDL_WINDOWEVENT:
+            switch (event.window.event) {
+            case SDL_WINDOWEVENT_RESIZED:
+                renderContext->currentWindowWidth = event.window.data1;
+                renderContext->currentWindowHeight = event.window.data2;
+                glViewport(0, 0, renderContext->currentWindowWidth, renderContext->currentWindowHeight);
+                break;
+            }
+            break;
+        }
+    }
+}
 
 void GameEngine::Update() {
     // Sleep until FRAME_TARGET_TIME has elapsed since last frame

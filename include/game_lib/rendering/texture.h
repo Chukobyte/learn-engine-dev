@@ -26,8 +26,6 @@ class Texture {
 
     void Initialize(const char* filePath);
 
-    void Initialize(void *buffer, size_t bufferSize);
-
     void Generate();
 
     unsigned int GetWrapFromString(const std::string &wrap) const;
@@ -39,8 +37,6 @@ class Texture {
     Texture(const char* filePath, unsigned int wrapS, unsigned int wrapT, unsigned int filterMin, unsigned int filterMax);
 
     Texture(const char* filePath, const std::string &wrapS, const std::string &wrapT, const std::string &filterMin, const std::string &filterMax);
-
-    Texture(void *buffer, size_t bufferSize);
 
     ~Texture();
 
