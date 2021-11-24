@@ -486,7 +486,7 @@
 <h2 id="measuring-fps">Measuring FPS</h2>
 <p>Last but not least, we should check performance to ensure we are getting the frames per second that we are expecting.  We will first start by defining a <code>Timer</code> class that will be used by the <code>FPSCounter</code> and other classes.</p>
 <h3 id="timer">Timer</h3>
-<p>The <code>Timer</code> class is the straight forward.</p>
+<p>The <code>Timer</code> class is straight forward.</p>
 <div class="highlight"><pre><span></span><code><span class="cp">#ifndef TIMER_H</span>
 <span class="cp">#define TIMER_H</span>
 
@@ -502,12 +502,12 @@
     <span class="kt">bool</span> <span class="n">hasStarted</span><span class="p">;</span>
 
   <span class="k">public</span><span class="o">:</span>
-    <span class="n">Timer</span><span class="p">(</span><span class="n">Uint32</span> <span class="n">waitTimeInMilliseconds</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">loops</span> <span class="o">=</span> <span class="nb">false</span><span class="p">);</span>
+    <span class="n">Timer</span><span class="p">(</span><span class="n">Uint32</span> <span class="n">waitTimeInMilliseconds</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">doesLoop</span> <span class="o">=</span> <span class="nb">false</span><span class="p">);</span>
     <span class="n">Uint32</span> <span class="nf">GetWaitTime</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
     <span class="n">Uint32</span> <span class="nf">GetTimeLeft</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
     <span class="kt">void</span> <span class="nf">SetWaitTime</span><span class="p">(</span><span class="n">Uint32</span> <span class="n">waitTimeInMilliseconds</span><span class="p">);</span>
     <span class="kt">bool</span> <span class="nf">DoesLoop</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
-    <span class="kt">void</span> <span class="nf">SetLoop</span><span class="p">(</span><span class="kt">bool</span> <span class="n">loops</span><span class="p">);</span>
+    <span class="kt">void</span> <span class="nf">SetLoop</span><span class="p">(</span><span class="kt">bool</span> <span class="n">doesLoop</span><span class="p">);</span>
     <span class="kt">void</span> <span class="nf">Start</span><span class="p">();</span>
     <span class="kt">void</span> <span class="nf">Stop</span><span class="p">();</span>
     <span class="kt">void</span> <span class="nf">Pause</span><span class="p">();</span>
@@ -525,9 +525,9 @@
 
 <span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp"></span>
 
-<span class="n">Timer</span><span class="o">::</span><span class="n">Timer</span><span class="p">(</span><span class="n">Uint32</span> <span class="n">waitTimeInMilliseconds</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">loops</span><span class="p">)</span> <span class="p">{</span>
-    <span class="k">this</span><span class="o">-&gt;</span><span class="n">waitTime</span> <span class="o">=</span> <span class="n">waitTimeInMilliseconds</span><span class="p">;</span>
-    <span class="k">this</span><span class="o">-&gt;</span><span class="n">loops</span> <span class="o">=</span> <span class="n">loops</span><span class="p">;</span>
+<span class="n">Timer</span><span class="o">::</span><span class="n">Timer</span><span class="p">(</span><span class="n">Uint32</span> <span class="n">waitTimeInMilliseconds</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">doesLoop</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">waitTime</span> <span class="o">=</span> <span class="n">waitTimeInMilliseconds</span><span class="p">;</span>
+    <span class="n">loops</span> <span class="o">=</span> <span class="n">doesLoop</span><span class="p">;</span>
     <span class="n">startTicks</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
     <span class="n">pausedTicks</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
     <span class="n">isPaused</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
@@ -554,8 +554,8 @@
     <span class="k">return</span> <span class="n">loops</span><span class="p">;</span>
 <span class="p">}</span>
 
-<span class="kt">void</span> <span class="n">Timer</span><span class="o">::</span><span class="n">SetLoop</span><span class="p">(</span><span class="kt">bool</span> <span class="n">loops</span><span class="p">)</span> <span class="p">{</span>
-    <span class="k">this</span><span class="o">-&gt;</span><span class="n">loops</span> <span class="o">=</span> <span class="n">loops</span><span class="p">;</span>
+<span class="kt">void</span> <span class="n">Timer</span><span class="o">::</span><span class="n">SetLoop</span><span class="p">(</span><span class="kt">bool</span> <span class="n">doesLoop</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">loops</span> <span class="o">=</span> <span class="n">doesLoop</span><span class="p">;</span>
 <span class="p">}</span>
 
 <span class="kt">void</span> <span class="n">Timer</span><span class="o">::</span><span class="n">Start</span><span class="p">()</span> <span class="p">{</span>
