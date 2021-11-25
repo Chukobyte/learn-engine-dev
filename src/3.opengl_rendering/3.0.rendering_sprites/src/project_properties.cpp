@@ -9,10 +9,14 @@ std::string ProjectProperties::GetGameTitle() const {
     return gameTitle;
 }
 
-int ProjectProperties::GetWindowWidth() const {
+unsigned int ProjectProperties::GetWindowWidth() const {
     return windowWidth;
 }
 
-int ProjectProperties::GetWindowHeight() const {
+unsigned int ProjectProperties::GetWindowHeight() const {
     return windowHeight;
+}
+
+unsigned int ProjectProperties::GetTargetFPS() const {
+    return targetFPS;
 }

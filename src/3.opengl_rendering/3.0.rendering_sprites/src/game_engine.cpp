@@ -6,7 +6,7 @@ GameEngine::GameEngine() :
     projectProperties(ProjectProperties::GetInstance()),
     engineContext(GameEngineContext::GetInstance()),
     renderContext(RenderContext::GetInstance()),
-    assetManager(AssetManager::GetInstance()),
+//    assetManager(AssetManager::GetInstance()),
     fpsCounter(FPSCounter::GetInstance()),
     logger(Logger::GetInstance()) {
     Initialize();
@@ -18,10 +18,12 @@ GameEngine::~GameEngine() {
 }
 
 void GameEngine::Initialize() {
+    logger->Debug("Initializing...");
     InitializeSDL();
     InitializeRendering();
     logger->Info("%s Engine v%s", engineContext->GetEngineName(), engineContext->GetEngineVersion());
     engineContext->SetRunning(true);
+    logger->Debug("Engine initialized!");
 }
 
 void GameEngine::InitializeSDL() {
@@ -93,7 +95,17 @@ void GameEngine::Update() {
     lastFrameTime = SDL_GetTicks();
 }
 
-void GameEngine::Render() {}
+void GameEngine::Render() {
+    glClearColor(projectProperties->backgroundClearColor.r,
+                 projectProperties->backgroundClearColor.g,
+                 projectProperties->backgroundClearColor.b,
+                 projectProperties->backgroundClearColor.a);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
+
+    // Render Stuff
+
+    SDL_GL_SwapWindow(renderContext->window);
+}
 
 bool GameEngine::IsRunning() const {
     return engineContext->IsRunning();
