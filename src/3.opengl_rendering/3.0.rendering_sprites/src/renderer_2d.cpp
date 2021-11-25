@@ -1,6 +1,20 @@
 #include "renderer_2d.h"
 
-void Renderer2D::Initialize() {}
+#include <cassert>
+#include <glad/glad.h>
+
+Renderer2D::~Renderer2D() {
+    if (spriteRenderer != nullptr) {
+        delete spriteRenderer;
+    }
+}
+
+void Renderer2D::Initialize() {
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+    spriteRenderer = new SpriteRenderer();
+}
 
 
 void Renderer2D::SubmitSpriteBatchItem(Texture *texture2D, Rect2 sourceRectangle, Rect2 destinationRectangle,
@@ -19,22 +33,19 @@ void Renderer2D::SubmitSpriteBatchItem(Texture *texture2D, Rect2 sourceRectangle
 }
 
 void Renderer2D::FlushBatches() {
+    assert(spriteRenderer != nullptr && "SpriteRenderer is NULL, initialize the Renderer2D before using!");
+
     const RenderFlushFunction &renderFlushFunction = [this] (const int zIndex, const ZIndexDrawBatch &zIndexDrawBatch) {
         // Render Sprites
         for (const SpriteBatchItem &spriteBatchItem : zIndexDrawBatch.spriteDrawBatches) {
-            DrawSprite(spriteBatchItem.texture2D,
-                       spriteBatchItem.sourceRectangle,
-                       spriteBatchItem.destinationRectangle,
-                       spriteBatchItem.rotation,
-                       spriteBatchItem.color,
-                       spriteBatchItem.flipX,
-                       spriteBatchItem.flipY);
+            spriteRenderer->Draw(spriteBatchItem.texture2D,
+                                 spriteBatchItem.sourceRectangle,
+                                 spriteBatchItem.destinationRectangle,
+                                 spriteBatchItem.rotation,
+                                 spriteBatchItem.color,
+                                 spriteBatchItem.flipX,
+                                 spriteBatchItem.flipY);
         }
     };
     rendererBatcher.Flush(renderFlushFunction);
-}
-
-void Renderer2D::DrawSprite(Texture *texture2D, Rect2 sourceRectangle, Rect2 destinationRectangle, float rotation,
-                            Color color, bool flipX, bool flipY) {
-
 }
