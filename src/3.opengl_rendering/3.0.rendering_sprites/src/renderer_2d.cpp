@@ -36,7 +36,6 @@ void Renderer2D::FlushBatches() {
     assert(spriteRenderer != nullptr && "SpriteRenderer is NULL, initialize the Renderer2D before using!");
 
     const RenderFlushFunction &renderFlushFunction = [this] (const int zIndex, const ZIndexDrawBatch &zIndexDrawBatch) {
-        // Render Sprites
         for (const SpriteBatchItem &spriteBatchItem : zIndexDrawBatch.spriteDrawBatches) {
             spriteRenderer->Draw(spriteBatchItem.texture2D,
                                  spriteBatchItem.sourceRectangle,
