@@ -6,7 +6,7 @@ GameEngine::GameEngine() :
     projectProperties(ProjectProperties::GetInstance()),
     engineContext(GameEngineContext::GetInstance()),
     renderContext(RenderContext::GetInstance()),
-//    assetManager(AssetManager::GetInstance()),
+    assetManager(AssetManager::GetInstance()),
     fpsCounter(FPSCounter::GetInstance()),
     logger(Logger::GetInstance()) {
     Initialize();

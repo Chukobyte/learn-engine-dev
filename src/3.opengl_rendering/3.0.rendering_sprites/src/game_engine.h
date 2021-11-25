@@ -4,7 +4,7 @@
 #include "project_properties.h"
 #include "game_engine_context.h"
 #include "render_context.h"
-//#include "asset_manager.h"
+#include "asset_manager.h"
 #include "./game_lib/utils/fps_counter.h"
 #include "./game_lib/utils/logger.h"
 
@@ -13,7 +13,7 @@ class GameEngine {
     ProjectProperties *projectProperties = nullptr;
     GameEngineContext *engineContext = nullptr;
     RenderContext *renderContext = nullptr;
-//    AssetManager *assetManager = nullptr;
+    AssetManager *assetManager = nullptr;
     FPSCounter *fpsCounter = nullptr;
     Logger *logger = nullptr;
 
