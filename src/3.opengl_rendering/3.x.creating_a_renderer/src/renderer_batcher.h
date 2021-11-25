@@ -8,7 +8,7 @@
 
 #include "./game_lib/rendering/color.h"
 #include "./game_lib/rendering/texture.h"
-#include "./game_lib/math/math.h" // NOLINT(modernize-deprecated-headers)
+#include "./game_lib/math/math.h"
 
 struct SpriteBatchItem {
     Texture *texture2D = nullptr;
