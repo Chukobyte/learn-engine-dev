@@ -11,6 +11,8 @@ class Renderer2D {
                     Color color, bool flipX, bool flipY);
 
   public:
+    void Initialize();
+
     void SubmitSpriteBatchItem(Texture *texture2D, Rect2 sourceRectangle, Rect2 destinationRectangle, int zIndex, float rotation = 0.0f, Color color = Color(1.0f, 1.0f, 1.0f), bool flipX = false, bool flipY = false);
 
     void FlushBatches();

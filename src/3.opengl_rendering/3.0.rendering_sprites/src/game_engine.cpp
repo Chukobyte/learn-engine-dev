@@ -2,6 +2,8 @@
 
 #include <SDL2/SDL.h>
 
+#include "./game_lib/math/math.h"
+
 GameEngine::GameEngine() :
     projectProperties(ProjectProperties::GetInstance()),
     engineContext(GameEngineContext::GetInstance()),
@@ -23,7 +25,6 @@ void GameEngine::Initialize() {
     InitializeRendering();
     logger->Info("%s Engine v%s", engineContext->GetEngineName(), engineContext->GetEngineVersion());
     engineContext->SetRunning(true);
-    logger->Debug("Engine initialized!");
 }
 
 void GameEngine::InitializeSDL() {
@@ -57,6 +58,11 @@ void GameEngine::InitializeRendering() {
     if (!gladLoadGLLoader((GLADloadproc)SDL_GL_GetProcAddress)) {
         logger->Error("Couldn't initialize glad");
     }
+
+    renderer2D.Initialize();
+
+    // Temp Load Assets
+    assetManager->LoadTexture("assets/images/melissa_walk_animation.png", "assets/images/melissa_walk_animation.png");
 }
 
 void GameEngine::ProcessInput() {
@@ -102,7 +108,19 @@ void GameEngine::Render() {
                  projectProperties->backgroundClearColor.a);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 
-    // Render Stuff
+    // Render Sprites
+    static Texture *mellisaWalkTexture = assetManager->GetTexture("assets/images/melissa_walk_animation.png");
+    static Rect2 drawSourceRect = Rect2(0, 0, 32, 32);
+    static Rect2 drawDestinationRect = Rect2(
+                                           projectProperties->GetWindowWidth() / 2,
+                                           projectProperties->GetWindowHeight() / 2,
+                                           32,
+                                           32);
+    renderer2D.SubmitSpriteBatchItem(mellisaWalkTexture, drawSourceRect, drawDestinationRect, 0);
+
+    // Flush
+    renderer2D.FlushBatches();
+
 
     SDL_GL_SwapWindow(renderContext->window);
 }

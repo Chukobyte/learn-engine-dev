@@ -1,5 +1,8 @@
 #include "renderer_2d.h"
 
+void Renderer2D::Initialize() {}
+
+
 void Renderer2D::SubmitSpriteBatchItem(Texture *texture2D, Rect2 sourceRectangle, Rect2 destinationRectangle,
                                        int zIndex, float rotation,
                                        Color color, bool flipX, bool flipY) {

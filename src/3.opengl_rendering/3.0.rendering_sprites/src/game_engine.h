@@ -5,6 +5,7 @@
 #include "game_engine_context.h"
 #include "render_context.h"
 #include "asset_manager.h"
+#include "renderer_2d.h"
 #include "./game_lib/utils/fps_counter.h"
 #include "./game_lib/utils/logger.h"
 
@@ -15,6 +16,7 @@ class GameEngine {
     RenderContext *renderContext = nullptr;
     AssetManager *assetManager = nullptr;
     FPSCounter *fpsCounter = nullptr;
+    Renderer2D renderer2D;
     Logger *logger = nullptr;
 
     void Initialize();
