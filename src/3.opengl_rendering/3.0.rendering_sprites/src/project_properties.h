@@ -14,7 +14,7 @@ class ProjectProperties {
     ProjectProperties() = default;
 
   public:
-    const Color &backgroundClearColor = Color(0.3f, 0.3f, 0.3f);
+    const Color backgroundClearColor = Color(50.f / 255.0f, 50.f / 255.0f, 50.f / 255.0f);
 
     static ProjectProperties* GetInstance();
 
