@@ -199,8 +199,8 @@
 </ul>
 </nav>
 </li>
-<li class="md-nav__item md-nav__item--nested">
-<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" id="__nav_4" type="checkbox"/>
+<li class="md-nav__item md-nav__item--active md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" id="__nav_4" type="checkbox"/>
 <label class="md-nav__link" for="__nav_4">
         OpenGL Rendering
         <span class="md-nav__icon md-icon"></span>
@@ -211,9 +211,61 @@
           OpenGL Rendering
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item md-nav__item--active">
+<input class="md-nav__toggle md-toggle" data-md-toggle="toc" id="__toc" type="checkbox"/>
+<label class="md-nav__link md-nav__link--active" for="__toc">
+          Asset Management
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<a class="md-nav__link md-nav__link--active" href="./">
+        Asset Management
+      </a>
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../creating_a_renderer/">
-        Creating A Renderer
+<a class="md-nav__link" href="#textures">
+    Textures
+  </a>
+<nav aria-label="Textures" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#glad">
+    Glad
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#stb_image">
+    stb_image
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#texture-class">
+    Texture Class
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#asset-manager">
+    Asset Manager
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../rendering_sprites/">
+        Rendering Sprites
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../rendering_text/">
+        Rendering Text
       </a>
 </li>
 </ul>
@@ -302,11 +354,25 @@
 <a class="md-nav__link" href="#textures">
     Textures
   </a>
+<nav aria-label="Textures" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#glad">
+    Glad
+  </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#font">
-    Font
+<a class="md-nav__link" href="#stb_image">
+    stb_image
   </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#texture-class">
+    Texture Class
+  </a>
+</li>
+</ul>
+</nav>
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="#asset-manager">
@@ -322,6 +388,14 @@
 <article class="md-content__inner md-typeset">
 <h1 id="asset-management">Asset Management</h1>
 <h2 id="textures">Textures</h2>
+<h3 id="glad">Glad</h3>
+<p>As you already know, we will be using the OpenGL graphics API for our renderer.  <a href="https://github.com/Dav1dde/glad">Glad</a>, which is an OpenGL loading library, will be used to by Simple Engine access OpenGL functions.  We will modify the build of the engine by adding the generated <code>glad.c</code> file to Makefile.</p>
+<div class="highlight"><pre><span></span><code><span class="nv">SRC_C</span> <span class="o">=</span> <span class="k">$(</span>wildcard <span class="k">$(</span>INCLUDE_DIR<span class="k">)</span>/glad/glad.c<span class="k">)</span>
+</code></pre></div>
+<h3 id="stb_image">stb_image</h3>
+<p><a href="https://github.com/nothings/stb/blob/master/stb_image.h">stb_image</a> is an image loading library which is part of a larger library named <a href="https://github.com/nothings/stb">stb</a>.  All function from the <a href="https://github.com/nothings/stb/blob/master/stb_image.h">stb_image</a> library that Simple Engine will use will have the prefix <code>stbi_</code>.</p>
+<h3 id="texture-class">Texture Class</h3>
+<p>Instances of the <code>Texture</code> class will be used to render sprites to the screen.</p>
 <div class="highlight"><pre><span></span><code><span class="cp">#ifndef TEXTURE_H</span>
 <span class="cp">#define TEXTURE_H</span>
 
@@ -511,13 +585,100 @@
     <span class="k">return</span> <span class="nb">false</span><span class="p">;</span>
 <span class="p">}</span>
 </code></pre></div>
-<h2 id="font">Font</h2>
+<p>Explanation coming soon...</p>
 <h2 id="asset-manager">Asset Manager</h2>
+<p>Now that we have the concept of a texture defined in the Simple Engine, we will need something to maintain textures as well as other assets.</p>
+<div class="highlight"><pre><span></span><code><span class="cp">#ifndef ASSET_MANAGER_H</span>
+<span class="cp">#define ASSET_MANAGER_H</span>
+
+<span class="cp">#include</span> <span class="cpf">&lt;unordered_map&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;string&gt;</span><span class="cp"></span>
+
+<span class="cp">#include</span> <span class="cpf">"./game_lib/utils/logger.h"</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">"./game_lib/rendering/texture.h"</span><span class="cp"></span>
+
+
+<span class="k">class</span> <span class="nc">AssetManager</span> <span class="p">{</span>
+  <span class="k">private</span><span class="o">:</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">unordered_map</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">,</span> <span class="n">Texture</span><span class="o">*&gt;</span> <span class="n">textures</span><span class="p">;</span>
+    <span class="n">Logger</span> <span class="o">*</span><span class="n">logger</span> <span class="o">=</span> <span class="k">nullptr</span><span class="p">;</span>
+
+    <span class="n">AssetManager</span><span class="p">();</span>
+  <span class="k">public</span><span class="o">:</span>
+    <span class="k">static</span> <span class="n">AssetManager</span><span class="o">*</span> <span class="n">GetInstance</span><span class="p">();</span>
+
+    <span class="kt">void</span> <span class="nf">LoadTexture</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">id</span><span class="p">,</span> <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">filePath</span><span class="p">);</span>
+
+    <span class="n">Texture</span><span class="o">*</span> <span class="nf">GetTexture</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">id</span><span class="p">);</span>
+
+    <span class="kt">bool</span> <span class="nf">HasTexture</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">id</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
+<span class="p">};</span>
+
+<span class="cp">#endif </span><span class="c1">//ASSET_MANAGER_H</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="cp">#include</span> <span class="cpf">"asset_manager.h"</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;cassert&gt;</span><span class="cp"></span>
+
+<span class="n">AssetManager</span><span class="o">::</span><span class="n">AssetManager</span><span class="p">()</span> <span class="o">:</span> <span class="n">logger</span><span class="p">(</span><span class="n">Logger</span><span class="o">::</span><span class="n">GetInstance</span><span class="p">())</span> <span class="p">{}</span>
+
+<span class="n">AssetManager</span><span class="o">*</span> <span class="n">AssetManager</span><span class="o">::</span><span class="n">GetInstance</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">static</span> <span class="n">AssetManager</span> <span class="o">*</span><span class="n">instance</span> <span class="o">=</span> <span class="k">new</span> <span class="n">AssetManager</span><span class="p">();</span>
+    <span class="k">return</span> <span class="n">instance</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">AssetManager</span><span class="o">::</span><span class="n">LoadTexture</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">id</span><span class="p">,</span> <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">filePath</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">Texture</span> <span class="o">*</span><span class="n">texture</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Texture</span><span class="p">(</span><span class="n">filePath</span><span class="p">.</span><span class="n">c_str</span><span class="p">());</span>
+    <span class="n">assert</span><span class="p">(</span><span class="n">texture</span><span class="o">-&gt;</span><span class="n">IsValid</span><span class="p">()</span> <span class="o">&amp;&amp;</span> <span class="s">"Failed to load texture!"</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">HasTexture</span><span class="p">(</span><span class="n">id</span><span class="p">))</span> <span class="p">{</span>
+        <span class="n">logger</span><span class="o">-&gt;</span><span class="n">Warn</span><span class="p">(</span><span class="s">"Already have texture, not loading..."</span><span class="p">);</span>
+        <span class="k">return</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="n">textures</span><span class="p">.</span><span class="n">emplace</span><span class="p">(</span><span class="n">id</span><span class="p">,</span> <span class="n">texture</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="n">Texture</span> <span class="o">*</span><span class="n">AssetManager</span><span class="o">::</span><span class="n">GetTexture</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">id</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">assert</span><span class="p">(</span><span class="n">HasTexture</span><span class="p">(</span><span class="n">id</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="s">"Failed to get texture!"</span><span class="p">);</span>
+    <span class="k">return</span> <span class="n">textures</span><span class="p">[</span><span class="n">id</span><span class="p">];</span>
+<span class="p">}</span>
+
+<span class="kt">bool</span> <span class="n">AssetManager</span><span class="o">::</span><span class="n">HasTexture</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">id</span><span class="p">)</span> <span class="k">const</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="n">textures</span><span class="p">.</span><span class="n">count</span><span class="p">(</span><span class="n">id</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Explanation coming soon...</p>
 </article>
 </div>
 </div>
 </main>
 <footer class="md-footer">
+<nav aria-label="Footer" class="md-footer__inner md-grid">
+<a class="md-footer__link md-footer__link--prev" href="../../game_loop_and_sdl/initialize_sdl/" rel="prev">
+<div class="md-footer__button md-icon">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"></path></svg>
+</div>
+<div class="md-footer__title">
+<div class="md-ellipsis">
+<span class="md-footer__direction">
+                Previous
+              </span>
+              Initialize SDL
+            </div>
+</div>
+</a>
+<a class="md-footer__link md-footer__link--next" href="../rendering_sprites/" rel="next">
+<div class="md-footer__title">
+<div class="md-ellipsis">
+<span class="md-footer__direction">
+                Next
+              </span>
+              Rendering Sprites
+            </div>
+</div>
+<div class="md-footer__button md-icon">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"></path></svg>
+</div>
+</a>
+</nav>
 <div class="md-footer-meta md-typeset">
 <div class="md-footer-meta__inner md-grid">
 <div class="md-footer-copyright">
