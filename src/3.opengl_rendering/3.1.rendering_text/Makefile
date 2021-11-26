@@ -4,12 +4,12 @@ PROJECT_NAME := learn_engine_dev
 ifeq ($(OS),Windows_NT)
     OS_TYPE := windows
     BUILD_OBJECT := $(PROJECT_NAME).exe
-    L_FLAGS := -lmingw32 -lSDL2main -lSDL2 -lpython37 -static-libgcc -static-libstdc++
+    L_FLAGS := -lmingw32 -lSDL2main -lSDL2 -lpython37 -lfreetype -static-libgcc -static-libstdc++
     DELETE_CMD := del
 else
     OS_TYPE := linux
     BUILD_OBJECT := $(PROJECT_NAME)
-    L_FLAGS := -lSDL2 -lGL -lpython3.7m -lcrypt -lpthread -ldl  -lutil -lm -static-libgcc -static-libstdc++
+    L_FLAGS := -lSDL2 -lGL -lpython3.7m -lfreetype -lcrypt -lpthread -ldl  -lutil -lm -static-libgcc -static-libstdc++
     DELETE_CMD := rm
 endif
 
@@ -18,11 +18,11 @@ CXX := g++ # C++ compiler
 INCLUDE_DIR := ../../../include
 GAME_LIB_DIR := $(INCLUDE_DIR)/game_lib
 I_FLAGS := -I"$(INCLUDE_DIR)" -I"${SDL2_INCLUDE}" -I"${PYTHON_INCLUDE}"
-LIBRARIES := -L"${SDL2_LIBS}" -L"${PYTHON_LIBS}"
+LIBRARIES := -L"${SDL2_LIBS}" -L"${PYTHON_LIBS}" -L"${FREETYPE_HOME}/lib"
 C_FLAGS := -w -Wfatal-errors
 CPP_FLAGS := -std=c++14 $(C_FLAGS)
 
-SRC = $(wildcard src/*.cpp  $(GAME_LIB_DIR)/python/*.cpp $(GAME_LIB_DIR)/utils/*.cpp $(GAME_LIB_DIR)/rendering/texture.cpp $(GAME_LIB_DIR)/rendering/shader.cpp $(INCLUDE_DIR)/stb_image/stb_image.cpp)
+SRC = $(wildcard src/*.cpp  $(GAME_LIB_DIR)/python/*.cpp $(GAME_LIB_DIR)/utils/*.cpp $(GAME_LIB_DIR)/rendering/texture.cpp $(GAME_LIB_DIR)/rendering/shader.cpp $(GAME_LIB_DIR)/rendering/render_context.cpp $(GAME_LIB_DIR)/rendering/renderer_batcher.cpp $(GAME_LIB_DIR)/rendering/sprite_renderer.cpp $(GAME_LIB_DIR)/rendering/font_renderer.cpp $(INCLUDE_DIR)/stb_image/stb_image.cpp)
 SRC_C = $(wildcard $(INCLUDE_DIR)/glad/glad.c)
 
 OBJ = $(SRC:.cpp=.o)

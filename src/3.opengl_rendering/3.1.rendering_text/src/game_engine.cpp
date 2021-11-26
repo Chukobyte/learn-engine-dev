@@ -59,10 +59,13 @@ void GameEngine::InitializeRendering() {
         logger->Error("Couldn't initialize glad");
     }
 
+    renderContext->InitializeFont();
     renderer2D.Initialize();
 
     // Temp Load Assets
     assetManager->LoadTexture("assets/images/melissa_walk_animation.png", "assets/images/melissa_walk_animation.png");
+
+    assetManager->LoadFont("assets/fonts/verdana.ttf", "assets/fonts/verdana.ttf", 20);
 }
 
 void GameEngine::ProcessInput() {
@@ -108,15 +111,21 @@ void GameEngine::Render() {
                  projectProperties->backgroundClearColor.a);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 
+    static const Vector2 windowCenter = Vector2(projectProperties->GetWindowWidth() / 2,
+                                        projectProperties->GetWindowHeight() / 2);
+
     // Render Sprites
     static Texture *mellisaWalkTexture = assetManager->GetTexture("assets/images/melissa_walk_animation.png");
     static Rect2 drawSourceRect = Rect2(0, 0, 32, 32);
-    static Rect2 drawDestinationRect = Rect2(
-                                           projectProperties->GetWindowWidth() / 2,
-                                           projectProperties->GetWindowHeight() / 2,
-                                           32,
-                                           32);
+    static Rect2 drawDestinationRect = Rect2(windowCenter.x, windowCenter.y,32,32);
     renderer2D.SubmitSpriteBatchItem(mellisaWalkTexture, drawSourceRect, drawDestinationRect, 0);
+
+    // Render Text
+    static Font *textFont = assetManager->GetFont("assets/fonts/verdana.ttf");
+    static const std::string &text = "Hello World!";
+    static Vector2 fontPosition = Vector2(windowCenter.x - 35.0f, windowCenter.y - 20.0f);
+    static Color fontColor = Color(1.0f, 1.0f, 1.0f);
+    renderer2D.SubmitFontBatchItem(textFont, text, fontPosition.x, fontPosition.y, 0, 1.0f, fontColor);
 
     // Flush
     renderer2D.FlushBatches();

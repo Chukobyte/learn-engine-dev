@@ -1,11 +1,11 @@
 #ifndef GAME_ENGINE_H
 #define GAME_ENGINE_H
 
-#include "project_properties.h"
 #include "game_engine_context.h"
-#include "render_context.h"
 #include "asset_manager.h"
 #include "renderer_2d.h"
+#include "./game_lib/utils/project_properties.h"
+#include "./game_lib/rendering/render_context.h"
 #include "./game_lib/utils/fps_counter.h"
 #include "./game_lib/utils/logger.h"
 
