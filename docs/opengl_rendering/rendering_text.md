@@ -232,3 +232,27 @@ bool AssetManager::HasFont(const std::string &fontId) const {
 ```
 
 ## Render Text
+
+In `InitializeRendering` we are adding:
+
+```c++
+renderContext->InitializeFont();
+```
+
+We will also load a font into asset manager with:
+
+```c++
+assetManager->LoadFont("assets/fonts/verdana.ttf", "assets/fonts/verdana.ttf", 20);
+```
+
+Next to render text, we call this within our `Render` function:
+
+```c++
+static Font *textFont = assetManager->GetFont("assets/fonts/verdana.ttf");
+static const std::string &text = "Hello World!";
+static Vector2 fontPosition = Vector2(windowCenter.x - 35.0f, windowCenter.y - 20.0f);
+static Color fontColor = Color(1.0f, 1.0f, 1.0f);
+renderer2D.SubmitFontBatchItem(textFont, text, fontPosition.x, fontPosition.y, 0, 1.0f, fontColor);
+```
+
+We have finally rendered text to the screen!  All source code for this section can be found [here](https://github.com/Chukobyte/learn-engine-dev/tree/main/src/3.opengl_rendering/3.1.rendering_text).  Now that we have a way to render sprites and text to the screen it's now time to start adding implementing audio to play music and sound effects!

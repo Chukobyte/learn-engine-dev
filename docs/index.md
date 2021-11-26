@@ -30,3 +30,11 @@ The engine will be built with the following technologies:
 * **SDL2_mixer** - Audio
 * **Python 3.7** - Scripting language for game logic
 * **AStyle** - Used for formatting C++ code
+
+## Work In Progress
+
+This tutorial series is not yet complete so expect incomplete chapters and sections.  The source code for each chapter will come first followed by more detailed descriptions and information for each section.  Also builds for windows are typically done first before linux, so expect delays in updating the Makefiles for linux in later chapters.
+
+## Feedback
+
+Feedback is greatly appreciated!  One way to submit feedback is to open up an [issue](https://github.com/Chukobyte/learn-engine-dev/issues) in github and apply an appropriate label.  If you like what this project is doing consider starring the Learn Engine Dev [github repo](https://github.com/Chukobyte/learn-engine-dev).
