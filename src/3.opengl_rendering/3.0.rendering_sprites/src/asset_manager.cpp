@@ -1,9 +1,7 @@
 #include "asset_manager.h"
 #include <cassert>
 
-AssetManager::AssetManager() {
-    logger = Logger::GetInstance();
-}
+AssetManager::AssetManager() : logger(Logger::GetInstance()) {}
 
 AssetManager* AssetManager::GetInstance() {
     static AssetManager *instance = new AssetManager();

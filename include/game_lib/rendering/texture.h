@@ -24,9 +24,7 @@ class Texture {
     unsigned int filterMin = GL_NEAREST;
     unsigned int filterMax = GL_NEAREST;
 
-    void Initialize(const char* fileName);
-
-    void Initialize(void *buffer, size_t bufferSize);
+    void Initialize(const char* filePath);
 
     void Generate();
 
@@ -34,13 +32,11 @@ class Texture {
 
     unsigned int GetFilterFromString(const std::string &filter) const;
   public:
-    Texture(const char* fileName);
+    Texture(const char* filePath);
 
-    Texture(const char* fileName, unsigned int wrapS, unsigned int wrapT, unsigned int filterMin, unsigned int filterMax);
+    Texture(const char* filePath, unsigned int wrapS, unsigned int wrapT, unsigned int filterMin, unsigned int filterMax);
 
-    Texture(const char* fileName, const std::string &wrapS, const std::string &wrapT, const std::string &filterMin, const std::string &filterMax);
-
-    Texture(void *buffer, size_t bufferSize);
+    Texture(const char* filePath, const std::string &wrapS, const std::string &wrapT, const std::string &filterMin, const std::string &filterMax);
 
     ~Texture();
 

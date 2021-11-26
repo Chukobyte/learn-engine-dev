@@ -128,7 +128,7 @@ Last but not least, we should check performance to ensure we are getting the fra
 
 ### Timer
 
-The `Timer` class is the straight forward.
+The `Timer` class is straight forward.
 
 ```c++
 #ifndef TIMER_H
@@ -146,12 +146,12 @@ class Timer {
     bool hasStarted;
 
   public:
-    Timer(Uint32 waitTimeInMilliseconds, bool loops = false);
+    Timer(Uint32 waitTimeInMilliseconds, bool doesLoop = false);
     Uint32 GetWaitTime() const;
     Uint32 GetTimeLeft() const;
     void SetWaitTime(Uint32 waitTimeInMilliseconds);
     bool DoesLoop() const;
-    void SetLoop(bool loops);
+    void SetLoop(bool doesLoop);
     void Start();
     void Stop();
     void Pause();
@@ -171,9 +171,9 @@ class Timer {
 
 #include <iostream>
 
-Timer::Timer(Uint32 waitTimeInMilliseconds, bool loops) {
-    this->waitTime = waitTimeInMilliseconds;
-    this->loops = loops;
+Timer::Timer(Uint32 waitTimeInMilliseconds, bool doesLoop) {
+    waitTime = waitTimeInMilliseconds;
+    loops = doesLoop;
     startTicks = 0;
     pausedTicks = 0;
     isPaused = false;
@@ -200,8 +200,8 @@ bool Timer::DoesLoop() const {
     return loops;
 }
 
-void Timer::SetLoop(bool loops) {
-    this->loops = loops;
+void Timer::SetLoop(bool doesLoop) {
+    loops = doesLoop;
 }
 
 void Timer::Start() {

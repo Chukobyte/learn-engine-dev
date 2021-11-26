@@ -32,7 +32,9 @@ nav:
       - Game Loop Introduction: game_loop_and_sdl/game_loop_introduction.md
       - Initialize SDL: game_loop_and_sdl/initialize_sdl.md
   - OpenGL Rendering:
-      - Creating A Renderer: opengl_rendering/creating_a_renderer.md
+      - Asset Management: opengl_rendering/asset_management.md
+      - Rendering Sprites: opengl_rendering/rendering_sprites.md
+      - Rendering Text: opengl_rendering/rendering_text.md
   - Implementing Audio:
       - Using SDL_mixer: implementing_audio/using_sdl_mixer.md
   - Serializing With JSON:

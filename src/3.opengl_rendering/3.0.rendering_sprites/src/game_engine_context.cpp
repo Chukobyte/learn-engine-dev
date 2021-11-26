@@ -5,6 +5,14 @@ GameEngineContext* GameEngineContext::GetInstance() {
     return instance;
 }
 
+const char* GameEngineContext::GetEngineVersion() const {
+    return engineVersion;
+}
+
+const char* GameEngineContext::GetEngineName() const {
+    return engineName;
+}
+
 void GameEngineContext::SetRunning(bool value) {
     running = value;
 }

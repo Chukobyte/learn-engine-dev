@@ -9,7 +9,7 @@ ifeq ($(OS),Windows_NT)
 else
     OS_TYPE := linux
     BUILD_OBJECT := $(PROJECT_NAME)
-    L_FLAGS := -lpython3.7m -lcrypt -lpthread -ldl  -lutil -lm -static-libgcc -static-libstdc++
+    L_FLAGS := -lSDL2 -lGL -lpython3.7m -lcrypt -lpthread -ldl  -lutil -lm -static-libgcc -static-libstdc++
     DELETE_CMD := rm
 endif
 
@@ -17,12 +17,12 @@ CC := gcc # C Compiler
 CXX := g++ # C++ compiler
 INCLUDE_DIR := ../../../include
 GAME_LIB_DIR := $(INCLUDE_DIR)/game_lib
-I_FLAGS := -I"$(INCLUDE_DIR)" -I"${SDL2_HOME}/include" -I"${PYTHON_INCLUDE}"
-LIBRARIES := -L"${SDL2_HOME}/lib" -L"${PYTHON_LIBS}"
+I_FLAGS := -I"$(INCLUDE_DIR)" -I"${SDL2_INCLUDE}" -I"${PYTHON_INCLUDE}"
+LIBRARIES := -L"${SDL2_LIBS}" -L"${PYTHON_LIBS}"
 C_FLAGS := -w -Wfatal-errors
-CPP_FLAGS := $(CPP_FLAGS) -std=c++14
+CPP_FLAGS := -std=c++14 $(C_FLAGS)
 
-SRC = $(wildcard src/create_a_renderer.cpp src/*.cpp  $(GAME_LIB_DIR)/python/*.cpp $(GAME_LIB_DIR)/math/*.cpp $(GAME_LIB_DIR)/rendering/*.cpp $(GAME_LIB_DIR)/utils/*.cpp $(INCLUDE_DIR)/stb_image/stb_image.cpp)
+SRC = $(wildcard src/*.cpp  $(GAME_LIB_DIR)/python/*.cpp $(GAME_LIB_DIR)/utils/*.cpp $(GAME_LIB_DIR)/rendering/texture.cpp $(GAME_LIB_DIR)/rendering/shader.cpp $(INCLUDE_DIR)/stb_image/stb_image.cpp)
 SRC_C = $(wildcard $(INCLUDE_DIR)/glad/glad.c)
 
 OBJ = $(SRC:.cpp=.o)
@@ -61,4 +61,4 @@ run:
 	./$(BUILD_OBJECT)
 
 format:
-	astyle -n --style=google --recursive src/*.h src/*.cpp $(GAME_LIB_DIR)/*.cpp $(GAME_LIB_DIR)/*.h $(GAME_LIB_DIR)/*.hpp
+	astyle -n --style=google --recursive src/*.h src/*.cpp $(GAME_LIB_DIR)/*.cpp

@@ -1,7 +1,7 @@
 #ifndef ASSET_MANAGER_H
 #define ASSET_MANAGER_H
 
-#include <map>
+#include <unordered_map>
 #include <string>
 
 #include "./game_lib/utils/logger.h"
@@ -10,7 +10,7 @@
 
 class AssetManager {
   private:
-    std::map<std::string, Texture*> textures;
+    std::unordered_map<std::string, Texture*> textures;
     Logger *logger = nullptr;
 
     AssetManager();

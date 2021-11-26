@@ -6,10 +6,9 @@
 #include <string>
 #include <functional>
 
-#include "./texture.h"
-#include "./font.h"
-#include "./color.h"
-#include "./game_lib/math/math.h" // NOLINT(modernize-deprecated-headers)
+#include "./game_lib/rendering/color.h"
+#include "./game_lib/rendering/texture.h"
+#include "./game_lib/math/math.h"
 
 struct SpriteBatchItem {
     Texture *texture2D = nullptr;
@@ -21,18 +20,8 @@ struct SpriteBatchItem {
     bool flipY = false;
 };
 
-struct FontBatchItem {
-    Font *font = nullptr;
-    std::string text;
-    float x = 0.0f;
-    float y = 0.0f;
-    float scale = 1.0f;
-    Color color = Color(1.0f, 1.0f, 1.0f, 1.0f);
-};
-
 struct ZIndexDrawBatch {
     std::vector<SpriteBatchItem> spriteDrawBatches;
-    std::vector<FontBatchItem> fontDrawBatches;
 };
 
 using RenderFlushFunction = std::function<void(const int zIndex, const ZIndexDrawBatch &zIndexDrawBatch)>;
@@ -43,8 +32,6 @@ class RendererBatcher {
 
   public:
     void BatchDrawSprite(SpriteBatchItem spriteBatchItem, int zIndex);
-
-    void BatchDrawFont(FontBatchItem fontBatchItem, int zIndex);
 
     void Flush(const RenderFlushFunction &renderFlushFunction);
 };
