@@ -22,7 +22,7 @@ LIBRARIES := -L"${SDL2_LIBS}" -L"${PYTHON_LIBS}"
 C_FLAGS := -w -Wfatal-errors
 CPP_FLAGS := -std=c++14 $(C_FLAGS)
 
-SRC = $(wildcard src/*.cpp  $(GAME_LIB_DIR)/python/*.cpp $(GAME_LIB_DIR)/utils/*.cpp $(GAME_LIB_DIR)/rendering/texture.cpp $(GAME_LIB_DIR)/rendering/shader.cpp $(INCLUDE_DIR)/stb_image/stb_image.cpp)
+SRC = $(wildcard src/*.cpp  $(GAME_LIB_DIR)/python/*.cpp $(GAME_LIB_DIR)/utils/fps_counter.cpp $(GAME_LIB_DIR)/utils/logger.cpp $(GAME_LIB_DIR)/utils/timer.cpp $(GAME_LIB_DIR)/rendering/texture.cpp $(GAME_LIB_DIR)/rendering/shader.cpp $(INCLUDE_DIR)/stb_image/stb_image.cpp)
 SRC_C = $(wildcard $(INCLUDE_DIR)/glad/glad.c)
 
 OBJ = $(SRC:.cpp=.o)

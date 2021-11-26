@@ -7,7 +7,7 @@
 
 class ProjectProperties {
   private:
-    const std::string &gameTitle = "Test Game";
+    const std::string gameTitle = "Test Game";
     const unsigned int windowWidth = 800;
     const unsigned int windowHeight = 600;
     const unsigned int targetFPS = 60;
