@@ -255,4 +255,8 @@ static Color fontColor = Color(1.0f, 1.0f, 1.0f);
 renderer2D.SubmitFontBatchItem(textFont, text, fontPosition.x, fontPosition.y, 0, 1.0f, fontColor);
 ```
 
+Once we run the engine, the following will be rendered to the screen:
+
+![Render Text Screenshot](https://github.com/Chukobyte/learn-engine-dev/blob/main/assets/images/screenshots/led_3_1.PNG?raw=true)
+
 We have finally rendered text to the screen!  All source code for this section can be found [here](https://github.com/Chukobyte/learn-engine-dev/tree/main/src/3.opengl_rendering/3.1.rendering_text).  Now that we have a way to render sprites and text to the screen it's now time to start adding implementing audio to play music and sound effects!
