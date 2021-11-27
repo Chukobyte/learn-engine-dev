@@ -2,7 +2,7 @@
 
 ## Creating a Game Library
 
-There will be code shared between each lesson and we wouldn't want to copy and paste the same code again and again as that goes against the [DRY](https://en.wikipedia.org/wiki/Don%27t_repeat_yourself) principle.  Moving forward, we will keep all code files that will be shared within the folder `./include/game_lib`.  With that being said we will move our python code (including from the previous section) into `./include/game_lib/python`.
+There will be code shared between each lesson and we wouldn't want to copy and paste the same code again and again as that goes against the [DRY](https://en.wikipedia.org/wiki/Don%27t_repeat_yourself) principle.  Moving forward, we will keep all code files that will be shared within the folder `./include/re`.  With that being said we will move our python code (including from the previous section) into `./include/re/python`.
 
 ## Python Modules Class
 
