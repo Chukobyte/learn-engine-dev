@@ -117,7 +117,7 @@ void GameEngine::Render() {
     // Render Sprites
     static Texture *mellisaWalkTexture = assetManager->GetTexture("assets/images/melissa_walk_animation.png");
     static Rect2 drawSourceRect = Rect2(0, 0, 32, 32);
-    static Rect2 drawDestinationRect = Rect2(windowCenter.x, windowCenter.y,32,32);
+    static Rect2 drawDestinationRect = Rect2(windowCenter.x, windowCenter.y, drawSourceRect.w, drawSourceRect.h);
     renderer2D.SubmitSpriteBatchItem(mellisaWalkTexture, drawSourceRect, drawDestinationRect, 0);
 
     // Render Text
