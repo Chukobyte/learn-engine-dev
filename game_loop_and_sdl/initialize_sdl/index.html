@@ -635,7 +635,7 @@
 <div class="highlight"><pre><span></span><code><span class="cp">#ifndef FPS_COUNTER_H</span>
 <span class="cp">#define FPS_COUNTER_H</span>
 
-<span class="cp">#include</span> <span class="cpf">"./game_lib/utils/timer.h"</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">"./re/utils/timer.h"</span><span class="cp"></span>
 
 <span class="k">class</span> <span class="nc">FPSCounter</span> <span class="p">{</span>
   <span class="k">private</span><span class="o">:</span>
@@ -658,7 +658,7 @@
 </code></pre></div>
 <div class="highlight"><pre><span></span><code><span class="cp">#include</span> <span class="cpf">"fps_counter.h"</span><span class="cp"></span>
 
-<span class="cp">#include</span> <span class="cpf">"./game_lib/utils/logger.h"</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">"./re/utils/logger.h"</span><span class="cp"></span>
 
 <span class="n">FPSCounter</span><span class="o">::</span><span class="n">FPSCounter</span><span class="p">()</span> <span class="o">:</span> <span class="n">timer</span><span class="p">(</span><span class="k">new</span> <span class="n">Timer</span><span class="p">(</span><span class="mi">1000</span><span class="p">,</span> <span class="nb">true</span><span class="p">))</span> <span class="p">{</span>
     <span class="n">timer</span><span class="o">-&gt;</span><span class="n">Start</span><span class="p">();</span>
