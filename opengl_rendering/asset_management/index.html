@@ -389,11 +389,11 @@
 <h1 id="asset-management">Asset Management</h1>
 <h2 id="textures">Textures</h2>
 <h3 id="glad">Glad</h3>
-<p>As you already know, we will be using the OpenGL graphics API for our renderer.  <a href="https://github.com/Dav1dde/glad">Glad</a>, which is an OpenGL loading library, will be used to by Simple Engine access OpenGL functions.  We will modify the build of the engine by adding the generated <code>glad.c</code> file to Makefile.</p>
+<p>As you already know, we will be using the OpenGL graphics API for our renderer.  <a href="https://github.com/Dav1dde/glad">Glad</a>, which is an OpenGL loading library, will be used to by <strong><em>Red Engine</em></strong> to access OpenGL functions.  We will modify the build of the engine by adding the generated <code>glad.c</code> file to Makefile.</p>
 <div class="highlight"><pre><span></span><code><span class="nv">SRC_C</span> <span class="o">=</span> <span class="k">$(</span>wildcard <span class="k">$(</span>INCLUDE_DIR<span class="k">)</span>/glad/glad.c<span class="k">)</span>
 </code></pre></div>
 <h3 id="stb_image">stb_image</h3>
-<p><a href="https://github.com/nothings/stb/blob/master/stb_image.h">stb_image</a> is an image loading library which is part of a larger library named <a href="https://github.com/nothings/stb">stb</a>.  All function from the <a href="https://github.com/nothings/stb/blob/master/stb_image.h">stb_image</a> library that Simple Engine will use will have the prefix <code>stbi_</code>.</p>
+<p><a href="https://github.com/nothings/stb/blob/master/stb_image.h">stb_image</a> is an image loading library which is part of a larger library named <a href="https://github.com/nothings/stb">stb</a>.  All functions from the <a href="https://github.com/nothings/stb/blob/master/stb_image.h">stb_image</a> library will have the prefix <code>stbi_</code>.</p>
 <h3 id="texture-class">Texture Class</h3>
 <p>Instances of the <code>Texture</code> class will be used to render sprites to the screen.</p>
 <div class="highlight"><pre><span></span><code><span class="cp">#ifndef TEXTURE_H</span>
@@ -587,7 +587,7 @@
 </code></pre></div>
 <p>Explanation coming soon...</p>
 <h2 id="asset-manager">Asset Manager</h2>
-<p>Now that we have the concept of a texture defined in the Simple Engine, we will need something to maintain textures as well as other assets.</p>
+<p>Now that we have the concept of a texture defined in the <strong><em>Red Engine</em></strong>, we will need something to maintain textures as well as other assets.</p>
 <div class="highlight"><pre><span></span><code><span class="cp">#ifndef ASSET_MANAGER_H</span>
 <span class="cp">#define ASSET_MANAGER_H</span>
 
