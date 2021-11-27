@@ -4,10 +4,10 @@
 #include "game_engine_context.h"
 #include "asset_manager.h"
 #include "renderer_2d.h"
-#include "./game_lib/utils/project_properties.h"
-#include "./game_lib/rendering/render_context.h"
-#include "./game_lib/utils/fps_counter.h"
-#include "./game_lib/utils/logger.h"
+#include "./re/utils/project_properties.h"
+#include "./re/rendering/render_context.h"
+#include "./re/utils/fps_counter.h"
+#include "./re/utils/logger.h"
 
 class GameEngine {
   private:

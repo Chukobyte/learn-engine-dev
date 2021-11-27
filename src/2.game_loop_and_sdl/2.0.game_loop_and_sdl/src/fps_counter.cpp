@@ -1,6 +1,6 @@
 #include "fps_counter.h"
 
-#include "./game_lib/utils/logger.h"
+#include "./re/utils/logger.h"
 
 FPSCounter::FPSCounter() : timer(new Timer(1000, true)) {
     timer->Start();

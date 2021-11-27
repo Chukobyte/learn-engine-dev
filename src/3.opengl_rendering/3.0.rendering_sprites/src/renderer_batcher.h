@@ -6,9 +6,9 @@
 #include <string>
 #include <functional>
 
-#include "./game_lib/rendering/color.h"
-#include "./game_lib/rendering/texture.h"
-#include "./game_lib/math/math.h"
+#include "./re/rendering/color.h"
+#include "./re/rendering/texture.h"
+#include "./re/math/math.h"
 
 struct SpriteBatchItem {
     Texture *texture2D = nullptr;

@@ -275,7 +275,7 @@ bool Timer::IsPaused() const {
 #ifndef FPS_COUNTER_H
 #define FPS_COUNTER_H
 
-#include "./game_lib/utils/timer.h"
+#include "./re/utils/timer.h"
 
 class FPSCounter {
   private:
@@ -300,7 +300,7 @@ class FPSCounter {
 ```c++
 #include "fps_counter.h"
 
-#include "./game_lib/utils/logger.h"
+#include "./re/utils/logger.h"
 
 FPSCounter::FPSCounter() : timer(new Timer(1000, true)) {
     timer->Start();

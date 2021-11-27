@@ -16,7 +16,7 @@ endif
 CC := gcc # C Compiler
 CXX := g++ # C++ compiler
 INCLUDE_DIR := ../../../include
-GAME_LIB_DIR := $(INCLUDE_DIR)/game_lib
+GAME_LIB_DIR := $(INCLUDE_DIR)/re
 I_FLAGS := -I"${INCLUDE_DIR}" -I"${PYTHON_INCLUDE}"
 LIBRARIES := -L"${PYTHON_LIBS}"
 CPP_FLAGS := -w -std=c++14 -Wfatal-errors

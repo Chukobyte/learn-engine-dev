@@ -1,7 +1,7 @@
 #ifndef FPS_COUNTER_H
 #define FPS_COUNTER_H
 
-#include "./game_lib/utils/timer.h"
+#include "./re/utils/timer.h"
 
 class FPSCounter {
   private:

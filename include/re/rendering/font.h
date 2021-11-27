@@ -11,7 +11,7 @@
 
 #include <glad/glad.h>
 
-#include "./game_lib/math/math.h"
+#include "./re/math/math.h"
 
 #include "../utils/file_helper.h"
 #include "../utils/logger.h"

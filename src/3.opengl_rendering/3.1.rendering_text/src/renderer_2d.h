@@ -1,9 +1,9 @@
 #ifndef RENDERER_2D_H
 #define RENDERER_2D_H
 
-#include "./game_lib/rendering/renderer_batcher.h"
-#include "./game_lib/rendering/sprite_renderer.h"
-#include "./game_lib/rendering/font_renderer.h"
+#include "./re/rendering/renderer_batcher.h"
+#include "./re/rendering/sprite_renderer.h"
+#include "./re/rendering/font_renderer.h"
 
 class Renderer2D {
   private:

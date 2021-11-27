@@ -1,4 +1,4 @@
-#include "./game_lib/python/python_object_manager.h"
+#include "./re/python/python_object_manager.h"
 
 int main(int argv, char** args) {
     CPyInstance pyInstance;

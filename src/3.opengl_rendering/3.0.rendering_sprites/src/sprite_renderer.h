@@ -3,13 +3,12 @@
 
 #include <glad/glad.h>
 
-#include "./game_lib/rendering/shader.h"
-#include "./game_lib/rendering/texture.h"
-#include "./game_lib/rendering/color.h"
-#include "./game_lib/math/math.h"
+#include "./re/rendering/shader.h"
+#include "./re/rendering/texture.h"
+#include "./re/rendering/color.h"
+#include "./re/math/math.h"
 
 #include "project_properties.h"
-#include "../../../../include/game_lib/math/math.h"
 
 static const std::string &OPENGL_SHADER_SOURCE_VERTEX_SPRITE =
     "#version 330 core\n"

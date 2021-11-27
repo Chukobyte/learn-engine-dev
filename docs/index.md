@@ -6,7 +6,7 @@ Welcome to a tutorial series for creating a simple game engine from scratch!  Ma
 
 ## Purpose
 
-The purpose of this tutorial series is to provide a step by step approach to building a game engine.  The end goal is to have a fully functional game engine that can be reused for multiple projects.  There's a popular saying floating around that goes "Make games, not engines".  To not disappoint the folks that usually mention this quote, we will be making 3 games with our engine to test it out!
+The purpose of this tutorial series is to provide a step-by-step approach to building a game engine.  The end goal is to have a fully functional game engine that can be reused for multiple projects.  There's a popular saying floating around that goes "Make games, not engines".  To not disappoint the folks that usually mention this quote, we will be making 3 games with our engine to test it out!
 
 ## Prerequisites
 
@@ -18,7 +18,7 @@ Programming and technical skills of all levels are welcome, but to get the most 
 
 ## Structure
 
-Each chapter of this tutorial series is broken up into sections which can be navigated to via the menu on the left.  Each chapter and section has source code attributed to it which can be found within the [github repo](https://github.com/Chukobyte/learn-engine-dev).
+Each chapter of this tutorial series is broken up into sections which can be navigated to via the menu on the left.  Each chapter and section has source code attributed to it which can be found within the [github repo](https://github.com/Chukobyte/learn-engine-dev).  Code will need to be shared between each project folder and a game library will be created in `include/re`.  Typically, code that is created within a chapter is moved into the game library once it's implementation is completed within the sections.
 
 ## Tech Stack
 

@@ -2,7 +2,7 @@
 
 #include <SDL2/SDL.h>
 
-#include "./game_lib/math/math.h"
+#include "./re/math/math.h"
 
 GameEngine::GameEngine() :
     projectProperties(ProjectProperties::GetInstance()),

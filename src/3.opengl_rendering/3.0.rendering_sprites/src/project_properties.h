@@ -3,7 +3,7 @@
 
 #include <string>
 
-#include "./game_lib/rendering/color.h"
+#include "./re/rendering/color.h"
 
 class ProjectProperties {
   private:

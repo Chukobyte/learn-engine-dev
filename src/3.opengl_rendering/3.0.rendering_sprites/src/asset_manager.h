@@ -4,8 +4,8 @@
 #include <unordered_map>
 #include <string>
 
-#include "./game_lib/utils/logger.h"
-#include "./game_lib/rendering/texture.h"
+#include "./re/utils/logger.h"
+#include "./re/rendering/texture.h"
 
 
 class AssetManager {
