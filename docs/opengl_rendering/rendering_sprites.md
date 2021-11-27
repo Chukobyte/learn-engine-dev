@@ -58,7 +58,7 @@ std::ostream& operator<<(std::ostream& os, const Rectangle &r) {
 
 ### Custom Math Header
 
-Simple Engine will use GLM, but we may want to use another math library or write our own in the future.  To make this easier, will we define [type aliases](https://en.cppreference.com/w/cpp/language/type_alias) for math related classes.
+***Red Engine*** will use GLM, but we may want to use another math library or write our own in the future.  To make this easier, will we define [type aliases](https://en.cppreference.com/w/cpp/language/type_alias) for math related classes.
 
 ```c++
 #ifndef MATH_H

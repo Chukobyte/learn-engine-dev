@@ -4,7 +4,7 @@
 
 ### Glad
 
-As you already know, we will be using the OpenGL graphics API for our renderer.  [Glad](https://github.com/Dav1dde/glad), which is an OpenGL loading library, will be used to by Simple Engine access OpenGL functions.  We will modify the build of the engine by adding the generated `glad.c` file to Makefile.
+As you already know, we will be using the OpenGL graphics API for our renderer.  [Glad](https://github.com/Dav1dde/glad), which is an OpenGL loading library, will be used to by ***Red Engine*** to access OpenGL functions.  We will modify the build of the engine by adding the generated `glad.c` file to Makefile.
 
 ```makefile
 SRC_C = $(wildcard $(INCLUDE_DIR)/glad/glad.c)
@@ -12,7 +12,7 @@ SRC_C = $(wildcard $(INCLUDE_DIR)/glad/glad.c)
 
 ### stb_image
 
-[stb_image](https://github.com/nothings/stb/blob/master/stb_image.h) is an image loading library which is part of a larger library named [stb](https://github.com/nothings/stb).  All function from the [stb_image](https://github.com/nothings/stb/blob/master/stb_image.h) library that Simple Engine will use will have the prefix `stbi_`.
+[stb_image](https://github.com/nothings/stb/blob/master/stb_image.h) is an image loading library which is part of a larger library named [stb](https://github.com/nothings/stb).  All functions from the [stb_image](https://github.com/nothings/stb/blob/master/stb_image.h) library will have the prefix `stbi_`.
 
 ### Texture Class
 
@@ -215,7 +215,7 @@ Explanation coming soon...
 
 ## Asset Manager
 
-Now that we have the concept of a texture defined in the Simple Engine, we will need something to maintain textures as well as other assets.
+Now that we have the concept of a texture defined in ***Red Engine***, we will need something to maintain textures as well as other assets.
 
 ```c++
 #ifndef ASSET_MANAGER_H

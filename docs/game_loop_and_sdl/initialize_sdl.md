@@ -118,8 +118,8 @@ int main(int argv, char** args) {
 After executing the above the following two log statements should be printed to the terminal:
 
 ```
-[INFO] Simple Engine v0.1.0
-[INFO] Simple Engine has shut down!
+[INFO] Red Engine v0.1.0
+[INFO] Red Engine has shut down!
 ```
 
 ## Measuring FPS
@@ -359,4 +359,4 @@ Also in the `Initialize` function uncomment setting `GameEngineContext` running 
 engineContext->SetRunning(true);
 ```
 
-If we execute our game engine now, it should print to the terminal the fps of our game loop once per second.  All the source code for this chapter can be found [here](https://github.com/Chukobyte/learn-engine-dev/tree/main/src/2.game_loop_and_sdl/2.0.game_loop_and_sdl).  We have now finished setting up SDL2 and our game loop!  Next we'll tackle creating a renderer to draw things to the screen!
+If we run ***Red Engine*** now, it should print to the terminal the fps of our game loop once per second.  All the source code for this chapter can be found [here](https://github.com/Chukobyte/learn-engine-dev/tree/main/src/2.game_loop_and_sdl/2.0.game_loop_and_sdl).  We have now finished setting up SDL2 and our game loop!  Next we'll tackle creating a renderer to draw things to the screen!

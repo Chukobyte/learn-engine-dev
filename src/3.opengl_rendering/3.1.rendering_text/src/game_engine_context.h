@@ -4,7 +4,7 @@
 class GameEngineContext {
   private:
     const char *engineVersion = "0.1.0";
-    const char *engineName = "Simple";
+    const char *engineName = "Red";
     bool running = false;
 
     GameEngineContext() = default;

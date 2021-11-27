@@ -75,7 +75,7 @@ format:
 
 ## Hello World
 
-It's time to finally write python code within our engine!  Before we start diving deeper into creating a scripting system for python, let's first obtain a small win by having out engine print out a statement via python.  Full documentation for embedding python within a c++ application can be found [here](https://docs.python.org/3/extending/embedding.html).
+It's time to finally write python code within ***Red Engine***!  Before we start diving deeper into creating a scripting system for python, let's first obtain a small win by having out engine print out a statement via python.  Full documentation for embedding python within a c++ application can be found [here](https://docs.python.org/3/extending/embedding.html).
 
 ```c++
 #define PY_SSIZE_T_CLEAN
@@ -102,7 +102,7 @@ print('hello world (from python)')
 
 Last but not least we terminate the python interpreter by calling `Py_Finalize()`.  Not too bad of a start but we can definitely do better!  You view the code by looking at the source [here](https://github.com/Chukobyte/learn-engine-dev/tree/main/src/1.embedding_python/1.0.hello_python).
 
-We will want to execute scripts and python functions from our engine and also be able to call C++ functions from a python script.  Let's work on that next!
+We will want to execute scripts and python functions from ***Red Engine*** and also be able to call C++ functions from a python script.  Let's work on that next!
 
 ## Execute A Python Function From C++
 
@@ -166,4 +166,4 @@ Next we're getting a python string object with `PyUnicode_FromString` as we'll n
 
 Now that we have imported the module we can get the reference to a function with `PyObject_GetAttrString`.  With this reference we'll call the function with `PyObject_CallObject`.  The function `play` returns an integer and we store this within `pValue`.  After that we just decrement the remaining python objects we no longer need.  The source for this section can be found [here](https://github.com/Chukobyte/learn-engine-dev/tree/main/src/1.embedding_python/1.1.calling_a_function).
 
-We're able to call a python function from c++ and receive its return value, but incrementing and decrementing the reference count will become tedious.  In the next section we will embed python further into our engine and create classes to generalize some of our usages of the Python API.
+We're able to call a python function from c++ and receive its return value, but incrementing and decrementing the reference count will become tedious.  In the next section we will embed python further into ***Red Engine*** and create classes to generalize some of our usages of the Python API.

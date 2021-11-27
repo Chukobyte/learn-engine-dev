@@ -2,11 +2,11 @@
 
 ## About
 
-Welcome to a tutorial series for creating a simple game engine from scratch!  Making a game engine is no easy task and each system we create could have multiple tutorials of its own.  But fear not, we will walk through building an engine each system at a time.  This tutorial series currently supports windows and linux, but may expand to other platforms in the future.
+Welcome to a tutorial series for creating a simple game engine, named ***Red Engine***, from scratch!  Making a game engine is no easy task and each system we create could have multiple tutorials of its own.  But fear not, we will walk through building an engine each system at a time.  This tutorial series currently supports windows and linux, but may expand to other platforms in the future.
 
 ## Purpose
 
-The purpose of this tutorial series is to provide a step-by-step approach to building a game engine.  The end goal is to have a fully functional game engine that can be reused for multiple projects.  There's a popular saying floating around that goes "Make games, not engines".  To not disappoint the folks that usually mention this quote, we will be making 3 games with our engine to test it out!
+The purpose of this tutorial series is to provide a step-by-step approach to building a game engine.  The end goal is to have a fully functional game engine that can be reused for multiple projects.  There's a popular saying floating around that goes "Make games, not engines".  To not disappoint the folks that usually mention this quote, we will be making 3 games with ***Red Engine*** to test it out!
 
 ## Prerequisites
 
@@ -22,7 +22,7 @@ Each chapter of this tutorial series is broken up into sections which can be nav
 
 ## Tech Stack
 
-The engine will be built with the following technologies:
+***Red Engine*** will be built with the following technologies:
 
 * **C++ 14** - Core engine
 * **OpenGL 3.3** - Graphics API

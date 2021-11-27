@@ -6,7 +6,7 @@ There will be code shared between each lesson and we wouldn't want to copy and p
 
 ## Python Modules Class
 
-We have successfully called functions from python modules and class instances but we have yet to call C++ code from python.  The best way to do that is to start defining our engine api.  To keep things simple and concise for now we'll just define one python module named `engine` which contains two functions.  The first function `get_version` doesn't take any parameters and will just return a hard coded string that represents our engine version.  Our second function `print_log` will simply take a string as a parameter and print it out to the console.  Now that we have an idea of what to do let's create our class for defining and implementing custom python modules.
+We have successfully called functions from python modules and class instances but we have yet to call C++ code from python.  The best way to do that is to start defining the api for ***Red Engine***.  To keep things simple and concise for now we'll just define one python module named `engine` which contains two functions.  The first function `get_version` doesn't take any parameters and will just return a hard coded string that represents the version of ***Red Engine***.  Our second function `print_log` will simply take a string as a parameter and print it out to the console.  Now that we have an idea of what to do let's create our class for defining and implementing custom python modules.
 
 ```c++
 #ifndef PYTHON_MODULES_H

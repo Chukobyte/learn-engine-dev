@@ -2,7 +2,7 @@
 
 ## Game Loop
 
-Before we start adding other systems to our game engine we should first create the game loop.  The game loop will be responsible for tasks such as processing input, updating game state (physics, A.I., etc...), and rendering.  Below is how our game loop will look:
+Before we start adding other systems to ***Red Engine*** we should first create the game loop.  The game loop will be responsible for tasks such as processing input, updating game state (physics, A.I., etc...), and rendering.  Below is how our game loop will look:
 
 ```cpp
 while (gameEngine.IsRunning()) {
@@ -16,7 +16,7 @@ In the next section we will define a `GameEngine` class, but we have a few more 
 
 ## Logger
 
-As we add more functionality and systems to the game it will be useful to make logging statements for debugging, erorr, etc...  The `Logger` class will be used for this purpose throughout the engine.
+As we add more functionality and systems to the game it will be useful to make logging statements for debugging, error, etc...  The `Logger` class will be used for this purpose throughout ***Red Engine***.
 
 ```cpp
 #ifndef LOGGER_H
@@ -151,7 +151,7 @@ Using log levels with a higher priority will print all logs for that level and b
 
 ## Engine Context
 
-`EngineContext` will store engine related properties and state.  There will be parts of our game engine that need access to properties such as if the game engine is running or the engine name.  We wouldn't want to have to pass the top level `GameEngine` class (that we haven't defined yet) to places that need it, so we're going to separate engine properties and state into it's own class `GameEngineContext`.  `GameEngineContext` will also be a singleton just like our `Logger` class.
+`EngineContext` will store engine related properties and state.  There will be parts of ***Red Engine*** that need access to properties such as if the game engine is running or the engine's name.  We wouldn't want to have to pass the top level `GameEngine` class (that we haven't defined yet) to places that need it, so we're going to separate engine properties and state into it's own class `GameEngineContext`.  `GameEngineContext` will also be a singleton just like our `Logger` class.
 
 ```c++
 #ifndef GAME_ENGINE_CONTEXT_H
@@ -160,7 +160,7 @@ Using log levels with a higher priority will print all logs for that level and b
 class GameEngineContext {
   private:
     const char *engineVersion = "0.1.0";
-    const char *engineName = "Simple";
+    const char *engineName = "Red";
     bool running = false;
 
     GameEngineContext() = default;

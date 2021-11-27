@@ -4,7 +4,7 @@
 
 ### Freetype Library
 
-Simple Engine uses the [FreeType](https://freetype.org/) to help render font.
+***Red Engine*** uses the [FreeType](https://freetype.org/) to help render font.
 
 ### Font Class
 
