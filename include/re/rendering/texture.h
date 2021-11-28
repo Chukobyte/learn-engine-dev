@@ -55,5 +55,4 @@ class Texture {
     bool IsValid() const;
 };
 
-
 #endif //TEXTURE_H

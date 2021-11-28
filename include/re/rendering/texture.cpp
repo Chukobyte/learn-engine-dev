@@ -7,20 +7,20 @@ Texture::Texture(const char* filePath) : logger(Logger::GetInstance()) {
 }
 
 Texture::Texture(const char* filePath, unsigned int wrapS, unsigned int wrapT, unsigned int filterMin, unsigned int filterMag) :
-        wrapS(wrapS),
-        wrapT(wrapT),
-        filterMin(filterMin),
-        filterMag(filterMag),
-        logger(Logger::GetInstance()) {
+    wrapS(wrapS),
+    wrapT(wrapT),
+    filterMin(filterMin),
+    filterMag(filterMag),
+    logger(Logger::GetInstance()) {
     Initialize(filePath);
 }
 
 Texture::Texture(const char* filePath, const std::string &wrapS, const std::string &wrapT, const std::string &filterMin, const std::string &filterMag) :
-        wrapS(GetWrapFromString(wrapS)),
-        wrapT(GetWrapFromString(wrapT)),
-        filterMin(GetFilterFromString(filterMin)),
-        filterMag(GetFilterFromString(filterMag)),
-        logger(Logger::GetInstance()) {
+    wrapS(GetWrapFromString(wrapS)),
+    wrapT(GetWrapFromString(wrapT)),
+    filterMin(GetFilterFromString(filterMin)),
+    filterMag(GetFilterFromString(filterMag)),
+    logger(Logger::GetInstance()) {
     Initialize(filePath);
 }
 
@@ -67,8 +67,12 @@ void Texture::Generate() {
 unsigned int Texture::GetWrapFromString(const std::string &wrap) const {
     if (wrap == "clamp_to_border") {
         return GL_CLAMP_TO_BORDER;
+    } else if (wrap == "clamp_to_edge") {
+        return GL_CLAMP_TO_EDGE;
     } else if (wrap == "repeat") {
         return GL_REPEAT;
+    } else if (wrap == "mirrored_repeat") {
+        return GL_MIRRORED_REPEAT;
     }
     logger->Error("'%s' is an invalid wrap value!", wrap.c_str());
     return wrapS;
