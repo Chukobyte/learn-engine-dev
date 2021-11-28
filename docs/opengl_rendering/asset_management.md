@@ -43,7 +43,7 @@ class Texture {
     unsigned int wrapS = GL_CLAMP_TO_BORDER;
     unsigned int wrapT = GL_CLAMP_TO_BORDER;
     unsigned int filterMin = GL_NEAREST;
-    unsigned int filterMax = GL_NEAREST;
+    unsigned int filterMag = GL_NEAREST;
 
     void Initialize(const char* fileName);
 
@@ -57,9 +57,9 @@ class Texture {
   public:
     Texture(const char* fileName);
 
-    Texture(const char* fileName, unsigned int wrapS, unsigned int wrapT, unsigned int filterMin, unsigned int filterMax);
+    Texture(const char* fileName, unsigned int wrapS, unsigned int wrapT, unsigned int filterMin, unsigned int filterMag);
 
-    Texture(const char* fileName, const std::string &wrapS, const std::string &wrapT, const std::string &filterMin, const std::string &filterMax);
+    Texture(const char* fileName, const std::string &wrapS, const std::string &wrapT, const std::string &filterMin, const std::string &filterMag);
 
     Texture(void *buffer, size_t bufferSize);
 
@@ -93,13 +93,13 @@ Texture::Texture(const char* fileName) {
     Initialize(fileName);
 }
 
-Texture::Texture(const char* fileName, unsigned int wrapS, unsigned int wrapT, unsigned int filterMin, unsigned int filterMax) :
-    wrapS(wrapS), wrapT(wrapT), filterMin(filterMin), filterMax(filterMax) {
+Texture::Texture(const char* fileName, unsigned int wrapS, unsigned int wrapT, unsigned int filterMin, unsigned int filterMag) :
+    wrapS(wrapS), wrapT(wrapT), filterMin(filterMin), filterMag(filterMag) {
     Initialize(fileName);
 }
 
-Texture::Texture(const char* fileName, const std::string &wrapS, const std::string &wrapT, const std::string &filterMin, const std::string &filterMax) :
-    wrapS(GetWrapFromString(wrapS)), wrapT(GetWrapFromString(wrapT)), filterMin(GetFilterFromString(filterMin)), filterMax(GetFilterFromString(filterMax)) {
+Texture::Texture(const char* fileName, const std::string &wrapS, const std::string &wrapT, const std::string &filterMin, const std::string &filterMag) :
+    wrapS(GetWrapFromString(wrapS)), wrapT(GetWrapFromString(wrapT)), filterMin(GetFilterFromString(filterMin)), filterMag(GetFilterFromString(filterMag)) {
     Initialize(fileName);
 }
 
@@ -154,7 +154,7 @@ void Texture::Generate() {
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, this->wrapS);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, this->wrapT);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, this->filterMin);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, this->filterMax);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, this->filterMag);
     // Unbind texture
     glBindTexture(GL_TEXTURE_2D, 0);
 }

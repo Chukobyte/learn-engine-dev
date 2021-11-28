@@ -6,21 +6,21 @@ Texture::Texture(const char* filePath) : logger(Logger::GetInstance()) {
     Initialize(filePath);
 }
 
-Texture::Texture(const char* filePath, unsigned int wrapS, unsigned int wrapT, unsigned int filterMin, unsigned int filterMax) :
-    wrapS(wrapS),
-    wrapT(wrapT),
-    filterMin(filterMin),
-    filterMax(filterMax),
-    logger(Logger::GetInstance()) {
+Texture::Texture(const char* filePath, unsigned int wrapS, unsigned int wrapT, unsigned int filterMin, unsigned int filterMag) :
+        wrapS(wrapS),
+        wrapT(wrapT),
+        filterMin(filterMin),
+        filterMag(filterMag),
+        logger(Logger::GetInstance()) {
     Initialize(filePath);
 }
 
-Texture::Texture(const char* filePath, const std::string &wrapS, const std::string &wrapT, const std::string &filterMin, const std::string &filterMax) :
-    wrapS(GetWrapFromString(wrapS)),
-    wrapT(GetWrapFromString(wrapT)),
-    filterMin(GetFilterFromString(filterMin)),
-    filterMax(GetFilterFromString(filterMax)),
-    logger(Logger::GetInstance()) {
+Texture::Texture(const char* filePath, const std::string &wrapS, const std::string &wrapT, const std::string &filterMin, const std::string &filterMag) :
+        wrapS(GetWrapFromString(wrapS)),
+        wrapT(GetWrapFromString(wrapT)),
+        filterMin(GetFilterFromString(filterMin)),
+        filterMag(GetFilterFromString(filterMag)),
+        logger(Logger::GetInstance()) {
     Initialize(filePath);
 }
 
@@ -59,7 +59,7 @@ void Texture::Generate() {
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, wrapS);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, wrapT);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, filterMin);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, filterMax);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, filterMag);
     // Unbind texture
     glBindTexture(GL_TEXTURE_2D, 0);
 }

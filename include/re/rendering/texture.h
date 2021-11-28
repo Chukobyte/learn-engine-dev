@@ -22,7 +22,7 @@ class Texture {
     unsigned int wrapS = GL_CLAMP_TO_BORDER;
     unsigned int wrapT = GL_CLAMP_TO_BORDER;
     unsigned int filterMin = GL_NEAREST;
-    unsigned int filterMax = GL_NEAREST;
+    unsigned int filterMag = GL_NEAREST;
 
     void Initialize(const char* filePath);
 
@@ -34,9 +34,9 @@ class Texture {
   public:
     Texture(const char* filePath);
 
-    Texture(const char* filePath, unsigned int wrapS, unsigned int wrapT, unsigned int filterMin, unsigned int filterMax);
+    Texture(const char* filePath, unsigned int wrapS, unsigned int wrapT, unsigned int filterMin, unsigned int filterMag);
 
-    Texture(const char* filePath, const std::string &wrapS, const std::string &wrapT, const std::string &filterMin, const std::string &filterMax);
+    Texture(const char* filePath, const std::string &wrapS, const std::string &wrapT, const std::string &filterMin, const std::string &filterMag);
 
     ~Texture();
 
