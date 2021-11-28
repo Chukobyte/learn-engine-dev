@@ -420,11 +420,9 @@
     <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">wrapS</span> <span class="o">=</span> <span class="n">GL_CLAMP_TO_BORDER</span><span class="p">;</span>
     <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">wrapT</span> <span class="o">=</span> <span class="n">GL_CLAMP_TO_BORDER</span><span class="p">;</span>
     <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">filterMin</span> <span class="o">=</span> <span class="n">GL_NEAREST</span><span class="p">;</span>
-    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">filterMax</span> <span class="o">=</span> <span class="n">GL_NEAREST</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">filterMag</span> <span class="o">=</span> <span class="n">GL_NEAREST</span><span class="p">;</span>
 
-    <span class="kt">void</span> <span class="nf">Initialize</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">fileName</span><span class="p">);</span>
-
-    <span class="kt">void</span> <span class="nf">Initialize</span><span class="p">(</span><span class="kt">void</span> <span class="o">*</span><span class="n">buffer</span><span class="p">,</span> <span class="kt">size_t</span> <span class="n">bufferSize</span><span class="p">);</span>
+    <span class="kt">void</span> <span class="nf">Initialize</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">filePath</span><span class="p">);</span>
 
     <span class="kt">void</span> <span class="nf">Generate</span><span class="p">();</span>
 
@@ -432,13 +430,11 @@
 
     <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">GetFilterFromString</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">filter</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
   <span class="k">public</span><span class="o">:</span>
-    <span class="n">Texture</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">fileName</span><span class="p">);</span>
+    <span class="n">Texture</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">filePath</span><span class="p">);</span>
 
-    <span class="n">Texture</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">fileName</span><span class="p">,</span> <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">wrapS</span><span class="p">,</span> <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">wrapT</span><span class="p">,</span> <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">filterMin</span><span class="p">,</span> <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">filterMax</span><span class="p">);</span>
+    <span class="n">Texture</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">filePath</span><span class="p">,</span> <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">wrapS</span><span class="p">,</span> <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">wrapT</span><span class="p">,</span> <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">filterMin</span><span class="p">,</span> <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">filterMag</span><span class="p">);</span>
 
-    <span class="n">Texture</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">fileName</span><span class="p">,</span> <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">wrapS</span><span class="p">,</span> <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">wrapT</span><span class="p">,</span> <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">filterMin</span><span class="p">,</span> <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">filterMax</span><span class="p">);</span>
-
-    <span class="n">Texture</span><span class="p">(</span><span class="kt">void</span> <span class="o">*</span><span class="n">buffer</span><span class="p">,</span> <span class="kt">size_t</span> <span class="n">bufferSize</span><span class="p">);</span>
+    <span class="n">Texture</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">filePath</span><span class="p">,</span> <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">wrapS</span><span class="p">,</span> <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">wrapT</span><span class="p">,</span> <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">filterMin</span><span class="p">,</span> <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">filterMag</span><span class="p">);</span>
 
     <span class="o">~</span><span class="n">Texture</span><span class="p">();</span>
 
@@ -457,57 +453,48 @@
     <span class="kt">bool</span> <span class="nf">IsValid</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
 <span class="p">};</span>
 
-
 <span class="cp">#endif </span><span class="c1">//TEXTURE_H</span>
 </code></pre></div>
 <div class="highlight"><pre><span></span><code><span class="cp">#include</span> <span class="cpf">"texture.h"</span><span class="cp"></span>
 
 <span class="cp">#include</span> <span class="cpf">&lt;stb_image/stb_image.h&gt;</span><span class="cp"></span>
 
-<span class="n">Texture</span><span class="o">::</span><span class="n">Texture</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">fileName</span><span class="p">)</span> <span class="p">{</span>
-    <span class="n">Initialize</span><span class="p">(</span><span class="n">fileName</span><span class="p">);</span>
+<span class="n">Texture</span><span class="o">::</span><span class="n">Texture</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">filePath</span><span class="p">)</span> <span class="o">:</span> <span class="n">logger</span><span class="p">(</span><span class="n">Logger</span><span class="o">::</span><span class="n">GetInstance</span><span class="p">())</span> <span class="p">{</span>
+    <span class="n">Initialize</span><span class="p">(</span><span class="n">filePath</span><span class="p">);</span>
 <span class="p">}</span>
 
-<span class="n">Texture</span><span class="o">::</span><span class="n">Texture</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">fileName</span><span class="p">,</span> <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">wrapS</span><span class="p">,</span> <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">wrapT</span><span class="p">,</span> <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">filterMin</span><span class="p">,</span> <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">filterMax</span><span class="p">)</span> <span class="o">:</span>
-    <span class="n">wrapS</span><span class="p">(</span><span class="n">wrapS</span><span class="p">),</span> <span class="n">wrapT</span><span class="p">(</span><span class="n">wrapT</span><span class="p">),</span> <span class="n">filterMin</span><span class="p">(</span><span class="n">filterMin</span><span class="p">),</span> <span class="n">filterMax</span><span class="p">(</span><span class="n">filterMax</span><span class="p">)</span> <span class="p">{</span>
-    <span class="n">Initialize</span><span class="p">(</span><span class="n">fileName</span><span class="p">);</span>
+<span class="n">Texture</span><span class="o">::</span><span class="n">Texture</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">filePath</span><span class="p">,</span> <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">wrapS</span><span class="p">,</span> <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">wrapT</span><span class="p">,</span> <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">filterMin</span><span class="p">,</span> <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">filterMag</span><span class="p">)</span> <span class="o">:</span>
+    <span class="n">wrapS</span><span class="p">(</span><span class="n">wrapS</span><span class="p">),</span>
+    <span class="n">wrapT</span><span class="p">(</span><span class="n">wrapT</span><span class="p">),</span>
+    <span class="n">filterMin</span><span class="p">(</span><span class="n">filterMin</span><span class="p">),</span>
+    <span class="n">filterMag</span><span class="p">(</span><span class="n">filterMag</span><span class="p">),</span>
+    <span class="n">logger</span><span class="p">(</span><span class="n">Logger</span><span class="o">::</span><span class="n">GetInstance</span><span class="p">())</span> <span class="p">{</span>
+    <span class="n">Initialize</span><span class="p">(</span><span class="n">filePath</span><span class="p">);</span>
 <span class="p">}</span>
 
-<span class="n">Texture</span><span class="o">::</span><span class="n">Texture</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">fileName</span><span class="p">,</span> <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">wrapS</span><span class="p">,</span> <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">wrapT</span><span class="p">,</span> <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">filterMin</span><span class="p">,</span> <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">filterMax</span><span class="p">)</span> <span class="o">:</span>
-    <span class="n">wrapS</span><span class="p">(</span><span class="n">GetWrapFromString</span><span class="p">(</span><span class="n">wrapS</span><span class="p">)),</span> <span class="n">wrapT</span><span class="p">(</span><span class="n">GetWrapFromString</span><span class="p">(</span><span class="n">wrapT</span><span class="p">)),</span> <span class="n">filterMin</span><span class="p">(</span><span class="n">GetFilterFromString</span><span class="p">(</span><span class="n">filterMin</span><span class="p">)),</span> <span class="n">filterMax</span><span class="p">(</span><span class="n">GetFilterFromString</span><span class="p">(</span><span class="n">filterMax</span><span class="p">))</span> <span class="p">{</span>
-    <span class="n">Initialize</span><span class="p">(</span><span class="n">fileName</span><span class="p">);</span>
-<span class="p">}</span>
-
-<span class="n">Texture</span><span class="o">::</span><span class="n">Texture</span><span class="p">(</span><span class="kt">void</span> <span class="o">*</span><span class="n">buffer</span><span class="p">,</span> <span class="kt">size_t</span> <span class="n">bufferSize</span><span class="p">)</span> <span class="p">{</span>
-    <span class="n">Initialize</span><span class="p">(</span><span class="n">buffer</span><span class="p">,</span> <span class="n">bufferSize</span><span class="p">);</span>
+<span class="n">Texture</span><span class="o">::</span><span class="n">Texture</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">filePath</span><span class="p">,</span> <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">wrapS</span><span class="p">,</span> <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">wrapT</span><span class="p">,</span> <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">filterMin</span><span class="p">,</span> <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">filterMag</span><span class="p">)</span> <span class="o">:</span>
+    <span class="n">wrapS</span><span class="p">(</span><span class="n">GetWrapFromString</span><span class="p">(</span><span class="n">wrapS</span><span class="p">)),</span>
+    <span class="n">wrapT</span><span class="p">(</span><span class="n">GetWrapFromString</span><span class="p">(</span><span class="n">wrapT</span><span class="p">)),</span>
+    <span class="n">filterMin</span><span class="p">(</span><span class="n">GetFilterFromString</span><span class="p">(</span><span class="n">filterMin</span><span class="p">)),</span>
+    <span class="n">filterMag</span><span class="p">(</span><span class="n">GetFilterFromString</span><span class="p">(</span><span class="n">filterMag</span><span class="p">)),</span>
+    <span class="n">logger</span><span class="p">(</span><span class="n">Logger</span><span class="o">::</span><span class="n">GetInstance</span><span class="p">())</span> <span class="p">{</span>
+    <span class="n">Initialize</span><span class="p">(</span><span class="n">filePath</span><span class="p">);</span>
 <span class="p">}</span>
 
 <span class="n">Texture</span><span class="o">::~</span><span class="n">Texture</span><span class="p">()</span> <span class="p">{</span>
-    <span class="n">stbi_image_free</span><span class="p">(</span><span class="k">this</span><span class="o">-&gt;</span><span class="n">data</span><span class="p">);</span>
-    <span class="k">this</span><span class="o">-&gt;</span><span class="n">data</span> <span class="o">=</span> <span class="k">nullptr</span><span class="p">;</span>
+    <span class="n">stbi_image_free</span><span class="p">(</span><span class="n">data</span><span class="p">);</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="k">nullptr</span><span class="p">;</span>
 <span class="p">}</span>
 
-<span class="kt">void</span> <span class="n">Texture</span><span class="o">::</span><span class="n">Initialize</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">fileName</span><span class="p">)</span> <span class="p">{</span>
-    <span class="k">this</span><span class="o">-&gt;</span><span class="n">logger</span> <span class="o">=</span> <span class="n">Logger</span><span class="o">::</span><span class="n">GetInstance</span><span class="p">();</span>
-    <span class="k">this</span><span class="o">-&gt;</span><span class="n">fileName</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">(</span><span class="n">fileName</span><span class="p">);</span>
+<span class="kt">void</span> <span class="n">Texture</span><span class="o">::</span><span class="n">Initialize</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">filePath</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">fileName</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">(</span><span class="n">filePath</span><span class="p">);</span>
     <span class="c1">// load image, create texture, and generate mipmaps</span>
     <span class="n">stbi_set_flip_vertically_on_load</span><span class="p">(</span><span class="nb">false</span><span class="p">);</span>
-    <span class="k">this</span><span class="o">-&gt;</span><span class="n">data</span> <span class="o">=</span> <span class="n">stbi_load</span><span class="p">(</span><span class="n">fileName</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">width</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">height</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">nrChannels</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">stbi_load</span><span class="p">(</span><span class="n">filePath</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">width</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">height</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">nrChannels</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
     <span class="k">if</span><span class="p">(</span><span class="n">IsValid</span><span class="p">())</span> <span class="p">{</span>
         <span class="n">Generate</span><span class="p">();</span>
     <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-        <span class="n">logger</span><span class="o">-&gt;</span><span class="n">Error</span><span class="p">(</span><span class="s">"Texture failed to load at: %s"</span><span class="p">,</span> <span class="n">fileName</span><span class="p">);</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-
-<span class="kt">void</span> <span class="n">Texture</span><span class="o">::</span><span class="n">Initialize</span><span class="p">(</span><span class="kt">void</span> <span class="o">*</span><span class="n">buffer</span><span class="p">,</span> <span class="kt">size_t</span> <span class="n">bufferSize</span><span class="p">)</span> <span class="p">{</span>
-    <span class="c1">// load image, create texture, and generate mipmaps</span>
-    <span class="n">stbi_set_flip_vertically_on_load</span><span class="p">(</span><span class="nb">false</span><span class="p">);</span>
-    <span class="k">this</span><span class="o">-&gt;</span><span class="n">data</span> <span class="o">=</span> <span class="n">stbi_load_from_memory</span><span class="p">((</span><span class="kt">unsigned</span> <span class="kt">char</span><span class="o">*</span><span class="p">)</span> <span class="n">buffer</span><span class="p">,</span> <span class="n">bufferSize</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">width</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">height</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">nrChannels</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
-    <span class="k">if</span><span class="p">(</span><span class="n">IsValid</span><span class="p">())</span> <span class="p">{</span>
-        <span class="n">Generate</span><span class="p">();</span>
-    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-        <span class="n">logger</span><span class="o">-&gt;</span><span class="n">Error</span><span class="p">(</span><span class="s">"Texture failed to load at texture from memory!"</span><span class="p">);</span>
+        <span class="n">logger</span><span class="o">-&gt;</span><span class="n">Error</span><span class="p">(</span><span class="s">"Texture failed to load at: %s"</span><span class="p">,</span> <span class="n">filePath</span><span class="p">);</span>
     <span class="p">}</span>
 <span class="p">}</span>
 
@@ -521,15 +508,15 @@
     <span class="p">}</span>
 
     <span class="c1">// Create texture</span>
-    <span class="n">glGenTextures</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">&amp;</span><span class="k">this</span><span class="o">-&gt;</span><span class="n">ID</span><span class="p">);</span>
+    <span class="n">glGenTextures</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">ID</span><span class="p">);</span>
     <span class="n">Bind</span><span class="p">();</span>
-    <span class="n">glTexImage2D</span><span class="p">(</span><span class="n">GL_TEXTURE_2D</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">internalFormat</span><span class="p">,</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">width</span><span class="p">,</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">height</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">imageFormat</span><span class="p">,</span> <span class="n">GL_UNSIGNED_BYTE</span><span class="p">,</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">data</span><span class="p">);</span>
+    <span class="n">glTexImage2D</span><span class="p">(</span><span class="n">GL_TEXTURE_2D</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">internalFormat</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">imageFormat</span><span class="p">,</span> <span class="n">GL_UNSIGNED_BYTE</span><span class="p">,</span> <span class="n">data</span><span class="p">);</span>
     <span class="n">glGenerateMipmap</span><span class="p">(</span><span class="n">GL_TEXTURE_2D</span><span class="p">);</span>
     <span class="c1">// Wrap and filter modes</span>
-    <span class="n">glTexParameteri</span><span class="p">(</span><span class="n">GL_TEXTURE_2D</span><span class="p">,</span> <span class="n">GL_TEXTURE_WRAP_S</span><span class="p">,</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">wrapS</span><span class="p">);</span>
-    <span class="n">glTexParameteri</span><span class="p">(</span><span class="n">GL_TEXTURE_2D</span><span class="p">,</span> <span class="n">GL_TEXTURE_WRAP_T</span><span class="p">,</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">wrapT</span><span class="p">);</span>
-    <span class="n">glTexParameteri</span><span class="p">(</span><span class="n">GL_TEXTURE_2D</span><span class="p">,</span> <span class="n">GL_TEXTURE_MIN_FILTER</span><span class="p">,</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">filterMin</span><span class="p">);</span>
-    <span class="n">glTexParameteri</span><span class="p">(</span><span class="n">GL_TEXTURE_2D</span><span class="p">,</span> <span class="n">GL_TEXTURE_MAG_FILTER</span><span class="p">,</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">filterMax</span><span class="p">);</span>
+    <span class="n">glTexParameteri</span><span class="p">(</span><span class="n">GL_TEXTURE_2D</span><span class="p">,</span> <span class="n">GL_TEXTURE_WRAP_S</span><span class="p">,</span> <span class="n">wrapS</span><span class="p">);</span>
+    <span class="n">glTexParameteri</span><span class="p">(</span><span class="n">GL_TEXTURE_2D</span><span class="p">,</span> <span class="n">GL_TEXTURE_WRAP_T</span><span class="p">,</span> <span class="n">wrapT</span><span class="p">);</span>
+    <span class="n">glTexParameteri</span><span class="p">(</span><span class="n">GL_TEXTURE_2D</span><span class="p">,</span> <span class="n">GL_TEXTURE_MIN_FILTER</span><span class="p">,</span> <span class="n">filterMin</span><span class="p">);</span>
+    <span class="n">glTexParameteri</span><span class="p">(</span><span class="n">GL_TEXTURE_2D</span><span class="p">,</span> <span class="n">GL_TEXTURE_MAG_FILTER</span><span class="p">,</span> <span class="n">filterMag</span><span class="p">);</span>
     <span class="c1">// Unbind texture</span>
     <span class="n">glBindTexture</span><span class="p">(</span><span class="n">GL_TEXTURE_2D</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
 <span class="p">}</span>
@@ -537,8 +524,12 @@
 <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">Texture</span><span class="o">::</span><span class="n">GetWrapFromString</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">wrap</span><span class="p">)</span> <span class="k">const</span> <span class="p">{</span>
     <span class="k">if</span> <span class="p">(</span><span class="n">wrap</span> <span class="o">==</span> <span class="s">"clamp_to_border"</span><span class="p">)</span> <span class="p">{</span>
         <span class="k">return</span> <span class="n">GL_CLAMP_TO_BORDER</span><span class="p">;</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">wrap</span> <span class="o">==</span> <span class="s">"clamp_to_edge"</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="n">GL_CLAMP_TO_EDGE</span><span class="p">;</span>
     <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">wrap</span> <span class="o">==</span> <span class="s">"repeat"</span><span class="p">)</span> <span class="p">{</span>
         <span class="k">return</span> <span class="n">GL_REPEAT</span><span class="p">;</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">wrap</span> <span class="o">==</span> <span class="s">"mirrored_repeat"</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="n">GL_MIRRORED_REPEAT</span><span class="p">;</span>
     <span class="p">}</span>
     <span class="n">logger</span><span class="o">-&gt;</span><span class="n">Error</span><span class="p">(</span><span class="s">"'%s' is an invalid wrap value!"</span><span class="p">,</span> <span class="n">wrap</span><span class="p">.</span><span class="n">c_str</span><span class="p">());</span>
     <span class="k">return</span> <span class="n">wrapS</span><span class="p">;</span>
@@ -555,7 +546,7 @@
 <span class="p">}</span>
 
 <span class="kt">void</span> <span class="n">Texture</span><span class="o">::</span><span class="n">Bind</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span>
-    <span class="n">glBindTexture</span><span class="p">(</span><span class="n">GL_TEXTURE_2D</span><span class="p">,</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">ID</span><span class="p">);</span>
+    <span class="n">glBindTexture</span><span class="p">(</span><span class="n">GL_TEXTURE_2D</span><span class="p">,</span> <span class="n">ID</span><span class="p">);</span>
 <span class="p">}</span>
 
 <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">Texture</span><span class="o">::</span><span class="n">GetFilePath</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span>
@@ -579,13 +570,41 @@
 <span class="p">}</span>
 
 <span class="kt">bool</span> <span class="n">Texture</span><span class="o">::</span><span class="n">IsValid</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span>
-    <span class="k">if</span><span class="p">(</span><span class="k">this</span><span class="o">-&gt;</span><span class="n">data</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="p">{</span>
         <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
     <span class="p">}</span>
     <span class="k">return</span> <span class="nb">false</span><span class="p">;</span>
 <span class="p">}</span>
 </code></pre></div>
-<p>Explanation coming soon...</p>
+<p>The <code>Texture</code> class has quite a few member variables.  <code>fileName</code> is just the file path of the texture file.  <code>data</code> is the texture data in memory.  <code>width</code> and <code>height</code> are self explanatory.  <code>nrChannels</code> represent the number of color channels.  <code>internalFormat</code> specifies the number of color components in the texture.  <code>imageFormat</code> is set based on the number of color channels for the loaded texture.</p>
+<p><code>wrapS</code> and <code>wrapT</code> refers to the texture wrapping mode applied to the S and T axis.  Below are the 4 possible values:</p>
+<ul>
+<li>
+<p><code>GL_REPEAT</code>: The default behavior for textures. Repeats the texture image.</p>
+</li>
+<li>
+<p><code>GL_MIRRORED_REPEAT</code>: Same as GL_REPEAT but mirrors the image with each repeat.</p>
+</li>
+<li>
+<p><code>GL_CLAMP_TO_EDGE</code>: Clamps the coordinates between 0 and 1. The result is that higher coordinates become clamped to the edge, resulting in a stretched edge pattern.</p>
+</li>
+<li>
+<p><code>GL_CLAMP_TO_BORDER</code>: Coordinates outside the range are now given a user-specified border color.</p>
+</li>
+</ul>
+<p><code>filterMin</code> and <code>filterMax</code> refers to the texture filtering mode.  Below are the possible values:</p>
+<ul>
+<li>
+<p><code>GL_NEAREST</code>: OpenGL selects the texel that center is closest to the texture coordinate.  Ideal for pixel art games.</p>
+</li>
+<li>
+<p><code>GL_LINEAR</code>: OpenGL takes an interpolated value from the texture coordinate's neighboring texel.</p>
+</li>
+</ul>
+<p>The <code>Initialize</code> function is called by both constructors.  Texture data is loaded by stb_image library with the following line:</p>
+<div class="highlight"><pre><span></span><code><span class="n">data</span> <span class="o">=</span> <span class="n">stbi_load</span><span class="p">(</span><span class="n">filePath</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">width</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">height</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">nrChannels</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+</code></pre></div>
+<p>If the texture is loaded successfully, the <code>Generate</code> function is called.  This function configures the texture for OpenGL.  The only other function to point out is the <code>Bind</code> function which we'll get into once we start rendering textures.</p>
 <h2 id="asset-manager">Asset Manager</h2>
 <p>Now that we have the concept of a texture defined in <strong><em>Red Engine</em></strong>, we will need something to maintain textures as well as other assets.</p>
 <div class="highlight"><pre><span></span><code><span class="cp">#ifndef ASSET_MANAGER_H</span>
@@ -645,7 +664,7 @@
     <span class="k">return</span> <span class="n">textures</span><span class="p">.</span><span class="n">count</span><span class="p">(</span><span class="n">id</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">;</span>
 <span class="p">}</span>
 </code></pre></div>
-<p>Explanation coming soon...</p>
+<p>The <code>AssetManager</code> class is a singleton with 3 functions to pay attention to.  <code>LoadTexture</code> loads a new instance of the <code>Texture</code> class and places it in the textures map.  <code>GetTexture</code> just retrieves a texture by id from the map.  And <code>HasTexture</code> checks to see if the texture is stored by <code>AssetManager</code>.  Other assets will follow the same 3 function pattern as textures and will be discussed in a later section.</p>
 </article>
 </div>
 </div>
