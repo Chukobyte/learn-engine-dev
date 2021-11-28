@@ -17,10 +17,11 @@ A work in progress tutorial series for developing a cross platform game engine f
 
 The makefiles for each section used the following environment variables for building:
 
-| Name           | Description                                |
-|:--------------:|:------------------------------------------:|
-| PYTHON_INCLUDE | Include folder of the python installation. |
-| PYTHON_LIBS    | Python lib folder containing .a files.     |
-| SDL2_INCLUDE   | Include folder for SDL2.                   |
-| SDL2_LIBS      | SDL2 lib folder containing .a files.       |
-| FREETYPE_LIBS  | Freetype lib folder containing .a files.   |
+| Name             | Description                                |
+|:----------------:|:------------------------------------------:|
+| PYTHON_INCLUDE   | Include folder of the python installation. |
+| PYTHON_LIBS      | Python lib folder containing .a files.     |
+| SDL2_INCLUDE     | Include folder for SDL2.                   |
+| SDL2_LIBS        | SDL2 lib folder containing .a files.       |
+| FREETYPE_INCLUDE | Freetype include folder.                   |
+| FREETYPE_LIBS    | Freetype lib folder containing .a files.   |
