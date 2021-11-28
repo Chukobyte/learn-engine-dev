@@ -18,7 +18,7 @@ CXX := g++ # C++ compiler
 INCLUDE_DIR := ../../../include
 GAME_LIB_DIR := $(INCLUDE_DIR)/re
 I_FLAGS := -I"$(INCLUDE_DIR)" -I"${SDL2_INCLUDE}" -I"${PYTHON_INCLUDE}"
-LIBRARIES := -L"${SDL2_LIBS}" -L"${PYTHON_LIBS}" -L"${FREETYPE_HOME}/lib"
+LIBRARIES := -L"${SDL2_LIBS}" -L"${PYTHON_LIBS}" -L"${FREETYPE_LIBS}"
 C_FLAGS := -w -Wfatal-errors
 CPP_FLAGS := -std=c++14 $(C_FLAGS)
 
