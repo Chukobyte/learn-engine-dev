@@ -545,6 +545,7 @@
 <span class="cp">#endif </span><span class="c1">//COLOR_H</span>
 </code></pre></div>
 <h2 id="renderer-batcher">Renderer Batcher</h2>
+<p>The <code>RendererBatcher</code> class will be used to take draw calls and batch them to be used during rendering.  Typically, batching is done to limit draw calls for efficiency and performance reasons but for simplicity’s sake this batcher will be designed to just defer and submit draw calls during the <code>Render</code> phase.</p>
 <div class="highlight"><pre><span></span><code><span class="cp">#ifndef RENDERER_BATCHER_H</span>
 <span class="cp">#define RENDERER_BATCHER_H</span>
 
@@ -603,9 +604,211 @@
     <span class="n">drawBatches</span><span class="p">.</span><span class="n">clear</span><span class="p">();</span>
 <span class="p">}</span>
 </code></pre></div>
-<p>Explanation coming soon...</p>
+<p>The first thing to point out is the <code>SpriteBatchItem</code> struct as this will be used to determine what to render for a sprite.  <strong><em>Red Engine</em></strong> will group draw batches by their z indices.  The <code>ZIndexDrawBatch</code> struct will represent a draw batch for a particular z index.  We also define an alias <code>RenderFlushFunction</code> to be used as a lambda function to render flushed draw batches by the Renderer which we'll get to later.</p>
+<p><code>RendererBatcher</code> class is currently simple as it has one map and two functions.  The <code>drawBatches</code> map maintains the order of draw batches based on their z indices.  <code>BatchDrawSprite</code> will submit a batch item to the batcher to draw during the render phase.  The <code>Flush</code> function is called during the render phase to render batch items submitted and will clear them when completed.</p>
 <h2 id="2d-rendering">2D Rendering</h2>
 <h3 id="shaders">Shaders</h3>
+<div class="highlight"><pre><span></span><code><span class="cp">#ifndef SHADER_H</span>
+<span class="cp">#define SHADER_H</span>
+
+<span class="cp">#include</span> <span class="cpf">&lt;string&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;fstream&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;sstream&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp"></span>
+
+<span class="cp">#include</span> <span class="cpf">&lt;glad/glad.h&gt;</span><span class="cp"></span>
+
+<span class="cp">#include</span> <span class="cpf">"./re/math/math.h"</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">"./color.h"</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">"../utils/logger.h"</span><span class="cp"></span>
+
+<span class="k">struct</span> <span class="nc">OpenGLShaderSourceCode</span> <span class="p">{</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">vertex</span><span class="p">;</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">fragment</span><span class="p">;</span>
+<span class="p">};</span>
+
+<span class="k">class</span> <span class="nc">Shader</span> <span class="p">{</span>
+  <span class="k">private</span><span class="o">:</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">ID</span><span class="p">;</span>
+    <span class="n">Logger</span> <span class="o">*</span><span class="n">logger</span> <span class="o">=</span> <span class="k">nullptr</span><span class="p">;</span>
+
+    <span class="kt">void</span> <span class="nf">CheckCompileErrors</span><span class="p">(</span><span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">shader</span><span class="p">,</span> <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">type</span><span class="p">);</span>
+
+  <span class="k">public</span><span class="o">:</span>
+    <span class="n">Shader</span><span class="p">();</span>
+
+    <span class="n">Shader</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">vertexPath</span><span class="p">,</span> <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">fragmentPath</span><span class="p">);</span>
+
+    <span class="n">Shader</span><span class="p">(</span><span class="n">OpenGLShaderSourceCode</span> <span class="n">openGlShaderSourceCode</span><span class="p">);</span>
+
+    <span class="o">~</span><span class="n">Shader</span><span class="p">();</span>
+
+    <span class="n">OpenGLShaderSourceCode</span> <span class="nf">GetOpenGLShaderSourceFromPaths</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">vertexPath</span><span class="p">,</span> <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">fragmentPath</span><span class="p">);</span>
+
+    <span class="kt">void</span> <span class="nf">Compile</span><span class="p">(</span><span class="n">OpenGLShaderSourceCode</span> <span class="n">openGlShaderSourceCode</span><span class="p">);</span>
+
+    <span class="kt">void</span> <span class="nf">Use</span><span class="p">();</span>
+
+    <span class="kt">void</span> <span class="nf">SetBool</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">name</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">value</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
+
+    <span class="kt">void</span> <span class="nf">SetInt</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">name</span><span class="p">,</span> <span class="kt">int</span> <span class="n">value</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
+
+    <span class="kt">void</span> <span class="nf">SetFloat</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">name</span><span class="p">,</span> <span class="kt">float</span> <span class="n">value</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
+
+    <span class="kt">void</span> <span class="nf">SetVec2Float</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">name</span><span class="p">,</span> <span class="kt">float</span> <span class="n">v1</span><span class="p">,</span> <span class="kt">float</span> <span class="n">v2</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
+
+    <span class="kt">void</span> <span class="nf">SetVec2Float</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">name</span><span class="p">,</span> <span class="k">const</span> <span class="n">Vector2</span> <span class="o">&amp;</span><span class="n">value</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
+
+    <span class="kt">void</span> <span class="nf">SetVec3Float</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">name</span><span class="p">,</span> <span class="k">const</span> <span class="n">Color</span> <span class="o">&amp;</span><span class="n">value</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
+
+    <span class="kt">void</span> <span class="nf">SetVec3Float</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">name</span><span class="p">,</span> <span class="k">const</span> <span class="n">Vector3</span> <span class="o">&amp;</span><span class="n">value</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
+
+    <span class="kt">void</span> <span class="nf">SetVec3Float</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">name</span><span class="p">,</span> <span class="kt">float</span> <span class="n">v1</span><span class="p">,</span> <span class="kt">float</span> <span class="n">v2</span><span class="p">,</span> <span class="kt">float</span> <span class="n">v3</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
+
+    <span class="kt">void</span> <span class="nf">SetVec4Float</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">name</span><span class="p">,</span> <span class="kt">float</span> <span class="n">v1</span><span class="p">,</span> <span class="kt">float</span> <span class="n">v2</span><span class="p">,</span> <span class="kt">float</span> <span class="n">v3</span><span class="p">,</span> <span class="kt">float</span> <span class="n">v4</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
+
+    <span class="kt">void</span> <span class="nf">SetVec4Float</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">name</span><span class="p">,</span> <span class="k">const</span> <span class="n">Color</span> <span class="o">&amp;</span><span class="n">value</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
+
+    <span class="kt">void</span> <span class="nf">SetMatrix4Float</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">name</span><span class="p">,</span> <span class="k">const</span> <span class="n">Matrix4</span> <span class="o">&amp;</span><span class="n">mat</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
+<span class="p">};</span>
+
+<span class="cp">#endif </span><span class="c1">//SHADER_H</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="cp">#include</span> <span class="cpf">"shader.h"</span><span class="cp"></span>
+
+<span class="cp">#include</span> <span class="cpf">&lt;glm/gtc/type_ptr.hpp&gt;</span><span class="cp"></span>
+
+<span class="k">static</span> <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">VERTEX</span> <span class="o">=</span> <span class="s">"VERTEX"</span><span class="p">;</span>
+<span class="k">static</span> <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">FRAGMENT</span> <span class="o">=</span> <span class="s">"FRAGMENT"</span><span class="p">;</span>
+<span class="k">static</span> <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">PROGRAM</span> <span class="o">=</span> <span class="s">"PROGRAM"</span><span class="p">;</span>
+
+<span class="n">Shader</span><span class="o">::</span><span class="n">Shader</span><span class="p">()</span> <span class="o">:</span> <span class="n">logger</span><span class="p">(</span><span class="n">Logger</span><span class="o">::</span><span class="n">GetInstance</span><span class="p">())</span> <span class="p">{}</span>
+
+<span class="n">Shader</span><span class="o">::</span><span class="n">Shader</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">vertexPath</span><span class="p">,</span> <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">fragmentPath</span><span class="p">)</span> <span class="o">:</span> <span class="n">logger</span><span class="p">(</span><span class="n">Logger</span><span class="o">::</span><span class="n">GetInstance</span><span class="p">())</span> <span class="p">{</span>
+    <span class="n">Compile</span><span class="p">(</span><span class="n">GetOpenGLShaderSourceFromPaths</span><span class="p">(</span><span class="n">vertexPath</span><span class="p">,</span> <span class="n">fragmentPath</span><span class="p">));</span>
+<span class="p">}</span>
+
+<span class="n">Shader</span><span class="o">::</span><span class="n">Shader</span><span class="p">(</span><span class="n">OpenGLShaderSourceCode</span> <span class="n">openGlShaderSourceCode</span><span class="p">)</span> <span class="o">:</span> <span class="n">logger</span><span class="p">(</span><span class="n">Logger</span><span class="o">::</span><span class="n">GetInstance</span><span class="p">())</span> <span class="p">{</span>
+    <span class="n">Compile</span><span class="p">(</span><span class="n">openGlShaderSourceCode</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="n">Shader</span><span class="o">::~</span><span class="n">Shader</span><span class="p">()</span> <span class="p">{}</span>
+
+<span class="n">OpenGLShaderSourceCode</span> <span class="n">Shader</span><span class="o">::</span><span class="n">GetOpenGLShaderSourceFromPaths</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">vertexPath</span><span class="p">,</span> <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">fragmentPath</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">ifstream</span> <span class="n">vertexShaderFile</span><span class="p">;</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">ifstream</span> <span class="n">fragmentShaderFile</span><span class="p">;</span>
+    <span class="n">vertexShaderFile</span><span class="p">.</span><span class="n">exceptions</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">ifstream</span><span class="o">::</span><span class="n">failbit</span> <span class="o">|</span> <span class="n">std</span><span class="o">::</span><span class="n">ifstream</span><span class="o">::</span><span class="n">badbit</span><span class="p">);</span>
+    <span class="n">fragmentShaderFile</span><span class="p">.</span><span class="n">exceptions</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">ifstream</span><span class="o">::</span><span class="n">failbit</span> <span class="o">|</span> <span class="n">std</span><span class="o">::</span><span class="n">ifstream</span><span class="o">::</span><span class="n">badbit</span><span class="p">);</span>
+    <span class="n">OpenGLShaderSourceCode</span> <span class="n">openGlShaderSourceCode</span><span class="p">;</span>
+    <span class="k">try</span> <span class="p">{</span>
+        <span class="c1">// TODO: Validate file exists...</span>
+        <span class="n">vertexShaderFile</span><span class="p">.</span><span class="n">open</span><span class="p">(</span><span class="n">vertexPath</span><span class="p">.</span><span class="n">c_str</span><span class="p">());</span>
+        <span class="n">fragmentShaderFile</span><span class="p">.</span><span class="n">open</span><span class="p">(</span><span class="n">fragmentPath</span><span class="p">.</span><span class="n">c_str</span><span class="p">());</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">stringstream</span> <span class="n">vertexShaderStream</span><span class="p">,</span> <span class="n">fragmentShaderStream</span><span class="p">;</span>
+        <span class="n">vertexShaderStream</span> <span class="o">&lt;&lt;</span> <span class="n">vertexShaderFile</span><span class="p">.</span><span class="n">rdbuf</span><span class="p">();</span>
+        <span class="n">fragmentShaderStream</span> <span class="o">&lt;&lt;</span> <span class="n">fragmentShaderFile</span><span class="p">.</span><span class="n">rdbuf</span><span class="p">();</span>
+        <span class="n">vertexShaderFile</span><span class="p">.</span><span class="n">close</span><span class="p">();</span>
+        <span class="n">fragmentShaderFile</span><span class="p">.</span><span class="n">close</span><span class="p">();</span>
+        <span class="n">openGlShaderSourceCode</span><span class="p">.</span><span class="n">vertex</span> <span class="o">=</span> <span class="n">vertexShaderStream</span><span class="p">.</span><span class="n">str</span><span class="p">();</span>
+        <span class="n">openGlShaderSourceCode</span><span class="p">.</span><span class="n">fragment</span> <span class="o">=</span> <span class="n">fragmentShaderStream</span><span class="p">.</span><span class="n">str</span><span class="p">();</span>
+    <span class="p">}</span> <span class="k">catch</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">ifstream</span><span class="o">::</span><span class="n">failure</span><span class="o">&amp;</span> <span class="n">e</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">logger</span><span class="o">-&gt;</span><span class="n">Error</span><span class="p">(</span><span class="s">"Error reading shader files!</span><span class="se">\n</span><span class="s">"</span>
+                      <span class="s">"vertex path = '%s'</span><span class="se">\n</span><span class="s">fragment path = '%s'!"</span><span class="p">,</span> <span class="n">vertexPath</span><span class="p">.</span><span class="n">c_str</span><span class="p">(),</span> <span class="n">fragmentPath</span><span class="p">.</span><span class="n">c_str</span><span class="p">());</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">openGlShaderSourceCode</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">Shader</span><span class="o">::</span><span class="n">Compile</span><span class="p">(</span><span class="n">OpenGLShaderSourceCode</span> <span class="n">openGlShaderSourceCode</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">vertex</span><span class="p">,</span> <span class="n">fragment</span><span class="p">;</span>
+    <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">vertexSource</span> <span class="o">=</span> <span class="n">openGlShaderSourceCode</span><span class="p">.</span><span class="n">vertex</span><span class="p">.</span><span class="n">c_str</span><span class="p">();</span>
+    <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">fragmentSource</span> <span class="o">=</span> <span class="n">openGlShaderSourceCode</span><span class="p">.</span><span class="n">fragment</span><span class="p">.</span><span class="n">c_str</span><span class="p">();</span>
+    <span class="c1">// vertex</span>
+    <span class="n">vertex</span> <span class="o">=</span> <span class="n">glCreateShader</span><span class="p">(</span><span class="n">GL_VERTEX_SHADER</span><span class="p">);</span>
+    <span class="n">glShaderSource</span><span class="p">(</span><span class="n">vertex</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">vertexSource</span><span class="p">,</span> <span class="k">nullptr</span><span class="p">);</span>
+    <span class="n">glCompileShader</span><span class="p">(</span><span class="n">vertex</span><span class="p">);</span>
+    <span class="n">CheckCompileErrors</span><span class="p">(</span><span class="n">vertex</span><span class="p">,</span> <span class="n">VERTEX</span><span class="p">);</span>
+    <span class="c1">// fragment</span>
+    <span class="n">fragment</span> <span class="o">=</span> <span class="n">glCreateShader</span><span class="p">(</span><span class="n">GL_FRAGMENT_SHADER</span><span class="p">);</span>
+    <span class="n">glShaderSource</span><span class="p">(</span><span class="n">fragment</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">fragmentSource</span><span class="p">,</span> <span class="k">nullptr</span><span class="p">);</span>
+    <span class="n">glCompileShader</span><span class="p">(</span><span class="n">fragment</span><span class="p">);</span>
+    <span class="n">CheckCompileErrors</span><span class="p">(</span><span class="n">fragment</span><span class="p">,</span> <span class="n">FRAGMENT</span><span class="p">);</span>
+    <span class="c1">// shader</span>
+    <span class="n">ID</span> <span class="o">=</span> <span class="n">glCreateProgram</span><span class="p">();</span>
+    <span class="n">glAttachShader</span><span class="p">(</span><span class="n">ID</span><span class="p">,</span> <span class="n">vertex</span><span class="p">);</span>
+    <span class="n">glAttachShader</span><span class="p">(</span><span class="n">ID</span><span class="p">,</span> <span class="n">fragment</span><span class="p">);</span>
+    <span class="n">glLinkProgram</span><span class="p">(</span><span class="n">ID</span><span class="p">);</span>
+    <span class="n">CheckCompileErrors</span><span class="p">(</span><span class="n">ID</span><span class="p">,</span> <span class="n">PROGRAM</span><span class="p">);</span>
+    <span class="n">glDeleteShader</span><span class="p">(</span><span class="n">vertex</span><span class="p">);</span>
+    <span class="n">glDeleteShader</span><span class="p">(</span><span class="n">fragment</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">Shader</span><span class="o">::</span><span class="n">Use</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">glUseProgram</span><span class="p">(</span><span class="n">ID</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">Shader</span><span class="o">::</span><span class="n">SetBool</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">name</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">value</span><span class="p">)</span> <span class="k">const</span> <span class="p">{</span>
+    <span class="n">glUniform1i</span><span class="p">(</span><span class="n">glGetUniformLocation</span><span class="p">(</span><span class="n">ID</span><span class="p">,</span> <span class="n">name</span><span class="p">.</span><span class="n">c_str</span><span class="p">()),</span> <span class="p">(</span><span class="kt">int</span><span class="p">)</span><span class="n">value</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">Shader</span><span class="o">::</span><span class="n">SetInt</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">name</span><span class="p">,</span> <span class="kt">int</span> <span class="n">value</span><span class="p">)</span> <span class="k">const</span> <span class="p">{</span>
+    <span class="n">glUniform1i</span><span class="p">(</span><span class="n">glGetUniformLocation</span><span class="p">(</span><span class="n">ID</span><span class="p">,</span> <span class="n">name</span><span class="p">.</span><span class="n">c_str</span><span class="p">()),</span> <span class="n">value</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">Shader</span><span class="o">::</span><span class="n">SetFloat</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">name</span><span class="p">,</span> <span class="kt">float</span> <span class="n">value</span><span class="p">)</span> <span class="k">const</span> <span class="p">{</span>
+    <span class="n">glUniform1f</span><span class="p">(</span><span class="n">glGetUniformLocation</span><span class="p">(</span><span class="n">ID</span><span class="p">,</span> <span class="n">name</span><span class="p">.</span><span class="n">c_str</span><span class="p">()),</span> <span class="n">value</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">Shader</span><span class="o">::</span><span class="n">SetVec2Float</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">name</span><span class="p">,</span> <span class="kt">float</span> <span class="n">v1</span><span class="p">,</span> <span class="kt">float</span> <span class="n">v2</span><span class="p">)</span> <span class="k">const</span> <span class="p">{</span>
+    <span class="n">glUniform2f</span><span class="p">(</span><span class="n">glGetUniformLocation</span><span class="p">(</span><span class="k">this</span><span class="o">-&gt;</span><span class="n">ID</span><span class="p">,</span> <span class="n">name</span><span class="p">.</span><span class="n">c_str</span><span class="p">()),</span> <span class="n">v1</span><span class="p">,</span> <span class="n">v2</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">Shader</span><span class="o">::</span><span class="n">SetVec2Float</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">name</span><span class="p">,</span> <span class="k">const</span> <span class="n">Vector2</span> <span class="o">&amp;</span><span class="n">value</span><span class="p">)</span> <span class="k">const</span> <span class="p">{</span>
+    <span class="n">glUniform2f</span><span class="p">(</span><span class="n">glGetUniformLocation</span><span class="p">(</span><span class="k">this</span><span class="o">-&gt;</span><span class="n">ID</span><span class="p">,</span> <span class="n">name</span><span class="p">.</span><span class="n">c_str</span><span class="p">()),</span> <span class="n">value</span><span class="p">.</span><span class="n">x</span><span class="p">,</span> <span class="n">value</span><span class="p">.</span><span class="n">y</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">Shader</span><span class="o">::</span><span class="n">SetVec3Float</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">name</span><span class="p">,</span> <span class="kt">float</span> <span class="n">v1</span><span class="p">,</span> <span class="kt">float</span> <span class="n">v2</span><span class="p">,</span> <span class="kt">float</span> <span class="n">v3</span><span class="p">)</span> <span class="k">const</span> <span class="p">{</span>
+    <span class="n">glUniform3f</span><span class="p">(</span><span class="n">glGetUniformLocation</span><span class="p">(</span><span class="k">this</span><span class="o">-&gt;</span><span class="n">ID</span><span class="p">,</span> <span class="n">name</span><span class="p">.</span><span class="n">c_str</span><span class="p">()),</span> <span class="n">v1</span><span class="p">,</span> <span class="n">v2</span><span class="p">,</span> <span class="n">v3</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">Shader</span><span class="o">::</span><span class="n">SetVec3Float</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">name</span><span class="p">,</span> <span class="k">const</span> <span class="n">Color</span> <span class="o">&amp;</span><span class="n">value</span><span class="p">)</span> <span class="k">const</span> <span class="p">{</span>
+    <span class="n">glUniform3f</span><span class="p">(</span><span class="n">glGetUniformLocation</span><span class="p">(</span><span class="k">this</span><span class="o">-&gt;</span><span class="n">ID</span><span class="p">,</span> <span class="n">name</span><span class="p">.</span><span class="n">c_str</span><span class="p">()),</span> <span class="n">value</span><span class="p">.</span><span class="n">r</span><span class="p">,</span> <span class="n">value</span><span class="p">.</span><span class="n">g</span><span class="p">,</span> <span class="n">value</span><span class="p">.</span><span class="n">b</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">Shader</span><span class="o">::</span><span class="n">SetVec3Float</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">name</span><span class="p">,</span> <span class="k">const</span> <span class="n">Vector3</span> <span class="o">&amp;</span><span class="n">value</span><span class="p">)</span> <span class="k">const</span> <span class="p">{</span>
+    <span class="n">glUniform3f</span><span class="p">(</span><span class="n">glGetUniformLocation</span><span class="p">(</span><span class="k">this</span><span class="o">-&gt;</span><span class="n">ID</span><span class="p">,</span> <span class="n">name</span><span class="p">.</span><span class="n">c_str</span><span class="p">()),</span> <span class="n">value</span><span class="p">.</span><span class="n">x</span><span class="p">,</span> <span class="n">value</span><span class="p">.</span><span class="n">y</span><span class="p">,</span> <span class="n">value</span><span class="p">.</span><span class="n">z</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">Shader</span><span class="o">::</span><span class="n">SetVec4Float</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">name</span><span class="p">,</span> <span class="kt">float</span> <span class="n">v1</span><span class="p">,</span> <span class="kt">float</span> <span class="n">v2</span><span class="p">,</span> <span class="kt">float</span> <span class="n">v3</span><span class="p">,</span> <span class="kt">float</span> <span class="n">v4</span><span class="p">)</span> <span class="k">const</span> <span class="p">{</span>
+    <span class="n">glUniform4f</span><span class="p">(</span><span class="n">glGetUniformLocation</span><span class="p">(</span><span class="k">this</span><span class="o">-&gt;</span><span class="n">ID</span><span class="p">,</span> <span class="n">name</span><span class="p">.</span><span class="n">c_str</span><span class="p">()),</span> <span class="n">v1</span><span class="p">,</span> <span class="n">v2</span><span class="p">,</span> <span class="n">v3</span><span class="p">,</span> <span class="n">v4</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">Shader</span><span class="o">::</span><span class="n">SetVec4Float</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">name</span><span class="p">,</span> <span class="k">const</span> <span class="n">Color</span> <span class="o">&amp;</span><span class="n">value</span><span class="p">)</span> <span class="k">const</span> <span class="p">{</span>
+    <span class="n">glUniform4f</span><span class="p">(</span><span class="n">glGetUniformLocation</span><span class="p">(</span><span class="k">this</span><span class="o">-&gt;</span><span class="n">ID</span><span class="p">,</span> <span class="n">name</span><span class="p">.</span><span class="n">c_str</span><span class="p">()),</span> <span class="n">value</span><span class="p">.</span><span class="n">r</span><span class="p">,</span> <span class="n">value</span><span class="p">.</span><span class="n">g</span><span class="p">,</span> <span class="n">value</span><span class="p">.</span><span class="n">b</span><span class="p">,</span> <span class="n">value</span><span class="p">.</span><span class="n">a</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">Shader</span><span class="o">::</span><span class="n">SetMatrix4Float</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">name</span><span class="p">,</span> <span class="k">const</span> <span class="n">Matrix4</span> <span class="o">&amp;</span><span class="n">mat</span><span class="p">)</span> <span class="k">const</span> <span class="p">{</span>
+    <span class="n">glUniformMatrix4fv</span><span class="p">(</span><span class="n">glGetUniformLocation</span><span class="p">(</span><span class="k">this</span><span class="o">-&gt;</span><span class="n">ID</span><span class="p">,</span> <span class="n">name</span><span class="p">.</span><span class="n">c_str</span><span class="p">()),</span> <span class="mi">1</span><span class="p">,</span> <span class="n">GL_FALSE</span><span class="p">,</span> <span class="n">glm</span><span class="o">::</span><span class="n">value_ptr</span><span class="p">(</span><span class="n">mat</span><span class="p">));</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">Shader</span><span class="o">::</span><span class="n">CheckCompileErrors</span><span class="p">(</span><span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">shader</span><span class="p">,</span> <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">type</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kt">int</span> <span class="n">success</span><span class="p">;</span>
+    <span class="kt">char</span> <span class="n">infoLog</span><span class="p">[</span><span class="mi">1024</span><span class="p">];</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">type</span> <span class="o">==</span> <span class="n">PROGRAM</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">glGetProgramiv</span><span class="p">(</span><span class="n">shader</span><span class="p">,</span> <span class="n">GL_LINK_STATUS</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">success</span><span class="p">);</span>
+        <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">success</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">glGetProgramInfoLog</span><span class="p">(</span><span class="n">shader</span><span class="p">,</span> <span class="mi">1024</span><span class="p">,</span> <span class="k">nullptr</span><span class="p">,</span> <span class="n">infoLog</span><span class="p">);</span>
+            <span class="n">logger</span><span class="o">-&gt;</span><span class="n">Error</span><span class="p">(</span><span class="s">"Shader type '%s' linking failed!</span><span class="se">\n</span><span class="s">%s"</span><span class="p">,</span> <span class="n">type</span><span class="p">.</span><span class="n">c_str</span><span class="p">(),</span> <span class="n">infoLog</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="n">glGetShaderiv</span><span class="p">(</span><span class="n">shader</span><span class="p">,</span> <span class="n">GL_COMPILE_STATUS</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">success</span><span class="p">);</span>
+        <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">success</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">glGetShaderInfoLog</span><span class="p">(</span><span class="n">shader</span><span class="p">,</span> <span class="mi">1024</span><span class="p">,</span> <span class="k">nullptr</span><span class="p">,</span> <span class="n">infoLog</span><span class="p">);</span>
+            <span class="n">logger</span><span class="o">-&gt;</span><span class="n">Error</span><span class="p">(</span><span class="s">"Shader type '%s' compilation failed!</span><span class="se">\n</span><span class="s">%s"</span><span class="p">,</span> <span class="n">type</span><span class="p">.</span><span class="n">c_str</span><span class="p">(),</span> <span class="n">infoLog</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Explanation coming soon...</p>
 <h3 id="spriterenderer">SpriteRenderer</h3>
 <div class="highlight"><pre><span></span><code><span class="cp">#ifndef SPRITE_RENDERER_H</span>
 <span class="cp">#define SPRITE_RENDERER_H</span>
@@ -618,7 +821,6 @@
 <span class="cp">#include</span> <span class="cpf">"./re/math/math.h"</span><span class="cp"></span>
 
 <span class="cp">#include</span> <span class="cpf">"project_properties.h"</span><span class="cp"></span>
-<span class="cp">#include</span> <span class="cpf">"../../../../include/game_lib/math/math.h"</span><span class="cp"></span>
 
 <span class="k">static</span> <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">OPENGL_SHADER_SOURCE_VERTEX_SPRITE</span> <span class="o">=</span>
         <span class="s">"#version 330 core</span><span class="se">\n</span><span class="s">"</span>
