@@ -8,7 +8,7 @@
 
 #include <glad/glad.h>
 
-#include "./re/math/math.h" // NOLINT(modernize-deprecated-headers)
+#include "./re/math/math.h"
 #include "./color.h"
 #include "../utils/logger.h"
 

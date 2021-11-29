@@ -9,7 +9,7 @@
 #include "./texture.h"
 #include "./font.h"
 #include "./color.h"
-#include "./re/math/math.h" // NOLINT(modernize-deprecated-headers)
+#include "./re/math/math.h"
 
 struct SpriteBatchItem {
     Texture *texture2D = nullptr;
