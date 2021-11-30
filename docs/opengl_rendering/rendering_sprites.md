@@ -585,6 +585,44 @@ SpriteRenderer::Draw(Texture *texture2D, const Rect2 &sourceRectangle, const Rec
 }
 ```
 
+#### Shader Code
+
+Vertex
+
+```glsl
+#version 330 core
+
+layout (location = 0) in vec4 vertex;
+
+out vec2 texCoord
+
+uniform mat4 projection;
+uniform mat4 model;
+
+void main() {
+    texCoord = vertex.zw;
+    gl_Position = projection * model * vec4(vertex.xy, 0.0f, 1.0f);
+}
+```
+
+Fragment
+
+```glsl
+#version 330 core
+
+in vec2 texCoord;
+out vec4 color;
+
+uniform sampler2D sprite;
+uniform vec4 spriteColor;
+
+void main() {
+    color = spriteColor * texture(sprite, texCoord);
+}
+```
+
+#### SpriteRenderer Class
+
 Explanation coming soon...
 
 ### Renderer2D
