@@ -414,7 +414,7 @@
 <p><code>get_version</code> is really simple as it is just returning a string which contain 'v0.0.1' with <code>Py_BuildValue</code>.  The next function <code>print_log</code> is slightly more complicated but not by much. We use <code>PyArg_ParseTupleKeywords</code> to get the values of the argument passed in.  <code>enginePrintLogKWList</code> is passed in as we have the defined <code>message</code> as a keyword argument.</p>
 <p>With our new module defined and implemented, we have to now import it into the python interpreter.  Update the construtor in <code>pyhelper.hpp</code> to add our newly created module with <code>PyImport_AppendInittab</code>.  This should be called before <code>Py_Initialize</code>.</p>
 <div class="highlight"><pre><span></span><code><span class="n">CPyInstance</span><span class="p">()</span> <span class="p">{</span>
-    <span class="n">Py_SetProgramName</span><span class="p">(</span><span class="sa">L</span><span class="s">"learn_engine_dev"</span><span class="p">);</span>
+    <span class="n">Py_SetProgramName</span><span class="p">(</span><span class="sa">L</span><span class="s">"red_engine"</span><span class="p">);</span>
     <span class="n">PyImport_AppendInittab</span><span class="p">(</span><span class="s">"engine"</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">PyInit_engine</span><span class="p">);</span>
     <span class="n">Py_Initialize</span><span class="p">();</span>
     <span class="n">PyRun_SimpleString</span><span class="p">(</span><span class="s">"import sys"</span><span class="p">);</span>
