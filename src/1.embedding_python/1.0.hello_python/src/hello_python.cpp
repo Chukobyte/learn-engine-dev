@@ -2,7 +2,7 @@
 #include <Python.h>
 
 int main(int argv, char** args) {
-    Py_SetProgramName(L"learn_engine_dev");
+    Py_SetProgramName(L"red_engine");
     Py_Initialize();
 
     PyRun_SimpleString("print('hello world (from python)')");

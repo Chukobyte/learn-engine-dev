@@ -23,7 +23,7 @@ With that said, let's create `PyHelper.hpp` which encapsulates this functionalit
 class CPyInstance {
   public:
     CPyInstance() {
-        Py_SetProgramName(L"learn_engine_dev");
+        Py_SetProgramName(L"red_engine");
         Py_Initialize();
         PyRun_SimpleString("import sys");
         PyRun_SimpleString("sys.path.append(\".\")");

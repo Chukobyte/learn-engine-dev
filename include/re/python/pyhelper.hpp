@@ -11,7 +11,7 @@
 class CPyInstance {
   public:
     CPyInstance() {
-        Py_SetProgramName(L"learn_engine_dev");
+        Py_SetProgramName(L"red_engine");
         PyImport_AppendInittab("engine", &PyInit_engine);
         Py_Initialize();
         PyRun_SimpleString("import sys");

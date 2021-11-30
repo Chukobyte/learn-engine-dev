@@ -1,4 +1,4 @@
-PROJECT_NAME := learn_engine_dev
+PROJECT_NAME := red_engine
 
 # OS Specific Stuff
 ifeq ($(OS),Windows_NT)

@@ -2,7 +2,7 @@
 
 ## Dependencies
 
-For this tutorial, we'll be using Python 3.7 but feel free to try other versions as well.  Python must be downloaded and installed locally before continuing.  Windows users be sure to include the `python37.dll` in the same directory as the `learn_engine_dev` executable.
+For this tutorial, we'll be using Python 3.7 but feel free to try other versions as well.  Python must be downloaded and installed locally before continuing.  Windows users be sure to include the `python37.dll` in the same directory as the `red_engine` executable.
 
 ## Build
 
@@ -14,7 +14,7 @@ For python there are two environment variables:
 * `PYTHON_LIBS` The python installation's lib folder.  Should contain the python `a.` file used during linking.
 
 ```makefile
-PROJECT_NAME := learn_engine_dev
+PROJECT_NAME := red_engine
 
 # OS Specific Stuff
 ifeq ($(OS),Windows_NT)
@@ -82,7 +82,7 @@ It's time to finally write python code within ***Red Engine***!  Before we start
 #include <Python.h>
 
 int main(int argv, char** args) {
-    Py_SetProgramName(L"learn_engine_dev");
+    Py_SetProgramName(L"red_engine");
     Py_Initialize();
 
     PyRun_SimpleString("print('hello world (from python)')");
@@ -122,7 +122,7 @@ A simple python function that prints the statement *'Game played!'* to the conso
 #include <Python.h>
 
 int main(int argv, char** args) {
-    Py_SetProgramName(L"learn_engine_dev");
+    Py_SetProgramName(L"red_engine");
     Py_Initialize();
     PyRun_SimpleString("import sys");
     PyRun_SimpleString("sys.path.append(\".\")");
