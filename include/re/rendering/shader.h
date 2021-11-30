@@ -22,6 +22,8 @@ class Shader {
     unsigned int ID;
     Logger *logger = nullptr;
 
+    bool IsShaderFilesValid(const std::string &vertexPath, const std::string &fragmentPath);
+
     void CheckCompileErrors(unsigned int shader, const std::string &type);
 
   public:

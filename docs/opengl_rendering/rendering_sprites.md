@@ -180,6 +180,10 @@ The first thing to point out is the `SpriteBatchItem` struct as this will be use
 
 ### Shaders
 
+What are shaders?  They are simply GPU programs, in the case of OpenGL written in [GLSL](https://www.khronos.org/opengl/wiki/OpenGL_Shading_Language) (OpenGL Shading Language).  Before we write the renderer for ***Red Engine*** we'll first implement the `Shader` class which will compile shaders, install the shaders for use, and set [uniform variables](https://www.khronos.org/opengl/wiki/Uniform_(GLSL)).
+
+A shader can be written for each of the [shader stages](https://www.khronos.org/opengl/wiki/Shader#Stages), but we will only use vertex and fragment shaders in ***Red Engine***.
+
 ```c++
 #ifndef SHADER_H
 #define SHADER_H
@@ -204,6 +208,8 @@ class Shader {
   private:
     unsigned int ID;
     Logger *logger = nullptr;
+
+    bool IsShaderFilesValid(const std::string &vertexPath, const std::string &fragmentPath);
 
     void CheckCompileErrors(unsigned int shader, const std::string &type);
 
@@ -251,11 +257,11 @@ class Shader {
 ```c++
 #include "shader.h"
 
+#include <cassert>
+
 #include <glm/gtc/type_ptr.hpp>
 
-static const std::string VERTEX = "VERTEX";
-static const std::string FRAGMENT = "FRAGMENT";
-static const std::string PROGRAM = "PROGRAM";
+#include "./re/utils/file_helper.h"
 
 Shader::Shader() : logger(Logger::GetInstance()) {}
 
@@ -270,25 +276,26 @@ Shader::Shader(OpenGLShaderSourceCode openGlShaderSourceCode) : logger(Logger::G
 Shader::~Shader() {}
 
 OpenGLShaderSourceCode Shader::GetOpenGLShaderSourceFromPaths(const std::string &vertexPath, const std::string &fragmentPath) {
-    std::ifstream vertexShaderFile;
-    std::ifstream fragmentShaderFile;
-    vertexShaderFile.exceptions(std::ifstream::failbit | std::ifstream::badbit);
-    fragmentShaderFile.exceptions(std::ifstream::failbit | std::ifstream::badbit);
     OpenGLShaderSourceCode openGlShaderSourceCode;
-    try {
-        // TODO: Validate file exists...
-        vertexShaderFile.open(vertexPath.c_str());
-        fragmentShaderFile.open(fragmentPath.c_str());
-        std::stringstream vertexShaderStream, fragmentShaderStream;
-        vertexShaderStream << vertexShaderFile.rdbuf();
-        fragmentShaderStream << fragmentShaderFile.rdbuf();
-        vertexShaderFile.close();
-        fragmentShaderFile.close();
-        openGlShaderSourceCode.vertex = vertexShaderStream.str();
-        openGlShaderSourceCode.fragment = fragmentShaderStream.str();
-    } catch(std::ifstream::failure& e) {
-        logger->Error("Error reading shader files!\n"
-                      "vertex path = '%s'\nfragment path = '%s'!", vertexPath.c_str(), fragmentPath.c_str());
+    if (IsShaderFilesValid(vertexPath, fragmentPath)) {
+        std::ifstream vertexShaderFile;
+        std::ifstream fragmentShaderFile;
+        vertexShaderFile.exceptions(std::ifstream::failbit | std::ifstream::badbit);
+        fragmentShaderFile.exceptions(std::ifstream::failbit | std::ifstream::badbit);
+        try {
+            vertexShaderFile.open(vertexPath.c_str());
+            fragmentShaderFile.open(fragmentPath.c_str());
+            std::stringstream vertexShaderStream, fragmentShaderStream;
+            vertexShaderStream << vertexShaderFile.rdbuf();
+            fragmentShaderStream << fragmentShaderFile.rdbuf();
+            vertexShaderFile.close();
+            fragmentShaderFile.close();
+            openGlShaderSourceCode.vertex = vertexShaderStream.str();
+            openGlShaderSourceCode.fragment = fragmentShaderStream.str();
+        } catch(std::ifstream::failure& e) {
+            logger->Error("Error reading shader files!\n"
+                          "vertex path = '%s'\nfragment path = '%s'!", vertexPath.c_str(), fragmentPath.c_str());
+        }
     }
     return openGlShaderSourceCode;
 }
@@ -301,18 +308,18 @@ void Shader::Compile(OpenGLShaderSourceCode openGlShaderSourceCode) {
     vertex = glCreateShader(GL_VERTEX_SHADER);
     glShaderSource(vertex, 1, &vertexSource, nullptr);
     glCompileShader(vertex);
-    CheckCompileErrors(vertex, VERTEX);
+    CheckCompileErrors(vertex, "VERTEX");
     // fragment
     fragment = glCreateShader(GL_FRAGMENT_SHADER);
     glShaderSource(fragment, 1, &fragmentSource, nullptr);
     glCompileShader(fragment);
-    CheckCompileErrors(fragment, FRAGMENT);
+    CheckCompileErrors(fragment, "FRAGMENT");
     // shader
     ID = glCreateProgram();
     glAttachShader(ID, vertex);
     glAttachShader(ID, fragment);
     glLinkProgram(ID);
-    CheckCompileErrors(ID, PROGRAM);
+    CheckCompileErrors(ID, "PROGRAM");
     glDeleteShader(vertex);
     glDeleteShader(fragment);
 }
@@ -365,10 +372,23 @@ void Shader::SetMatrix4Float(const std::string &name, const Matrix4 &mat) const 
     glUniformMatrix4fv(glGetUniformLocation(this->ID, name.c_str()), 1, GL_FALSE, glm::value_ptr(mat));
 }
 
+bool Shader::IsShaderFilesValid(const std::string &vertexPath, const std::string &fragmentPath) {
+    bool isValid = true;
+    if (!FileHelper::DoesFileExist(vertexPath)) {
+        isValid = false;
+        logger->Error("Vertex file: %s doesn't exist!", vertexPath.c_str());
+    }
+    if (!FileHelper::DoesFileExist(fragmentPath)) {
+        isValid = false;
+        logger->Error("Vertex file: %s doesn't exist!", vertexPath.c_str());
+    }
+    return isValid;
+}
+
 void Shader::CheckCompileErrors(unsigned int shader, const std::string &type) {
     int success;
     char infoLog[1024];
-    if(type == PROGRAM) {
+    if(type == "PROGRAM") {
         glGetProgramiv(shader, GL_LINK_STATUS, &success);
         if(!success) {
             glGetProgramInfoLog(shader, 1024, nullptr, infoLog);
@@ -384,7 +404,9 @@ void Shader::CheckCompileErrors(unsigned int shader, const std::string &type) {
 }
 ```
 
-Explanation coming soon...
+First, the `OpenGLShaderSourceCode` struct is used to hold a string representation of the shader code.  The `Shader` class has two constructors, one that accepts `OpenGLShaderSourceCode` and another that accepts the file paths of the vertex and fragment shaders file paths as parameters which we won't use for this tutorial series.
+
+The `Compile` function compiles the vertex and fragment shaders, attaches the shader objects to the shader program, and links the shader program.  We will call the `Use` function whenever we need to install a shader for use which we'll see an example of later.  Other than that, the last thing to mention is the multiple `Set$TYPE` functions.  These are used to set [uniform variables](https://www.khronos.org/opengl/wiki/Uniform_(GLSL)) within the shaders and we will see how they are used in the next section.
 
 ### SpriteRenderer
 
@@ -563,6 +585,8 @@ SpriteRenderer::Draw(Texture *texture2D, const Rect2 &sourceRectangle, const Rec
 }
 ```
 
+Explanation coming soon...
+
 ### Renderer2D
 
 ```c++
@@ -645,6 +669,8 @@ void Renderer2D::FlushBatches() {
     rendererBatcher.Flush(renderFlushFunction);
 }
 ```
+
+Explanation coming soon...
 
 ## Render Sprites
 
