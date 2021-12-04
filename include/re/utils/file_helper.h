@@ -2,6 +2,7 @@
 #define FILE_HELPER_H
 
 #include <sys/stat.h>
+#include <experimental/filesystem>
 
 class FileHelper {
   public:
@@ -11,7 +12,7 @@ class FileHelper {
     }
 
     static void ChangeDirectory(const std::string &newDirectory) {
-        chdir(newDirectory.c_str());
+        std::experimental::filesystem::current_path(newDirectory);
     }
 };
 
