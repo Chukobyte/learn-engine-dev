@@ -5,9 +5,6 @@
 #include <SDL2/SDL.h>
 
 class RenderContext {
-  private:
-    RenderContext() = default;
-
   public:
     SDL_Window *window = nullptr;
     SDL_WindowFlags windowFlags = (SDL_WindowFlags)(
@@ -20,6 +17,9 @@ class RenderContext {
     unsigned int currentWindowHeight;
 
     static RenderContext* GetInstance();
+
+  private:
+    RenderContext() = default;
 };
 
 #endif //RENDER_CONTEXT_H

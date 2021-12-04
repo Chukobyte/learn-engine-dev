@@ -109,7 +109,7 @@ void GameEngine::Render() {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 
     static const Vector2 windowCenter = Vector2(projectProperties->GetWindowWidth() / 2,
-                                                projectProperties->GetWindowHeight() / 2);
+                                        projectProperties->GetWindowHeight() / 2);
 
     // Render Sprites
     static Texture *mellisaWalkTexture = assetManager->GetTexture("assets/images/melissa_walk_animation.png");

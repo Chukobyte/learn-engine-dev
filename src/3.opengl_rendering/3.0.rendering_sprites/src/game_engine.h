@@ -10,6 +10,14 @@
 #include "./re/utils/logger.h"
 
 class GameEngine {
+  public:
+    GameEngine();
+    ~GameEngine();
+    void ProcessInput();
+    void Update();
+    void Render();
+    bool IsRunning() const;
+
   private:
     ProjectProperties *projectProperties = nullptr;
     GameEngineContext *engineContext = nullptr;
@@ -20,22 +28,8 @@ class GameEngine {
     Logger *logger = nullptr;
 
     void Initialize();
-
     void InitializeSDL();
-
     void InitializeRendering();
-  public:
-    GameEngine();
-
-    ~GameEngine();
-
-    void ProcessInput();
-
-    void Update();
-
-    void Render();
-
-    bool IsRunning() const;
 };
 
 

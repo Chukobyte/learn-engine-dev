@@ -15,23 +15,16 @@ class Logger {
     Logger() = default;
 
   public:
-    LogLevel logLevel = LogLevel::DEBUG;
-
     static Logger* GetInstance();
-
     void SetLogLevel(LogLevel level);
-
     bool SetLogLevelFromString(std::string logLevelString);
-
     LogLevel GetLogLevel() const;
-
     void Debug(const char *fmt, ...) const;
-
     void Warn(const char *fmt, ...) const;
-
     void Info(const char *fmt, ...) const;
-
     void Error(const char *fmt, ...) const;
+
+    LogLevel logLevel = LogLevel::DEBUG;
 };
 
 #endif //LOGGER_H

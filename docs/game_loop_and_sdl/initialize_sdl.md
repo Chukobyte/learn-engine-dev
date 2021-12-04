@@ -12,25 +12,20 @@ The `GameEngine` class will tie the game loop and engine systems together.
 #include <game_lib/utils/logger.h>
 
 class GameEngine {
+  public:
+    GameEngine();
+    ~GameEngine();
+    void ProcessInput();
+    void Update();
+    void Render();
+    bool IsRunning() const;
+
   private:
     GameEngineContext *engineContext = nullptr;
     Logger *logger = nullptr;
 
     void Initialize();
-
     void InitializeSDL();
-  public:
-    GameEngine();
-
-    ~GameEngine();
-
-    void ProcessInput();
-
-    void Update();
-
-    void Render();
-
-    bool IsRunning() const;
 };
 
 #endif //GAME_ENGINE_H
@@ -137,14 +132,6 @@ The `Timer` class is straight forward.
 #include <SDL2/SDL.h>
 
 class Timer {
-  private:
-    Uint32 waitTime;
-    bool loops;
-    Uint32 startTicks;
-    Uint32 pausedTicks;
-    bool isPaused;
-    bool hasStarted;
-
   public:
     Timer(Uint32 waitTimeInMilliseconds, bool doesLoop = false);
     Uint32 GetWaitTime() const;
@@ -161,6 +148,14 @@ class Timer {
     Uint32 GetTicks() const;
     bool HasStarted() const;
     bool IsPaused() const;
+
+  private:
+    Uint32 waitTime;
+    bool loops;
+    Uint32 startTicks;
+    Uint32 pausedTicks;
+    bool isPaused;
+    bool hasStarted;
 };
 
 #endif
@@ -278,20 +273,18 @@ bool Timer::IsPaused() const {
 #include "./re/utils/timer.h"
 
 class FPSCounter {
+  public:
+    ~FPSCounter();
+    static FPSCounter* GetInstance();
+    void Update();
+    unsigned int GetFPS() const;
+
   private:
     unsigned int fps;
     unsigned int fpsCount;
     Timer *timer = nullptr;
 
     FPSCounter();
-  public:
-    ~FPSCounter();
-
-    static FPSCounter* GetInstance();
-
-    void Update();
-
-    unsigned int GetFPS() const;
 };
 
 #endif //FPS_COUNTER_H

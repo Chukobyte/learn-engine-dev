@@ -7,9 +7,6 @@
 #include FT_FREETYPE_H
 
 class RenderContext {
-  private:
-    RenderContext() = default;
-
   public:
     SDL_Window *window = nullptr;
     SDL_WindowFlags windowFlags = (SDL_WindowFlags)(
@@ -23,8 +20,10 @@ class RenderContext {
     unsigned int currentWindowHeight;
 
     static RenderContext* GetInstance();
-
     void InitializeFont();
+
+  private:
+    RenderContext() = default;
 };
 
 #endif //RENDER_CONTEXT_H

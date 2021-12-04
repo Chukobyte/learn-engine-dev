@@ -11,6 +11,17 @@
 
 
 class AssetManager {
+  public:
+    static AssetManager* GetInstance();
+    // Texture
+    void LoadTexture(const std::string &id, const std::string &filePath);
+    Texture* GetTexture(const std::string &id);
+    bool HasTexture(const std::string &id) const;
+    // Font
+    void LoadFont(const std::string &fontId, const std::string &fontPath, int size);
+    Font* GetFont(const std::string &fontId);
+    bool HasFont(const std::string &fontId) const;
+
   private:
     std::unordered_map<std::string, Texture*> textures;
     std::unordered_map<std::string, Font*> fonts;
@@ -18,22 +29,6 @@ class AssetManager {
     Logger *logger = nullptr;
 
     AssetManager();
-  public:
-    static AssetManager* GetInstance();
-
-    // Texture
-    void LoadTexture(const std::string &id, const std::string &filePath);
-
-    Texture* GetTexture(const std::string &id);
-
-    bool HasTexture(const std::string &id) const;
-
-    // Font
-    void LoadFont(const std::string &fontId, const std::string &fontPath, int size);
-
-    Font* GetFont(const std::string &fontId);
-
-    bool HasFont(const std::string &fontId) const;
 };
 
 

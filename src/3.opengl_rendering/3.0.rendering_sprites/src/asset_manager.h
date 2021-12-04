@@ -9,19 +9,17 @@
 
 
 class AssetManager {
+  public:
+    static AssetManager* GetInstance();
+    void LoadTexture(const std::string &id, const std::string &filePath);
+    Texture* GetTexture(const std::string &id);
+    bool HasTexture(const std::string &id) const;
+
   private:
     std::unordered_map<std::string, Texture*> textures;
     Logger *logger = nullptr;
 
     AssetManager();
-  public:
-    static AssetManager* GetInstance();
-
-    void LoadTexture(const std::string &id, const std::string &filePath);
-
-    Texture* GetTexture(const std::string &id);
-
-    bool HasTexture(const std::string &id) const;
 };
 
 

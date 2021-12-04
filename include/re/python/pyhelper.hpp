@@ -24,11 +24,8 @@ class CPyInstance {
 };
 
 class CPyObject {
-  private:
-    PyObject* pyObj;
   public:
     CPyObject(): pyObj(nullptr) {}
-
     CPyObject(PyObject* p) : pyObj(p) {}
 
     ~CPyObject() {
@@ -73,6 +70,9 @@ class CPyObject {
         pyObj = p;
         return pyObj;
     }
+
+  private:
+    PyObject* pyObj;
 };
 
 #endif //PYHELPER_HPP

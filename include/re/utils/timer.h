@@ -4,14 +4,6 @@
 #include <SDL2/SDL.h>
 
 class Timer {
-  private:
-    Uint32 waitTime;
-    bool loops;
-    Uint32 startTicks;
-    Uint32 pausedTicks;
-    bool isPaused;
-    bool hasStarted;
-
   public:
     Timer(Uint32 waitTimeInMilliseconds, bool doesLoop = false);
     Uint32 GetWaitTime() const;
@@ -28,6 +20,14 @@ class Timer {
     Uint32 GetTicks() const;
     bool HasStarted() const;
     bool IsPaused() const;
+
+  private:
+    Uint32 waitTime;
+    bool loops;
+    Uint32 startTicks;
+    Uint32 pausedTicks;
+    bool isPaused;
+    bool hasStarted;
 };
 
 #endif

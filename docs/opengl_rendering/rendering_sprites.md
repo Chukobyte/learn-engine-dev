@@ -26,11 +26,8 @@ class Rectangle {
     float h;
 
     Rectangle(): x(0.0f), y(0.0f), w(0.0f), h(0.0f) {}
-
     Rectangle(float x, float y, float w, float h): x(x), y(y), w(w), h(h) {}
-
     Rectangle(float x, float y, glm::vec2 size): x(x), y(y), w(size.x), h(size.y) {}
-
     Rectangle(glm::vec2 position, glm::vec2 size): x(position.x), y(position.y), w(size.x), h(size.y) {}
 
     bool operator==(const Rectangle &otherRect2) const {
@@ -93,9 +90,7 @@ class Color {
     float a = 1.0f;
 
     Color() {}
-
     Color(GLfloat red, GLfloat green, GLfloat blue) : r(red), g(green), b(blue), a(1.0f) {}
-
     Color(GLfloat red, GLfloat green, GLfloat blue, GLfloat alpha) : r(red), g(green), b(blue), a(alpha) {}
 
     Color operator*(float value) {
@@ -140,13 +135,12 @@ struct ZIndexDrawBatch {
 using RenderFlushFunction = std::function<void(const int zIndex, const ZIndexDrawBatch &zIndexDrawBatch)>;
 
 class RendererBatcher {
-  private:
-    std::map<int, ZIndexDrawBatch> drawBatches;
-
   public:
     void BatchDrawSprite(SpriteBatchItem spriteBatchItem, int zIndex);
-
     void Flush(const RenderFlushFunction &renderFlushFunction);
+
+  private:
+    std::map<int, ZIndexDrawBatch> drawBatches;
 };
 
 #endif //RENDERER_BATCHER_H
@@ -195,7 +189,7 @@ A shader can be written for each of the [shader stages](https://www.khronos.org/
 
 #include <glad/glad.h>
 
-#include "./re/math/math.h"
+#include "../math/math.h"
 #include "./color.h"
 #include "../utils/logger.h"
 
@@ -205,50 +199,32 @@ struct OpenGLShaderSourceCode {
 };
 
 class Shader {
+  public:
+    Shader();
+    Shader(const std::string &vertexPath, const std::string &fragmentPath);
+    Shader(OpenGLShaderSourceCode openGlShaderSourceCode);
+    ~Shader();
+    OpenGLShaderSourceCode GetOpenGLShaderSourceFromPaths(const std::string &vertexPath, const std::string &fragmentPath);
+    void Compile(OpenGLShaderSourceCode openGlShaderSourceCode);
+    void Use();
+    void SetBool(const std::string &name, bool value) const;
+    void SetInt(const std::string &name, int value) const;
+    void SetFloat(const std::string &name, float value) const;
+    void SetVec2Float(const std::string &name, float v1, float v2) const;
+    void SetVec2Float(const std::string &name, const Vector2 &value) const;
+    void SetVec3Float(const std::string &name, const Color &value) const;
+    void SetVec3Float(const std::string &name, const Vector3 &value) const;
+    void SetVec3Float(const std::string &name, float v1, float v2, float v3) const;
+    void SetVec4Float(const std::string &name, float v1, float v2, float v3, float v4) const;
+    void SetVec4Float(const std::string &name, const Color &value) const;
+    void SetMatrix4Float(const std::string &name, const Matrix4 &mat) const;
+
   private:
     unsigned int ID;
     Logger *logger = nullptr;
 
     bool IsShaderFilesValid(const std::string &vertexPath, const std::string &fragmentPath);
-
     void CheckCompileErrors(unsigned int shader, const std::string &type);
-
-  public:
-    Shader();
-
-    Shader(const std::string &vertexPath, const std::string &fragmentPath);
-
-    Shader(OpenGLShaderSourceCode openGlShaderSourceCode);
-
-    ~Shader();
-
-    OpenGLShaderSourceCode GetOpenGLShaderSourceFromPaths(const std::string &vertexPath, const std::string &fragmentPath);
-
-    void Compile(OpenGLShaderSourceCode openGlShaderSourceCode);
-
-    void Use();
-
-    void SetBool(const std::string &name, bool value) const;
-
-    void SetInt(const std::string &name, int value) const;
-
-    void SetFloat(const std::string &name, float value) const;
-
-    void SetVec2Float(const std::string &name, float v1, float v2) const;
-
-    void SetVec2Float(const std::string &name, const Vector2 &value) const;
-
-    void SetVec3Float(const std::string &name, const Color &value) const;
-
-    void SetVec3Float(const std::string &name, const Vector3 &value) const;
-
-    void SetVec3Float(const std::string &name, float v1, float v2, float v3) const;
-
-    void SetVec4Float(const std::string &name, float v1, float v2, float v3, float v4) const;
-
-    void SetVec4Float(const std::string &name, const Color &value) const;
-
-    void SetMatrix4Float(const std::string &name, const Matrix4 &mat) const;
 };
 
 #endif //SHADER_H
@@ -261,7 +237,7 @@ class Shader {
 
 #include <glm/gtc/type_ptr.hpp>
 
-#include "./re/utils/file_helper.h"
+#include "../utils/file_helper.h"
 
 Shader::Shader() : logger(Logger::GetInstance()) {}
 
@@ -459,19 +435,17 @@ static const OpenGLShaderSourceCode OPENGL_SHADER_SOURCE_SPRITE = OpenGLShaderSo
 };
 
 class SpriteRenderer {
-    private:
+  public:
+    SpriteRenderer();
+    void Draw(Texture *texture2D, const Rect2 &sourceRectangle, const Rect2 &destinationRectangle, float rotation,
+            const Color &color, bool flipX, bool flipY);
+
+  private:
     Shader shader;
     GLuint quadVAO;
     GLuint quadVBO;
     ProjectProperties *projectProperties = nullptr;
-
-public:
-    SpriteRenderer();
-
-    void Draw(Texture *texture2D, const Rect2 &sourceRectangle, const Rect2 &destinationRectangle, float rotation,
-              const Color &color, bool flipX, bool flipY);
 };
-
 
 #endif //SPRITE_RENDERER_H
 ```
@@ -635,22 +609,17 @@ Explanation coming soon...
 #include "sprite_renderer.h"
 
 class Renderer2D {
+  public:
+    Renderer2D() = default;
+    ~Renderer2D();
+    void Initialize();
+    void SubmitSpriteBatchItem(Texture *texture2D, Rect2 sourceRectangle, Rect2 destinationRectangle, int zIndex, float rotation = 0.0f, Color color = Color(1.0f, 1.0f, 1.0f), bool flipX = false, bool flipY = false);
+    void FlushBatches();
+
   private:
     RendererBatcher rendererBatcher;
     SpriteRenderer *spriteRenderer = nullptr;
-
-  public:
-    Renderer2D() = default;
-
-    ~Renderer2D();
-
-    void Initialize();
-
-    void SubmitSpriteBatchItem(Texture *texture2D, Rect2 sourceRectangle, Rect2 destinationRectangle, int zIndex, float rotation = 0.0f, Color color = Color(1.0f, 1.0f, 1.0f), bool flipX = false, bool flipY = false);
-
-    void FlushBatches();
 };
-
 
 #endif //RENDERER_2D_H
 ```

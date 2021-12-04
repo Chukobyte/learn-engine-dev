@@ -4,7 +4,7 @@
 
 #include <glm/gtc/type_ptr.hpp>
 
-#include "./re/utils/file_helper.h"
+#include "../utils/file_helper.h"
 
 Shader::Shader() : logger(Logger::GetInstance()) {}
 

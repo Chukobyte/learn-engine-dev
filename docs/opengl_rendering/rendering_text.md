@@ -22,8 +22,7 @@
 
 #include <glad/glad.h>
 
-#include "./re/math/math.h"
-
+#include "../math/math.h"
 #include "../utils/file_helper.h"
 #include "../utils/logger.h"
 
@@ -35,6 +34,28 @@ struct Character {
 };
 
 class Font {
+  public:
+    std::map<GLchar, Character> characters;
+    GLuint VAO;
+    GLuint VBO;
+
+    Font(FT_Library freeTypeLibrary, const char* fileName, int size) : filePath(std::string(fileName)), size(size) {
+        LoadFont(freeTypeLibrary, fileName, size);
+        ConfigureVertex();
+    }
+
+    std::string GetFilePath() const {
+        return filePath;
+    }
+
+    int GetSize() const {
+        return size;
+    }
+
+    bool IsValid() const {
+        return valid;
+    }
+
   private:
     std::string filePath;
     int size;
@@ -43,7 +64,7 @@ class Font {
     void LoadFont(FT_Library freeTypeLibrary, const char* fileName, int size) {
         static Logger *logger = Logger::GetInstance();
         if(!FileHelper::DoesFileExist(fileName)) {
-            logger->Error("Freetype failed at path: %s", fileName);
+            logger->Error("Font doesn't exist at path: %s", fileName);
         }
         FT_Face face;
         if(FT_New_Face(freeTypeLibrary, fileName, 0, &face)) {
@@ -67,16 +88,16 @@ class Font {
                 glGenTextures(1, &textTexture);
                 glBindTexture(GL_TEXTURE_2D, textTexture);
                 glTexImage2D(
-                        GL_TEXTURE_2D,
-                        0,
-                        GL_RED,
-                        face->glyph->bitmap.width,
-                        face->glyph->bitmap.rows,
-                        0,
-                        GL_RED,
-                        GL_UNSIGNED_BYTE,
-                        face->glyph->bitmap.buffer
-                        );
+                    GL_TEXTURE_2D,
+                    0,
+                    GL_RED,
+                    face->glyph->bitmap.width,
+                    face->glyph->bitmap.rows,
+                    0,
+                    GL_RED,
+                    GL_UNSIGNED_BYTE,
+                    face->glyph->bitmap.buffer
+                );
                 // set texture options
                 glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
                 glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
@@ -84,10 +105,10 @@ class Font {
                 glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
                 // store character for later use
                 Character character = {
-                        .textureID = textTexture,
-                        .size = Vector2(face->glyph->bitmap.width, face->glyph->bitmap.rows),
-                        .bearing = Vector2(face->glyph->bitmap_left, face->glyph->bitmap_top),
-                        .advance = static_cast<unsigned int>(face->glyph->advance.x)
+                    .textureID = textTexture,
+                    .size = Vector2(face->glyph->bitmap.width, face->glyph->bitmap.rows),
+                    .bearing = Vector2(face->glyph->bitmap_left, face->glyph->bitmap_top),
+                    .advance = static_cast<unsigned int>(face->glyph->advance.x)
                 };
                 characters.insert(std::pair<char, Character>(c, character));
             }
@@ -108,27 +129,6 @@ class Font {
         glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 4 * sizeof(GLfloat), nullptr);
         glBindBuffer(GL_ARRAY_BUFFER, 0);
         glBindVertexArray(0);
-    }
-  public:
-    std::map<GLchar, Character> characters;
-    GLuint VAO;
-    GLuint VBO;
-
-    Font(FT_Library freeTypeLibrary, const char* fileName, int size) : filePath(std::string(fileName)), size(size) {
-        LoadFont(freeTypeLibrary, fileName, size);
-        ConfigureVertex();
-    }
-
-    std::string GetFilePath() const {
-        return filePath;
-    }
-
-    int GetSize() const {
-        return size;
-    }
-
-    bool IsValid() const {
-        return valid;
     }
 };
 

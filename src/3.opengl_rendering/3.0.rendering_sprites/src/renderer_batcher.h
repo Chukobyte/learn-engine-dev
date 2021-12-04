@@ -27,13 +27,12 @@ struct ZIndexDrawBatch {
 using RenderFlushFunction = std::function<void(const int zIndex, const ZIndexDrawBatch &zIndexDrawBatch)>;
 
 class RendererBatcher {
-  private:
-    std::map<int, ZIndexDrawBatch> drawBatches;
-
   public:
     void BatchDrawSprite(SpriteBatchItem spriteBatchItem, int zIndex);
-
     void Flush(const RenderFlushFunction &renderFlushFunction);
+
+  private:
+    std::map<int, ZIndexDrawBatch> drawBatches;
 };
 
 #endif //RENDERER_BATCHER_H

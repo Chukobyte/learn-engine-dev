@@ -24,7 +24,6 @@ As we add more functionality and systems to the game it will be useful to make l
 
 #include <string>
 
-typedef int LogLevel;
 enum class LogLevel : unsigned int {
     DEBUG = 0,
     WARN = 1,
@@ -33,27 +32,19 @@ enum class LogLevel : unsigned int {
 };
 
 class Logger {
-  private:
-    Logger() = default;
-
   public:
     LogLevel logLevel = LogLevel::DEBUG;
 
     static Logger* GetInstance();
-
     void SetLogLevel(LogLevel level);
-
     bool SetLogLevelFromString(std::string logLevelString);
-
     LogLevel GetLogLevel() const;
-
     void Debug(const char *fmt, ...) const;
-
     void Warn(const char *fmt, ...) const;
-
     void Info(const char *fmt, ...) const;
-
     void Error(const char *fmt, ...) const;
+  private:
+    Logger() = default;
 };
 
 #endif //LOGGER_H
@@ -158,23 +149,19 @@ Using log levels with a higher priority will print all logs for that level and b
 #define GAME_ENGINE_CONTEXT_H
 
 class GameEngineContext {
+  public:
+    static GameEngineContext* GetInstance();
+    const char* GetEngineVersion() const;
+    const char* GetEngineName() const;
+    void SetRunning(bool value);
+    bool IsRunning() const;
+
   private:
     const char *engineVersion = "0.1.0";
     const char *engineName = "Red";
     bool running = false;
 
     GameEngineContext() = default;
-
-  public:
-    static GameEngineContext* GetInstance();
-
-    const char* GetEngineVersion() const;
-
-    const char* GetEngineName() const;
-
-    void SetRunning(bool value);
-
-    bool IsRunning() const;
 };
 
 #endif //GAME_ENGINE_CONTEXT_H

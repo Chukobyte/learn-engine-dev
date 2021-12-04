@@ -12,6 +12,15 @@ struct PythonModuleObject {
 };
 
 class PythonObjectManager {
+  public:
+    CPyObject CreateClassInstance(const std::string &classPath, const std::string &className) {
+        CPyObject pClass = GetClass(classPath, className);
+        CPyObject pClassInstance = PyObject_CallObject(pClass, nullptr);
+        assert(pClassInstance != nullptr && "Class instance is NULL!");
+        pClassInstance.AddRef();
+        return pClassInstance;
+    }
+
   private:
     std::unordered_map<std::string, PythonModuleObject> modules;
 
@@ -32,14 +41,6 @@ class PythonObjectManager {
             modules[classPath].classes.emplace(className, pClass);
         }
         return modules[classPath].classes[className];
-    }
-  public:
-    CPyObject CreateClassInstance(const std::string &classPath, const std::string &className) {
-        CPyObject pClass = GetClass(classPath, className);
-        CPyObject pClassInstance = PyObject_CallObject(pClass, nullptr);
-        assert(pClassInstance != nullptr && "Class instance is NULL!");
-        pClassInstance.AddRef();
-        return pClassInstance;
     }
 };
 

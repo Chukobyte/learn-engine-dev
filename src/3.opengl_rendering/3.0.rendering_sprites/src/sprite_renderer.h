@@ -46,17 +46,16 @@ static const OpenGLShaderSourceCode OPENGL_SHADER_SOURCE_SPRITE = OpenGLShaderSo
 };
 
 class SpriteRenderer {
+  public:
+    SpriteRenderer();
+    void Draw(Texture *texture2D, const Rect2 &sourceRectangle, const Rect2 &destinationRectangle, float rotation,
+              const Color &color, bool flipX, bool flipY);
+
   private:
     Shader shader;
     GLuint quadVAO;
     GLuint quadVBO;
     ProjectProperties *projectProperties = nullptr;
-
-  public:
-    SpriteRenderer();
-
-    void Draw(Texture *texture2D, const Rect2 &sourceRectangle, const Rect2 &destinationRectangle, float rotation,
-              const Color &color, bool flipX, bool flipY);
 };
 
 

@@ -11,9 +11,7 @@ class Color {
     float a = 1.0f;
 
     Color() {}
-
     Color(GLfloat red, GLfloat green, GLfloat blue) : r(red), g(green), b(blue), a(1.0f) {}
-
     Color(GLfloat red, GLfloat green, GLfloat blue, GLfloat alpha) : r(red), g(green), b(blue), a(alpha) {}
 
     Color operator*(float value) {

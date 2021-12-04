@@ -54,4 +54,4 @@ run:
 	./$(BUILD_OBJECT)
 
 format:
-	astyle -n --style=google --recursive src/*.h src/*.cpp $(GAME_LIB_DIR)/*.cpp
+	astyle -n --style=google --recursive src/*.h src/*.cpp $(GAME_LIB_DIR)/*.cpp $(GAME_LIB_DIR)/*.h $(GAME_LIB_DIR)/*.hpp

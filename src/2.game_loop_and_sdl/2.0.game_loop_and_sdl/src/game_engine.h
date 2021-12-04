@@ -6,26 +6,21 @@
 #include "./re/utils/logger.h"
 
 class GameEngine {
+  public:
+    GameEngine();
+    ~GameEngine();
+    void ProcessInput();
+    void Update();
+    void Render();
+    bool IsRunning() const;
+
   private:
     GameEngineContext *engineContext = nullptr;
     FPSCounter *fpsCounter = nullptr;
     Logger *logger = nullptr;
 
     void Initialize();
-
     void InitializeSDL();
-  public:
-    GameEngine();
-
-    ~GameEngine();
-
-    void ProcessInput();
-
-    void Update();
-
-    void Render();
-
-    bool IsRunning() const;
 };
 
 

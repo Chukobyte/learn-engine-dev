@@ -27,10 +27,22 @@ Instances of the `Texture` class will be used to render sprites to the screen.
 #include "../utils/logger.h"
 
 class Texture {
+  public:
+    Texture(const char* filePath);
+    Texture(const char* filePath, unsigned int wrapS, unsigned int wrapT, unsigned int filterMin, unsigned int filterMag);
+    Texture(const char* filePath, const std::string &wrapS, const std::string &wrapT, const std::string &filterMin, const std::string &filterMag);
+    ~Texture();
+    void Bind() const;
+    std::string GetFilePath() const;
+    int GetWidth() const;
+    int GetHeight() const;
+    unsigned int GetImageFormat() const;
+    unsigned char* GetData() const;
+    bool IsValid() const;
+
   private:
     Logger *logger = nullptr;
     std::string fileName;
-
     GLuint ID = 0;
     unsigned char* data = nullptr;
     int width = 0;
@@ -46,34 +58,9 @@ class Texture {
     unsigned int filterMag = GL_NEAREST;
 
     void Initialize(const char* filePath);
-
     void Generate();
-
     unsigned int GetWrapFromString(const std::string &wrap) const;
-
     unsigned int GetFilterFromString(const std::string &filter) const;
-  public:
-    Texture(const char* filePath);
-
-    Texture(const char* filePath, unsigned int wrapS, unsigned int wrapT, unsigned int filterMin, unsigned int filterMag);
-
-    Texture(const char* filePath, const std::string &wrapS, const std::string &wrapT, const std::string &filterMin, const std::string &filterMag);
-
-    ~Texture();
-
-    void Bind() const;
-
-    std::string GetFilePath() const;
-
-    int GetWidth() const;
-
-    int GetHeight() const;
-
-    unsigned int GetImageFormat() const;
-
-    unsigned char* GetData() const;
-
-    bool IsValid() const;
 };
 
 #endif //TEXTURE_H
@@ -244,19 +231,17 @@ Now that we have the concept of a texture defined in ***Red Engine***, we will n
 
 
 class AssetManager {
+  public:
+    static AssetManager* GetInstance();
+    void LoadTexture(const std::string &id, const std::string &filePath);
+    Texture* GetTexture(const std::string &id);
+    bool HasTexture(const std::string &id) const;
+
   private:
     std::unordered_map<std::string, Texture*> textures;
     Logger *logger = nullptr;
 
     AssetManager();
-  public:
-    static AssetManager* GetInstance();
-
-    void LoadTexture(const std::string &id, const std::string &filePath);
-
-    Texture* GetTexture(const std::string &id);
-
-    bool HasTexture(const std::string &id) const;
 };
 
 #endif //ASSET_MANAGER_H
