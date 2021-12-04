@@ -383,27 +383,19 @@
 <span class="p">};</span>
 
 <span class="k">class</span> <span class="nc">Logger</span> <span class="p">{</span>
-  <span class="k">private</span><span class="o">:</span>
-    <span class="n">Logger</span><span class="p">()</span> <span class="o">=</span> <span class="k">default</span><span class="p">;</span>
-
   <span class="k">public</span><span class="o">:</span>
     <span class="n">LogLevel</span> <span class="n">logLevel</span> <span class="o">=</span> <span class="n">LogLevel</span><span class="o">::</span><span class="n">DEBUG</span><span class="p">;</span>
 
     <span class="k">static</span> <span class="n">Logger</span><span class="o">*</span> <span class="nf">GetInstance</span><span class="p">();</span>
-
     <span class="kt">void</span> <span class="nf">SetLogLevel</span><span class="p">(</span><span class="n">LogLevel</span> <span class="n">level</span><span class="p">);</span>
-
     <span class="kt">bool</span> <span class="nf">SetLogLevelFromString</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">logLevelString</span><span class="p">);</span>
-
     <span class="n">LogLevel</span> <span class="nf">GetLogLevel</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
-
     <span class="kt">void</span> <span class="nf">Debug</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">fmt</span><span class="p">,</span> <span class="p">...)</span> <span class="k">const</span><span class="p">;</span>
-
     <span class="kt">void</span> <span class="nf">Warn</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">fmt</span><span class="p">,</span> <span class="p">...)</span> <span class="k">const</span><span class="p">;</span>
-
     <span class="kt">void</span> <span class="nf">Info</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">fmt</span><span class="p">,</span> <span class="p">...)</span> <span class="k">const</span><span class="p">;</span>
-
     <span class="kt">void</span> <span class="nf">Error</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">fmt</span><span class="p">,</span> <span class="p">...)</span> <span class="k">const</span><span class="p">;</span>
+  <span class="k">private</span><span class="o">:</span>
+    <span class="n">Logger</span><span class="p">()</span> <span class="o">=</span> <span class="k">default</span><span class="p">;</span>
 <span class="p">};</span>
 
 <span class="cp">#endif </span><span class="c1">//LOGGER_H</span>
@@ -523,23 +515,19 @@
 <span class="cp">#define GAME_ENGINE_CONTEXT_H</span>
 
 <span class="k">class</span> <span class="nc">GameEngineContext</span> <span class="p">{</span>
+  <span class="k">public</span><span class="o">:</span>
+    <span class="k">static</span> <span class="n">GameEngineContext</span><span class="o">*</span> <span class="n">GetInstance</span><span class="p">();</span>
+    <span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="nf">GetEngineVersion</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
+    <span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="nf">GetEngineName</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
+    <span class="kt">void</span> <span class="nf">SetRunning</span><span class="p">(</span><span class="kt">bool</span> <span class="n">value</span><span class="p">);</span>
+    <span class="kt">bool</span> <span class="nf">IsRunning</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
+
   <span class="k">private</span><span class="o">:</span>
     <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">engineVersion</span> <span class="o">=</span> <span class="s">"0.1.0"</span><span class="p">;</span>
     <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">engineName</span> <span class="o">=</span> <span class="s">"Red"</span><span class="p">;</span>
     <span class="kt">bool</span> <span class="n">running</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
 
     <span class="n">GameEngineContext</span><span class="p">()</span> <span class="o">=</span> <span class="k">default</span><span class="p">;</span>
-
-  <span class="k">public</span><span class="o">:</span>
-    <span class="k">static</span> <span class="n">GameEngineContext</span><span class="o">*</span> <span class="n">GetInstance</span><span class="p">();</span>
-
-    <span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="nf">GetEngineVersion</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
-
-    <span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="nf">GetEngineName</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
-
-    <span class="kt">void</span> <span class="nf">SetRunning</span><span class="p">(</span><span class="kt">bool</span> <span class="n">value</span><span class="p">);</span>
-
-    <span class="kt">bool</span> <span class="nf">IsRunning</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
 <span class="p">};</span>
 
 <span class="cp">#endif </span><span class="c1">//GAME_ENGINE_CONTEXT_H</span>

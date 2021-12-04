@@ -396,25 +396,20 @@
 <span class="cp">#include</span> <span class="cpf">&lt;game_lib/utils/logger.h&gt;</span><span class="cp"></span>
 
 <span class="k">class</span> <span class="nc">GameEngine</span> <span class="p">{</span>
+  <span class="k">public</span><span class="o">:</span>
+    <span class="n">GameEngine</span><span class="p">();</span>
+    <span class="o">~</span><span class="n">GameEngine</span><span class="p">();</span>
+    <span class="kt">void</span> <span class="nf">ProcessInput</span><span class="p">();</span>
+    <span class="kt">void</span> <span class="nf">Update</span><span class="p">();</span>
+    <span class="kt">void</span> <span class="nf">Render</span><span class="p">();</span>
+    <span class="kt">bool</span> <span class="nf">IsRunning</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
+
   <span class="k">private</span><span class="o">:</span>
     <span class="n">GameEngineContext</span> <span class="o">*</span><span class="n">engineContext</span> <span class="o">=</span> <span class="k">nullptr</span><span class="p">;</span>
     <span class="n">Logger</span> <span class="o">*</span><span class="n">logger</span> <span class="o">=</span> <span class="k">nullptr</span><span class="p">;</span>
 
     <span class="kt">void</span> <span class="nf">Initialize</span><span class="p">();</span>
-
     <span class="kt">void</span> <span class="nf">InitializeSDL</span><span class="p">();</span>
-  <span class="k">public</span><span class="o">:</span>
-    <span class="n">GameEngine</span><span class="p">();</span>
-
-    <span class="o">~</span><span class="n">GameEngine</span><span class="p">();</span>
-
-    <span class="kt">void</span> <span class="nf">ProcessInput</span><span class="p">();</span>
-
-    <span class="kt">void</span> <span class="nf">Update</span><span class="p">();</span>
-
-    <span class="kt">void</span> <span class="nf">Render</span><span class="p">();</span>
-
-    <span class="kt">bool</span> <span class="nf">IsRunning</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
 <span class="p">};</span>
 
 <span class="cp">#endif </span><span class="c1">//GAME_ENGINE_H</span>
@@ -503,14 +498,6 @@
 <span class="cp">#include</span> <span class="cpf">&lt;SDL2/SDL.h&gt;</span><span class="cp"></span>
 
 <span class="k">class</span> <span class="nc">Timer</span> <span class="p">{</span>
-  <span class="k">private</span><span class="o">:</span>
-    <span class="n">Uint32</span> <span class="n">waitTime</span><span class="p">;</span>
-    <span class="kt">bool</span> <span class="n">loops</span><span class="p">;</span>
-    <span class="n">Uint32</span> <span class="n">startTicks</span><span class="p">;</span>
-    <span class="n">Uint32</span> <span class="n">pausedTicks</span><span class="p">;</span>
-    <span class="kt">bool</span> <span class="n">isPaused</span><span class="p">;</span>
-    <span class="kt">bool</span> <span class="n">hasStarted</span><span class="p">;</span>
-
   <span class="k">public</span><span class="o">:</span>
     <span class="n">Timer</span><span class="p">(</span><span class="n">Uint32</span> <span class="n">waitTimeInMilliseconds</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">doesLoop</span> <span class="o">=</span> <span class="nb">false</span><span class="p">);</span>
     <span class="n">Uint32</span> <span class="nf">GetWaitTime</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
@@ -527,6 +514,14 @@
     <span class="n">Uint32</span> <span class="nf">GetTicks</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
     <span class="kt">bool</span> <span class="nf">HasStarted</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
     <span class="kt">bool</span> <span class="nf">IsPaused</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
+
+  <span class="k">private</span><span class="o">:</span>
+    <span class="n">Uint32</span> <span class="n">waitTime</span><span class="p">;</span>
+    <span class="kt">bool</span> <span class="n">loops</span><span class="p">;</span>
+    <span class="n">Uint32</span> <span class="n">startTicks</span><span class="p">;</span>
+    <span class="n">Uint32</span> <span class="n">pausedTicks</span><span class="p">;</span>
+    <span class="kt">bool</span> <span class="n">isPaused</span><span class="p">;</span>
+    <span class="kt">bool</span> <span class="n">hasStarted</span><span class="p">;</span>
 <span class="p">};</span>
 
 <span class="cp">#endif</span>
@@ -638,20 +633,18 @@
 <span class="cp">#include</span> <span class="cpf">"./re/utils/timer.h"</span><span class="cp"></span>
 
 <span class="k">class</span> <span class="nc">FPSCounter</span> <span class="p">{</span>
+  <span class="k">public</span><span class="o">:</span>
+    <span class="o">~</span><span class="n">FPSCounter</span><span class="p">();</span>
+    <span class="k">static</span> <span class="n">FPSCounter</span><span class="o">*</span> <span class="nf">GetInstance</span><span class="p">();</span>
+    <span class="kt">void</span> <span class="nf">Update</span><span class="p">();</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">GetFPS</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
+
   <span class="k">private</span><span class="o">:</span>
     <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">fps</span><span class="p">;</span>
     <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">fpsCount</span><span class="p">;</span>
     <span class="n">Timer</span> <span class="o">*</span><span class="n">timer</span> <span class="o">=</span> <span class="k">nullptr</span><span class="p">;</span>
 
     <span class="n">FPSCounter</span><span class="p">();</span>
-  <span class="k">public</span><span class="o">:</span>
-    <span class="o">~</span><span class="n">FPSCounter</span><span class="p">();</span>
-
-    <span class="k">static</span> <span class="n">FPSCounter</span><span class="o">*</span> <span class="nf">GetInstance</span><span class="p">();</span>
-
-    <span class="kt">void</span> <span class="nf">Update</span><span class="p">();</span>
-
-    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">GetFPS</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
 <span class="p">};</span>
 
 <span class="cp">#endif </span><span class="c1">//FPS_COUNTER_H</span>

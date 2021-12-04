@@ -452,8 +452,7 @@
 
 <span class="cp">#include</span> <span class="cpf">&lt;glad/glad.h&gt;</span><span class="cp"></span>
 
-<span class="cp">#include</span> <span class="cpf">"./re/math/math.h"</span><span class="cp"></span>
-
+<span class="cp">#include</span> <span class="cpf">"../math/math.h"</span><span class="cp"></span>
 <span class="cp">#include</span> <span class="cpf">"../utils/file_helper.h"</span><span class="cp"></span>
 <span class="cp">#include</span> <span class="cpf">"../utils/logger.h"</span><span class="cp"></span>
 
@@ -465,6 +464,28 @@
 <span class="p">};</span>
 
 <span class="k">class</span> <span class="nc">Font</span> <span class="p">{</span>
+  <span class="k">public</span><span class="o">:</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span><span class="n">GLchar</span><span class="p">,</span> <span class="n">Character</span><span class="o">&gt;</span> <span class="n">characters</span><span class="p">;</span>
+    <span class="n">GLuint</span> <span class="n">VAO</span><span class="p">;</span>
+    <span class="n">GLuint</span> <span class="n">VBO</span><span class="p">;</span>
+
+    <span class="n">Font</span><span class="p">(</span><span class="n">FT_Library</span> <span class="n">freeTypeLibrary</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">fileName</span><span class="p">,</span> <span class="kt">int</span> <span class="n">size</span><span class="p">)</span> <span class="o">:</span> <span class="n">filePath</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">(</span><span class="n">fileName</span><span class="p">)),</span> <span class="n">size</span><span class="p">(</span><span class="n">size</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">LoadFont</span><span class="p">(</span><span class="n">freeTypeLibrary</span><span class="p">,</span> <span class="n">fileName</span><span class="p">,</span> <span class="n">size</span><span class="p">);</span>
+        <span class="n">ConfigureVertex</span><span class="p">();</span>
+    <span class="p">}</span>
+
+    <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">GetFilePath</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="n">filePath</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="kt">int</span> <span class="n">GetSize</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="n">size</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="kt">bool</span> <span class="n">IsValid</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="n">valid</span><span class="p">;</span>
+    <span class="p">}</span>
+
   <span class="k">private</span><span class="o">:</span>
     <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">filePath</span><span class="p">;</span>
     <span class="kt">int</span> <span class="n">size</span><span class="p">;</span>
@@ -473,7 +494,7 @@
     <span class="kt">void</span> <span class="nf">LoadFont</span><span class="p">(</span><span class="n">FT_Library</span> <span class="n">freeTypeLibrary</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">fileName</span><span class="p">,</span> <span class="kt">int</span> <span class="n">size</span><span class="p">)</span> <span class="p">{</span>
         <span class="k">static</span> <span class="n">Logger</span> <span class="o">*</span><span class="n">logger</span> <span class="o">=</span> <span class="n">Logger</span><span class="o">::</span><span class="n">GetInstance</span><span class="p">();</span>
         <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">FileHelper</span><span class="o">::</span><span class="n">DoesFileExist</span><span class="p">(</span><span class="n">fileName</span><span class="p">))</span> <span class="p">{</span>
-            <span class="n">logger</span><span class="o">-&gt;</span><span class="n">Error</span><span class="p">(</span><span class="s">"Freetype failed at path: %s"</span><span class="p">,</span> <span class="n">fileName</span><span class="p">);</span>
+            <span class="n">logger</span><span class="o">-&gt;</span><span class="n">Error</span><span class="p">(</span><span class="s">"Font doesn't exist at path: %s"</span><span class="p">,</span> <span class="n">fileName</span><span class="p">);</span>
         <span class="p">}</span>
         <span class="n">FT_Face</span> <span class="n">face</span><span class="p">;</span>
         <span class="k">if</span><span class="p">(</span><span class="n">FT_New_Face</span><span class="p">(</span><span class="n">freeTypeLibrary</span><span class="p">,</span> <span class="n">fileName</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">face</span><span class="p">))</span> <span class="p">{</span>
@@ -497,16 +518,16 @@
                 <span class="n">glGenTextures</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">textTexture</span><span class="p">);</span>
                 <span class="n">glBindTexture</span><span class="p">(</span><span class="n">GL_TEXTURE_2D</span><span class="p">,</span> <span class="n">textTexture</span><span class="p">);</span>
                 <span class="n">glTexImage2D</span><span class="p">(</span>
-                        <span class="n">GL_TEXTURE_2D</span><span class="p">,</span>
-                        <span class="mi">0</span><span class="p">,</span>
-                        <span class="n">GL_RED</span><span class="p">,</span>
-                        <span class="n">face</span><span class="o">-&gt;</span><span class="n">glyph</span><span class="o">-&gt;</span><span class="n">bitmap</span><span class="p">.</span><span class="n">width</span><span class="p">,</span>
-                        <span class="n">face</span><span class="o">-&gt;</span><span class="n">glyph</span><span class="o">-&gt;</span><span class="n">bitmap</span><span class="p">.</span><span class="n">rows</span><span class="p">,</span>
-                        <span class="mi">0</span><span class="p">,</span>
-                        <span class="n">GL_RED</span><span class="p">,</span>
-                        <span class="n">GL_UNSIGNED_BYTE</span><span class="p">,</span>
-                        <span class="n">face</span><span class="o">-&gt;</span><span class="n">glyph</span><span class="o">-&gt;</span><span class="n">bitmap</span><span class="p">.</span><span class="n">buffer</span>
-                        <span class="p">);</span>
+                    <span class="n">GL_TEXTURE_2D</span><span class="p">,</span>
+                    <span class="mi">0</span><span class="p">,</span>
+                    <span class="n">GL_RED</span><span class="p">,</span>
+                    <span class="n">face</span><span class="o">-&gt;</span><span class="n">glyph</span><span class="o">-&gt;</span><span class="n">bitmap</span><span class="p">.</span><span class="n">width</span><span class="p">,</span>
+                    <span class="n">face</span><span class="o">-&gt;</span><span class="n">glyph</span><span class="o">-&gt;</span><span class="n">bitmap</span><span class="p">.</span><span class="n">rows</span><span class="p">,</span>
+                    <span class="mi">0</span><span class="p">,</span>
+                    <span class="n">GL_RED</span><span class="p">,</span>
+                    <span class="n">GL_UNSIGNED_BYTE</span><span class="p">,</span>
+                    <span class="n">face</span><span class="o">-&gt;</span><span class="n">glyph</span><span class="o">-&gt;</span><span class="n">bitmap</span><span class="p">.</span><span class="n">buffer</span>
+                <span class="p">);</span>
                 <span class="c1">// set texture options</span>
                 <span class="n">glTexParameteri</span><span class="p">(</span><span class="n">GL_TEXTURE_2D</span><span class="p">,</span> <span class="n">GL_TEXTURE_WRAP_S</span><span class="p">,</span> <span class="n">GL_CLAMP_TO_EDGE</span><span class="p">);</span>
                 <span class="n">glTexParameteri</span><span class="p">(</span><span class="n">GL_TEXTURE_2D</span><span class="p">,</span> <span class="n">GL_TEXTURE_WRAP_T</span><span class="p">,</span> <span class="n">GL_CLAMP_TO_EDGE</span><span class="p">);</span>
@@ -514,10 +535,10 @@
                 <span class="n">glTexParameteri</span><span class="p">(</span><span class="n">GL_TEXTURE_2D</span><span class="p">,</span> <span class="n">GL_TEXTURE_MAG_FILTER</span><span class="p">,</span> <span class="n">GL_LINEAR</span><span class="p">);</span>
                 <span class="c1">// store character for later use</span>
                 <span class="n">Character</span> <span class="n">character</span> <span class="o">=</span> <span class="p">{</span>
-                        <span class="p">.</span><span class="n">textureID</span> <span class="o">=</span> <span class="n">textTexture</span><span class="p">,</span>
-                        <span class="p">.</span><span class="n">size</span> <span class="o">=</span> <span class="n">Vector2</span><span class="p">(</span><span class="n">face</span><span class="o">-&gt;</span><span class="n">glyph</span><span class="o">-&gt;</span><span class="n">bitmap</span><span class="p">.</span><span class="n">width</span><span class="p">,</span> <span class="n">face</span><span class="o">-&gt;</span><span class="n">glyph</span><span class="o">-&gt;</span><span class="n">bitmap</span><span class="p">.</span><span class="n">rows</span><span class="p">),</span>
-                        <span class="p">.</span><span class="n">bearing</span> <span class="o">=</span> <span class="n">Vector2</span><span class="p">(</span><span class="n">face</span><span class="o">-&gt;</span><span class="n">glyph</span><span class="o">-&gt;</span><span class="n">bitmap_left</span><span class="p">,</span> <span class="n">face</span><span class="o">-&gt;</span><span class="n">glyph</span><span class="o">-&gt;</span><span class="n">bitmap_top</span><span class="p">),</span>
-                        <span class="p">.</span><span class="n">advance</span> <span class="o">=</span> <span class="k">static_cast</span><span class="o">&lt;</span><span class="kt">unsigned</span> <span class="kt">int</span><span class="o">&gt;</span><span class="p">(</span><span class="n">face</span><span class="o">-&gt;</span><span class="n">glyph</span><span class="o">-&gt;</span><span class="n">advance</span><span class="p">.</span><span class="n">x</span><span class="p">)</span>
+                    <span class="p">.</span><span class="n">textureID</span> <span class="o">=</span> <span class="n">textTexture</span><span class="p">,</span>
+                    <span class="p">.</span><span class="n">size</span> <span class="o">=</span> <span class="n">Vector2</span><span class="p">(</span><span class="n">face</span><span class="o">-&gt;</span><span class="n">glyph</span><span class="o">-&gt;</span><span class="n">bitmap</span><span class="p">.</span><span class="n">width</span><span class="p">,</span> <span class="n">face</span><span class="o">-&gt;</span><span class="n">glyph</span><span class="o">-&gt;</span><span class="n">bitmap</span><span class="p">.</span><span class="n">rows</span><span class="p">),</span>
+                    <span class="p">.</span><span class="n">bearing</span> <span class="o">=</span> <span class="n">Vector2</span><span class="p">(</span><span class="n">face</span><span class="o">-&gt;</span><span class="n">glyph</span><span class="o">-&gt;</span><span class="n">bitmap_left</span><span class="p">,</span> <span class="n">face</span><span class="o">-&gt;</span><span class="n">glyph</span><span class="o">-&gt;</span><span class="n">bitmap_top</span><span class="p">),</span>
+                    <span class="p">.</span><span class="n">advance</span> <span class="o">=</span> <span class="k">static_cast</span><span class="o">&lt;</span><span class="kt">unsigned</span> <span class="kt">int</span><span class="o">&gt;</span><span class="p">(</span><span class="n">face</span><span class="o">-&gt;</span><span class="n">glyph</span><span class="o">-&gt;</span><span class="n">advance</span><span class="p">.</span><span class="n">x</span><span class="p">)</span>
                 <span class="p">};</span>
                 <span class="n">characters</span><span class="p">.</span><span class="n">insert</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">pair</span><span class="o">&lt;</span><span class="kt">char</span><span class="p">,</span> <span class="n">Character</span><span class="o">&gt;</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">character</span><span class="p">));</span>
             <span class="p">}</span>
@@ -538,27 +559,6 @@
         <span class="n">glVertexAttribPointer</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="n">GL_FLOAT</span><span class="p">,</span> <span class="n">GL_FALSE</span><span class="p">,</span> <span class="mi">4</span> <span class="o">*</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">GLfloat</span><span class="p">),</span> <span class="k">nullptr</span><span class="p">);</span>
         <span class="n">glBindBuffer</span><span class="p">(</span><span class="n">GL_ARRAY_BUFFER</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
         <span class="n">glBindVertexArray</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
-    <span class="p">}</span>
-  <span class="k">public</span><span class="o">:</span>
-    <span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span><span class="n">GLchar</span><span class="p">,</span> <span class="n">Character</span><span class="o">&gt;</span> <span class="n">characters</span><span class="p">;</span>
-    <span class="n">GLuint</span> <span class="n">VAO</span><span class="p">;</span>
-    <span class="n">GLuint</span> <span class="n">VBO</span><span class="p">;</span>
-
-    <span class="n">Font</span><span class="p">(</span><span class="n">FT_Library</span> <span class="n">freeTypeLibrary</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">fileName</span><span class="p">,</span> <span class="kt">int</span> <span class="n">size</span><span class="p">)</span> <span class="o">:</span> <span class="n">filePath</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">(</span><span class="n">fileName</span><span class="p">)),</span> <span class="n">size</span><span class="p">(</span><span class="n">size</span><span class="p">)</span> <span class="p">{</span>
-        <span class="n">LoadFont</span><span class="p">(</span><span class="n">freeTypeLibrary</span><span class="p">,</span> <span class="n">fileName</span><span class="p">,</span> <span class="n">size</span><span class="p">);</span>
-        <span class="n">ConfigureVertex</span><span class="p">();</span>
-    <span class="p">}</span>
-
-    <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">GetFilePath</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span>
-        <span class="k">return</span> <span class="n">filePath</span><span class="p">;</span>
-    <span class="p">}</span>
-
-    <span class="kt">int</span> <span class="n">GetSize</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span>
-        <span class="k">return</span> <span class="n">size</span><span class="p">;</span>
-    <span class="p">}</span>
-
-    <span class="kt">bool</span> <span class="n">IsValid</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span>
-        <span class="k">return</span> <span class="n">valid</span><span class="p">;</span>
     <span class="p">}</span>
 <span class="p">};</span>
 

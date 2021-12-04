@@ -503,11 +503,8 @@
     <span class="kt">float</span> <span class="n">h</span><span class="p">;</span>
 
     <span class="n">Rectangle</span><span class="p">()</span><span class="o">:</span> <span class="n">x</span><span class="p">(</span><span class="mf">0.0f</span><span class="p">),</span> <span class="n">y</span><span class="p">(</span><span class="mf">0.0f</span><span class="p">),</span> <span class="n">w</span><span class="p">(</span><span class="mf">0.0f</span><span class="p">),</span> <span class="n">h</span><span class="p">(</span><span class="mf">0.0f</span><span class="p">)</span> <span class="p">{}</span>
-
     <span class="n">Rectangle</span><span class="p">(</span><span class="kt">float</span> <span class="n">x</span><span class="p">,</span> <span class="kt">float</span> <span class="n">y</span><span class="p">,</span> <span class="kt">float</span> <span class="n">w</span><span class="p">,</span> <span class="kt">float</span> <span class="n">h</span><span class="p">)</span><span class="o">:</span> <span class="n">x</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">y</span><span class="p">(</span><span class="n">y</span><span class="p">),</span> <span class="n">w</span><span class="p">(</span><span class="n">w</span><span class="p">),</span> <span class="n">h</span><span class="p">(</span><span class="n">h</span><span class="p">)</span> <span class="p">{}</span>
-
     <span class="n">Rectangle</span><span class="p">(</span><span class="kt">float</span> <span class="n">x</span><span class="p">,</span> <span class="kt">float</span> <span class="n">y</span><span class="p">,</span> <span class="n">glm</span><span class="o">::</span><span class="n">vec2</span> <span class="n">size</span><span class="p">)</span><span class="o">:</span> <span class="n">x</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">y</span><span class="p">(</span><span class="n">y</span><span class="p">),</span> <span class="n">w</span><span class="p">(</span><span class="n">size</span><span class="p">.</span><span class="n">x</span><span class="p">),</span> <span class="n">h</span><span class="p">(</span><span class="n">size</span><span class="p">.</span><span class="n">y</span><span class="p">)</span> <span class="p">{}</span>
-
     <span class="n">Rectangle</span><span class="p">(</span><span class="n">glm</span><span class="o">::</span><span class="n">vec2</span> <span class="n">position</span><span class="p">,</span> <span class="n">glm</span><span class="o">::</span><span class="n">vec2</span> <span class="n">size</span><span class="p">)</span><span class="o">:</span> <span class="n">x</span><span class="p">(</span><span class="n">position</span><span class="p">.</span><span class="n">x</span><span class="p">),</span> <span class="n">y</span><span class="p">(</span><span class="n">position</span><span class="p">.</span><span class="n">y</span><span class="p">),</span> <span class="n">w</span><span class="p">(</span><span class="n">size</span><span class="p">.</span><span class="n">x</span><span class="p">),</span> <span class="n">h</span><span class="p">(</span><span class="n">size</span><span class="p">.</span><span class="n">y</span><span class="p">)</span> <span class="p">{}</span>
 
     <span class="kt">bool</span> <span class="k">operator</span><span class="o">==</span><span class="p">(</span><span class="k">const</span> <span class="n">Rectangle</span> <span class="o">&amp;</span><span class="n">otherRect2</span><span class="p">)</span> <span class="k">const</span> <span class="p">{</span>
@@ -560,9 +557,7 @@
     <span class="kt">float</span> <span class="n">a</span> <span class="o">=</span> <span class="mf">1.0f</span><span class="p">;</span>
 
     <span class="n">Color</span><span class="p">()</span> <span class="p">{}</span>
-
     <span class="n">Color</span><span class="p">(</span><span class="n">GLfloat</span> <span class="n">red</span><span class="p">,</span> <span class="n">GLfloat</span> <span class="n">green</span><span class="p">,</span> <span class="n">GLfloat</span> <span class="n">blue</span><span class="p">)</span> <span class="o">:</span> <span class="n">r</span><span class="p">(</span><span class="n">red</span><span class="p">),</span> <span class="n">g</span><span class="p">(</span><span class="n">green</span><span class="p">),</span> <span class="n">b</span><span class="p">(</span><span class="n">blue</span><span class="p">),</span> <span class="n">a</span><span class="p">(</span><span class="mf">1.0f</span><span class="p">)</span> <span class="p">{}</span>
-
     <span class="n">Color</span><span class="p">(</span><span class="n">GLfloat</span> <span class="n">red</span><span class="p">,</span> <span class="n">GLfloat</span> <span class="n">green</span><span class="p">,</span> <span class="n">GLfloat</span> <span class="n">blue</span><span class="p">,</span> <span class="n">GLfloat</span> <span class="n">alpha</span><span class="p">)</span> <span class="o">:</span> <span class="n">r</span><span class="p">(</span><span class="n">red</span><span class="p">),</span> <span class="n">g</span><span class="p">(</span><span class="n">green</span><span class="p">),</span> <span class="n">b</span><span class="p">(</span><span class="n">blue</span><span class="p">),</span> <span class="n">a</span><span class="p">(</span><span class="n">alpha</span><span class="p">)</span> <span class="p">{}</span>
 
     <span class="n">Color</span> <span class="k">operator</span><span class="o">*</span><span class="p">(</span><span class="kt">float</span> <span class="n">value</span><span class="p">)</span> <span class="p">{</span>
@@ -603,13 +598,12 @@
 <span class="k">using</span> <span class="n">RenderFlushFunction</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">function</span><span class="o">&lt;</span><span class="kt">void</span><span class="p">(</span><span class="k">const</span> <span class="kt">int</span> <span class="n">zIndex</span><span class="p">,</span> <span class="k">const</span> <span class="n">ZIndexDrawBatch</span> <span class="o">&amp;</span><span class="n">zIndexDrawBatch</span><span class="p">)</span><span class="o">&gt;</span><span class="p">;</span>
 
 <span class="k">class</span> <span class="nc">RendererBatcher</span> <span class="p">{</span>
-  <span class="k">private</span><span class="o">:</span>
-    <span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span><span class="kt">int</span><span class="p">,</span> <span class="n">ZIndexDrawBatch</span><span class="o">&gt;</span> <span class="n">drawBatches</span><span class="p">;</span>
-
   <span class="k">public</span><span class="o">:</span>
     <span class="kt">void</span> <span class="n">BatchDrawSprite</span><span class="p">(</span><span class="n">SpriteBatchItem</span> <span class="n">spriteBatchItem</span><span class="p">,</span> <span class="kt">int</span> <span class="n">zIndex</span><span class="p">);</span>
-
     <span class="kt">void</span> <span class="nf">Flush</span><span class="p">(</span><span class="k">const</span> <span class="n">RenderFlushFunction</span> <span class="o">&amp;</span><span class="n">renderFlushFunction</span><span class="p">);</span>
+
+  <span class="k">private</span><span class="o">:</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span><span class="kt">int</span><span class="p">,</span> <span class="n">ZIndexDrawBatch</span><span class="o">&gt;</span> <span class="n">drawBatches</span><span class="p">;</span>
 <span class="p">};</span>
 
 <span class="cp">#endif </span><span class="c1">//RENDERER_BATCHER_H</span>
@@ -648,7 +642,7 @@
 
 <span class="cp">#include</span> <span class="cpf">&lt;glad/glad.h&gt;</span><span class="cp"></span>
 
-<span class="cp">#include</span> <span class="cpf">"./re/math/math.h"</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">"../math/math.h"</span><span class="cp"></span>
 <span class="cp">#include</span> <span class="cpf">"./color.h"</span><span class="cp"></span>
 <span class="cp">#include</span> <span class="cpf">"../utils/logger.h"</span><span class="cp"></span>
 
@@ -658,50 +652,32 @@
 <span class="p">};</span>
 
 <span class="k">class</span> <span class="nc">Shader</span> <span class="p">{</span>
+  <span class="k">public</span><span class="o">:</span>
+    <span class="n">Shader</span><span class="p">();</span>
+    <span class="n">Shader</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">vertexPath</span><span class="p">,</span> <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">fragmentPath</span><span class="p">);</span>
+    <span class="n">Shader</span><span class="p">(</span><span class="n">OpenGLShaderSourceCode</span> <span class="n">openGlShaderSourceCode</span><span class="p">);</span>
+    <span class="o">~</span><span class="n">Shader</span><span class="p">();</span>
+    <span class="n">OpenGLShaderSourceCode</span> <span class="nf">GetOpenGLShaderSourceFromPaths</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">vertexPath</span><span class="p">,</span> <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">fragmentPath</span><span class="p">);</span>
+    <span class="kt">void</span> <span class="nf">Compile</span><span class="p">(</span><span class="n">OpenGLShaderSourceCode</span> <span class="n">openGlShaderSourceCode</span><span class="p">);</span>
+    <span class="kt">void</span> <span class="nf">Use</span><span class="p">();</span>
+    <span class="kt">void</span> <span class="nf">SetBool</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">name</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">value</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
+    <span class="kt">void</span> <span class="nf">SetInt</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">name</span><span class="p">,</span> <span class="kt">int</span> <span class="n">value</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
+    <span class="kt">void</span> <span class="nf">SetFloat</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">name</span><span class="p">,</span> <span class="kt">float</span> <span class="n">value</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
+    <span class="kt">void</span> <span class="nf">SetVec2Float</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">name</span><span class="p">,</span> <span class="kt">float</span> <span class="n">v1</span><span class="p">,</span> <span class="kt">float</span> <span class="n">v2</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
+    <span class="kt">void</span> <span class="nf">SetVec2Float</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">name</span><span class="p">,</span> <span class="k">const</span> <span class="n">Vector2</span> <span class="o">&amp;</span><span class="n">value</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
+    <span class="kt">void</span> <span class="nf">SetVec3Float</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">name</span><span class="p">,</span> <span class="k">const</span> <span class="n">Color</span> <span class="o">&amp;</span><span class="n">value</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
+    <span class="kt">void</span> <span class="nf">SetVec3Float</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">name</span><span class="p">,</span> <span class="k">const</span> <span class="n">Vector3</span> <span class="o">&amp;</span><span class="n">value</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
+    <span class="kt">void</span> <span class="nf">SetVec3Float</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">name</span><span class="p">,</span> <span class="kt">float</span> <span class="n">v1</span><span class="p">,</span> <span class="kt">float</span> <span class="n">v2</span><span class="p">,</span> <span class="kt">float</span> <span class="n">v3</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
+    <span class="kt">void</span> <span class="nf">SetVec4Float</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">name</span><span class="p">,</span> <span class="kt">float</span> <span class="n">v1</span><span class="p">,</span> <span class="kt">float</span> <span class="n">v2</span><span class="p">,</span> <span class="kt">float</span> <span class="n">v3</span><span class="p">,</span> <span class="kt">float</span> <span class="n">v4</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
+    <span class="kt">void</span> <span class="nf">SetVec4Float</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">name</span><span class="p">,</span> <span class="k">const</span> <span class="n">Color</span> <span class="o">&amp;</span><span class="n">value</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
+    <span class="kt">void</span> <span class="nf">SetMatrix4Float</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">name</span><span class="p">,</span> <span class="k">const</span> <span class="n">Matrix4</span> <span class="o">&amp;</span><span class="n">mat</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
+
   <span class="k">private</span><span class="o">:</span>
     <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">ID</span><span class="p">;</span>
     <span class="n">Logger</span> <span class="o">*</span><span class="n">logger</span> <span class="o">=</span> <span class="k">nullptr</span><span class="p">;</span>
 
     <span class="kt">bool</span> <span class="nf">IsShaderFilesValid</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">vertexPath</span><span class="p">,</span> <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">fragmentPath</span><span class="p">);</span>
-
     <span class="kt">void</span> <span class="nf">CheckCompileErrors</span><span class="p">(</span><span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">shader</span><span class="p">,</span> <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">type</span><span class="p">);</span>
-
-  <span class="k">public</span><span class="o">:</span>
-    <span class="n">Shader</span><span class="p">();</span>
-
-    <span class="n">Shader</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">vertexPath</span><span class="p">,</span> <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">fragmentPath</span><span class="p">);</span>
-
-    <span class="n">Shader</span><span class="p">(</span><span class="n">OpenGLShaderSourceCode</span> <span class="n">openGlShaderSourceCode</span><span class="p">);</span>
-
-    <span class="o">~</span><span class="n">Shader</span><span class="p">();</span>
-
-    <span class="n">OpenGLShaderSourceCode</span> <span class="nf">GetOpenGLShaderSourceFromPaths</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">vertexPath</span><span class="p">,</span> <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">fragmentPath</span><span class="p">);</span>
-
-    <span class="kt">void</span> <span class="nf">Compile</span><span class="p">(</span><span class="n">OpenGLShaderSourceCode</span> <span class="n">openGlShaderSourceCode</span><span class="p">);</span>
-
-    <span class="kt">void</span> <span class="nf">Use</span><span class="p">();</span>
-
-    <span class="kt">void</span> <span class="nf">SetBool</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">name</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">value</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
-
-    <span class="kt">void</span> <span class="nf">SetInt</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">name</span><span class="p">,</span> <span class="kt">int</span> <span class="n">value</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
-
-    <span class="kt">void</span> <span class="nf">SetFloat</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">name</span><span class="p">,</span> <span class="kt">float</span> <span class="n">value</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
-
-    <span class="kt">void</span> <span class="nf">SetVec2Float</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">name</span><span class="p">,</span> <span class="kt">float</span> <span class="n">v1</span><span class="p">,</span> <span class="kt">float</span> <span class="n">v2</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
-
-    <span class="kt">void</span> <span class="nf">SetVec2Float</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">name</span><span class="p">,</span> <span class="k">const</span> <span class="n">Vector2</span> <span class="o">&amp;</span><span class="n">value</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
-
-    <span class="kt">void</span> <span class="nf">SetVec3Float</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">name</span><span class="p">,</span> <span class="k">const</span> <span class="n">Color</span> <span class="o">&amp;</span><span class="n">value</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
-
-    <span class="kt">void</span> <span class="nf">SetVec3Float</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">name</span><span class="p">,</span> <span class="k">const</span> <span class="n">Vector3</span> <span class="o">&amp;</span><span class="n">value</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
-
-    <span class="kt">void</span> <span class="nf">SetVec3Float</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">name</span><span class="p">,</span> <span class="kt">float</span> <span class="n">v1</span><span class="p">,</span> <span class="kt">float</span> <span class="n">v2</span><span class="p">,</span> <span class="kt">float</span> <span class="n">v3</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
-
-    <span class="kt">void</span> <span class="nf">SetVec4Float</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">name</span><span class="p">,</span> <span class="kt">float</span> <span class="n">v1</span><span class="p">,</span> <span class="kt">float</span> <span class="n">v2</span><span class="p">,</span> <span class="kt">float</span> <span class="n">v3</span><span class="p">,</span> <span class="kt">float</span> <span class="n">v4</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
-
-    <span class="kt">void</span> <span class="nf">SetVec4Float</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">name</span><span class="p">,</span> <span class="k">const</span> <span class="n">Color</span> <span class="o">&amp;</span><span class="n">value</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
-
-    <span class="kt">void</span> <span class="nf">SetMatrix4Float</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">name</span><span class="p">,</span> <span class="k">const</span> <span class="n">Matrix4</span> <span class="o">&amp;</span><span class="n">mat</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
 <span class="p">};</span>
 
 <span class="cp">#endif </span><span class="c1">//SHADER_H</span>
@@ -712,7 +688,7 @@
 
 <span class="cp">#include</span> <span class="cpf">&lt;glm/gtc/type_ptr.hpp&gt;</span><span class="cp"></span>
 
-<span class="cp">#include</span> <span class="cpf">"./re/utils/file_helper.h"</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">"../utils/file_helper.h"</span><span class="cp"></span>
 
 <span class="n">Shader</span><span class="o">::</span><span class="n">Shader</span><span class="p">()</span> <span class="o">:</span> <span class="n">logger</span><span class="p">(</span><span class="n">Logger</span><span class="o">::</span><span class="n">GetInstance</span><span class="p">())</span> <span class="p">{}</span>
 
@@ -905,19 +881,17 @@
 <span class="p">};</span>
 
 <span class="k">class</span> <span class="nc">SpriteRenderer</span> <span class="p">{</span>
-    <span class="k">private</span><span class="o">:</span>
+  <span class="k">public</span><span class="o">:</span>
+    <span class="n">SpriteRenderer</span><span class="p">();</span>
+    <span class="kt">void</span> <span class="nf">Draw</span><span class="p">(</span><span class="n">Texture</span> <span class="o">*</span><span class="n">texture2D</span><span class="p">,</span> <span class="k">const</span> <span class="n">Rect2</span> <span class="o">&amp;</span><span class="n">sourceRectangle</span><span class="p">,</span> <span class="k">const</span> <span class="n">Rect2</span> <span class="o">&amp;</span><span class="n">destinationRectangle</span><span class="p">,</span> <span class="kt">float</span> <span class="n">rotation</span><span class="p">,</span>
+            <span class="k">const</span> <span class="n">Color</span> <span class="o">&amp;</span><span class="n">color</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">flipX</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">flipY</span><span class="p">);</span>
+
+  <span class="k">private</span><span class="o">:</span>
     <span class="n">Shader</span> <span class="n">shader</span><span class="p">;</span>
     <span class="n">GLuint</span> <span class="n">quadVAO</span><span class="p">;</span>
     <span class="n">GLuint</span> <span class="n">quadVBO</span><span class="p">;</span>
     <span class="n">ProjectProperties</span> <span class="o">*</span><span class="n">projectProperties</span> <span class="o">=</span> <span class="k">nullptr</span><span class="p">;</span>
-
-<span class="k">public</span><span class="o">:</span>
-    <span class="n">SpriteRenderer</span><span class="p">();</span>
-
-    <span class="kt">void</span> <span class="nf">Draw</span><span class="p">(</span><span class="n">Texture</span> <span class="o">*</span><span class="n">texture2D</span><span class="p">,</span> <span class="k">const</span> <span class="n">Rect2</span> <span class="o">&amp;</span><span class="n">sourceRectangle</span><span class="p">,</span> <span class="k">const</span> <span class="n">Rect2</span> <span class="o">&amp;</span><span class="n">destinationRectangle</span><span class="p">,</span> <span class="kt">float</span> <span class="n">rotation</span><span class="p">,</span>
-              <span class="k">const</span> <span class="n">Color</span> <span class="o">&amp;</span><span class="n">color</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">flipX</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">flipY</span><span class="p">);</span>
 <span class="p">};</span>
-
 
 <span class="cp">#endif </span><span class="c1">//SPRITE_RENDERER_H</span>
 </code></pre></div>
@@ -1067,22 +1041,17 @@
 <span class="cp">#include</span> <span class="cpf">"sprite_renderer.h"</span><span class="cp"></span>
 
 <span class="k">class</span> <span class="nc">Renderer2D</span> <span class="p">{</span>
+  <span class="k">public</span><span class="o">:</span>
+    <span class="n">Renderer2D</span><span class="p">()</span> <span class="o">=</span> <span class="k">default</span><span class="p">;</span>
+    <span class="o">~</span><span class="n">Renderer2D</span><span class="p">();</span>
+    <span class="kt">void</span> <span class="nf">Initialize</span><span class="p">();</span>
+    <span class="kt">void</span> <span class="nf">SubmitSpriteBatchItem</span><span class="p">(</span><span class="n">Texture</span> <span class="o">*</span><span class="n">texture2D</span><span class="p">,</span> <span class="n">Rect2</span> <span class="n">sourceRectangle</span><span class="p">,</span> <span class="n">Rect2</span> <span class="n">destinationRectangle</span><span class="p">,</span> <span class="kt">int</span> <span class="n">zIndex</span><span class="p">,</span> <span class="kt">float</span> <span class="n">rotation</span> <span class="o">=</span> <span class="mf">0.0f</span><span class="p">,</span> <span class="n">Color</span> <span class="n">color</span> <span class="o">=</span> <span class="n">Color</span><span class="p">(</span><span class="mf">1.0f</span><span class="p">,</span> <span class="mf">1.0f</span><span class="p">,</span> <span class="mf">1.0f</span><span class="p">),</span> <span class="kt">bool</span> <span class="n">flipX</span> <span class="o">=</span> <span class="nb">false</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">flipY</span> <span class="o">=</span> <span class="nb">false</span><span class="p">);</span>
+    <span class="kt">void</span> <span class="nf">FlushBatches</span><span class="p">();</span>
+
   <span class="k">private</span><span class="o">:</span>
     <span class="n">RendererBatcher</span> <span class="n">rendererBatcher</span><span class="p">;</span>
     <span class="n">SpriteRenderer</span> <span class="o">*</span><span class="n">spriteRenderer</span> <span class="o">=</span> <span class="k">nullptr</span><span class="p">;</span>
-
-  <span class="k">public</span><span class="o">:</span>
-    <span class="n">Renderer2D</span><span class="p">()</span> <span class="o">=</span> <span class="k">default</span><span class="p">;</span>
-
-    <span class="o">~</span><span class="n">Renderer2D</span><span class="p">();</span>
-
-    <span class="kt">void</span> <span class="nf">Initialize</span><span class="p">();</span>
-
-    <span class="kt">void</span> <span class="nf">SubmitSpriteBatchItem</span><span class="p">(</span><span class="n">Texture</span> <span class="o">*</span><span class="n">texture2D</span><span class="p">,</span> <span class="n">Rect2</span> <span class="n">sourceRectangle</span><span class="p">,</span> <span class="n">Rect2</span> <span class="n">destinationRectangle</span><span class="p">,</span> <span class="kt">int</span> <span class="n">zIndex</span><span class="p">,</span> <span class="kt">float</span> <span class="n">rotation</span> <span class="o">=</span> <span class="mf">0.0f</span><span class="p">,</span> <span class="n">Color</span> <span class="n">color</span> <span class="o">=</span> <span class="n">Color</span><span class="p">(</span><span class="mf">1.0f</span><span class="p">,</span> <span class="mf">1.0f</span><span class="p">,</span> <span class="mf">1.0f</span><span class="p">),</span> <span class="kt">bool</span> <span class="n">flipX</span> <span class="o">=</span> <span class="nb">false</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">flipY</span> <span class="o">=</span> <span class="nb">false</span><span class="p">);</span>
-
-    <span class="kt">void</span> <span class="nf">FlushBatches</span><span class="p">();</span>
 <span class="p">};</span>
-
 
 <span class="cp">#endif </span><span class="c1">//RENDERER_2D_H</span>
 </code></pre></div>

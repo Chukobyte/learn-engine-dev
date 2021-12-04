@@ -381,8 +381,6 @@
 <span class="p">};</span>
 
 <span class="k">class</span> <span class="nc">CPyObject</span> <span class="p">{</span>
-  <span class="k">private</span><span class="o">:</span>
-    <span class="n">PyObject</span><span class="o">*</span> <span class="n">pyObj</span><span class="p">;</span>
   <span class="k">public</span><span class="o">:</span>
     <span class="n">CPyObject</span><span class="p">()</span><span class="o">:</span> <span class="n">pyObj</span><span class="p">(</span><span class="k">nullptr</span><span class="p">)</span> <span class="p">{}</span>
 
@@ -430,6 +428,9 @@
         <span class="n">pyObj</span> <span class="o">=</span> <span class="n">p</span><span class="p">;</span>
         <span class="k">return</span> <span class="n">pyObj</span><span class="p">;</span>
     <span class="p">}</span>
+
+  <span class="k">private</span><span class="o">:</span>
+    <span class="n">PyObject</span><span class="o">*</span> <span class="n">pyObj</span><span class="p">;</span>
 <span class="p">};</span>
 
 <span class="cp">#endif </span><span class="c1">//PYHELPER_HPP</span>
@@ -478,6 +479,15 @@
 <span class="p">};</span>
 
 <span class="k">class</span> <span class="nc">PythonObjectManager</span> <span class="p">{</span>
+  <span class="k">public</span><span class="o">:</span>
+    <span class="n">CPyObject</span> <span class="n">CreateClassInstance</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">classPath</span><span class="p">,</span> <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">className</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">CPyObject</span> <span class="n">pClass</span> <span class="o">=</span> <span class="n">GetClass</span><span class="p">(</span><span class="n">classPath</span><span class="p">,</span> <span class="n">className</span><span class="p">);</span>
+        <span class="n">CPyObject</span> <span class="n">pClassInstance</span> <span class="o">=</span> <span class="n">PyObject_CallObject</span><span class="p">(</span><span class="n">pClass</span><span class="p">,</span> <span class="k">nullptr</span><span class="p">);</span>
+        <span class="n">assert</span><span class="p">(</span><span class="n">pClassInstance</span> <span class="o">!=</span> <span class="k">nullptr</span> <span class="o">&amp;&amp;</span> <span class="s">"Class instance is NULL!"</span><span class="p">);</span>
+        <span class="n">pClassInstance</span><span class="p">.</span><span class="n">AddRef</span><span class="p">();</span>
+        <span class="k">return</span> <span class="n">pClassInstance</span><span class="p">;</span>
+    <span class="p">}</span>
+
   <span class="k">private</span><span class="o">:</span>
     <span class="n">std</span><span class="o">::</span><span class="n">unordered_map</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">,</span> <span class="n">PythonModuleObject</span><span class="o">&gt;</span> <span class="n">modules</span><span class="p">;</span>
 
@@ -498,14 +508,6 @@
             <span class="n">modules</span><span class="p">[</span><span class="n">classPath</span><span class="p">].</span><span class="n">classes</span><span class="p">.</span><span class="n">emplace</span><span class="p">(</span><span class="n">className</span><span class="p">,</span> <span class="n">pClass</span><span class="p">);</span>
         <span class="p">}</span>
         <span class="k">return</span> <span class="n">modules</span><span class="p">[</span><span class="n">classPath</span><span class="p">].</span><span class="n">classes</span><span class="p">[</span><span class="n">className</span><span class="p">];</span>
-    <span class="p">}</span>
-  <span class="k">public</span><span class="o">:</span>
-    <span class="n">CPyObject</span> <span class="n">CreateClassInstance</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">classPath</span><span class="p">,</span> <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">className</span><span class="p">)</span> <span class="p">{</span>
-        <span class="n">CPyObject</span> <span class="n">pClass</span> <span class="o">=</span> <span class="n">GetClass</span><span class="p">(</span><span class="n">classPath</span><span class="p">,</span> <span class="n">className</span><span class="p">);</span>
-        <span class="n">CPyObject</span> <span class="n">pClassInstance</span> <span class="o">=</span> <span class="n">PyObject_CallObject</span><span class="p">(</span><span class="n">pClass</span><span class="p">,</span> <span class="k">nullptr</span><span class="p">);</span>
-        <span class="n">assert</span><span class="p">(</span><span class="n">pClassInstance</span> <span class="o">!=</span> <span class="k">nullptr</span> <span class="o">&amp;&amp;</span> <span class="s">"Class instance is NULL!"</span><span class="p">);</span>
-        <span class="n">pClassInstance</span><span class="p">.</span><span class="n">AddRef</span><span class="p">();</span>
-        <span class="k">return</span> <span class="n">pClassInstance</span><span class="p">;</span>
     <span class="p">}</span>
 <span class="p">};</span>
 

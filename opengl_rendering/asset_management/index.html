@@ -404,10 +404,22 @@
 <span class="cp">#include</span> <span class="cpf">"../utils/logger.h"</span><span class="cp"></span>
 
 <span class="k">class</span> <span class="nc">Texture</span> <span class="p">{</span>
+  <span class="k">public</span><span class="o">:</span>
+    <span class="n">Texture</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">filePath</span><span class="p">);</span>
+    <span class="n">Texture</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">filePath</span><span class="p">,</span> <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">wrapS</span><span class="p">,</span> <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">wrapT</span><span class="p">,</span> <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">filterMin</span><span class="p">,</span> <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">filterMag</span><span class="p">);</span>
+    <span class="n">Texture</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">filePath</span><span class="p">,</span> <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">wrapS</span><span class="p">,</span> <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">wrapT</span><span class="p">,</span> <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">filterMin</span><span class="p">,</span> <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">filterMag</span><span class="p">);</span>
+    <span class="o">~</span><span class="n">Texture</span><span class="p">();</span>
+    <span class="kt">void</span> <span class="nf">Bind</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="nf">GetFilePath</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="nf">GetWidth</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="nf">GetHeight</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">GetImageFormat</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">char</span><span class="o">*</span> <span class="n">GetData</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
+    <span class="kt">bool</span> <span class="nf">IsValid</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
+
   <span class="k">private</span><span class="o">:</span>
     <span class="n">Logger</span> <span class="o">*</span><span class="n">logger</span> <span class="o">=</span> <span class="k">nullptr</span><span class="p">;</span>
     <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">fileName</span><span class="p">;</span>
-
     <span class="n">GLuint</span> <span class="n">ID</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
     <span class="kt">unsigned</span> <span class="kt">char</span><span class="o">*</span> <span class="n">data</span> <span class="o">=</span> <span class="k">nullptr</span><span class="p">;</span>
     <span class="kt">int</span> <span class="n">width</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
@@ -423,34 +435,9 @@
     <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">filterMag</span> <span class="o">=</span> <span class="n">GL_NEAREST</span><span class="p">;</span>
 
     <span class="kt">void</span> <span class="nf">Initialize</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">filePath</span><span class="p">);</span>
-
     <span class="kt">void</span> <span class="nf">Generate</span><span class="p">();</span>
-
     <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">GetWrapFromString</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">wrap</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
-
     <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">GetFilterFromString</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">filter</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
-  <span class="k">public</span><span class="o">:</span>
-    <span class="n">Texture</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">filePath</span><span class="p">);</span>
-
-    <span class="n">Texture</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">filePath</span><span class="p">,</span> <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">wrapS</span><span class="p">,</span> <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">wrapT</span><span class="p">,</span> <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">filterMin</span><span class="p">,</span> <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">filterMag</span><span class="p">);</span>
-
-    <span class="n">Texture</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">filePath</span><span class="p">,</span> <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">wrapS</span><span class="p">,</span> <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">wrapT</span><span class="p">,</span> <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">filterMin</span><span class="p">,</span> <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">filterMag</span><span class="p">);</span>
-
-    <span class="o">~</span><span class="n">Texture</span><span class="p">();</span>
-
-    <span class="kt">void</span> <span class="nf">Bind</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
-
-    <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="nf">GetFilePath</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
-
-    <span class="kt">int</span> <span class="nf">GetWidth</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
-
-    <span class="kt">int</span> <span class="nf">GetHeight</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
-
-    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">GetImageFormat</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
-
-    <span class="kt">unsigned</span> <span class="kt">char</span><span class="o">*</span> <span class="n">GetData</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
-
-    <span class="kt">bool</span> <span class="nf">IsValid</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
 <span class="p">};</span>
 
 <span class="cp">#endif </span><span class="c1">//TEXTURE_H</span>
@@ -618,19 +605,17 @@
 
 
 <span class="k">class</span> <span class="nc">AssetManager</span> <span class="p">{</span>
+  <span class="k">public</span><span class="o">:</span>
+    <span class="k">static</span> <span class="n">AssetManager</span><span class="o">*</span> <span class="n">GetInstance</span><span class="p">();</span>
+    <span class="kt">void</span> <span class="nf">LoadTexture</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">id</span><span class="p">,</span> <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">filePath</span><span class="p">);</span>
+    <span class="n">Texture</span><span class="o">*</span> <span class="nf">GetTexture</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">id</span><span class="p">);</span>
+    <span class="kt">bool</span> <span class="nf">HasTexture</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">id</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
+
   <span class="k">private</span><span class="o">:</span>
     <span class="n">std</span><span class="o">::</span><span class="n">unordered_map</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">,</span> <span class="n">Texture</span><span class="o">*&gt;</span> <span class="n">textures</span><span class="p">;</span>
     <span class="n">Logger</span> <span class="o">*</span><span class="n">logger</span> <span class="o">=</span> <span class="k">nullptr</span><span class="p">;</span>
 
     <span class="n">AssetManager</span><span class="p">();</span>
-  <span class="k">public</span><span class="o">:</span>
-    <span class="k">static</span> <span class="n">AssetManager</span><span class="o">*</span> <span class="n">GetInstance</span><span class="p">();</span>
-
-    <span class="kt">void</span> <span class="nf">LoadTexture</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">id</span><span class="p">,</span> <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">filePath</span><span class="p">);</span>
-
-    <span class="n">Texture</span><span class="o">*</span> <span class="nf">GetTexture</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">id</span><span class="p">);</span>
-
-    <span class="kt">bool</span> <span class="nf">HasTexture</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">id</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
 <span class="p">};</span>
 
 <span class="cp">#endif </span><span class="c1">//ASSET_MANAGER_H</span>
