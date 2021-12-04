@@ -1,5 +1,28 @@
 #include "renderer_2d.h"
 
+#include <cassert>
+#include <glad/glad.h>
+
+Renderer2D::~Renderer2D() {
+    if (spriteRenderer != nullptr) {
+        delete spriteRenderer;
+        spriteRenderer = nullptr;
+    }
+    if (fontRenderer != nullptr) {
+        delete fontRenderer;
+        fontRenderer = nullptr;
+    }
+}
+
+void Renderer2D::Initialize() {
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+    spriteRenderer = new SpriteRenderer();
+    fontRenderer = new FontRenderer();
+}
+
+
 void Renderer2D::SubmitSpriteBatchItem(Texture *texture2D, Rect2 sourceRectangle, Rect2 destinationRectangle,
                                        int zIndex, float rotation,
                                        Color color, bool flipX, bool flipY) {
@@ -15,8 +38,7 @@ void Renderer2D::SubmitSpriteBatchItem(Texture *texture2D, Rect2 sourceRectangle
     rendererBatcher.BatchDrawSprite(spriteBatchItem, zIndex);
 }
 
-void Renderer2D::SubmitFontBatchItem(Font *font, const std::string &text, float x, float y, int zIndex,
-                                     float scale, Color color) {
+void Renderer2D::SubmitFontBatchItem(Font *font, const std::string &text, float x, float y, int zIndex, float scale, Color color) {
     FontBatchItem fontBatchItem = {
         font,
         text,
@@ -29,36 +51,28 @@ void Renderer2D::SubmitFontBatchItem(Font *font, const std::string &text, float 
 }
 
 void Renderer2D::FlushBatches() {
-    const RenderFlushFunction &renderFlushFunction = [this] (const int zIndex, const ZIndexDrawBatch &zIndexDrawBatch) {
-        // Render Font
-        for (const FontBatchItem &fontBatchItem : zIndexDrawBatch.fontDrawBatches) {
-            DrawFont(fontBatchItem.font,
-                     fontBatchItem.text,
-                     fontBatchItem.x,
-                     fontBatchItem.y,
-                     fontBatchItem.scale,
-                     fontBatchItem.color);
-        }
+    assert(spriteRenderer != nullptr && "SpriteRenderer is NULL, initialize the Renderer2D before using!");
 
-        // Render Sprites
+    const RenderFlushFunction &renderFlushFunction = [this] (const int zIndex, const ZIndexDrawBatch &zIndexDrawBatch) {
+        // Draw Sprites
         for (const SpriteBatchItem &spriteBatchItem : zIndexDrawBatch.spriteDrawBatches) {
-            DrawSprite(spriteBatchItem.texture2D,
-                       spriteBatchItem.sourceRectangle,
-                       spriteBatchItem.destinationRectangle,
-                       spriteBatchItem.rotation,
-                       spriteBatchItem.color,
-                       spriteBatchItem.flipX,
-                       spriteBatchItem.flipY);
+            spriteRenderer->Draw(spriteBatchItem.texture2D,
+                                 spriteBatchItem.sourceRectangle,
+                                 spriteBatchItem.destinationRectangle,
+                                 spriteBatchItem.rotation,
+                                 spriteBatchItem.color,
+                                 spriteBatchItem.flipX,
+                                 spriteBatchItem.flipY);
+        }
+        // Draw Font
+        for (const FontBatchItem &fontBatchItem : zIndexDrawBatch.fontDrawBatches) {
+            fontRenderer->Draw(fontBatchItem.font,
+                               fontBatchItem.text,
+                               fontBatchItem.x,
+                               fontBatchItem.y,
+                               fontBatchItem.scale,
+                               fontBatchItem.color);
         }
     };
     rendererBatcher.Flush(renderFlushFunction);
-}
-
-void Renderer2D::DrawSprite(Texture *texture2D, Rect2 sourceRectangle, Rect2 destinationRectangle, float rotation,
-                            Color color, bool flipX, bool flipY) {
-
-}
-
-void Renderer2D::DrawFont(Font *font, const std::string &text, float x, float y, float scale, Color color) {
-
 }
