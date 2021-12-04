@@ -270,4 +270,4 @@ void GameEngine::Initialize() {
 }
 ```
 
-Now that we have music and sound effects implemented it's time to tackle handling input next!
+If you run the code, it should play a brief sound effect and a song once the engine is running.  The source code for this section can be found [here](https://github.com/Chukobyte/learn-engine-dev/tree/main/src/4.implementing_audio/4.0.sdl_mixer).  Now that we have music and sound effects implemented it's time to tackle handling input next!
