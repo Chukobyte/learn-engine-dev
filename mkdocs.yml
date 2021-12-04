@@ -37,6 +37,8 @@ nav:
       - Rendering Text: opengl_rendering/rendering_text.md
   - Implementing Audio:
       - Using SDL_mixer: implementing_audio/using_sdl_mixer.md
+  - Input Management:
+      - Implementing Input: input_management/input_management.md
   - Serializing With JSON:
       - Parsing JSON: serializing_with_json/parsing_json.md
   - Entity Component System:
