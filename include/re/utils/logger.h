@@ -3,12 +3,11 @@
 
 #include <string>
 
-typedef int LogLevel;
-enum _LogLevel {
-    LogLevel_DEBUG = 0,
-    LogLevel_WARN = 1,
-    LogLevel_INFO = 2,
-    LogLevel_ERROR = 3,
+enum class LogLevel : unsigned int {
+    DEBUG = 0,
+    WARN = 1,
+    INFO = 2,
+    ERROR = 3,
 };
 
 class Logger {
@@ -16,7 +15,7 @@ class Logger {
     Logger() = default;
 
   public:
-    LogLevel logLevel = LogLevel_DEBUG;
+    LogLevel logLevel = LogLevel::DEBUG;
 
     static Logger* GetInstance();
 

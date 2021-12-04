@@ -25,11 +25,11 @@ As we add more functionality and systems to the game it will be useful to make l
 #include <string>
 
 typedef int LogLevel;
-enum _LogLevel {
-    LogLevel_DEBUG = 0,
-    LogLevel_WARN = 1,
-    LogLevel_INFO = 2,
-    LogLevel_ERROR = 3,
+enum class LogLevel : unsigned int {
+    DEBUG = 0,
+    WARN = 1,
+    INFO = 2,
+    ERROR = 3,
 };
 
 class Logger {
@@ -37,7 +37,7 @@ class Logger {
     Logger() = default;
 
   public:
-    LogLevel logLevel = LogLevel_DEBUG;
+    LogLevel logLevel = LogLevel::DEBUG;
 
     static Logger* GetInstance();
 
@@ -76,16 +76,16 @@ void Logger::SetLogLevel(LogLevel level) {
 bool Logger::SetLogLevelFromString(std::string logLevelString) {
     transform(logLevelString.begin(), logLevelString.end(), logLevelString.begin(), ::tolower);
     if (logLevelString == "debug") {
-        logLevel = LogLevel_DEBUG;
+        logLevel = LogLevel::DEBUG;
         return true;
     } else if (logLevelString == "warn") {
-        logLevel = LogLevel_WARN;
+        logLevel = LogLevel::WARN;
         return true;
     } else if (logLevelString == "info") {
-        logLevel = LogLevel_INFO;
+        logLevel = LogLevel::INFO;
         return true;
     } else if (logLevelString == "error") {
-        logLevel = LogLevel_ERROR;
+        logLevel = LogLevel::ERROR;
         return true;
     }
     return false;
@@ -96,7 +96,7 @@ LogLevel Logger::GetLogLevel() const {
 }
 
 void Logger::Debug(const char *fmt, ...) const {
-    if (logLevel <= LogLevel_DEBUG) {
+    if (logLevel <= LogLevel::DEBUG) {
         const std::string &logMessage = "[DEBUG] " + std::string(fmt) + "\n";
         va_list args;
         va_start(args, fmt);
@@ -106,7 +106,7 @@ void Logger::Debug(const char *fmt, ...) const {
 }
 
 void Logger::Warn(const char *fmt, ...) const {
-    if (logLevel <= LogLevel_WARN) {
+    if (logLevel <= LogLevel::WARN) {
         const std::string &logMessage = "[WARN] " + std::string(fmt) + "\n";
         va_list args;
         va_start(args, fmt);
@@ -116,7 +116,7 @@ void Logger::Warn(const char *fmt, ...) const {
 }
 
 void Logger::Info(const char *fmt, ...) const {
-    if (logLevel <= LogLevel_INFO) {
+    if (logLevel <= LogLevel::INFO) {
         const std::string &logMessage = "[INFO] " + std::string(fmt) + "\n";
         va_list args;
         va_start(args, fmt);
@@ -126,7 +126,7 @@ void Logger::Info(const char *fmt, ...) const {
 }
 
 void Logger::Error(const char *fmt, ...) const {
-    if (logLevel <= LogLevel_ERROR) {
+    if (logLevel <= LogLevel::ERROR) {
         const std::string &logMessage = "[ERROR] " + std::string(fmt) + "\n";
         va_list args;
         va_start(args, fmt);
