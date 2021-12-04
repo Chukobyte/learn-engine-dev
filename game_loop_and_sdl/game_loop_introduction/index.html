@@ -376,11 +376,11 @@
 <span class="cp">#include</span> <span class="cpf">&lt;string&gt;</span><span class="cp"></span>
 
 <span class="k">typedef</span> <span class="kt">int</span> <span class="n">LogLevel</span><span class="p">;</span>
-<span class="k">enum</span> <span class="nc">_LogLevel</span> <span class="p">{</span>
-    <span class="n">LogLevel_DEBUG</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
-    <span class="n">LogLevel_WARN</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
-    <span class="n">LogLevel_INFO</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span>
-    <span class="n">LogLevel_ERROR</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span>
+<span class="k">enum</span> <span class="k">class</span> <span class="nc">LogLevel</span> <span class="o">:</span> <span class="kt">unsigned</span> <span class="kt">int</span> <span class="p">{</span>
+    <span class="n">DEBUG</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="n">WARN</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="n">INFO</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span>
+    <span class="n">ERROR</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span>
 <span class="p">};</span>
 
 <span class="k">class</span> <span class="nc">Logger</span> <span class="p">{</span>
@@ -388,7 +388,7 @@
     <span class="n">Logger</span><span class="p">()</span> <span class="o">=</span> <span class="k">default</span><span class="p">;</span>
 
   <span class="k">public</span><span class="o">:</span>
-    <span class="n">LogLevel</span> <span class="n">logLevel</span> <span class="o">=</span> <span class="n">LogLevel_DEBUG</span><span class="p">;</span>
+    <span class="n">LogLevel</span> <span class="n">logLevel</span> <span class="o">=</span> <span class="n">LogLevel</span><span class="o">::</span><span class="n">DEBUG</span><span class="p">;</span>
 
     <span class="k">static</span> <span class="n">Logger</span><span class="o">*</span> <span class="nf">GetInstance</span><span class="p">();</span>
 
@@ -425,16 +425,16 @@
 <span class="kt">bool</span> <span class="nf">Logger::SetLogLevelFromString</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">logLevelString</span><span class="p">)</span> <span class="p">{</span>
     <span class="n">transform</span><span class="p">(</span><span class="n">logLevelString</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span> <span class="n">logLevelString</span><span class="p">.</span><span class="n">end</span><span class="p">(),</span> <span class="n">logLevelString</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span> <span class="o">::</span><span class="n">tolower</span><span class="p">);</span>
     <span class="k">if</span> <span class="p">(</span><span class="n">logLevelString</span> <span class="o">==</span> <span class="s">"debug"</span><span class="p">)</span> <span class="p">{</span>
-        <span class="n">logLevel</span> <span class="o">=</span> <span class="n">LogLevel_DEBUG</span><span class="p">;</span>
+        <span class="n">logLevel</span> <span class="o">=</span> <span class="n">LogLevel</span><span class="o">::</span><span class="n">DEBUG</span><span class="p">;</span>
         <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
     <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">logLevelString</span> <span class="o">==</span> <span class="s">"warn"</span><span class="p">)</span> <span class="p">{</span>
-        <span class="n">logLevel</span> <span class="o">=</span> <span class="n">LogLevel_WARN</span><span class="p">;</span>
+        <span class="n">logLevel</span> <span class="o">=</span> <span class="n">LogLevel</span><span class="o">::</span><span class="n">WARN</span><span class="p">;</span>
         <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
     <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">logLevelString</span> <span class="o">==</span> <span class="s">"info"</span><span class="p">)</span> <span class="p">{</span>
-        <span class="n">logLevel</span> <span class="o">=</span> <span class="n">LogLevel_INFO</span><span class="p">;</span>
+        <span class="n">logLevel</span> <span class="o">=</span> <span class="n">LogLevel</span><span class="o">::</span><span class="n">INFO</span><span class="p">;</span>
         <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
     <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">logLevelString</span> <span class="o">==</span> <span class="s">"error"</span><span class="p">)</span> <span class="p">{</span>
-        <span class="n">logLevel</span> <span class="o">=</span> <span class="n">LogLevel_ERROR</span><span class="p">;</span>
+        <span class="n">logLevel</span> <span class="o">=</span> <span class="n">LogLevel</span><span class="o">::</span><span class="n">ERROR</span><span class="p">;</span>
         <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
     <span class="p">}</span>
     <span class="k">return</span> <span class="nb">false</span><span class="p">;</span>
@@ -445,7 +445,7 @@
 <span class="p">}</span>
 
 <span class="kt">void</span> <span class="nf">Logger::Debug</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">fmt</span><span class="p">,</span> <span class="p">...)</span> <span class="k">const</span> <span class="p">{</span>
-    <span class="k">if</span> <span class="p">(</span><span class="n">logLevel</span> <span class="o">&lt;=</span> <span class="n">LogLevel_DEBUG</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">logLevel</span> <span class="o">&lt;=</span> <span class="n">LogLevel</span><span class="o">::</span><span class="n">DEBUG</span><span class="p">)</span> <span class="p">{</span>
         <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">logMessage</span> <span class="o">=</span> <span class="s">"[DEBUG] "</span> <span class="o">+</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">(</span><span class="n">fmt</span><span class="p">)</span> <span class="o">+</span> <span class="s">"</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
         <span class="kt">va_list</span> <span class="n">args</span><span class="p">;</span>
         <span class="n">va_start</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">fmt</span><span class="p">);</span>
@@ -455,7 +455,7 @@
 <span class="p">}</span>
 
 <span class="kt">void</span> <span class="nf">Logger::Warn</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">fmt</span><span class="p">,</span> <span class="p">...)</span> <span class="k">const</span> <span class="p">{</span>
-    <span class="k">if</span> <span class="p">(</span><span class="n">logLevel</span> <span class="o">&lt;=</span> <span class="n">LogLevel_WARN</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">logLevel</span> <span class="o">&lt;=</span> <span class="n">LogLevel</span><span class="o">::</span><span class="n">WARN</span><span class="p">)</span> <span class="p">{</span>
         <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">logMessage</span> <span class="o">=</span> <span class="s">"[WARN] "</span> <span class="o">+</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">(</span><span class="n">fmt</span><span class="p">)</span> <span class="o">+</span> <span class="s">"</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
         <span class="kt">va_list</span> <span class="n">args</span><span class="p">;</span>
         <span class="n">va_start</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">fmt</span><span class="p">);</span>
@@ -465,7 +465,7 @@
 <span class="p">}</span>
 
 <span class="kt">void</span> <span class="nf">Logger::Info</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">fmt</span><span class="p">,</span> <span class="p">...)</span> <span class="k">const</span> <span class="p">{</span>
-    <span class="k">if</span> <span class="p">(</span><span class="n">logLevel</span> <span class="o">&lt;=</span> <span class="n">LogLevel_INFO</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">logLevel</span> <span class="o">&lt;=</span> <span class="n">LogLevel</span><span class="o">::</span><span class="n">INFO</span><span class="p">)</span> <span class="p">{</span>
         <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">logMessage</span> <span class="o">=</span> <span class="s">"[INFO] "</span> <span class="o">+</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">(</span><span class="n">fmt</span><span class="p">)</span> <span class="o">+</span> <span class="s">"</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
         <span class="kt">va_list</span> <span class="n">args</span><span class="p">;</span>
         <span class="n">va_start</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">fmt</span><span class="p">);</span>
@@ -475,7 +475,7 @@
 <span class="p">}</span>
 
 <span class="kt">void</span> <span class="nf">Logger::Error</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">fmt</span><span class="p">,</span> <span class="p">...)</span> <span class="k">const</span> <span class="p">{</span>
-    <span class="k">if</span> <span class="p">(</span><span class="n">logLevel</span> <span class="o">&lt;=</span> <span class="n">LogLevel_ERROR</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">logLevel</span> <span class="o">&lt;=</span> <span class="n">LogLevel</span><span class="o">::</span><span class="n">ERROR</span><span class="p">)</span> <span class="p">{</span>
         <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">logMessage</span> <span class="o">=</span> <span class="s">"[ERROR] "</span> <span class="o">+</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">(</span><span class="n">fmt</span><span class="p">)</span> <span class="o">+</span> <span class="s">"</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
         <span class="kt">va_list</span> <span class="n">args</span><span class="p">;</span>
         <span class="n">va_start</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">fmt</span><span class="p">);</span>
