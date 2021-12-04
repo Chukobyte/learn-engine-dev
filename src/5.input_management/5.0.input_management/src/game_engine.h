@@ -8,6 +8,7 @@
 #include "./re/rendering/render_context.h"
 #include "./re/utils/fps_counter.h"
 #include "./re/utils/logger.h"
+#include "./re/input/input_manager.h"
 
 class GameEngine {
   public:
@@ -26,11 +27,13 @@ class GameEngine {
     FPSCounter *fpsCounter = nullptr;
     Renderer2D renderer2D;
     Logger *logger = nullptr;
+    InputManager *inputManager = nullptr;
 
     void Initialize();
     void InitializeSDL();
     void InitializeAudio();
     void InitializeRendering();
+    void InitializeInput();
 };
 
 #endif //GAME_ENGINE_H

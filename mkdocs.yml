@@ -38,10 +38,11 @@ nav:
   - Implementing Audio:
       - Using SDL_mixer: implementing_audio/using_sdl_mixer.md
   - Input Management:
-      - Implementing Input: input_management/input_management.md
-  - Serializing With JSON:
-      - Parsing JSON: serializing_with_json/parsing_json.md
+      - Input Events: input_management/input_events.md
+      - Input Management: input_management/input_management.md
   - Entity Component System:
       - Building An ECS: entity_component_system/building_an_ecs.md
+  - Serializing With JSON:
+      - Parsing JSON: serializing_with_json/parsing_json.md
   - Source Code: source_code/source_code.md
 
