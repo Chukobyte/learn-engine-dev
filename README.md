@@ -2,6 +2,15 @@
 
 A work in progress tutorial series for developing a cross platform game engine from scratch.  The source code for all turtorials will be maintained in this repo and tutorials can be accessed [here](https://chukobyte.github.io/learn-engine-dev/).
 
+### Chapters
+
+- [1.0 Embedding Python](https://chukobyte.github.io/learn-engine-dev/embedding_python/hello_python/)
+- [2.0 Game Loop & SDL](https://chukobyte.github.io/learn-engine-dev/game_loop_and_sdl/game_loop_introduction/)
+- [3.0 OpenGL Rendering](https://chukobyte.github.io/learn-engine-dev/opengl_rendering/asset_management/)
+- [4.0 Implementing Audio](https://chukobyte.github.io/learn-engine-dev/implementing_audio/using_sdl_mixer/)
+
+*Note: Chapters are a work in progress and subject to change*
+
 ### Building
 
 [Make](https://www.gnu.org/software/make/) is used to build the source code examples.  To build the code for a section, change directory to that folder's section (which contains a Makefile) and run the `build` target with `make build`.  Below is more information about targets defined in the Makefiles.
