@@ -243,9 +243,41 @@
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item md-nav__item--active">
 <input class="md-nav__toggle md-toggle" data-md-toggle="toc" id="__toc" type="checkbox"/>
+<label class="md-nav__link md-nav__link--active" for="__toc">
+          Using SDL_mixer
+          <span class="md-nav__icon md-icon"></span>
+</label>
 <a class="md-nav__link md-nav__link--active" href="./">
         Using SDL_mixer
       </a>
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#audio">
+    Audio
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#asset-manager">
+    Asset Manager
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#audio-helper">
+    Audio Helper
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#using-audio">
+    Using Audio
+  </a>
+</li>
+</ul>
+</nav>
 </li>
 </ul>
 </nav>
@@ -253,11 +285,31 @@
 <li class="md-nav__item md-nav__item--nested">
 <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_6" id="__nav_6" type="checkbox"/>
 <label class="md-nav__link" for="__nav_6">
+        Input Management
+        <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Input Management" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_6">
+<span class="md-nav__icon md-icon"></span>
+          Input Management
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../input_management/input_management/">
+        Implementing Input
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_7" id="__nav_7" type="checkbox"/>
+<label class="md-nav__link" for="__nav_7">
         Serializing With JSON
         <span class="md-nav__icon md-icon"></span>
 </label>
 <nav aria-label="Serializing With JSON" class="md-nav" data-md-level="1">
-<label class="md-nav__title" for="__nav_6">
+<label class="md-nav__title" for="__nav_7">
 <span class="md-nav__icon md-icon"></span>
           Serializing With JSON
         </label>
@@ -271,13 +323,13 @@
 </nav>
 </li>
 <li class="md-nav__item md-nav__item--nested">
-<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_7" id="__nav_7" type="checkbox"/>
-<label class="md-nav__link" for="__nav_7">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_8" id="__nav_8" type="checkbox"/>
+<label class="md-nav__link" for="__nav_8">
         Entity Component System
         <span class="md-nav__icon md-icon"></span>
 </label>
 <nav aria-label="Entity Component System" class="md-nav" data-md-level="1">
-<label class="md-nav__title" for="__nav_7">
+<label class="md-nav__title" for="__nav_8">
 <span class="md-nav__icon md-icon"></span>
           Entity Component System
         </label>
@@ -304,6 +356,32 @@
 <div class="md-sidebar__scrollwrap">
 <div class="md-sidebar__inner">
 <nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#audio">
+    Audio
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#asset-manager">
+    Asset Manager
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#audio-helper">
+    Audio Helper
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#using-audio">
+    Using Audio
+  </a>
+</li>
+</ul>
 </nav>
 </div>
 </div>
@@ -311,7 +389,257 @@
 <div class="md-content" data-md-component="content">
 <article class="md-content__inner md-typeset">
 <h1 id="using-sdl_mixer">Using SDL_mixer</h1>
-<p>Coming soon.</p>
+<h2 id="audio">Audio</h2>
+<p>Creating <code>Music</code> and <code>SoundEffect</code> classes.</p>
+<div class="highlight"><pre><span></span><code><span class="cp">#ifndef AUDIO_H</span>
+<span class="cp">#define AUDIO_H</span>
+
+<span class="cp">#include</span> <span class="cpf">&lt;SDL2/SDL_mixer.h&gt;</span><span class="cp"></span>
+
+<span class="cp">#include</span> <span class="cpf">"../utils/logger.h"</span><span class="cp"></span>
+
+<span class="k">enum</span> <span class="k">class</span> <span class="nc">AudioVolume</span> <span class="o">:</span> <span class="kt">int</span> <span class="p">{</span>
+    <span class="n">MIN</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="n">MAX</span> <span class="o">=</span> <span class="mi">128</span><span class="p">,</span>
+<span class="p">};</span>
+
+<span class="k">class</span> <span class="nc">Music</span> <span class="p">{</span>
+  <span class="k">public</span><span class="o">:</span>
+    <span class="n">Music</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">filePath</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">mixMusic</span> <span class="o">=</span> <span class="n">Mix_LoadMUS</span><span class="p">(</span><span class="n">filePath</span><span class="p">.</span><span class="n">c_str</span><span class="p">());</span>
+        <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">mixMusic</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">Logger</span><span class="o">::</span><span class="n">GetInstance</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">Error</span><span class="p">(</span><span class="s">"Error loading music at path '%s'</span><span class="se">\n</span><span class="s">SDL2 Mixer Error: %s"</span><span class="p">,</span>
+                                         <span class="n">filePath</span><span class="p">.</span><span class="n">c_str</span><span class="p">(),</span>
+                                         <span class="n">Mix_GetError</span><span class="p">());</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="o">~</span><span class="n">Music</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">mixMusic</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">delete</span> <span class="n">mixMusic</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="kt">bool</span> <span class="n">IsValid</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="n">mixMusic</span> <span class="o">!=</span> <span class="k">nullptr</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="n">Mix_Music</span><span class="o">*</span> <span class="n">GetData</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="n">mixMusic</span><span class="p">;</span>
+    <span class="p">}</span>
+
+  <span class="k">private</span><span class="o">:</span>
+    <span class="n">Mix_Music</span> <span class="o">*</span><span class="n">mixMusic</span> <span class="o">=</span> <span class="k">nullptr</span><span class="p">;</span>
+<span class="p">};</span>
+
+<span class="k">class</span> <span class="nc">SoundEffect</span> <span class="p">{</span>
+  <span class="k">public</span><span class="o">:</span>
+    <span class="n">SoundEffect</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">filePath</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">mixChunk</span> <span class="o">=</span> <span class="n">Mix_LoadWAV</span><span class="p">(</span><span class="n">filePath</span><span class="p">.</span><span class="n">c_str</span><span class="p">());</span>
+        <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">mixChunk</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">Logger</span><span class="o">::</span><span class="n">GetInstance</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">Error</span><span class="p">(</span><span class="s">"Error loading sound at path '%s'</span><span class="se">\n</span><span class="s">SDL2 Mixer Error: %s"</span><span class="p">,</span>
+                                         <span class="n">filePath</span><span class="p">.</span><span class="n">c_str</span><span class="p">(),</span>
+                                         <span class="n">Mix_GetError</span><span class="p">());</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="o">~</span><span class="n">SoundEffect</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">mixChunk</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">delete</span> <span class="n">mixChunk</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="kt">bool</span> <span class="n">IsValid</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="n">mixChunk</span> <span class="o">!=</span> <span class="k">nullptr</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="n">Mix_Chunk</span><span class="o">*</span> <span class="n">GetData</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="n">mixChunk</span><span class="p">;</span>
+    <span class="p">}</span>
+
+  <span class="k">private</span><span class="o">:</span>
+    <span class="n">Mix_Chunk</span> <span class="o">*</span><span class="n">mixChunk</span> <span class="o">=</span> <span class="k">nullptr</span><span class="p">;</span>
+<span class="p">};</span>
+
+<span class="cp">#endif </span><span class="c1">//AUDIO_H</span>
+</code></pre></div>
+<h2 id="asset-manager">Asset Manager</h2>
+<p>Will need to add functions for <code>Music</code> and <code>SoundEffect</code> in the <code>AssetManager</code> class.</p>
+<div class="highlight"><pre><span></span><code><span class="cp">#ifndef ASSET_MANAGER_H</span>
+<span class="cp">#define ASSET_MANAGER_H</span>
+
+<span class="cp">#include</span> <span class="cpf">&lt;unordered_map&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;string&gt;</span><span class="cp"></span>
+
+<span class="cp">#include</span> <span class="cpf">"./re/audio/audio.h"</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">"./re/utils/logger.h"</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">"./re/rendering/texture.h"</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">"./re/rendering/font.h"</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">"./re/rendering/render_context.h"</span><span class="cp"></span>
+
+
+<span class="k">class</span> <span class="nc">AssetManager</span> <span class="p">{</span>
+  <span class="k">public</span><span class="o">:</span>
+    <span class="k">static</span> <span class="n">AssetManager</span><span class="o">*</span> <span class="n">GetInstance</span><span class="p">();</span>
+    <span class="c1">// Texture</span>
+    <span class="kt">void</span> <span class="nf">LoadTexture</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">id</span><span class="p">,</span> <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">filePath</span><span class="p">);</span>
+    <span class="n">Texture</span><span class="o">*</span> <span class="nf">GetTexture</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">id</span><span class="p">);</span>
+    <span class="kt">bool</span> <span class="nf">HasTexture</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">id</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
+    <span class="c1">// Font</span>
+    <span class="kt">void</span> <span class="nf">LoadFont</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">fontId</span><span class="p">,</span> <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">fontPath</span><span class="p">,</span> <span class="kt">int</span> <span class="n">size</span><span class="p">);</span>
+    <span class="n">Font</span><span class="o">*</span> <span class="nf">GetFont</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">fontId</span><span class="p">);</span>
+    <span class="kt">bool</span> <span class="nf">HasFont</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">fontId</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
+    <span class="c1">// Music</span>
+    <span class="kt">void</span> <span class="nf">LoadMusic</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">musicId</span><span class="p">,</span> <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">musicPath</span><span class="p">);</span>
+    <span class="n">Music</span><span class="o">*</span> <span class="nf">GetMusic</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">musicId</span><span class="p">);</span>
+    <span class="kt">bool</span> <span class="nf">HasMusic</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">musicId</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
+    <span class="c1">// Sound</span>
+    <span class="kt">void</span> <span class="nf">LoadSound</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">soundId</span><span class="p">,</span> <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">soundPath</span><span class="p">);</span>
+    <span class="n">SoundEffect</span><span class="o">*</span> <span class="nf">GetSound</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">soundId</span><span class="p">);</span>
+    <span class="kt">bool</span> <span class="nf">HasSound</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">soundId</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">unordered_map</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">,</span> <span class="n">SoundEffect</span><span class="o">*&gt;</span> <span class="n">GetAllSounds</span><span class="p">();</span>
+
+  <span class="k">private</span><span class="o">:</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">unordered_map</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">,</span> <span class="n">Texture</span><span class="o">*&gt;</span> <span class="n">textures</span><span class="p">;</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">unordered_map</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">,</span> <span class="n">Font</span><span class="o">*&gt;</span> <span class="n">fonts</span><span class="p">;</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">unordered_map</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">,</span> <span class="n">Music</span><span class="o">*&gt;</span> <span class="n">music</span><span class="p">;</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">unordered_map</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">,</span> <span class="n">SoundEffect</span><span class="o">*&gt;</span> <span class="n">soundEffects</span><span class="p">;</span>
+    <span class="n">RenderContext</span> <span class="o">*</span><span class="n">renderContext</span> <span class="o">=</span> <span class="k">nullptr</span><span class="p">;</span>
+    <span class="n">Logger</span> <span class="o">*</span><span class="n">logger</span> <span class="o">=</span> <span class="k">nullptr</span><span class="p">;</span>
+
+    <span class="n">AssetManager</span><span class="p">();</span>
+<span class="p">};</span>
+
+<span class="cp">#endif </span><span class="c1">//ASSET_MANAGER_H</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="kt">void</span> <span class="nf">AssetManager::LoadMusic</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">musicId</span><span class="p">,</span> <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">musicPath</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">HasMusic</span><span class="p">(</span><span class="n">musicId</span><span class="p">))</span> <span class="p">{</span>
+        <span class="n">logger</span><span class="o">-&gt;</span><span class="n">Warn</span><span class="p">(</span><span class="s">"Already has music, not loading!"</span><span class="p">);</span>
+        <span class="k">return</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="n">Music</span> <span class="o">*</span><span class="n">newMusic</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Music</span><span class="p">(</span><span class="n">musicPath</span><span class="p">);</span>
+    <span class="n">assert</span><span class="p">(</span><span class="n">newMusic</span><span class="o">-&gt;</span><span class="n">IsValid</span><span class="p">()</span> <span class="o">&amp;&amp;</span> <span class="s">"Failed to load music!"</span><span class="p">);</span>
+    <span class="n">music</span><span class="p">.</span><span class="n">emplace</span><span class="p">(</span><span class="n">musicId</span><span class="p">,</span> <span class="n">newMusic</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="n">Music</span> <span class="o">*</span><span class="nf">AssetManager::GetMusic</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">musicId</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">assert</span><span class="p">(</span><span class="n">HasMusic</span><span class="p">(</span><span class="n">musicId</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="s">"Failed to get music!"</span><span class="p">);</span>
+    <span class="k">return</span> <span class="n">music</span><span class="p">[</span><span class="n">musicId</span><span class="p">];</span>
+<span class="p">}</span>
+
+<span class="kt">bool</span> <span class="nf">AssetManager::HasMusic</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">musicId</span><span class="p">)</span> <span class="k">const</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="n">music</span><span class="p">.</span><span class="n">count</span><span class="p">(</span><span class="n">musicId</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="nf">AssetManager::LoadSound</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">soundId</span><span class="p">,</span> <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">soundPath</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">HasSound</span><span class="p">(</span><span class="n">soundId</span><span class="p">))</span> <span class="p">{</span>
+        <span class="n">logger</span><span class="o">-&gt;</span><span class="n">Warn</span><span class="p">(</span><span class="s">"Already have sound, not loading!"</span><span class="p">);</span>
+        <span class="k">return</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="n">SoundEffect</span> <span class="o">*</span><span class="n">soundEffect</span> <span class="o">=</span> <span class="k">new</span> <span class="n">SoundEffect</span><span class="p">(</span><span class="n">soundPath</span><span class="p">);</span>
+    <span class="n">assert</span><span class="p">(</span><span class="n">soundEffect</span><span class="o">-&gt;</span><span class="n">IsValid</span><span class="p">()</span> <span class="o">&amp;&amp;</span> <span class="s">"Failed to load sound effect!"</span><span class="p">);</span>
+    <span class="n">soundEffects</span><span class="p">.</span><span class="n">emplace</span><span class="p">(</span><span class="n">soundId</span><span class="p">,</span> <span class="n">soundEffect</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="n">SoundEffect</span> <span class="o">*</span><span class="nf">AssetManager::GetSound</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">soundId</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">assert</span><span class="p">(</span><span class="n">HasSound</span><span class="p">(</span><span class="n">soundId</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="s">"Failed to get sound effect!"</span><span class="p">);</span>
+    <span class="k">return</span> <span class="n">soundEffects</span><span class="p">[</span><span class="n">soundId</span><span class="p">];</span>
+<span class="p">}</span>
+
+<span class="kt">bool</span> <span class="nf">AssetManager::HasSound</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">soundId</span><span class="p">)</span> <span class="k">const</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="n">soundEffects</span><span class="p">.</span><span class="n">count</span><span class="p">(</span><span class="n">soundId</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="n">std</span><span class="o">::</span><span class="n">unordered_map</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">,</span> <span class="n">SoundEffect</span> <span class="o">*&gt;</span> <span class="n">AssetManager</span><span class="o">::</span><span class="n">GetAllSounds</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="n">soundEffects</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>I haven't included the entire <code>asset_manager.cpp</code> file to reduce lines.</p>
+<h2 id="audio-helper">Audio Helper</h2>
+<div class="highlight"><pre><span></span><code><span class="cp">#ifndef AUDIO_HELPER_H</span>
+<span class="cp">#define AUDIO_HELPER_H</span>
+
+<span class="cp">#include</span> <span class="cpf">"./re/audio/audio.h"</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">"./re/utils/helper.h"</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">"asset_manager.h"</span><span class="cp"></span>
+
+<span class="k">class</span> <span class="nc">AudioHelper</span> <span class="p">{</span>
+  <span class="k">public</span><span class="o">:</span>
+    <span class="k">static</span> <span class="kt">void</span> <span class="n">PlayMusic</span><span class="p">(</span><span class="n">Music</span> <span class="o">*</span><span class="n">music</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">loops</span> <span class="o">=</span> <span class="nb">true</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kt">int</span> <span class="n">loopNumber</span> <span class="o">=</span> <span class="n">loops</span> <span class="o">?</span> <span class="mi">-1</span> <span class="o">:</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="n">Mix_PlayMusic</span><span class="p">(</span><span class="n">music</span><span class="o">-&gt;</span><span class="n">GetData</span><span class="p">(),</span> <span class="n">loopNumber</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="k">static</span> <span class="kt">void</span> <span class="n">PlayMusic</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">musicId</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">loops</span> <span class="o">=</span> <span class="nb">true</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">static</span> <span class="n">AssetManager</span> <span class="o">*</span><span class="n">assetManager</span> <span class="o">=</span> <span class="n">AssetManager</span><span class="o">::</span><span class="n">GetInstance</span><span class="p">();</span>
+        <span class="n">PlayMusic</span><span class="p">(</span><span class="n">assetManager</span><span class="o">-&gt;</span><span class="n">GetMusic</span><span class="p">(</span><span class="n">musicId</span><span class="p">),</span> <span class="n">loops</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="k">static</span> <span class="kt">void</span> <span class="n">StopMusic</span><span class="p">()</span> <span class="p">{</span>
+        <span class="n">Mix_HaltMusic</span><span class="p">();</span>
+    <span class="p">}</span>
+
+    <span class="k">static</span> <span class="kt">void</span> <span class="n">PauseMusic</span><span class="p">()</span> <span class="p">{</span>
+        <span class="n">Mix_PauseMusic</span><span class="p">();</span>
+    <span class="p">}</span>
+
+    <span class="k">static</span> <span class="kt">void</span> <span class="n">PlaySound</span><span class="p">(</span><span class="n">SoundEffect</span> <span class="o">*</span><span class="n">soundEffect</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">Mix_PlayChannel</span><span class="p">(</span><span class="mi">-1</span><span class="p">,</span> <span class="n">soundEffect</span><span class="o">-&gt;</span><span class="n">GetData</span><span class="p">(),</span> <span class="mi">0</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="k">static</span> <span class="kt">void</span> <span class="n">PlaySound</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">soundId</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">static</span> <span class="n">AssetManager</span> <span class="o">*</span><span class="n">assetManager</span> <span class="o">=</span> <span class="n">AssetManager</span><span class="o">::</span><span class="n">GetInstance</span><span class="p">();</span>
+        <span class="n">PlaySound</span><span class="p">(</span><span class="n">assetManager</span><span class="o">-&gt;</span><span class="n">GetSound</span><span class="p">(</span><span class="n">soundId</span><span class="p">));</span>
+    <span class="p">}</span>
+
+    <span class="k">static</span> <span class="kt">void</span> <span class="n">SetMusicVolume</span><span class="p">(</span><span class="kt">int</span> <span class="n">volume</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">Helper</span><span class="o">::</span><span class="n">Clamp</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="p">(</span><span class="n">volume</span><span class="p">,</span> <span class="k">static_cast</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="p">(</span><span class="n">AudioVolume</span><span class="o">::</span><span class="n">MIN</span><span class="p">),</span> <span class="k">static_cast</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="p">(</span><span class="n">AudioVolume</span><span class="o">::</span><span class="n">MAX</span><span class="p">));</span>
+        <span class="n">Mix_VolumeMusic</span><span class="p">(</span><span class="n">volume</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="k">static</span> <span class="kt">void</span> <span class="n">SetSoundVolume</span><span class="p">(</span><span class="kt">int</span> <span class="n">volume</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">Helper</span><span class="o">::</span><span class="n">Clamp</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="p">(</span><span class="n">volume</span><span class="p">,</span> <span class="k">static_cast</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="p">(</span><span class="n">AudioVolume</span><span class="o">::</span><span class="n">MIN</span><span class="p">),</span> <span class="k">static_cast</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="p">(</span><span class="n">AudioVolume</span><span class="o">::</span><span class="n">MAX</span><span class="p">));</span>
+        <span class="k">static</span> <span class="n">AssetManager</span> <span class="o">*</span><span class="n">assetManager</span> <span class="o">=</span> <span class="n">AssetManager</span><span class="o">::</span><span class="n">GetInstance</span><span class="p">();</span>
+        <span class="k">for</span> <span class="p">(</span><span class="k">auto</span> <span class="k">const</span> <span class="o">&amp;</span><span class="nl">pair</span> <span class="p">:</span> <span class="n">assetManager</span><span class="o">-&gt;</span><span class="n">GetAllSounds</span><span class="p">())</span> <span class="p">{</span>
+            <span class="n">SoundEffect</span> <span class="o">*</span><span class="n">soundEffect</span> <span class="o">=</span> <span class="n">pair</span><span class="p">.</span><span class="n">second</span><span class="p">;</span>
+            <span class="n">Mix_VolumeChunk</span><span class="p">(</span><span class="n">soundEffect</span><span class="o">-&gt;</span><span class="n">GetData</span><span class="p">(),</span> <span class="n">volume</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="k">static</span> <span class="kt">void</span> <span class="n">SetAllVolume</span><span class="p">(</span><span class="kt">int</span> <span class="n">volume</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">SetMusicVolume</span><span class="p">(</span><span class="n">volume</span><span class="p">);</span>
+        <span class="n">SetSoundVolume</span><span class="p">(</span><span class="n">volume</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">};</span>
+
+<span class="cp">#endif </span><span class="c1">//AUDIO_HELPER_H</span>
+</code></pre></div>
+<h2 id="using-audio">Using Audio</h2>
+<p>We'll need to make a few tweaks to the <code>GameEngine</code> class.</p>
+<div class="highlight"><pre><span></span><code><span class="kt">void</span> <span class="nf">GameEngine::InitializeAudio</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">Mix_OpenAudio</span><span class="p">(</span><span class="mi">44100</span><span class="p">,</span> <span class="n">MIX_DEFAULT_FORMAT</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2048</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">logger</span><span class="o">-&gt;</span><span class="n">Error</span><span class="p">(</span><span class="s">"SDL_mixer could not be initialized!"</span><span class="p">);</span>
+        <span class="k">return</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="c1">// Temp load assets</span>
+    <span class="n">assetManager</span><span class="o">-&gt;</span><span class="n">LoadMusic</span><span class="p">(</span><span class="s">"test_music"</span><span class="p">,</span> <span class="s">"assets/audio/music/test_music.wav"</span><span class="p">);</span>
+    <span class="n">assetManager</span><span class="o">-&gt;</span><span class="n">LoadSound</span><span class="p">(</span><span class="s">"test_sound"</span><span class="p">,</span> <span class="s">"assets/audio/sound/test_sound_effect.wav"</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="kt">void</span> <span class="nf">GameEngine::Initialize</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">logger</span><span class="o">-&gt;</span><span class="n">Debug</span><span class="p">(</span><span class="s">"Initializing..."</span><span class="p">);</span>
+    <span class="n">InitializeSDL</span><span class="p">();</span>
+    <span class="n">InitializeAudio</span><span class="p">();</span>
+    <span class="n">InitializeRendering</span><span class="p">();</span>
+    <span class="n">logger</span><span class="o">-&gt;</span><span class="n">Info</span><span class="p">(</span><span class="s">"%s Engine v%s"</span><span class="p">,</span> <span class="n">engineContext</span><span class="o">-&gt;</span><span class="n">GetEngineName</span><span class="p">(),</span> <span class="n">engineContext</span><span class="o">-&gt;</span><span class="n">GetEngineVersion</span><span class="p">());</span>
+    <span class="n">engineContext</span><span class="o">-&gt;</span><span class="n">SetRunning</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span>
+
+    <span class="c1">// Temp play music</span>
+    <span class="n">AudioHelper</span><span class="o">::</span><span class="n">PlayMusic</span><span class="p">(</span><span class="s">"test_music"</span><span class="p">);</span>
+    <span class="n">AudioHelper</span><span class="o">::</span><span class="n">PlaySound</span><span class="p">(</span><span class="s">"test_sound"</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>If you run the code, it should play a brief sound effect and a song once the engine is running.  The source code for this section can be found <a href="https://github.com/Chukobyte/learn-engine-dev/tree/main/src/4.implementing_audio/4.0.sdl_mixer">here</a>.  Now that we have music and sound effects implemented it's time to tackle handling input next!</p>
 </article>
 </div>
 </div>
@@ -331,13 +659,13 @@
             </div>
 </div>
 </a>
-<a class="md-footer__link md-footer__link--next" href="../../serializing_with_json/parsing_json/" rel="next">
+<a class="md-footer__link md-footer__link--next" href="../../input_management/input_management/" rel="next">
 <div class="md-footer__title">
 <div class="md-ellipsis">
 <span class="md-footer__direction">
                 Next
               </span>
-              Parsing JSON
+              Implementing Input
             </div>
 </div>
 <div class="md-footer__button md-icon">
