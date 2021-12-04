@@ -9,7 +9,7 @@ ifeq ($(OS),Windows_NT)
 else
     OS_TYPE := linux
     BUILD_OBJECT := $(PROJECT_NAME)
-    L_FLAGS := -lSDL2 -lGL -lpython3.7m -lfreetype -lcrypt -lpthread -ldl  -lutil -lm -static-libgcc -static-libstdc++
+    L_FLAGS := -lSDL2 -lSDL2_mixer -lGL -lpython3.7m -lfreetype -lcrypt -lpthread -ldl  -lutil -lm -static-libgcc -static-libstdc++
     DELETE_CMD := rm
 endif
 
