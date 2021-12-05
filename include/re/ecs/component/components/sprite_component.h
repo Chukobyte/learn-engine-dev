@@ -1,0 +1,18 @@
+#ifndef SPRITE_COMPONENT_H
+#define SPRITE_COMPONENT_H
+
+#include "../component.h"
+#include "../../../rendering/texture.h"
+#include "../../../rendering/color.h"
+#include "../../../math/math.h"
+
+struct SpriteComponent {
+    Texture* texture = nullptr;
+    Rect2 drawSource;
+    bool flipX = false;
+    bool flipY = false;
+    Color modulate = Color(1.0f, 1.0f, 1.0f, 1.0f);
+    Rect2 drawDestination; // Updated when drawing to position
+};
+
+#endif //SPRITE_COMPONENT_H

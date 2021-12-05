@@ -14,6 +14,11 @@ Renderer2D::~Renderer2D() {
     }
 }
 
+Renderer2D* Renderer2D::GetInstance() {
+    static Renderer2D *instance = new Renderer2D();
+    return instance;
+}
+
 void Renderer2D::Initialize() {
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);

@@ -5,10 +5,10 @@
 
 #include "../math/math.h"
 
-enum class InputEventType : std::uint32_t {
-    MOUSE = 2,
-    KEYBOARD = 4,
-    JOYSTICK = 8,
+enum class InputEventType {
+    MOUSE,
+    KEYBOARD,
+    JOYSTICK,
 };
 
 struct InputEvent {
