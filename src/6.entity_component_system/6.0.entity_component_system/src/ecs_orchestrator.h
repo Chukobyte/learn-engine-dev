@@ -1,9 +1,10 @@
 #ifndef ECS_ORCHESTRATOR_H
 #define ECS_ORCHESTRATOR_H
 
-#include "system/ec_system_manager.h"
-#include "entity/entity_manager.h"
-#include "component/component_manager.h"
+#include "./re/ecs/system/ec_system_manager.h"
+#include "./re/ecs/entity/entity_manager.h"
+#include "./re/ecs/component/component_manager.h"
+#include "./scene/scene_manager.h"
 
 class ECSOrchestrator {
   public:
@@ -27,7 +28,7 @@ class ECSOrchestrator {
         auto signature = entityManager->GetSignature(entity);
         signature.set(componentManager->GetComponentType<T>(), true);
         entityManager->SetSignature(entity, signature);
-        ecSystemManager->EntitySignatureChanged(entity, signature);
+        RefreshEntitySignature(entity);
     }
 
     template<typename T>
@@ -44,25 +45,25 @@ class ECSOrchestrator {
         ecSystemManager->EntitySignatureChanged(entity, signature);
     }
 
-    template<typename T>
-    void EnableComponent(Entity entity) {
-        auto signature = entityManager->GetSignature(entity);
-        signature.set(componentManager->GetComponentType<T>(), true);
-        ecSystemManager->EntitySignatureChanged(entity, signature);
-    }
+//    template<typename T>
+//    void EnableComponent(Entity entity) {
+//        auto signature = entityManager->GetSignature(entity);
+//        signature.set(componentManager->GetComponentType<T>(), true);
+//        ecSystemManager->EntitySignatureChanged(entity, signature);
+//    }
+//
+//    template<typename T>
+//    void DisableComponent(Entity entity) {
+//        auto signature = entityManager->GetSignature(entity);
+//        signature.set(componentManager->GetComponentType<T>(), false);
+//        ecSystemManager->EntitySignatureChanged(entity, signature);
+//    }
 
-    template<typename T>
-    void DisableComponent(Entity entity) {
-        auto signature = entityManager->GetSignature(entity);
-        signature.set(componentManager->GetComponentType<T>(), false);
-        ecSystemManager->EntitySignatureChanged(entity, signature);
-    }
-
-    template<typename T>
-    bool IsComponentEnabled(Entity entity) {
-        auto signature = entityManager->GetSignature(entity);
-        return (GetComponentType<T>() & signature) == signature;
-    }
+//    template<typename T>
+//    bool IsComponentEnabled(Entity entity) {
+//        auto signature = entityManager->GetSignature(entity);
+//        return (GetComponentType<T>() & signature) == signature;
+//    }
 
     template<typename T>
     T& GetComponent(Entity entity) {
@@ -108,12 +109,21 @@ class ECSOrchestrator {
         return ecSystemManager->GetSignature<T>();
     }
 
+    // Scene
+    void ChangeToEmptyScene();
+    void AddRootNode(Entity rootEntity);
+    void AddChildNode(Entity child, Entity parent);
+    void DeleteNode(Entity entity);
+    bool IsNodeInScene(Entity entity) const;
+
   private:
     ECSystemManager *ecSystemManager = nullptr;
     EntityManager *entityManager = nullptr;
     ComponentManager *componentManager = nullptr;
+    SceneManager *sceneManager = nullptr;
 
     ECSOrchestrator();
+    void RefreshEntitySignature(Entity entity);
 };
 
 #endif //ECS_ORCHESTRATOR_H

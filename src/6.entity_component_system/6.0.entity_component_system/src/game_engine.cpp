@@ -115,9 +115,14 @@ void GameEngine::InitializeECS() {
     textRenderingSignature.set(ecsOrchestrator->GetComponentType<TextLabelComponent>(), true);
     ecsOrchestrator->RegisterSystem<TextRenderingECSystem>(textRenderingSignature);
 
+    // Temp startup scene
+    ecsOrchestrator->ChangeToEmptyScene();
     // Temp setup entities
     const Vector2 windowCenter = Vector2(projectProperties->GetWindowWidth() / 2,
                                          projectProperties->GetWindowHeight() / 2);
+    // Main
+    Entity mainEntity = ecsOrchestrator->CreateEntity();
+    ecsOrchestrator->AddRootNode(mainEntity);
     // Sprite
     Entity witchEntity = ecsOrchestrator->CreateEntity();
     Transform2DComponent witchEntityTransform = Transform2DComponent{ windowCenter };
@@ -127,6 +132,7 @@ void GameEngine::InitializeECS() {
         Rect2(0, 0, 32, 32)
     };
     ecsOrchestrator->AddComponent<SpriteComponent>(witchEntity, witchEntitySpriteComponent);
+    ecsOrchestrator->AddChildNode(witchEntity, mainEntity);
     // Text Label
     Entity textEntity = ecsOrchestrator->CreateEntity();
     Transform2DComponent textEntityTransform = Transform2DComponent{ Vector2(windowCenter.x - 35.0f, windowCenter.y - 20.0f) };
@@ -137,6 +143,7 @@ void GameEngine::InitializeECS() {
         Color(1.0f, 1.0f, 1.0f)
     };
     ecsOrchestrator->AddComponent<TextLabelComponent>(textEntity, textEntityTextLabelComponent);
+    ecsOrchestrator->AddChildNode(textEntity, mainEntity);
 }
 
 void GameEngine::ProcessInput() {

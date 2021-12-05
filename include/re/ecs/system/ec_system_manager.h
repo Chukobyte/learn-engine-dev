@@ -15,9 +15,7 @@ class ECSystemManager {
     Logger *logger = nullptr;
 
   public:
-    ECSystemManager() {
-        logger = Logger::GetInstance();
-    }
+    ECSystemManager() : logger(Logger::GetInstance()) {}
 
     template<typename T>
     T* GetSystem() {
