@@ -8,6 +8,8 @@ A work in progress tutorial series for developing a cross platform game engine f
 - [2.0 Game Loop & SDL](https://chukobyte.github.io/learn-engine-dev/game_loop_and_sdl/game_loop_introduction/)
 - [3.0 OpenGL Rendering](https://chukobyte.github.io/learn-engine-dev/opengl_rendering/asset_management/)
 - [4.0 Implementing Audio](https://chukobyte.github.io/learn-engine-dev/implementing_audio/using_sdl_mixer/)
+- [5.0 Input Management](https://chukobyte.github.io/learn-engine-dev/input_management/input_events/)
+- [6.0 Entity Component System](https://chukobyte.github.io/learn-engine-dev/entity_component_system/building_an_ecs/)
 
 *Note: Chapters are a work in progress and subject to change*
 
