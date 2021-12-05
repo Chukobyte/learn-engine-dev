@@ -9,7 +9,7 @@
 <meta content="Chukobyte" name="author"/>
 <link href="../../assets/images/favicon.png" rel="icon"/>
 <meta content="mkdocs-1.1.2, mkdocs-material-7.1.4" name="generator"/>
-<title>Implementing Input - Learn Engine Dev</title>
+<title>Input Management - Learn Engine Dev</title>
 <link href="../../assets/stylesheets/main.bde7dde4.min.css" rel="stylesheet"/>
 <link href="../../assets/stylesheets/palette.ef6f36e2.min.css" rel="stylesheet"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
@@ -69,7 +69,7 @@
 <div class="md-header__topic" data-md-component="header-topic">
 <span class="md-ellipsis">
             
-              Implementing Input
+              Input Management
             
           </span>
 </div>
@@ -261,11 +261,43 @@
           Input Management
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../input_events/">
+        Input Events
+      </a>
+</li>
 <li class="md-nav__item md-nav__item--active">
 <input class="md-nav__toggle md-toggle" data-md-toggle="toc" id="__toc" type="checkbox"/>
+<label class="md-nav__link md-nav__link--active" for="__toc">
+          Input Management
+          <span class="md-nav__icon md-icon"></span>
+</label>
 <a class="md-nav__link md-nav__link--active" href="./">
-        Implementing Input
+        Input Management
       </a>
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#input-action">
+    Input Action
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#input-manager">
+    Input Manager
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#processing-input-events">
+    Processing Input Events
+  </a>
+</li>
+</ul>
+</nav>
 </li>
 </ul>
 </nav>
@@ -273,18 +305,18 @@
 <li class="md-nav__item md-nav__item--nested">
 <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_7" id="__nav_7" type="checkbox"/>
 <label class="md-nav__link" for="__nav_7">
-        Serializing With JSON
+        Entity Component System
         <span class="md-nav__icon md-icon"></span>
 </label>
-<nav aria-label="Serializing With JSON" class="md-nav" data-md-level="1">
+<nav aria-label="Entity Component System" class="md-nav" data-md-level="1">
 <label class="md-nav__title" for="__nav_7">
 <span class="md-nav__icon md-icon"></span>
-          Serializing With JSON
+          Entity Component System
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../serializing_with_json/parsing_json/">
-        Parsing JSON
+<a class="md-nav__link" href="../../entity_component_system/building_an_ecs/">
+        Building An ECS
       </a>
 </li>
 </ul>
@@ -293,18 +325,18 @@
 <li class="md-nav__item md-nav__item--nested">
 <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_8" id="__nav_8" type="checkbox"/>
 <label class="md-nav__link" for="__nav_8">
-        Entity Component System
+        Serializing With JSON
         <span class="md-nav__icon md-icon"></span>
 </label>
-<nav aria-label="Entity Component System" class="md-nav" data-md-level="1">
+<nav aria-label="Serializing With JSON" class="md-nav" data-md-level="1">
 <label class="md-nav__title" for="__nav_8">
 <span class="md-nav__icon md-icon"></span>
-          Entity Component System
+          Serializing With JSON
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../entity_component_system/building_an_ecs/">
-        Building An ECS
+<a class="md-nav__link" href="../../serializing_with_json/parsing_json/">
+        Parsing JSON
       </a>
 </li>
 </ul>
@@ -324,6 +356,27 @@
 <div class="md-sidebar__scrollwrap">
 <div class="md-sidebar__inner">
 <nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#input-action">
+    Input Action
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#input-manager">
+    Input Manager
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#processing-input-events">
+    Processing Input Events
+  </a>
+</li>
+</ul>
 </nav>
 </div>
 </div>
@@ -331,14 +384,265 @@
 <div class="md-content" data-md-component="content">
 <article class="md-content__inner md-typeset">
 <h1 id="input-management">Input Management</h1>
-<p>Coming soon...</p>
+<h2 id="input-action">Input Action</h2>
+<div class="highlight"><pre><span></span><code><span class="cp">#ifndef INPUT_ACTION_H</span>
+<span class="cp">#define INPUT_ACTION_H</span>
+
+<span class="cp">#include</span> <span class="cpf">&lt;vector&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;algorithm&gt;</span><span class="cp"></span>
+
+<span class="cp">#include</span> <span class="cpf">&lt;SDL2/SDL.h&gt;</span><span class="cp"></span>
+
+<span class="cp">#include</span> <span class="cpf">"mouse_input.h"</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">"keyboard_input.h"</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">"joystick_input.h"</span><span class="cp"></span>
+
+<span class="cp">#include</span> <span class="cpf">"../utils/logger.h"</span><span class="cp"></span>
+
+<span class="k">class</span> <span class="nc">InputAction</span> <span class="p">{</span>
+  <span class="k">private</span><span class="o">:</span>
+    <span class="n">MouseAction</span> <span class="n">mouseAction</span><span class="p">;</span>
+    <span class="n">KeyboardAction</span> <span class="n">keyboardAction</span><span class="p">;</span>
+    <span class="n">JoystickAction</span> <span class="n">joystickAction</span><span class="p">;</span>
+    <span class="n">Logger</span> <span class="o">*</span><span class="n">logger</span> <span class="o">=</span> <span class="k">nullptr</span><span class="p">;</span>
+  <span class="k">public</span><span class="o">:</span>
+    <span class="kt">bool</span> <span class="n">isActionPressed</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
+    <span class="kt">bool</span> <span class="n">isActionJustPressed</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
+    <span class="kt">bool</span> <span class="n">isActionJustReleased</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
+
+    <span class="n">InputAction</span><span class="p">()</span> <span class="p">{</span>
+        <span class="n">logger</span> <span class="o">=</span> <span class="n">Logger</span><span class="o">::</span><span class="n">GetInstance</span><span class="p">();</span>
+    <span class="p">}</span>
+
+    <span class="kt">void</span> <span class="n">AddValue</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">actionValue</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">mouseAction</span><span class="p">.</span><span class="n">IsMouseValue</span><span class="p">(</span><span class="n">actionValue</span><span class="p">))</span> <span class="p">{</span>
+            <span class="n">mouseAction</span><span class="p">.</span><span class="n">AddValue</span><span class="p">(</span><span class="n">actionValue</span><span class="p">);</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">joystickAction</span><span class="p">.</span><span class="n">IsJoystickValue</span><span class="p">(</span><span class="n">actionValue</span><span class="p">))</span> <span class="p">{</span>
+            <span class="n">joystickAction</span><span class="p">.</span><span class="n">AddValue</span><span class="p">(</span><span class="n">actionValue</span><span class="p">);</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="n">keyboardAction</span><span class="p">.</span><span class="n">AddValue</span><span class="p">(</span><span class="n">actionValue</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="kt">bool</span> <span class="n">IsActionPressed</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">mouseAction</span><span class="p">.</span><span class="n">IsActionPressed</span><span class="p">())</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">keyboardAction</span><span class="p">.</span><span class="n">isActionPressed</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">joystickAction</span><span class="p">.</span><span class="n">IsActionPressed</span><span class="p">())</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="nb">false</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="kt">bool</span> <span class="n">IsActionJustPressed</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">mouseAction</span><span class="p">.</span><span class="n">IsActionJustPressed</span><span class="p">())</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">keyboardAction</span><span class="p">.</span><span class="n">isActionJustPressed</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">joystickAction</span><span class="p">.</span><span class="n">IsActionJustPressed</span><span class="p">())</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="nb">false</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="kt">bool</span> <span class="n">IsActionJustReleased</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">mouseAction</span><span class="p">.</span><span class="n">IsActionJustReleased</span><span class="p">())</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">keyboardAction</span><span class="p">.</span><span class="n">isActionJustReleased</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">joystickAction</span><span class="p">.</span><span class="n">IsActionJustReleased</span><span class="p">())</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="nb">false</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="kt">void</span> <span class="n">ProcessInputs</span><span class="p">(</span><span class="k">const</span> <span class="n">Uint8</span><span class="o">*</span> <span class="n">keyboardState</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">keyboardAction</span><span class="p">.</span><span class="n">ProcessInputs</span><span class="p">(</span><span class="n">keyboardState</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="kt">void</span> <span class="n">ClearInputFlags</span><span class="p">()</span> <span class="p">{</span>
+        <span class="n">keyboardAction</span><span class="p">.</span><span class="n">isActionJustPressed</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
+        <span class="n">keyboardAction</span><span class="p">.</span><span class="n">isActionJustReleased</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
+    <span class="p">}</span>
+
+<span class="p">};</span>
+
+<span class="cp">#endif </span><span class="c1">//INPUT_ACTION_H</span>
+</code></pre></div>
+<h2 id="input-manager">Input Manager</h2>
+<div class="highlight"><pre><span></span><code><span class="cp">#ifndef INPUT_MANAGER_H</span>
+<span class="cp">#define INPUT_MANAGER_H</span>
+
+<span class="cp">#include</span> <span class="cpf">&lt;unordered_map&gt;</span><span class="cp"></span>
+
+<span class="cp">#include</span> <span class="cpf">"input_action.h"</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">"mouse_input.h"</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">"joystick_input.h"</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">"input_event_state.h"</span><span class="cp"></span>
+
+<span class="k">class</span> <span class="nc">InputManager</span> <span class="p">{</span>
+  <span class="k">public</span><span class="o">:</span>
+    <span class="k">static</span> <span class="n">InputManager</span><span class="o">*</span> <span class="n">GetInstance</span><span class="p">();</span>
+    <span class="kt">void</span> <span class="nf">Initialize</span><span class="p">();</span>
+    <span class="kt">void</span> <span class="nf">ProcessInputs</span><span class="p">(</span><span class="n">SDL_Event</span> <span class="o">&amp;</span><span class="n">event</span><span class="p">);</span>
+    <span class="kt">void</span> <span class="nf">ClearInputFlags</span><span class="p">();</span>
+    <span class="kt">void</span> <span class="nf">AddAction</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">actionName</span><span class="p">,</span> <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">actionValue</span><span class="p">);</span>
+    <span class="kt">void</span> <span class="nf">RemoveAction</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">actionName</span><span class="p">);</span>
+    <span class="kt">bool</span> <span class="nf">IsActionPressed</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">actionName</span><span class="p">);</span>
+    <span class="kt">bool</span> <span class="nf">IsActionJustPressed</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">actionName</span><span class="p">);</span>
+    <span class="kt">bool</span> <span class="nf">IsActionJustReleased</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">actionName</span><span class="p">);</span>
+    <span class="n">InputEvent</span> <span class="nf">GetCurrentInputEvent</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
+
+  <span class="k">private</span><span class="o">:</span>
+    <span class="n">MouseInput</span> <span class="o">*</span><span class="n">mouseInput</span> <span class="o">=</span> <span class="k">nullptr</span><span class="p">;</span>
+    <span class="n">JoystickInput</span> <span class="o">*</span><span class="n">joystickInput</span> <span class="o">=</span> <span class="k">nullptr</span><span class="p">;</span>
+    <span class="n">InputEvent</span> <span class="n">currentInputEvent</span><span class="p">;</span>
+    <span class="n">InputEventState</span> <span class="n">inputEventState</span><span class="p">;</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">unordered_map</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">,</span> <span class="n">InputAction</span><span class="o">*&gt;</span> <span class="n">inputActions</span><span class="p">;</span>
+
+    <span class="n">InputManager</span><span class="p">();</span>
+<span class="p">};</span>
+
+
+<span class="cp">#endif </span><span class="c1">//INPUT_MANAGER_H</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="cp">#include</span> <span class="cpf">"input_manager.h"</span><span class="cp"></span>
+
+<span class="n">InputManager</span><span class="o">::</span><span class="n">InputManager</span><span class="p">()</span> <span class="o">:</span> <span class="n">mouseInput</span><span class="p">(</span><span class="n">MouseInput</span><span class="o">::</span><span class="n">GetInstance</span><span class="p">()),</span> <span class="n">joystickInput</span><span class="p">(</span><span class="n">JoystickInput</span><span class="o">::</span><span class="n">GetInstance</span><span class="p">())</span> <span class="p">{}</span>
+
+<span class="n">InputManager</span><span class="o">*</span> <span class="n">InputManager</span><span class="o">::</span><span class="n">GetInstance</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">static</span> <span class="n">InputManager</span> <span class="o">*</span><span class="n">instance</span> <span class="o">=</span> <span class="k">new</span> <span class="n">InputManager</span><span class="p">();</span>
+    <span class="k">return</span> <span class="n">instance</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">InputManager</span><span class="o">::</span><span class="n">Initialize</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">joystickInput</span><span class="o">-&gt;</span><span class="n">LoadJoysticks</span><span class="p">();</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">InputManager</span><span class="o">::</span><span class="n">ProcessInputs</span><span class="p">(</span><span class="n">SDL_Event</span> <span class="o">&amp;</span><span class="n">event</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">currentInputEvent</span> <span class="o">=</span> <span class="n">inputEventState</span><span class="p">.</span><span class="n">ProcessSDLEvent</span><span class="p">(</span><span class="n">event</span><span class="p">);</span>
+    <span class="k">const</span> <span class="n">Uint8</span><span class="o">*</span> <span class="n">keyboardState</span> <span class="o">=</span> <span class="n">SDL_GetKeyboardState</span><span class="p">(</span><span class="k">nullptr</span><span class="p">);</span>
+    <span class="n">mouseInput</span><span class="o">-&gt;</span><span class="n">ProcessSDLEvent</span><span class="p">(</span><span class="n">currentInputEvent</span><span class="p">);</span>
+    <span class="n">joystickInput</span><span class="o">-&gt;</span><span class="n">ProcessSDLEvent</span><span class="p">(</span><span class="n">currentInputEvent</span><span class="p">);</span>
+    <span class="k">for</span> <span class="p">(</span><span class="k">auto</span> <span class="k">const</span> <span class="o">&amp;</span><span class="nl">pair</span> <span class="p">:</span> <span class="n">inputActions</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">InputAction</span> <span class="o">*</span><span class="n">inputAction</span> <span class="o">=</span> <span class="n">pair</span><span class="p">.</span><span class="n">second</span><span class="p">;</span>
+        <span class="n">inputAction</span><span class="o">-&gt;</span><span class="n">ProcessInputs</span><span class="p">(</span><span class="n">keyboardState</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">InputManager</span><span class="o">::</span><span class="n">ClearInputFlags</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">mouseInput</span><span class="o">-&gt;</span><span class="n">ClearInputFlags</span><span class="p">();</span>
+    <span class="n">joystickInput</span><span class="o">-&gt;</span><span class="n">ClearInputFlags</span><span class="p">();</span>
+    <span class="k">for</span> <span class="p">(</span><span class="k">auto</span> <span class="k">const</span> <span class="o">&amp;</span><span class="nl">pair</span> <span class="p">:</span> <span class="n">inputActions</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">InputAction</span> <span class="o">*</span><span class="n">inputAction</span> <span class="o">=</span> <span class="n">pair</span><span class="p">.</span><span class="n">second</span><span class="p">;</span>
+        <span class="n">inputAction</span><span class="o">-&gt;</span><span class="n">ClearInputFlags</span><span class="p">();</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">InputManager</span><span class="o">::</span><span class="n">AddAction</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">actionName</span><span class="p">,</span> <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">actionValue</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">inputActions</span><span class="p">.</span><span class="n">count</span><span class="p">(</span><span class="n">actionName</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">inputActions</span><span class="p">.</span><span class="n">emplace</span><span class="p">(</span><span class="n">actionName</span><span class="p">,</span> <span class="k">new</span> <span class="n">InputAction</span><span class="p">());</span>
+    <span class="p">}</span>
+    <span class="n">inputActions</span><span class="p">[</span><span class="n">actionName</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">AddValue</span><span class="p">(</span><span class="n">actionValue</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">InputManager</span><span class="o">::</span><span class="n">RemoveAction</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">actionName</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">inputActions</span><span class="p">.</span><span class="n">count</span><span class="p">(</span><span class="n">actionName</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">delete</span> <span class="n">inputActions</span><span class="p">[</span><span class="n">actionName</span><span class="p">];</span>
+        <span class="n">inputActions</span><span class="p">.</span><span class="n">erase</span><span class="p">(</span><span class="n">actionName</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kt">bool</span> <span class="n">InputManager</span><span class="o">::</span><span class="n">IsActionPressed</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">actionName</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">inputActions</span><span class="p">.</span><span class="n">count</span><span class="p">(</span><span class="n">actionName</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="n">inputActions</span><span class="p">[</span><span class="n">actionName</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">IsActionPressed</span><span class="p">();</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="nb">false</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">bool</span> <span class="n">InputManager</span><span class="o">::</span><span class="n">IsActionJustPressed</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">actionName</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">inputActions</span><span class="p">.</span><span class="n">count</span><span class="p">(</span><span class="n">actionName</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="n">inputActions</span><span class="p">[</span><span class="n">actionName</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">IsActionJustPressed</span><span class="p">();</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="nb">false</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">bool</span> <span class="n">InputManager</span><span class="o">::</span><span class="n">IsActionJustReleased</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">actionName</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">inputActions</span><span class="p">.</span><span class="n">count</span><span class="p">(</span><span class="n">actionName</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="n">inputActions</span><span class="p">[</span><span class="n">actionName</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">IsActionJustReleased</span><span class="p">();</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="nb">false</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="n">InputEvent</span> <span class="n">InputManager</span><span class="o">::</span><span class="n">GetCurrentInputEvent</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="n">currentInputEvent</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<h2 id="processing-input-events">Processing Input Events</h2>
+<p>Will add <code>inputManager</code> to <code>GameEngine</code> class.</p>
+<div class="highlight"><pre><span></span><code><span class="n">InputManager</span> <span class="o">*</span><span class="n">inputManager</span> <span class="o">=</span> <span class="k">nullptr</span><span class="p">;</span>
+</code></pre></div>
+<p>Initialize <code>inputManager</code> in constructor.</p>
+<div class="highlight"><pre><span></span><code><span class="n">GameEngine</span><span class="o">::</span><span class="n">GameEngine</span><span class="p">()</span> <span class="o">:</span>
+    <span class="n">projectProperties</span><span class="p">(</span><span class="n">ProjectProperties</span><span class="o">::</span><span class="n">GetInstance</span><span class="p">()),</span>
+    <span class="n">engineContext</span><span class="p">(</span><span class="n">GameEngineContext</span><span class="o">::</span><span class="n">GetInstance</span><span class="p">()),</span>
+    <span class="n">renderContext</span><span class="p">(</span><span class="n">RenderContext</span><span class="o">::</span><span class="n">GetInstance</span><span class="p">()),</span>
+    <span class="n">assetManager</span><span class="p">(</span><span class="n">AssetManager</span><span class="o">::</span><span class="n">GetInstance</span><span class="p">()),</span>
+    <span class="n">fpsCounter</span><span class="p">(</span><span class="n">FPSCounter</span><span class="o">::</span><span class="n">GetInstance</span><span class="p">()),</span>
+    <span class="n">logger</span><span class="p">(</span><span class="n">Logger</span><span class="o">::</span><span class="n">GetInstance</span><span class="p">()),</span>
+    <span class="n">inputManager</span><span class="p">(</span><span class="n">InputManager</span><span class="o">::</span><span class="n">GetInstance</span><span class="p">())</span> <span class="p">{</span>
+    <span class="n">Initialize</span><span class="p">();</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Adding new function <code>InitializeInput</code>.</p>
+<div class="highlight"><pre><span></span><code><span class="kt">void</span> <span class="nf">GameEngine::InitializeInput</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">inputManager</span><span class="o">-&gt;</span><span class="n">Initialize</span><span class="p">();</span>
+    <span class="c1">// temp adding actions</span>
+    <span class="n">inputManager</span><span class="o">-&gt;</span><span class="n">AddAction</span><span class="p">(</span><span class="s">"quit"</span><span class="p">,</span> <span class="s">"esc"</span><span class="p">);</span>
+    <span class="n">inputManager</span><span class="o">-&gt;</span><span class="n">AddAction</span><span class="p">(</span><span class="s">"play_sound"</span><span class="p">,</span> <span class="s">"space"</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Call <code>InitializeInput</code> in <code>Initialize</code> function.</p>
+<div class="highlight"><pre><span></span><code><span class="kt">void</span> <span class="nf">GameEngine::Initialize</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">logger</span><span class="o">-&gt;</span><span class="n">Debug</span><span class="p">(</span><span class="s">"Initializing..."</span><span class="p">);</span>
+    <span class="n">InitializeSDL</span><span class="p">();</span>
+    <span class="n">InitializeAudio</span><span class="p">();</span>
+    <span class="n">InitializeRendering</span><span class="p">();</span>
+    <span class="n">InitializeInput</span><span class="p">();</span>
+    <span class="n">logger</span><span class="o">-&gt;</span><span class="n">Info</span><span class="p">(</span><span class="s">"%s Engine v%s"</span><span class="p">,</span> <span class="n">engineContext</span><span class="o">-&gt;</span><span class="n">GetEngineName</span><span class="p">(),</span> <span class="n">engineContext</span><span class="o">-&gt;</span><span class="n">GetEngineVersion</span><span class="p">());</span>
+    <span class="n">engineContext</span><span class="o">-&gt;</span><span class="n">SetRunning</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span>
+
+    <span class="c1">// Temp play music</span>
+    <span class="n">AudioHelper</span><span class="o">::</span><span class="n">PlayMusic</span><span class="p">(</span><span class="s">"test_music"</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Adding this to the bottom of the <code>ProcessInput</code> function.</p>
+<div class="highlight"><pre><span></span><code><span class="n">inputManager</span><span class="o">-&gt;</span><span class="n">ProcessInputs</span><span class="p">(</span><span class="n">event</span><span class="p">);</span>
+
+<span class="c1">// Temp input processing</span>
+<span class="k">if</span> <span class="p">(</span><span class="n">inputManager</span><span class="o">-&gt;</span><span class="n">IsActionJustPressed</span><span class="p">(</span><span class="s">"quit"</span><span class="p">))</span> <span class="p">{</span>
+    <span class="n">engineContext</span><span class="o">-&gt;</span><span class="n">SetRunning</span><span class="p">(</span><span class="nb">false</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="k">if</span> <span class="p">(</span><span class="n">inputManager</span><span class="o">-&gt;</span><span class="n">IsActionJustPressed</span><span class="p">(</span><span class="s">"play_sound"</span><span class="p">))</span> <span class="p">{</span>
+    <span class="n">AudioHelper</span><span class="o">::</span><span class="n">PlaySound</span><span class="p">(</span><span class="s">"test_sound"</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>If you run the engine now, you'll be able to exit out of the game by pressing the ESC key.  You can also trigger a sound effect to play by pressing the SPACE key.  All source code for this section can be found <a href="https://github.com/Chukobyte/learn-engine-dev/tree/main/src/5.input_management/5.0.input_management">here</a>.</p>
+<p>Now that we have audio in place, it's time to expand further and build out our Entity Component System.</p>
 </article>
 </div>
 </div>
 </main>
 <footer class="md-footer">
 <nav aria-label="Footer" class="md-footer__inner md-grid">
-<a class="md-footer__link md-footer__link--prev" href="../../implementing_audio/using_sdl_mixer/" rel="prev">
+<a class="md-footer__link md-footer__link--prev" href="../input_events/" rel="prev">
 <div class="md-footer__button md-icon">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"></path></svg>
 </div>
@@ -347,17 +651,17 @@
 <span class="md-footer__direction">
                 Previous
               </span>
-              Using SDL_mixer
+              Input Events
             </div>
 </div>
 </a>
-<a class="md-footer__link md-footer__link--next" href="../../serializing_with_json/parsing_json/" rel="next">
+<a class="md-footer__link md-footer__link--next" href="../../entity_component_system/building_an_ecs/" rel="next">
 <div class="md-footer__title">
 <div class="md-ellipsis">
 <span class="md-footer__direction">
                 Next
               </span>
-              Parsing JSON
+              Building An ECS
             </div>
 </div>
 <div class="md-footer__button md-icon">
