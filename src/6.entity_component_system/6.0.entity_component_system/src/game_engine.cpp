@@ -95,7 +95,10 @@ void GameEngine::InitializeInput() {
     inputManager->Initialize();
     // temp adding actions
     inputManager->AddAction("quit", "esc");
-    inputManager->AddAction("play_sound", "space");
+    inputManager->AddAction("move_left", "left");
+    inputManager->AddAction("move_left", "a");
+    inputManager->AddAction("move_right", "right");
+    inputManager->AddAction("move_right", "d");
 }
 
 void GameEngine::InitializeECS() {
@@ -170,8 +173,17 @@ void GameEngine::ProcessInput() {
     if (inputManager->IsActionJustPressed("quit")) {
         engineContext->SetRunning(false);
     }
-    if (inputManager->IsActionJustPressed("play_sound")) {
-        AudioHelper::PlaySound("test_sound");
+    // Temp moving left or right
+    const bool moveLeftPressed = inputManager->IsActionPressed("move_left");
+    const bool moveRightPressed = inputManager->IsActionPressed("move_right");
+    if (moveLeftPressed || moveRightPressed) {
+        const Entity witchEntity = 2;
+        Transform2DComponent witchTransformComponent = ecsOrchestrator->GetComponent<Transform2DComponent>(witchEntity);
+        witchTransformComponent.position.x += moveRightPressed ? 1 : -1;
+        ecsOrchestrator->UpdateComponent<Transform2DComponent>(witchEntity, witchTransformComponent);
+        SpriteComponent witchSpriteComponent = ecsOrchestrator->GetComponent<SpriteComponent>(witchEntity);
+        witchSpriteComponent.flipX = !moveRightPressed;
+        ecsOrchestrator->UpdateComponent<SpriteComponent>(witchEntity, witchSpriteComponent);
     }
 }
 
