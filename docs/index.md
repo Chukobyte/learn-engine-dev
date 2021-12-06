@@ -12,9 +12,9 @@ The purpose of this tutorial series is to provide a step-by-step approach to bui
 
 Programming and technical skills of all levels are welcome, but to get the most out of this tutorial series you should have the following:
 
-* A basic understanding of C++.  This includes compiling and writing code.
-* Proficiency with writing code in Python.
-* A high level understanding of OpenGL.
+- A basic understanding of C++.  This includes compiling and writing code.
+- Proficiency with writing code in Python.
+- A high level understanding of OpenGL.
 
 ## Structure
 
@@ -24,12 +24,24 @@ Each chapter of this tutorial series is broken up into sections which can be nav
 
 ***Red Engine*** will be built with the following technologies:
 
-* **C++ 14** - Core engine
-* **OpenGL 3.3** - Graphics API
-* **SDL2** - Windowing and input
-* **SDL2_mixer** - Audio
-* **Python 3.7** - Scripting language for game logic
-* **AStyle** - Used for formatting C++ code
+- **C++ 14** - Core engine
+- **OpenGL 3.3** - Graphics API
+- **SDL2** - Windowing and input
+- **SDL2_mixer** - Audio
+- **Python 3.7** - Scripting language for game logic
+- **AStyle** - Used for formatting C++ code
+
+## Features
+
+***Red Engine*** will have the following features:
+
+- Sprite rendering
+- Font rendering
+- Keyboard, mouse, and joystick input management
+- Python scripting
+- Entity Component System
+- Scene management
+- Json serialization of project properties and scene data
 
 ## Work In Progress
 

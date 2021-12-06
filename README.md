@@ -1,6 +1,6 @@
 ## Learn Engine Dev
 
-A work in progress tutorial series for developing a cross platform game engine from scratch.  The source code for all turtorials will be maintained in this repo and tutorials can be accessed [here](https://chukobyte.github.io/learn-engine-dev/).
+A work in progress tutorial series for developing a cross platform game engine from scratch.  The source code for all tutorials will be maintained in this repo and can be accessed [here](https://chukobyte.github.io/learn-engine-dev/).  A list of engine features can be found [here](https://chukobyte.github.io/learn-engine-dev/#features).
 
 ### Chapters
 
