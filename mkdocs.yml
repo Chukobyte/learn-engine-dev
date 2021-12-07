@@ -43,6 +43,7 @@ nav:
   - Entity Component System:
       - Building An ECS: entity_component_system/building_an_ecs.md
   - Serializing With JSON:
-      - Parsing JSON: serializing_with_json/parsing_json.md
+      - Parsing JSON Properties File: serializing_with_json/parsing_json_properties_file.md
+      - Creating Scene Json Files: serializing_with_json/creating_scene_json_files.md
   - Source Code: source_code/source_code.md
 

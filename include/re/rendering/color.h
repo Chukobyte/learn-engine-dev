@@ -14,6 +14,10 @@ class Color {
     Color(GLfloat red, GLfloat green, GLfloat blue) : r(red), g(green), b(blue), a(1.0f) {}
     Color(GLfloat red, GLfloat green, GLfloat blue, GLfloat alpha) : r(red), g(green), b(blue), a(alpha) {}
 
+    static Color NormalizedColor(int red, int green, int blue) {
+        return Color(red / 255.0f, green / 255.0f, blue / 255.0f);
+    }
+
     Color operator*(float value) {
         return Color(this->r * value, this->g * value, this->b * value, this->a);
     }

@@ -1,4 +1,6 @@
 #include "project_properties.h"
+#include "../../../../include/re/utils/project_properties.h"
+
 
 ProjectProperties* ProjectProperties::GetInstance() {
     static ProjectProperties *instance = new ProjectProperties();
