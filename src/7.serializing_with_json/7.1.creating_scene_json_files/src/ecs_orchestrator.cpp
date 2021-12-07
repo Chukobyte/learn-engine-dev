@@ -30,10 +30,6 @@ void ECSOrchestrator::ChangeToEmptyScene() {
     sceneManager->ChangeToEmptyScene();
 }
 
-void ECSOrchestrator::ChangeToScene(const std::string& filePath) {
-    sceneManager->ChangeToScene(filePath);
-}
-
 void ECSOrchestrator::AddRootNode(Entity rootEntity) {
     sceneManager->AddRootNode(rootEntity);
     RefreshEntitySignature(rootEntity);
@@ -50,4 +46,12 @@ void ECSOrchestrator::DeleteNode(Entity entity) {
 
 bool ECSOrchestrator::IsNodeInScene(Entity entity) const {
     return sceneManager->IsNodeInScene(entity);
+}
+
+void ECSOrchestrator::UpdateSystems(float deltaTime) {
+    ecSystemManager->UpdateSystems(deltaTime);
+}
+
+void ECSOrchestrator::RenderSystems() {
+    ecSystemManager->RenderSystems();
 }

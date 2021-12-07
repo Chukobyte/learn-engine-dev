@@ -34,6 +34,10 @@ class ECSystem {
     bool IsEnabled() {
         return enabled;
     }
+
+    virtual void Update(float deltaTime) {}
+
+    virtual void Render() {}
 };
 
 #endif //EC_SYSTEM_H

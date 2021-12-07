@@ -17,7 +17,7 @@ class SpriteRenderingECSystem : public ECSystem {
         enabled = true;
     }
 
-    void Render() {
+    void Render() override {
         if (IsEnabled()) {
             for (Entity entity : entities) {
                 Transform2DComponent transform2DComponent = componentManager->GetComponent<Transform2DComponent>(entity);
