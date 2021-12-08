@@ -22,7 +22,7 @@ LIBRARIES := -L"${SDL2_LIBS}" -L"${PYTHON_LIBS}" -L"${FREETYPE_LIBS}"
 C_FLAGS := -w -Wfatal-errors
 CPP_FLAGS := -std=c++14 $(C_FLAGS)
 
-SRC = $(wildcard src/*.cpp $(GAME_LIB_DIR)/python/*.cpp $(GAME_LIB_DIR)/utils/*.cpp $(GAME_LIB_DIR)/rendering/texture.cpp $(GAME_LIB_DIR)/rendering/shader.cpp $(GAME_LIB_DIR)/rendering/render_context.cpp $(GAME_LIB_DIR)/rendering/renderer_batcher.cpp $(GAME_LIB_DIR)/rendering/renderer_2d.cpp $(GAME_LIB_DIR)/rendering/sprite_renderer.cpp $(GAME_LIB_DIR)/rendering/font_renderer.cpp $(GAME_LIB_DIR)/input/*.cpp $(GAME_LIB_DIR)/ecs/component/component_manager.cpp $(GAME_LIB_DIR)/scene/scene_manager.cpp $(INCLUDE_DIR)/stb_image/stb_image.cpp)
+SRC = $(wildcard src/*.cpp $(GAME_LIB_DIR)/python/*.cpp $(GAME_LIB_DIR)/utils/*.cpp $(GAME_LIB_DIR)/rendering/texture.cpp $(GAME_LIB_DIR)/rendering/shader.cpp $(GAME_LIB_DIR)/rendering/render_context.cpp $(GAME_LIB_DIR)/rendering/renderer_batcher.cpp $(GAME_LIB_DIR)/rendering/renderer_2d.cpp $(GAME_LIB_DIR)/rendering/sprite_renderer.cpp $(GAME_LIB_DIR)/rendering/font_renderer.cpp $(GAME_LIB_DIR)/input/*.cpp $(GAME_LIB_DIR)/ecs/component/component_manager.cpp $(GAME_LIB_DIR)/scene/scene_manager.cpp $(GAME_LIB_DIR)/data/asset_manager.cpp $(INCLUDE_DIR)/stb_image/stb_image.cpp)
 SRC_C = $(wildcard $(INCLUDE_DIR)/glad/glad.c)
 
 OBJ = $(SRC:.cpp=.o)

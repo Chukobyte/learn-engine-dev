@@ -3,7 +3,7 @@
 
 #include "./re/audio/audio.h"
 #include "./re/utils/helper.h"
-#include "asset_manager.h"
+#include "./re/data/asset_manager.h"
 
 class AudioHelper {
   public:

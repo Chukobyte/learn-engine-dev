@@ -67,7 +67,7 @@ AssetConfigurations ProjectProperties::LoadProjectAssets(const nlohmann::json& a
                 .wrapS = assetWrapS,
                 .wrapT = assetWrapT,
                 .filterMin = assetFilterMin,
-                .filterMax = assetFilterMax
+                .filterMag = assetFilterMax
             });
         } else if (assetType == "font") {
             const std::string &fontId = JsonHelper::Get<std::string>(assetJson, "uid");

@@ -4,15 +4,15 @@
 #include <string>
 #include <vector>
 
-#include "./re/rendering/color.h"
-#include "./re/utils/json_helper.h"
+#include "../rendering/color.h"
+#include "../utils/json_helper.h"
 
 struct TextureConfiguration {
     std::string filePath;
     std::string wrapS = "clamp_to_border";
     std::string wrapT = "clamp_to_border";
     std::string filterMin = "nearest";
-    std::string filterMax = "nearest";
+    std::string filterMag = "nearest";
 };
 
 struct FontConfiguration {

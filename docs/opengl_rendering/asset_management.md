@@ -201,7 +201,7 @@ The `Texture` class has quite a few member variables.  `fileName` is just the fi
 
 - `GL_CLAMP_TO_BORDER`: Coordinates outside the range are now given a user-specified border color.
 
-`filterMin` and `filterMax` refers to the texture filtering mode.  Below are the possible values:
+`filterMin` and `filterMag` refers to the texture filtering mode.  Below are the possible values:
 
 - `GL_NEAREST`: OpenGL selects the texel that center is closest to the texture coordinate.  Ideal for pixel art games.
 

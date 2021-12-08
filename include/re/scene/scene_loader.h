@@ -173,7 +173,7 @@
 //};
 
 class SceneLoader {
-public:
+  public:
     static Scene* LoadSceneFile(const std::string& filePath) {
         Scene* loadedScene = new Scene();
         if (FileHelper::DoesFileExist(filePath)) {

@@ -48,6 +48,7 @@ bool GameEngine::Initialize() {
         logger->Error("Failed to initialize input!");
         return false;
     }
+    assetManager->LoadProjectConfigurations(projectProperties->GetAssetConfigurations());
     if (!InitializeECS()) {
         logger->Error("Failed to initialize ECS!");
         return false;
@@ -56,7 +57,7 @@ bool GameEngine::Initialize() {
     engineContext->SetRunning(true);
 
     // Temp play music
-    AudioHelper::PlayMusic("test_music");
+    AudioHelper::PlayMusic("assets/audio/music/test_music.wav");
     return true;
 }
 
@@ -83,10 +84,6 @@ bool GameEngine::InitializeAudio() {
         logger->Error("SDL_mixer could not be initialized!");
         return false;
     }
-
-    // Temp load assets
-    assetManager->LoadMusic("test_music", "assets/audio/music/test_music.wav");
-    assetManager->LoadSound("test_sound", "assets/audio/sound/test_sound_effect.wav");
     return true;
 }
 
@@ -119,9 +116,6 @@ bool GameEngine::InitializeRendering() {
     renderContext->InitializeFont();
     renderer2D->Initialize();
 
-    // Temp Load Assets
-    assetManager->LoadTexture("assets/images/melissa_walk_animation.png", "assets/images/melissa_walk_animation.png");
-    assetManager->LoadFont("assets/fonts/verdana.ttf", "assets/fonts/verdana.ttf", 20);
     return true;
 }
 
@@ -177,7 +171,7 @@ bool GameEngine::InitializeECS() {
     ecsOrchestrator->AddComponent<Transform2DComponent>(textEntity, textEntityTransform);
     TextLabelComponent textEntityTextLabelComponent = TextLabelComponent{
         "Hello World",
-        assetManager->GetFont("assets/fonts/verdana.ttf"),
+        assetManager->GetFont("verdana-20"),
         Color(1.0f, 1.0f, 1.0f)
     };
     ecsOrchestrator->AddComponent<TextLabelComponent>(textEntity, textEntityTextLabelComponent);
@@ -223,21 +217,52 @@ void GameEngine::ProcessInput() {
     }
 }
 
+namespace {
+void PhysicsUpdate(GameEngine* gameEngine) {
+    // Fixed time step
+    const double PHYSICS_DELTA_TIME = 0.01f;
+    static double time = 0.0f;
+    static Uint32 currentTime = SDL_GetTicks();
+    static double accumulator = 0.0f;
+
+    Uint32 newTime = SDL_GetTicks();
+    Uint32 frameTime = newTime - currentTime;
+    const Uint32 MAX_FRAME_TIME = 250;
+    if (frameTime > MAX_FRAME_TIME) {
+        frameTime = MAX_FRAME_TIME;
+    }
+    currentTime = newTime;
+
+    accumulator += frameTime / 1000.0f;
+
+    while (accumulator >= PHYSICS_DELTA_TIME) {
+        time += PHYSICS_DELTA_TIME;
+        accumulator -= PHYSICS_DELTA_TIME;
+
+//            scriptEntitySystem->PhysicsProcess(PHYSICS_DELTA_TIME);
+//            inputManager->ClearInputFlags();
+    }
+}
+}
+
 void GameEngine::Update() {
     // Sleep until FRAME_TARGET_TIME has elapsed since last frame
     const unsigned int MILLISECONDS_PER_TICK = 1000;
     const unsigned int TARGET_FPS = 60;
+    const Uint32 TIME_TICKS = SDL_GetTicks();
     static Uint32 lastFrameTime = 0;
     const unsigned int FRAME_TARGET_TIME = MILLISECONDS_PER_TICK / TARGET_FPS;
-    unsigned int timeToWait = FRAME_TARGET_TIME - (SDL_GetTicks() - lastFrameTime);
+    unsigned int timeToWait = FRAME_TARGET_TIME - (TIME_TICKS - lastFrameTime);
     if (timeToWait > 0 && timeToWait <= FRAME_TARGET_TIME) {
         SDL_Delay(timeToWait);
     }
 
     fpsCounter->Update();
 
-    const float variableDeltaTime = (SDL_GetTicks() - lastFrameTime) / 1000.0f;
+    const float variableDeltaTime = (TIME_TICKS - lastFrameTime) / 1000.0f;
     ecsOrchestrator->UpdateSystems(variableDeltaTime);
+
+    PhysicsUpdate(this);
 
     inputManager->ClearInputFlags();
     lastFrameTime = SDL_GetTicks();

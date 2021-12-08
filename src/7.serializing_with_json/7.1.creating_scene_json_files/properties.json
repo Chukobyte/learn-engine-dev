@@ -23,9 +23,9 @@
     },
     {
       "type": "font",
-      "uid": "verdana-32",
+      "uid": "verdana-20",
       "file_path": "assets/fonts/verdana.ttf",
-      "size": 32
+      "size": 20
     },
     {
       "type": "music",
