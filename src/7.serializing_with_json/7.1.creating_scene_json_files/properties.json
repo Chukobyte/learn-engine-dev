@@ -1,6 +1,6 @@
 {
   "game_title": "2D Test",
-  "initial_scene": "scenes/main.sscn",
+  "initial_scene": "scenes/main.json",
   "base_resolution": {
     "width": 800,
     "height": 600

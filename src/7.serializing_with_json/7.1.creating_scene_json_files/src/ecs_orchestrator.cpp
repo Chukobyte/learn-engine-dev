@@ -26,8 +26,20 @@ void ECSOrchestrator::RefreshEntitySignature(Entity entity) {
     }
 }
 
-void ECSOrchestrator::ChangeToEmptyScene() {
-    sceneManager->ChangeToEmptyScene();
+//void ECSOrchestrator::ChangeToEmptyScene() {
+//    sceneManager->ChangeToEmptyScene();
+//}
+
+void ECSOrchestrator::ChangeToScene(const std::string& filePath) {
+    sceneManager->ChangeToScene(filePath);
+}
+
+void ECSOrchestrator::AddNodesToScene() {
+    Scene* currentScene = sceneManager->GetCurrentScene();
+    AddRootNode(currentScene->rootNode.entity);
+    for (SceneNode childSceneNode : currentScene->rootNode.children) {
+        AddChildNode(childSceneNode.entity, childSceneNode.parent);
+    }
 }
 
 void ECSOrchestrator::AddRootNode(Entity rootEntity) {

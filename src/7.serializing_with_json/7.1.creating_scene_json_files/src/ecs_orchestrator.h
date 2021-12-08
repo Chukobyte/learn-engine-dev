@@ -113,8 +113,9 @@ class ECSOrchestrator {
     void RenderSystems();
 
     // Scene
-    void ChangeToEmptyScene();
+//    void ChangeToEmptyScene();
     void ChangeToScene(const std::string& filePath);
+    void AddNodesToScene();
     void AddRootNode(Entity rootEntity);
     void AddChildNode(Entity child, Entity parent);
     void DeleteNode(Entity entity);

@@ -35,8 +35,8 @@
               "y": 300.0
             },
             "scale": {
-              "x": 4.0,
-              "y": 4.0
+              "x": 1.0,
+              "y": 1.0
             },
             "rotation": 0.0,
             "z_index": 0,
@@ -46,7 +46,7 @@
         },
         {
           "sprite": {
-            "texture_path": "assets/images/mellisa_walk_animation.png",
+            "texture_path": "assets/images/melissa_walk_animation.png",
             "draw_source": {
               "x": 0.0,
               "y": 0.0,
@@ -75,8 +75,8 @@
         {
           "transform2D": {
             "position": {
-              "x": 65.0,
-              "y": 100.0
+              "x": 365.0,
+              "y": 280.0
             },
             "scale": {
               "x": 1.0,

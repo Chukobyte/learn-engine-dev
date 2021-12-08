@@ -71,11 +71,11 @@ class SceneNodeJsonParser {
         const bool nodeFlipX = JsonHelper::Get<bool>(nodeComponentObjectJson, "flip_x");
         const bool nodeFlipY = JsonHelper::Get<bool>(nodeComponentObjectJson, "flip_x");
         nlohmann::json nodeModulateJson = JsonHelper::Get<nlohmann::json>(nodeComponentObjectJson, "modulate");
-        const Color nodeModulate = Color(
-                                       JsonHelper::Get<float>(nodeModulateJson, "red"),
-                                       JsonHelper::Get<float>(nodeModulateJson, "green"),
-                                       JsonHelper::Get<float>(nodeModulateJson, "blue"),
-                                       JsonHelper::Get<float>(nodeModulateJson, "alpha")
+        const Color nodeModulate = Color::NormalizedColor(
+                                       JsonHelper::Get<int>(nodeModulateJson, "red"),
+                                       JsonHelper::Get<int>(nodeModulateJson, "green"),
+                                       JsonHelper::Get<int>(nodeModulateJson, "blue"),
+                                       JsonHelper::Get<int>(nodeModulateJson, "alpha")
                                    );
 
         componentManager->AddComponent(sceneNode.entity, SpriteComponent{
@@ -95,11 +95,11 @@ class SceneNodeJsonParser {
         const std::string &nodeText = JsonHelper::Get<std::string>(nodeComponentObjectJson, "text");
         const std::string &nodeFontUID = JsonHelper::Get<std::string>(nodeComponentObjectJson, "font_uid");
         nlohmann::json nodeColorJson = JsonHelper::Get<nlohmann::json>(nodeComponentObjectJson, "color");
-        const Color nodeColor = Color(
-                                    JsonHelper::Get<float>(nodeColorJson, "red"),
-                                    JsonHelper::Get<float>(nodeColorJson, "green"),
-                                    JsonHelper::Get<float>(nodeColorJson, "blue"),
-                                    JsonHelper::Get<float>(nodeColorJson, "alpha")
+        const Color nodeColor = Color::NormalizedColor(
+                                    JsonHelper::Get<int>(nodeColorJson, "red"),
+                                    JsonHelper::Get<int>(nodeColorJson, "green"),
+                                    JsonHelper::Get<int>(nodeColorJson, "blue"),
+                                    JsonHelper::Get<int>(nodeColorJson, "alpha")
                                 );
 
         componentManager->AddComponent(sceneNode.entity, TextLabelComponent{
@@ -119,7 +119,7 @@ class SceneNodeJsonParser {
         componentManager(ComponentManager::GetInstance()),
         assetManager(AssetManager::GetInstance()) {}
 
-    SceneNode ParseSceneJson(nlohmann::json nodeJson, bool isRoot) {
+    SceneNode ParseSceneJson(Scene* scene, nlohmann::json nodeJson, bool isRoot) {
         SceneNode sceneNode;
         if (isRoot) {
             sceneNode = {entityManager->CreateEntity()};
@@ -150,8 +150,13 @@ class SceneNodeJsonParser {
 
         for (nlohmann::json nodeChildJson : nodeChildrenJsonArray) {
             nodeChildJson["parent_entity_id"] = sceneNode.entity;
-            SceneNode childNode = ParseSceneJson(nodeChildJson, false);
+            SceneNode childNode = ParseSceneJson(scene, nodeChildJson, false);
             sceneNode.children.emplace_back(childNode);
+        }
+
+        scene->sceneNodes.emplace(sceneNode.entity, sceneNode);
+        if (isRoot) {
+            scene->rootNode = sceneNode;
         }
 
         return sceneNode;
@@ -165,11 +170,15 @@ class SceneLoader {
         if (FileHelper::DoesFileExist(filePath)) {
             nlohmann::json sceneJson = JsonFileHelper::LoadJsonFile(filePath);
             static SceneNodeJsonParser sceneNodeJsonParser;
-//            sceneNodeJsonParser.ParseSceneJson(sceneJson, true);
+            sceneNodeJsonParser.ParseSceneJson(loadedScene, sceneJson, true);
         } else {
             Logger::GetInstance()->Error("Scene file '%s' not found!", filePath.c_str());
         }
         return loadedScene;
+    }
+
+    static void AddNodesToScene(Scene* scene) {
+
     }
 };
 

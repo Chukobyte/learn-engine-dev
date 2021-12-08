@@ -20,6 +20,9 @@ void AssetManager::LoadTexture(const std::string &id, const std::string &filePat
 }
 
 Texture *AssetManager::GetTexture(const std::string &id) {
+    if (!HasTexture(id)) {
+        logger->Error("texture id = '%s'", id.c_str());
+    }
     assert(HasTexture(id) && "Failed to get texture!");
     return textures[id];
 }

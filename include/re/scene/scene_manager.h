@@ -13,12 +13,11 @@ class SceneManager {
     static SceneManager* GetInstance();
     void ChangeToEmptyScene();
     void ChangeToScene(const std::string& filePath);
-    // TODO: Pass in a scene from ecs orchestrator
-    void ChangeToScene(Scene* newScene);
     void AddRootNode(Entity rootEntity);
     void AddChildNode(Entity child, Entity parent);
     void DeleteNode(Entity entity);
     bool IsNodeInScene(Entity entity) const;
+    Scene* GetCurrentScene();
 
   private:
     Scene *currentScene = nullptr;
