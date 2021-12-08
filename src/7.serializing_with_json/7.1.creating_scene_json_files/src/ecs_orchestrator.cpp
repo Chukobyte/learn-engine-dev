@@ -26,10 +26,6 @@ void ECSOrchestrator::RefreshEntitySignature(Entity entity) {
     }
 }
 
-//void ECSOrchestrator::ChangeToEmptyScene() {
-//    sceneManager->ChangeToEmptyScene();
-//}
-
 void ECSOrchestrator::ChangeToScene(const std::string& filePath) {
     sceneManager->ChangeToScene(filePath);
 }
@@ -43,12 +39,12 @@ void ECSOrchestrator::AddNodesToScene() {
 }
 
 void ECSOrchestrator::AddRootNode(Entity rootEntity) {
-    sceneManager->AddRootNode(rootEntity);
+//    sceneManager->AddRootNode(rootEntity);
     RefreshEntitySignature(rootEntity);
 }
 
 void ECSOrchestrator::AddChildNode(Entity child, Entity parent) {
-    sceneManager->AddChildNode(child, parent);
+//    sceneManager->AddChildNode(child, parent);
     RefreshEntitySignature(child);
 }
 
@@ -64,6 +60,18 @@ void ECSOrchestrator::UpdateSystems(float deltaTime) {
     ecSystemManager->UpdateSystems(deltaTime);
 }
 
+void ECSOrchestrator::PhysicsUpdateSystems(float deltaTime) {
+    ecSystemManager->PhysicsUpdateSystems(deltaTime);
+}
+
 void ECSOrchestrator::RenderSystems() {
     ecSystemManager->RenderSystems();
+}
+
+void ECSOrchestrator::OnSceneStartSystems(Scene* scene) {
+    ecSystemManager->OnSceneStartSystems(scene);
+}
+
+void ECSOrchestrator::OnSceneEndSystems(Scene* scene) {
+    ecSystemManager->OnSceneEndSystems(scene);
 }

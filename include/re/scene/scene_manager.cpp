@@ -28,10 +28,6 @@ void SceneManager::ChangeToScene(const std::string& filePath) {
     assert(currentScene->rootNode.entity != NULL_ENTITY && "Scene root node is NULL!");
 }
 
-//void SceneManager::ChangeToScene(Scene* newScene) {
-//    currentScene = newScene;
-//}
-
 void SceneManager::AddRootNode(Entity rootEntity) {
     assert(currentScene != nullptr && "Current scene is NULL!");
     if (IsNodeInScene(rootEntity)) {

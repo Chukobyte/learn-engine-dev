@@ -109,11 +109,14 @@ class ECSOrchestrator {
         return ecSystemManager->GetSignature<T>();
     }
 
+    // Event Hooks
     void UpdateSystems(float deltaTime);
+    void PhysicsUpdateSystems(float deltaTime);
     void RenderSystems();
+    void OnSceneStartSystems(Scene* scene);
+    void OnSceneEndSystems(Scene* scene);
 
     // Scene
-//    void ChangeToEmptyScene();
     void ChangeToScene(const std::string& filePath);
     void AddNodesToScene();
     void AddRootNode(Entity rootEntity);

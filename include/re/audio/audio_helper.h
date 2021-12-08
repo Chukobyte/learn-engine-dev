@@ -1,9 +1,9 @@
 #ifndef AUDIO_HELPER_H
 #define AUDIO_HELPER_H
 
-#include "./re/audio/audio.h"
-#include "./re/utils/helper.h"
-#include "./re/data/asset_manager.h"
+#include "../audio/audio.h"
+#include "../utils/helper.h"
+#include "../data/asset_manager.h"
 
 class AudioHelper {
   public:

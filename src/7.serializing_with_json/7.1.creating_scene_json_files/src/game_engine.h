@@ -9,6 +9,7 @@
 #include "./re/utils/fps_counter.h"
 #include "./re/utils/logger.h"
 #include "./re/input/input_manager.h"
+#include "./re/data/constants.h"
 #include "ecs_orchestrator.h"
 
 class GameEngine {
@@ -38,6 +39,7 @@ class GameEngine {
     bool InitializeInput();
     bool InitializeECS();
     bool LoadProjectProperties();
+    void PhysicsUpdate(); // Fixed time step
 };
 
 #endif //GAME_ENGINE_H

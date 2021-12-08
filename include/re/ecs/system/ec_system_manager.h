@@ -14,8 +14,11 @@
 enum class ECSystemRegistration : int {
     NONE = 0,
     UPDATE = 2,
-    RENDER = 4,
-    ALL = UPDATE | RENDER,
+    PHYSICS_UPDATE = 4,
+    RENDER = 8,
+    ON_SCENE_START = 16,
+    ON_SCENE_END = 32,
+    ALL = UPDATE | PHYSICS_UPDATE | RENDER | ON_SCENE_START | ON_SCENE_END,
 };
 
 class ECSystemManager {
@@ -23,7 +26,10 @@ class ECSystemManager {
     std::unordered_map<const char*, ComponentSignature> signatures{};
     std::unordered_map<const char*, ECSystem*> systems{};
     std::vector<ECSystem*> updateSystems{};
+    std::vector<ECSystem*> physicsUpdateSystems{};
     std::vector<ECSystem*> renderSystems{};
+    std::vector<ECSystem*> onSceneStartSystems{};
+    std::vector<ECSystem*> onSceneEndSystems{};
     Logger *logger = nullptr;
 
     void ProcessSystemRegistration(ECSystem* system, ECSystemRegistration ecSystemRegistration) {
@@ -33,8 +39,17 @@ class ECSystemManager {
         if (Helper::CompareEnumClass(ecSystemRegistration, ECSystemRegistration::UPDATE)) {
             updateSystems.emplace_back(system);
         }
+        if (Helper::CompareEnumClass(ecSystemRegistration, ECSystemRegistration::PHYSICS_UPDATE)) {
+            physicsUpdateSystems.emplace_back(system);
+        }
         if (Helper::CompareEnumClass(ecSystemRegistration, ECSystemRegistration::RENDER)) {
             renderSystems.emplace_back(system);
+        }
+        if (Helper::CompareEnumClass(ecSystemRegistration, ECSystemRegistration::ON_SCENE_START)) {
+            onSceneStartSystems.emplace_back(system);
+        }
+        if (Helper::CompareEnumClass(ecSystemRegistration, ECSystemRegistration::ON_SCENE_END)) {
+            onSceneEndSystems.emplace_back(system);
         }
     }
 
@@ -143,14 +158,32 @@ class ECSystemManager {
     }
 
     void UpdateSystems(float deltaTime) {
-        for (ECSystem* update_system : updateSystems) {
-            update_system->Update(deltaTime);
+        for (ECSystem* updateSystem : updateSystems) {
+            updateSystem->Update(deltaTime);
+        }
+    }
+
+    void PhysicsUpdateSystems(float deltaTime) {
+        for (ECSystem* physicsUpdateSystem : physicsUpdateSystems) {
+            physicsUpdateSystem->PhysicsUpdate(deltaTime);
         }
     }
 
     void RenderSystems() {
-        for (ECSystem* render_system : renderSystems) {
-            render_system->Render();
+        for (ECSystem* renderSystem : renderSystems) {
+            renderSystem->Render();
+        }
+    }
+
+    void OnSceneStartSystems(Scene* scene) {
+        for (ECSystem* sceneStartSystem : onSceneStartSystems) {
+            sceneStartSystem->OnSceneStart(scene);
+        }
+    }
+
+    void OnSceneEndSystems(Scene* scene) {
+        for (ECSystem* sceneEndSystem : onSceneEndSystems) {
+            sceneEndSystem->OnSceneEnd(scene);
         }
     }
 };

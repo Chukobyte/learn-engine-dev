@@ -1,12 +1,10 @@
 #include "game_engine.h"
 
-#include "audio_helper.h"
 #include "./re/ecs/component/components/node_component.h"
-#include "./re/ecs/component/components/transform2d_component.h"
-#include "./re/ecs/component/components/sprite_component.h"
-#include "./re/ecs/component/components/text_label_component.h"
 #include "./re/ecs/system/systems/sprite_rendering_ec_system.h"
 #include "./re/ecs/system/systems/text_rendering_ec_system.h"
+#include "./re/audio/audio_helper.h"
+#include "./re/data/constants.h"
 
 GameEngine::GameEngine() :
     projectProperties(ProjectProperties::GetInstance()),
@@ -56,10 +54,9 @@ bool GameEngine::Initialize() {
     logger->Info("%s Engine v%s", engineContext->GetEngineName(), engineContext->GetEngineVersion());
     engineContext->SetRunning(true);
 
-    // Temp load scene
+    // Load initial scene
     ecsOrchestrator->ChangeToScene(projectProperties->GetInitialScenePath());
     ecsOrchestrator->AddNodesToScene();
-//    ecsOrchestrator->ChangeToEmptyScene();
 
     // Temp play music
     AudioHelper::PlayMusic("assets/audio/music/test_music.wav");
@@ -151,36 +148,6 @@ bool GameEngine::InitializeECS() {
     textRenderingSignature.set(ecsOrchestrator->GetComponentType<Transform2DComponent>(), true);
     textRenderingSignature.set(ecsOrchestrator->GetComponentType<TextLabelComponent>(), true);
     ecsOrchestrator->RegisterSystem<TextRenderingECSystem>(textRenderingSignature, ECSystemRegistration::RENDER);
-
-    // Temp startup scene
-//    ecsOrchestrator->ChangeToEmptyScene();
-    // Temp setup entities
-//    const Vector2 windowCenter = Vector2(projectProperties->GetWindowWidth() / 2,
-//                                         projectProperties->GetWindowHeight() / 2);
-    // Main
-//    Entity mainEntity = ecsOrchestrator->CreateEntity();
-//    ecsOrchestrator->AddRootNode(mainEntity);
-//    // Sprite
-//    Entity witchEntity = ecsOrchestrator->CreateEntity();
-//    Transform2DComponent witchEntityTransform = Transform2DComponent{ windowCenter };
-//    ecsOrchestrator->AddComponent<Transform2DComponent>(witchEntity, witchEntityTransform);
-//    SpriteComponent witchEntitySpriteComponent = SpriteComponent{
-//        assetManager->GetTexture("assets/images/melissa_walk_animation.png"),
-//        Rect2(0, 0, 32, 32)
-//    };
-//    ecsOrchestrator->AddComponent<SpriteComponent>(witchEntity, witchEntitySpriteComponent);
-//    ecsOrchestrator->AddChildNode(witchEntity, mainEntity);
-//    // Text Label
-//    Entity textEntity = ecsOrchestrator->CreateEntity();
-//    Transform2DComponent textEntityTransform = Transform2DComponent{ Vector2(windowCenter.x - 35.0f, windowCenter.y - 20.0f) };
-//    ecsOrchestrator->AddComponent<Transform2DComponent>(textEntity, textEntityTransform);
-//    TextLabelComponent textEntityTextLabelComponent = TextLabelComponent{
-//        "Hello World",
-//        assetManager->GetFont("verdana-20"),
-//        Color(1.0f, 1.0f, 1.0f)
-//    };
-//    ecsOrchestrator->AddComponent<TextLabelComponent>(textEntity, textEntityTextLabelComponent);
-//    ecsOrchestrator->AddChildNode(textEntity, mainEntity);
     return true;
 }
 
@@ -222,52 +189,44 @@ void GameEngine::ProcessInput() {
     }
 }
 
-namespace {
-void PhysicsUpdate(GameEngine* gameEngine) {
-    // Fixed time step
-    const double PHYSICS_DELTA_TIME = 0.01f;
+void GameEngine::PhysicsUpdate() {
     static double time = 0.0f;
     static Uint32 currentTime = SDL_GetTicks();
     static double accumulator = 0.0f;
 
     Uint32 newTime = SDL_GetTicks();
     Uint32 frameTime = newTime - currentTime;
-    const Uint32 MAX_FRAME_TIME = 250;
-    if (frameTime > MAX_FRAME_TIME) {
-        frameTime = MAX_FRAME_TIME;
+    if (frameTime > Timing::Physics::MAX_FRAME_TIME) {
+        frameTime = Timing::Physics::MAX_FRAME_TIME;
     }
-    currentTime = newTime;
 
+    currentTime = newTime;
     accumulator += frameTime / 1000.0f;
 
-    while (accumulator >= PHYSICS_DELTA_TIME) {
-        time += PHYSICS_DELTA_TIME;
-        accumulator -= PHYSICS_DELTA_TIME;
-
-//            scriptEntitySystem->PhysicsProcess(PHYSICS_DELTA_TIME);
-//            inputManager->ClearInputFlags();
+    while (accumulator >= Timing::Physics::DELTA_TIME) {
+        time += Timing::Physics::DELTA_TIME;
+        accumulator -= Timing::Physics::DELTA_TIME;
+        ecsOrchestrator->PhysicsUpdateSystems(Timing::Physics::DELTA_TIME);
+        inputManager->ClearInputFlags();
     }
-}
 }
 
 void GameEngine::Update() {
     // Sleep until FRAME_TARGET_TIME has elapsed since last frame
-    const unsigned int MILLISECONDS_PER_TICK = 1000;
-    const unsigned int TARGET_FPS = 60;
-    const Uint32 TIME_TICKS = SDL_GetTicks();
+    const Uint32 currentTime = SDL_GetTicks();
     static Uint32 lastFrameTime = 0;
-    const unsigned int FRAME_TARGET_TIME = MILLISECONDS_PER_TICK / TARGET_FPS;
-    unsigned int timeToWait = FRAME_TARGET_TIME - (TIME_TICKS - lastFrameTime);
+    const unsigned int FRAME_TARGET_TIME = Timing::Update::MILLISECONDS_PER_TICK / projectProperties->GetTargetFPS();
+    unsigned int timeToWait = FRAME_TARGET_TIME - (currentTime - lastFrameTime);
     if (timeToWait > 0 && timeToWait <= FRAME_TARGET_TIME) {
         SDL_Delay(timeToWait);
     }
 
     fpsCounter->Update();
 
-    const float variableDeltaTime = (TIME_TICKS - lastFrameTime) / 1000.0f;
+    const float variableDeltaTime = (currentTime - lastFrameTime) / static_cast<float>(Timing::Update::MILLISECONDS_PER_TICK);
     ecsOrchestrator->UpdateSystems(variableDeltaTime);
 
-    PhysicsUpdate(this);
+    PhysicsUpdate();
 
     inputManager->ClearInputFlags();
     lastFrameTime = SDL_GetTicks();
