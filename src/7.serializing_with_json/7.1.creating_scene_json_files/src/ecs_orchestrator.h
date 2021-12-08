@@ -2,8 +2,6 @@
 #define ECS_ORCHESTRATOR_H
 
 #include "./re/ecs/system/ec_system_manager.h"
-#include "./re/ecs/entity/entity_manager.h"
-#include "./re/ecs/component/component_manager.h"
 #include "./re/scene/scene_manager.h"
 
 class ECSOrchestrator {

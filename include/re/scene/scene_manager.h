@@ -4,7 +4,7 @@
 #include <vector>
 #include <unordered_map>
 
-#include "scene.h"
+#include "scene_loader.h"
 #include "../ecs/entity/entity.h"
 #include "../utils/logger.h"
 

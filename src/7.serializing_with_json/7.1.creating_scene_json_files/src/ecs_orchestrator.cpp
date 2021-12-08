@@ -2,7 +2,7 @@
 
 ECSOrchestrator::ECSOrchestrator() :
     ecSystemManager(new ECSystemManager()),
-    entityManager(new EntityManager()),
+    entityManager(EntityManager::GetInstance()),
     componentManager(ComponentManager::GetInstance()),
     sceneManager(SceneManager::GetInstance()) {}
 

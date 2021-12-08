@@ -5,13 +5,13 @@
 
 struct SceneNode {
     Entity entity = NULL_ENTITY;
-    SceneNode *parent = nullptr;
-    std::vector<SceneNode*> children;
+    Entity parent = NULL_ENTITY;
+    std::vector<SceneNode> children = {};
 };
 
 struct Scene {
-    SceneNode *rootNode = nullptr;
-    std::unordered_map<Entity, SceneNode*> sceneNodes;
+    SceneNode rootNode = {};
+    std::unordered_map<Entity, SceneNode> sceneNodes = {};
 };
 
 #endif //SCENE_H

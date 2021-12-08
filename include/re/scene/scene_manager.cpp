@@ -14,10 +14,10 @@ SceneManager* SceneManager::GetInstance() {
 
 void SceneManager::ChangeToEmptyScene() {
     if (currentScene) {
-        for (auto &pair : currentScene->sceneNodes) {
-            SceneNode *sceneNode = pair.second;
-            delete sceneNode;
-        }
+//        for (auto &pair : currentScene->sceneNodes) {
+//            SceneNode *sceneNode = pair.second;
+//            delete sceneNode;
+//        }
         delete currentScene;
     }
     currentScene = new Scene{};
@@ -25,7 +25,7 @@ void SceneManager::ChangeToEmptyScene() {
 
 void SceneManager::ChangeToScene(const std::string& filePath) {
     currentScene = SceneLoader::LoadSceneFile(filePath);
-    assert(currentScene->rootNode != nullptr && "Scene root node is NULL!");
+    assert(currentScene->rootNode.entity != NULL_ENTITY && "Scene root node is NULL!");
 }
 
 void SceneManager::ChangeToScene(Scene* newScene) {
@@ -34,20 +34,20 @@ void SceneManager::ChangeToScene(Scene* newScene) {
 
 void SceneManager::AddRootNode(Entity rootEntity) {
     assert(currentScene != nullptr && "Current scene is NULL!");
-    assert(currentScene->rootNode == nullptr && "Current scene already has a root node!");
+    assert(currentScene->rootNode.entity == NULL_ENTITY && "Current scene already has a root node!");
     if (IsNodeInScene(rootEntity)) {
         logger->Warn("Entity '%d' already in the scene!", rootEntity);
         return;
     }
-    currentScene->sceneNodes.emplace(rootEntity, new SceneNode{ rootEntity });
+    currentScene->sceneNodes.emplace(rootEntity, SceneNode{ rootEntity });
 }
 
 void SceneManager::AddChildNode(Entity child, Entity parent) {
     assert(currentScene != nullptr && "Current scene is NULL!");
     assert(IsNodeInScene(parent) && "Parent node is not in scene!");
-    SceneNode *parentSceneNode = currentScene->sceneNodes[parent];
-    SceneNode *childSceneNode = new SceneNode{ child, parentSceneNode };
-    parentSceneNode->children.emplace_back(childSceneNode);
+    SceneNode parentSceneNode = currentScene->sceneNodes[parent];
+    SceneNode childSceneNode = SceneNode{ child, currentScene->sceneNodes[parent].entity };
+    currentScene->sceneNodes[parent].children.emplace_back(childSceneNode);
     currentScene->sceneNodes.emplace(child, childSceneNode);
 }
 
@@ -57,7 +57,6 @@ void SceneManager::DeleteNode(Entity entity) {
         logger->Warn("Attempted to delete entity '%d' which is not in the scene!", entity);
         return;
     }
-    delete currentScene->sceneNodes[entity];
     currentScene->sceneNodes.erase(entity);
 }
 
