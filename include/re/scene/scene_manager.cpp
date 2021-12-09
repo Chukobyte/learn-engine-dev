@@ -14,10 +14,6 @@ SceneManager* SceneManager::GetInstance() {
 
 void SceneManager::ChangeToEmptyScene() {
     if (currentScene) {
-//        for (auto &pair : currentScene->sceneNodes) {
-//            SceneNode *sceneNode = pair.second;
-//            delete sceneNode;
-//        }
         delete currentScene;
     }
     currentScene = new Scene{};

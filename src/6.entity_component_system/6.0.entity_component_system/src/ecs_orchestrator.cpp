@@ -22,7 +22,7 @@ ECSOrchestrator* ECSOrchestrator::GetInstance() {
 
 void ECSOrchestrator::RefreshEntitySignature(Entity entity) {
     if (sceneManager->IsNodeInScene(entity)) {
-        ecSystemManager->EntitySignatureChanged(entity, entityManager->GetSignature(entity));
+        ecSystemManager->EntitySignatureChanged(entity, entityManager->GetEnabledSignature(entity));
     }
 }
 

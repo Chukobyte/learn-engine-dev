@@ -56,9 +56,10 @@ class SceneNodeJsonParser {
             .isZIndexRelativeToParent = nodeZIndexIsRelativeToParent,
             .ignoreCamera = nodeIgnoreCamera
         });
-        auto signature = entityManager->GetSignature(sceneNode.entity);
+        auto signature = entityManager->GetEnabledSignature(sceneNode.entity);
         signature.set(componentManager->GetComponentType<Transform2DComponent>(), true);
         entityManager->SetSignature(sceneNode.entity, signature);
+        entityManager->SetEnabledSignature(sceneNode.entity, signature);
     }
 
     void ParseSpriteComponent(SceneNode &sceneNode, const nlohmann::json &nodeComponentObjectJson) {
@@ -85,10 +86,11 @@ class SceneNodeJsonParser {
             .flipY = nodeFlipY,
             .modulate = nodeModulate
         });
-        auto signature = entityManager->GetSignature(sceneNode.entity);
+        auto signature = entityManager->GetEnabledSignature(sceneNode.entity);
         const bool isSpriteEnabled = !nodeTexturePath.empty();
         signature.set(componentManager->GetComponentType<SpriteComponent>(), isSpriteEnabled);
         entityManager->SetSignature(sceneNode.entity, signature);
+        entityManager->SetEnabledSignature(sceneNode.entity, signature);
     }
 
     void ParseTextLabelComponent(SceneNode &sceneNode, const nlohmann::json &nodeComponentObjectJson) {
@@ -107,10 +109,11 @@ class SceneNodeJsonParser {
             .font = nodeFontUID.empty() ? nullptr : assetManager->GetFont(nodeFontUID),
             .color = nodeColor
         });
-        auto signature = entityManager->GetSignature(sceneNode.entity);
+        auto signature = entityManager->GetEnabledSignature(sceneNode.entity);
         const bool isTextLabelEnabled = !nodeFontUID.empty();
         signature.set(componentManager->GetComponentType<TextLabelComponent>(), isTextLabelEnabled);
         entityManager->SetSignature(sceneNode.entity, signature);
+        entityManager->SetEnabledSignature(sceneNode.entity, signature);
     }
 
   public:

@@ -69,3 +69,11 @@ bool InputManager::IsActionJustReleased(const std::string &actionName) {
 InputEvent InputManager::GetCurrentInputEvent() const {
     return currentInputEvent;
 }
+
+void InputManager::LoadInputActionConfigurations(InputActionsConfigurations inputActionsConfigurations) {
+    for (InputConfiguration inputConfiguration : inputActionsConfigurations.configurations) {
+        for (const std::string& actionValue : inputConfiguration.values) {
+            AddAction(inputConfiguration.name, actionValue);
+        }
+    }
+}

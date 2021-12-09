@@ -20,32 +20,39 @@ ECSOrchestrator* ECSOrchestrator::GetInstance() {
     return instance;
 }
 
-void ECSOrchestrator::RefreshEntitySignature(Entity entity) {
-    if (sceneManager->IsNodeInScene(entity)) {
-        ecSystemManager->EntitySignatureChanged(entity, entityManager->GetSignature(entity));
-    }
+void ECSOrchestrator::RefreshEntitySignatureChanged(Entity entity) {
+    ecSystemManager->EntitySignatureChanged(entity, entityManager->GetEnabledSignature(entity));
 }
 
-void ECSOrchestrator::ChangeToScene(const std::string& filePath) {
-    sceneManager->ChangeToScene(filePath);
+void ECSOrchestrator::PrepareSceneChange(const std::string& filePath) {
+    sceneToChangeFilePath = filePath;
 }
 
-void ECSOrchestrator::AddNodesToScene() {
+void ECSOrchestrator::ChangeToScene() {
+    sceneManager->ChangeToScene(sceneToChangeFilePath);
+    sceneToChangeFilePath.clear();
+}
+
+bool ECSOrchestrator::HasPreparedScene() const {
+    return !sceneToChangeFilePath.empty();
+}
+
+void ECSOrchestrator::RegisterLoadedSceneNodeComponents() {
     Scene* currentScene = sceneManager->GetCurrentScene();
-    AddRootNode(currentScene->rootNode.entity);
+    RefreshEntitySignatureChanged(currentScene->rootNode.entity);
     for (SceneNode childSceneNode : currentScene->rootNode.children) {
-        AddChildNode(childSceneNode.entity, childSceneNode.parent);
+        RefreshEntitySignatureChanged(childSceneNode.entity);
     }
 }
 
 void ECSOrchestrator::AddRootNode(Entity rootEntity) {
-//    sceneManager->AddRootNode(rootEntity);
-    RefreshEntitySignature(rootEntity);
+    sceneManager->AddRootNode(rootEntity);
+    RefreshEntitySignatureChanged(rootEntity);
 }
 
 void ECSOrchestrator::AddChildNode(Entity child, Entity parent) {
-//    sceneManager->AddChildNode(child, parent);
-    RefreshEntitySignature(child);
+    sceneManager->AddChildNode(child, parent);
+    RefreshEntitySignatureChanged(child);
 }
 
 void ECSOrchestrator::DeleteNode(Entity entity) {

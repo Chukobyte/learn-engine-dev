@@ -25,7 +25,7 @@ class ECSOrchestrator {
     template<typename T>
     void AddComponent(Entity entity, T component) {
         componentManager->AddComponent<T>(entity, component);
-        auto signature = entityManager->GetSignature(entity);
+        auto signature = entityManager->GetEnabledSignature(entity);
         signature.set(componentManager->GetComponentType<T>(), true);
         entityManager->SetSignature(entity, signature);
         RefreshEntitySignature(entity);
@@ -39,7 +39,7 @@ class ECSOrchestrator {
     template<typename T>
     void RemoveComponent(Entity entity) {
         componentManager->RemoveComponent<T>(entity);
-        auto signature = entityManager->GetSignature(entity);
+        auto signature = entityManager->GetEnabledSignature(entity);
         signature.set(componentManager->GetComponentType<T>(), false);
         entityManager->SetSignature(entity, signature);
         ecSystemManager->EntitySignatureChanged(entity, signature);
@@ -47,7 +47,7 @@ class ECSOrchestrator {
 
     template<typename T>
     void EnableComponent(Entity entity) {
-        auto signature = entityManager->GetSignature(entity);
+        auto signature = entityManager->GetEnabledSignature(entity);
         signature.set(componentManager->GetComponentType<T>(), true);
         entityManager->SetSignature(entity, signature);
         RefreshEntitySignature(entity);
@@ -55,7 +55,7 @@ class ECSOrchestrator {
 
     template<typename T>
     void DisableComponent(Entity entity) {
-        auto signature = entityManager->GetSignature(entity);
+        auto signature = entityManager->GetEnabledSignature(entity);
         signature.set(componentManager->GetComponentType<T>(), false);
         entityManager->SetSignature(entity, signature);
         ecSystemManager->EntitySignatureChanged(entity, signature);
@@ -63,7 +63,7 @@ class ECSOrchestrator {
 
     template<typename T>
     bool IsComponentEnabled(Entity entity) {
-        auto signature = entityManager->GetSignature(entity);
+        auto signature = entityManager->GetEnabledSignature(entity);
         return (GetComponentType<T>() & signature) == signature;
     }
 
@@ -108,7 +108,7 @@ class ECSOrchestrator {
 
     template<typename T>
     ComponentSignature GetSystemSignature() {
-        return ecSystemManager->GetSignature<T>();
+        return ecSystemManager->GetEnabledSignature<T>();
     }
 
     // Scene

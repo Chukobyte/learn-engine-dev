@@ -14,16 +14,14 @@ Entity EntityManager::CreateEntity() {
 }
 
 void EntityManager::DestroyEntity(Entity entity) {
-    assert(entity < MAX_ENTITIES && "Entity out of range!");
-
-    signatures[entity].reset();
-
     entitiesToDelete.insert(entitiesToDelete.end(), 1, entity);
     livingEntityCounter--;
 }
 
 void EntityManager::DeleteEntitiesQueuedForDeletion() {
     for (Entity entity : entitiesToDelete) {
+        signatures[entity].reset();
+        enabledSignatures[entity].reset();
         availableEntityIds.push(entity);
     }
     entitiesToDelete.clear();
@@ -34,15 +32,23 @@ unsigned int EntityManager::GetAliveEntities() {
 }
 
 void EntityManager::SetSignature(Entity entity, ComponentSignature signature) {
-    assert(entity < MAX_ENTITIES && "Entity out of range!");
-
     signatures[entity] = signature;
 }
 
 ComponentSignature EntityManager::GetSignature(Entity entity) {
-    assert(entity < MAX_ENTITIES && "Entity out of range!");
-
     return signatures[entity];
+}
+
+ComponentSignature EntityManager::GetEnabledSignature(Entity entity) {
+    return enabledSignatures[entity];
+}
+
+void EntityManager::SetEnabledSignature(Entity entity, ComponentSignature signature) {
+    enabledSignatures[entity] = signature;
+}
+
+void EntityManager::ResetEnabledSignature(Entity entity) {
+    enabledSignatures[entity] = signatures[entity];
 }
 
 Entity EntityManager::GetUniqueEntityId() {

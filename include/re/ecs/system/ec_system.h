@@ -15,11 +15,21 @@ class ECSystem {
 
   public:
     virtual void Initialize()  {}
-    virtual void RegisterEntity(Entity entity) { entities.insert(entity); }
-    virtual void UnregisterEntity(Entity entity) { entities.erase(entity); }
-    virtual void Enable() { enabled = true; }
-    virtual void Disable() { enabled = false; }
-    bool IsEnabled() { return enabled; }
+    virtual void RegisterEntity(Entity entity) {
+        entities.insert(entity);
+    }
+    virtual void UnregisterEntity(Entity entity) {
+        entities.erase(entity);
+    }
+    virtual void Enable() {
+        enabled = true;
+    }
+    virtual void Disable() {
+        enabled = false;
+    }
+    bool IsEnabled() {
+        return enabled;
+    }
     // Event hooks
     virtual void Update(float deltaTime) {}
     virtual void PhysicsUpdate(float deltaTime) {}

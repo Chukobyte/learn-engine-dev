@@ -4,7 +4,6 @@
 #include "./re/ecs/system/systems/sprite_rendering_ec_system.h"
 #include "./re/ecs/system/systems/text_rendering_ec_system.h"
 #include "./re/audio/audio_helper.h"
-#include "./re/data/constants.h"
 
 GameEngine::GameEngine() :
     projectProperties(ProjectProperties::GetInstance()),
@@ -55,8 +54,7 @@ bool GameEngine::Initialize() {
     engineContext->SetRunning(true);
 
     // Load initial scene
-    ecsOrchestrator->ChangeToScene(projectProperties->GetInitialScenePath());
-    ecsOrchestrator->AddNodesToScene();
+    ecsOrchestrator->PrepareSceneChange(projectProperties->GetInitialScenePath());
 
     // Temp play music
     AudioHelper::PlayMusic("assets/audio/music/test_music.wav");
@@ -123,12 +121,7 @@ bool GameEngine::InitializeRendering() {
 
 bool GameEngine::InitializeInput() {
     inputManager->Initialize();
-    // temp adding actions
-    inputManager->AddAction("quit", "esc");
-    inputManager->AddAction("move_left", "left");
-    inputManager->AddAction("move_left", "a");
-    inputManager->AddAction("move_right", "right");
-    inputManager->AddAction("move_right", "d");
+    inputManager->LoadInputActionConfigurations(projectProperties->GetInputActionsConfigurations());
     return true;
 }
 
@@ -201,7 +194,7 @@ void GameEngine::PhysicsUpdate() {
     }
 
     currentTime = newTime;
-    accumulator += frameTime / 1000.0f;
+    accumulator += frameTime / static_cast<float>(Timing::Update::MILLISECONDS_PER_TICK);
 
     while (accumulator >= Timing::Physics::DELTA_TIME) {
         time += Timing::Physics::DELTA_TIME;
@@ -223,6 +216,11 @@ void GameEngine::Update() {
 
     fpsCounter->Update();
 
+    if (ecsOrchestrator->HasPreparedScene()) {
+        ecsOrchestrator->ChangeToScene();
+        ecsOrchestrator->RegisterLoadedSceneNodeComponents();
+    }
+
     const float variableDeltaTime = (currentTime - lastFrameTime) / static_cast<float>(Timing::Update::MILLISECONDS_PER_TICK);
     ecsOrchestrator->UpdateSystems(variableDeltaTime);
 
@@ -241,7 +239,6 @@ void GameEngine::Render() {
 
     ecsOrchestrator->RenderSystems();
 
-    // Flush
     renderer2D->FlushBatches();
 
     SDL_GL_SwapWindow(renderContext->window);

@@ -7,6 +7,7 @@
 #include "mouse_input.h"
 #include "joystick_input.h"
 #include "input_event_state.h"
+#include "../utils/project_properties.h"
 
 class InputManager {
   public:
@@ -20,6 +21,7 @@ class InputManager {
     bool IsActionJustPressed(const std::string &actionName);
     bool IsActionJustReleased(const std::string &actionName);
     InputEvent GetCurrentInputEvent() const;
+    void LoadInputActionConfigurations(InputActionsConfigurations inputActionsConfigurations);
 
   private:
     MouseInput *mouseInput = nullptr;
