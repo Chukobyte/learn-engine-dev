@@ -13,7 +13,7 @@
 class EntityManager {
   public:
     static EntityManager* GetInstance();
-    Entity CreateEntity(std::string name);
+    Entity CreateEntity();
     void DestroyEntity(Entity entity);
     void DeleteEntitiesQueuedForDeletion();
     unsigned int GetAliveEntities();
@@ -35,7 +35,6 @@ class EntityManager {
 
     EntityManager() = default;
     Entity GetUniqueEntityId();
-    std::string GetUniqueEntityName(std::string name) const;
 };
 
 #endif //ENTITY_MANAGER_H

@@ -127,7 +127,7 @@ bool GameEngine::InitializeInput() {
 
 bool GameEngine::InitializeECS() {
     // Register Components to ECS
-    ecsOrchestrator->RegisterComponent<NodeComponent>();
+    ecsOrchestrator->RegisterComponent<SceneComponent>();
     ecsOrchestrator->RegisterComponent<Transform2DComponent>();
     ecsOrchestrator->RegisterComponent<SpriteComponent>();
     ecsOrchestrator->RegisterComponent<TextLabelComponent>();

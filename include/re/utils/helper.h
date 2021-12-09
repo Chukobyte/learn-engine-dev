@@ -31,6 +31,16 @@ class Helper {
         return currentEndNumberString;
     }
 
+    static std::string RemoveNumberFromEndOfString(const std::string& text) {
+        const std::string& endStringText = GetNumberFromEndOfString(text);
+        if (!endStringText.empty()) {
+            std::string currentText = text;
+            currentText.resize(currentText.size() - endStringText.size());
+            return currentText;
+        }
+        return text;
+    }
+
     static unsigned int ConvertStringToUnsignedInt(const std::string& text) {
         std::istringstream reader(text);
         unsigned int value;

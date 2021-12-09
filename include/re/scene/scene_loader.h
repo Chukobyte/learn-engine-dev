@@ -19,7 +19,48 @@ class SceneNodeJsonParser {
     ComponentManager *componentManager = nullptr;
     AssetManager *assetManager = nullptr;
 
-    void ParseComponents(SceneNode &sceneNode, const nlohmann::json &nodeComponentJsonArray) {
+    unsigned int GetEntityNameCount(const std::string& name, const SceneNode& parentSceneNode) {
+        unsigned int enitityNameCount = 0;
+        for (const SceneNode& childrenSceneNode : parentSceneNode.children) {
+            SceneComponent sceneComponent = componentManager->GetComponent<SceneComponent>(childrenSceneNode.entity);
+            std::string childName = sceneComponent.name;
+            const std::string& childNumberAtTheEndString = Helper::GetNumberFromEndOfString(childName);
+            if (childNumberAtTheEndString.empty()) {
+                continue;
+            }
+            childName.resize(childName.size() - childNumberAtTheEndString.size());
+            unsigned int childNumberAtEnd = Helper::ConvertStringToUnsignedInt(childNumberAtTheEndString);
+            enitityNameCount = std::max(enitityNameCount, childNumberAtEnd);
+        }
+        return enitityNameCount;
+    }
+
+    std::string GetUniqueSceneNodeName(const std::string& name, const SceneNode& parentSceneNode) {
+        if (!parentSceneNode.children.empty()) {
+            unsigned int entitiesWithSameNameCount = GetEntityNameCount(name, parentSceneNode);
+            if (entitiesWithSameNameCount > 0) {
+                unsigned int uniqueId = entitiesWithSameNameCount + 1;
+                const std::string& numberAtEndString = Helper::GetNumberFromEndOfString(name);
+                std::string nameWithoutNumber = Helper::RemoveNumberFromEndOfString(name);
+                // Make sure provided number isn't higher than unique id
+                if (!numberAtEndString.empty()) {
+                    unsigned int numberAtTheEnd = Helper::ConvertStringToUnsignedInt(numberAtEndString);
+                    uniqueId = std::max(uniqueId, numberAtTheEnd);
+                }
+                return nameWithoutNumber + std::to_string(uniqueId);
+            }
+        }
+        return name;
+    }
+
+    SceneComponent GenerateSceneComponent(const std::string& nodeName, const SceneNode& parentSceneNode, std::vector<std::string> tags = {}) {
+        return SceneComponent{
+            GetUniqueSceneNodeName(nodeName, parentSceneNode),
+            tags
+        };
+    }
+
+    void ParseComponentArray(SceneNode &sceneNode, const nlohmann::json &nodeComponentJsonArray) {
         for (nlohmann::json nodeComponentJson : nodeComponentJsonArray) {
             nlohmann::json::iterator it = nodeComponentJson.begin();
             const std::string &nodeComponentType = it.key();
@@ -94,7 +135,7 @@ class SceneNodeJsonParser {
         entityManager->SetEnabledSignature(sceneNode.entity, signature);
     }
 
-    void ParseTextLabelComponent(SceneNode &sceneNode, const nlohmann::json &nodeComponentObjectJson) {
+    void ParseTextLabelComponent(SceneNode& sceneNode, const nlohmann::json &nodeComponentObjectJson) {
         const std::string &nodeText = JsonHelper::Get<std::string>(nodeComponentObjectJson, "text");
         const std::string &nodeFontUID = JsonHelper::Get<std::string>(nodeComponentObjectJson, "font_uid");
         nlohmann::json nodeColorJson = JsonHelper::Get<nlohmann::json>(nodeComponentObjectJson, "color");
@@ -123,37 +164,32 @@ class SceneNodeJsonParser {
         componentManager(ComponentManager::GetInstance()),
         assetManager(AssetManager::GetInstance()) {}
 
-    SceneNode ParseSceneJson(Scene* scene, nlohmann::json nodeJson, bool isRoot) {
-        const std::string &nodeName = JsonHelper::Get<std::string>(nodeJson, "name");
+    SceneNode ParseSceneJson(Scene* scene, nlohmann::json nodeJson, bool isRoot, const SceneNode& parentSceneNode = {}) {
         SceneNode sceneNode;
-        if (isRoot) {
-            sceneNode = {entityManager->CreateEntity(nodeName)};
+        if (parentSceneNode.entity != NULL_ENTITY) {
+            sceneNode = { entityManager->CreateEntity(), parentSceneNode.entity };
         } else {
-            sceneNode = {entityManager->CreateEntity(nodeName), JsonHelper::Get<unsigned int>(nodeJson, "parent_entity_id")};
+            sceneNode = { entityManager->CreateEntity() };
         }
 
+        // Configure scene component
+        const std::string &nodeName = JsonHelper::Get<std::string>(nodeJson, "name");
         const std::string &nodeType = JsonHelper::Get<std::string>(nodeJson, "type");
         nlohmann::json nodeTagsJsonArray = JsonHelper::Get<nlohmann::json>(nodeJson, "tags");
         const std::string &nodeExternalSceneSource = JsonHelper::Get<std::string>(nodeJson, "external_scene_source");
-        nlohmann::json nodeComponentJsonArray = JsonHelper::Get<nlohmann::json>(nodeJson, "components");
-        nlohmann::json nodeChildrenJsonArray = JsonHelper::Get<nlohmann::json>(nodeJson, "children");
-
-        // Configure node type component
-        std::vector<std::string> nodeTags;
-        for (const std::string &nodeTag : nodeTagsJsonArray) {
+        std::vector<std::string> nodeTags = {};
+        for (auto& nodeTag : nodeTagsJsonArray) {
             nodeTags.emplace_back(nodeTag);
         }
-        componentManager->AddComponent(sceneNode.entity, NodeComponent{
-            .name = nodeName,
-            .tags = nodeTags
-        });
+        componentManager->AddComponent(sceneNode.entity, GenerateSceneComponent(nodeName, parentSceneNode, nodeTags));
 
         // Rest of components
-        ParseComponents(sceneNode, nodeComponentJsonArray);
+        nlohmann::json nodeComponentJsonArray = JsonHelper::Get<nlohmann::json>(nodeJson, "components");
+        ParseComponentArray(sceneNode, nodeComponentJsonArray);
 
+        nlohmann::json nodeChildrenJsonArray = JsonHelper::Get<nlohmann::json>(nodeJson, "children");
         for (nlohmann::json nodeChildJson : nodeChildrenJsonArray) {
-            nodeChildJson["parent_entity_id"] = sceneNode.entity;
-            SceneNode childNode = ParseSceneJson(scene, nodeChildJson, false);
+            SceneNode childNode = ParseSceneJson(scene, nodeChildJson, false, sceneNode);
             sceneNode.children.emplace_back(childNode);
         }
 

@@ -12,8 +12,8 @@ class ECSOrchestrator {
     static ECSOrchestrator* GetInstance();
 
     // Entity
-    Entity CreateEntity(const std::string& name) {
-        return entityManager->CreateEntity(name);
+    Entity CreateEntity() {
+        return entityManager->CreateEntity();
     }
 
     // Component
