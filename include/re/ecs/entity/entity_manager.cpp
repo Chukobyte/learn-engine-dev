@@ -1,16 +1,25 @@
 #include "entity_manager.h"
 
+#include "../../utils/helper.h"
+
+#include<ctype.h>
+
 EntityManager* EntityManager::GetInstance() {
     static EntityManager* instance = new EntityManager();
     return instance;
 }
 
-Entity EntityManager::CreateEntity() {
+Entity EntityManager::CreateEntity(std::string name) {
     assert(livingEntityCounter < MAX_ENTITIES && "Too many entities to create!");
+    const Entity newEntity = GetUniqueEntityId();
+    if (nameToEntityMap.count(name) > 0) {
+        name = GetUniqueEntityName(name);
+    }
+    nameToEntityMap.emplace(name, newEntity);
 
     livingEntityCounter++;
 
-    return GetUniqueEntityId();
+    return newEntity;
 }
 
 void EntityManager::DestroyEntity(Entity entity) {
@@ -59,4 +68,15 @@ Entity EntityManager::GetUniqueEntityId() {
     Entity newEntityId = availableEntityIds.front();
     availableEntityIds.pop();
     return newEntityId;
+}
+
+std::string EntityManager::GetUniqueEntityName(std::string name) const {
+    unsigned int uniqueId = 2;
+    const std::string& numberAtTheEndText = Helper::GetNumberFromEndOfString(name);
+    if (!numberAtTheEndText.empty()) {
+        name.resize(name.size() - numberAtTheEndText.size());
+        const unsigned int numberAtTheEnd = Helper::ConvertStringToUnsignedInt(numberAtTheEndText);
+        uniqueId = numberAtTheEnd + 1;
+    }
+    return name + std::to_string(uniqueId);
 }

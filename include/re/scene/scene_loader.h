@@ -5,6 +5,7 @@
 
 #include "../ecs/entity/entity_manager.h"
 #include "../ecs/component/component_manager.h"
+#include "../ecs/component/components/node_component.h"
 #include "../ecs/component/components/transform2d_component.h"
 #include "../ecs/component/components/text_label_component.h"
 #include "../ecs/component/components/sprite_component.h"
@@ -123,14 +124,14 @@ class SceneNodeJsonParser {
         assetManager(AssetManager::GetInstance()) {}
 
     SceneNode ParseSceneJson(Scene* scene, nlohmann::json nodeJson, bool isRoot) {
+        const std::string &nodeName = JsonHelper::Get<std::string>(nodeJson, "name");
         SceneNode sceneNode;
         if (isRoot) {
-            sceneNode = {entityManager->CreateEntity()};
+            sceneNode = {entityManager->CreateEntity(nodeName)};
         } else {
-            sceneNode = {entityManager->CreateEntity(), JsonHelper::Get<unsigned int>(nodeJson, "parent_entity_id")};
+            sceneNode = {entityManager->CreateEntity(nodeName), JsonHelper::Get<unsigned int>(nodeJson, "parent_entity_id")};
         }
 
-        const std::string &nodeName = JsonHelper::Get<std::string>(nodeJson, "name");
         const std::string &nodeType = JsonHelper::Get<std::string>(nodeJson, "type");
         nlohmann::json nodeTagsJsonArray = JsonHelper::Get<nlohmann::json>(nodeJson, "tags");
         const std::string &nodeExternalSceneSource = JsonHelper::Get<std::string>(nodeJson, "external_scene_source");
@@ -138,15 +139,14 @@ class SceneNodeJsonParser {
         nlohmann::json nodeChildrenJsonArray = JsonHelper::Get<nlohmann::json>(nodeJson, "children");
 
         // Configure node type component
-//        std::vector<std::string> nodeTags;
-//        for (const std::string &nodeTag : nodeTagsJsonArray) {
-//            nodeTags.emplace_back(nodeTag);
-//        }
-//        componentManager->AddComponent(sceneNode.entity, NodeComponent{
-//            .type = NodeTypeHelper::GetNodeTypeInt(nodeType),
-//            .name = nodeName,
-//            .tags = nodeTags
-//        });
+        std::vector<std::string> nodeTags;
+        for (const std::string &nodeTag : nodeTagsJsonArray) {
+            nodeTags.emplace_back(nodeTag);
+        }
+        componentManager->AddComponent(sceneNode.entity, NodeComponent{
+            .name = nodeName,
+            .tags = nodeTags
+        });
 
         // Rest of components
         ParseComponents(sceneNode, nodeComponentJsonArray);
@@ -178,10 +178,6 @@ class SceneLoader {
             Logger::GetInstance()->Error("Scene file '%s' not found!", filePath.c_str());
         }
         return loadedScene;
-    }
-
-    static void AddNodesToScene(Scene* scene) {
-
     }
 };
 

@@ -4,6 +4,7 @@
 #include <array>
 #include <vector>
 #include <queue>
+#include <unordered_map>
 #include <cassert>
 
 #include "entity.h"
@@ -12,7 +13,7 @@
 class EntityManager {
   public:
     static EntityManager* GetInstance();
-    Entity CreateEntity();
+    Entity CreateEntity(std::string name);
     void DestroyEntity(Entity entity);
     void DeleteEntitiesQueuedForDeletion();
     unsigned int GetAliveEntities();
@@ -26,12 +27,15 @@ class EntityManager {
     unsigned int entityIdCounter = 1;  // Starts at 1 as 0 is invalid
     unsigned int livingEntityCounter = 0;
     std::queue<Entity> availableEntityIds;
+    // TODO: Figure out if I want to store names here and use Node Component
+    std::unordered_map<std::string, Entity> nameToEntityMap;
     std::array<ComponentSignature, MAX_ENTITIES> signatures;
     std::array<ComponentSignature, MAX_ENTITIES> enabledSignatures;
     std::vector<Entity> entitiesToDelete;
 
     EntityManager() = default;
     Entity GetUniqueEntityId();
+    std::string GetUniqueEntityName(std::string name) const;
 };
 
 #endif //ENTITY_MANAGER_H
