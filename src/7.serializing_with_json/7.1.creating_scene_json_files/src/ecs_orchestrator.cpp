@@ -26,6 +26,7 @@ void ECSOrchestrator::RefreshEntitySignatureChanged(Entity entity) {
 
 void ECSOrchestrator::PrepareSceneChange(const std::string& filePath) {
     sceneToChangeFilePath = filePath;
+    shouldDestroySceneNextFrame = true;
 }
 
 void ECSOrchestrator::ChangeToScene() {
@@ -33,8 +34,16 @@ void ECSOrchestrator::ChangeToScene() {
     sceneToChangeFilePath.clear();
 }
 
-bool ECSOrchestrator::HasPreparedScene() const {
-    return !sceneToChangeFilePath.empty();
+void ECSOrchestrator::DestroyScene() {
+    shouldDestroySceneNextFrame = false;
+}
+
+bool ECSOrchestrator::HasSceneToCreate() const {
+    return !sceneToChangeFilePath.empty() && !shouldDestroySceneNextFrame;
+}
+
+bool ECSOrchestrator::HasSceneToDestroy() const {
+    return shouldDestroySceneNextFrame;
 }
 
 void ECSOrchestrator::RegisterLoadedSceneNodeComponents() {
@@ -55,12 +64,29 @@ void ECSOrchestrator::AddChildNode(Entity child, Entity parent) {
     RefreshEntitySignatureChanged(child);
 }
 
-void ECSOrchestrator::DeleteNode(Entity entity) {
+void ECSOrchestrator::QueueDestroyEntity(Entity entity) {
+    entitiesQueuedForDeletion.emplace_back(entity);
+}
+
+void ECSOrchestrator::DestroyQueuedEntities() {
+    for (Entity entity : entitiesQueuedForDeletion) {
+        DestroyEntity(entity);
+    }
+    entitiesQueuedForDeletion.clear();
+}
+
+void ECSOrchestrator::DestroyEntity(Entity entity) {
     sceneManager->DeleteNode(entity);
+    componentManager->EntityDestroyed(entity);
+    ecSystemManager->EntityDestroyed(entity);
 }
 
 bool ECSOrchestrator::IsNodeInScene(Entity entity) const {
     return sceneManager->IsNodeInScene(entity);
+}
+
+Scene* ECSOrchestrator::GetCurrentScene() {
+    sceneManager->GetCurrentScene();
 }
 
 void ECSOrchestrator::UpdateSystems(float deltaTime) {
@@ -75,10 +101,10 @@ void ECSOrchestrator::RenderSystems() {
     ecSystemManager->RenderSystems();
 }
 
-void ECSOrchestrator::OnSceneStartSystems(Scene* scene) {
-    ecSystemManager->OnSceneStartSystems(scene);
+void ECSOrchestrator::OnSceneStartSystems() {
+    ecSystemManager->OnSceneStartSystems(sceneManager->GetCurrentScene());
 }
 
-void ECSOrchestrator::OnSceneEndSystems(Scene* scene) {
-    ecSystemManager->OnSceneEndSystems(scene);
+void ECSOrchestrator::OnSceneEndSystems() {
+    ecSystemManager->OnSceneEndSystems(sceneManager->GetCurrentScene());
 }

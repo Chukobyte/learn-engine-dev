@@ -183,7 +183,6 @@ void GameEngine::ProcessInput() {
 }
 
 void GameEngine::PhysicsUpdate() {
-    static double time = 0.0f;
     static Uint32 currentTime = SDL_GetTicks();
     static double accumulator = 0.0f;
 
@@ -197,7 +196,6 @@ void GameEngine::PhysicsUpdate() {
     accumulator += frameTime / static_cast<float>(Timing::Update::MILLISECONDS_PER_TICK);
 
     while (accumulator >= Timing::Physics::DELTA_TIME) {
-        time += Timing::Physics::DELTA_TIME;
         accumulator -= Timing::Physics::DELTA_TIME;
         ecsOrchestrator->PhysicsUpdateSystems(Timing::Physics::DELTA_TIME);
         inputManager->ClearInputFlags();
@@ -216,9 +214,10 @@ void GameEngine::Update() {
 
     fpsCounter->Update();
 
-    if (ecsOrchestrator->HasPreparedScene()) {
+    if (ecsOrchestrator->HasSceneToCreate()) {
         ecsOrchestrator->ChangeToScene();
         ecsOrchestrator->RegisterLoadedSceneNodeComponents();
+        ecsOrchestrator->OnSceneStartSystems();
     }
 
     const float variableDeltaTime = (currentTime - lastFrameTime) / static_cast<float>(Timing::Update::MILLISECONDS_PER_TICK);
@@ -227,6 +226,13 @@ void GameEngine::Update() {
     PhysicsUpdate();
 
     inputManager->ClearInputFlags();
+
+    if (ecsOrchestrator->HasSceneToDestroy()) {
+        ecsOrchestrator->DestroyScene();
+    }
+
+    ecsOrchestrator->DestroyQueuedEntities();
+
     lastFrameTime = SDL_GetTicks();
 }
 

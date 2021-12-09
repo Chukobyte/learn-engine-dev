@@ -1,6 +1,8 @@
 #ifndef ECS_ORCHESTRATOR_H
 #define ECS_ORCHESTRATOR_H
 
+#include <vector>
+
 #include "./re/ecs/system/ec_system_manager.h"
 #include "./re/scene/scene_manager.h"
 
@@ -118,18 +120,22 @@ class ECSOrchestrator {
     void UpdateSystems(float deltaTime);
     void PhysicsUpdateSystems(float deltaTime);
     void RenderSystems();
-    void OnSceneStartSystems(Scene* scene);
-    void OnSceneEndSystems(Scene* scene);
+    void OnSceneStartSystems();
+    void OnSceneEndSystems();
 
     // Scene
     void PrepareSceneChange(const std::string& filePath);
     void ChangeToScene();
-    bool HasPreparedScene() const;
+    void DestroyScene();
+    bool HasSceneToCreate() const;
+    bool HasSceneToDestroy() const;
     void RegisterLoadedSceneNodeComponents();
     void AddRootNode(Entity rootEntity);
     void AddChildNode(Entity child, Entity parent);
-    void DeleteNode(Entity entity);
     bool IsNodeInScene(Entity entity) const;
+    void QueueDestroyEntity(Entity entity);
+    void DestroyQueuedEntities();
+    Scene* GetCurrentScene();
 
   private:
     ECSystemManager *ecSystemManager = nullptr;
@@ -137,9 +143,12 @@ class ECSOrchestrator {
     ComponentManager *componentManager = nullptr;
     SceneManager *sceneManager = nullptr;
     std::string sceneToChangeFilePath;
+    bool shouldDestroySceneNextFrame = false;
+    std::vector<Entity> entitiesQueuedForDeletion;
 
     ECSOrchestrator();
     void RefreshEntitySignatureChanged(Entity entity);
+    void DestroyEntity(Entity entity);
 };
 
 #endif //ECS_ORCHESTRATOR_H

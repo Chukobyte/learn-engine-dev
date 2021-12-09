@@ -115,7 +115,7 @@ class ECSOrchestrator {
     void ChangeToEmptyScene();
     void AddRootNode(Entity rootEntity);
     void AddChildNode(Entity child, Entity parent);
-    void DeleteNode(Entity entity);
+    void DestroyEntity(Entity entity);
     bool IsNodeInScene(Entity entity) const;
 
   private:

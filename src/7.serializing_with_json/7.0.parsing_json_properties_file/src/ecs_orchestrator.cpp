@@ -40,7 +40,7 @@ void ECSOrchestrator::AddChildNode(Entity child, Entity parent) {
     RefreshEntitySignature(child);
 }
 
-void ECSOrchestrator::DeleteNode(Entity entity) {
+void ECSOrchestrator::DestroyEntity(Entity entity) {
     sceneManager->DeleteNode(entity);
 }
 
