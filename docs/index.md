@@ -18,7 +18,7 @@ Programming and technical skills of all levels are welcome, but to get the most 
 
 ## Structure
 
-Each chapter of this tutorial series is broken up into sections which can be navigated to via the menu on the left.  Each chapter and section has source code attributed to it which can be found within the [github repo](https://github.com/Chukobyte/learn-engine-dev).  Code will need to be shared between each project folder and a game library will be created in `include/re`.  Typically, code that is created within a chapter is moved into the game library once it's implementation is completed within the sections.
+There are a total of three parts to this tutorial series which are split in multiple chapters.  Each chapter is further broken up into sections which can be navigated to via the menu on the left.  Each chapter and section has source code attributed to it which can be found within the [github repo](https://github.com/Chukobyte/learn-engine-dev).  Code will need to be shared between each project folder and a game library will be created in `include/re`.  Typically, code that is created within a chapter is moved into the game library once it's implementation is completed within the sections.
 
 ## Tech Stack
 
