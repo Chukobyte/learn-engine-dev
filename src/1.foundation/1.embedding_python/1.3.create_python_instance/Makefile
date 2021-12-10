@@ -53,3 +53,7 @@ run:
 
 format:
 	astyle -n --style=google --recursive src/*.cpp src/*.hpp src/*.h
+
+# Adds debug symbols for debugger
+debug-build: C_FLAGS +=  -g
+debug-build: build

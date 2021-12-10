@@ -15,7 +15,7 @@ endif
 
 CC := gcc # C Compiler
 CXX := g++ # C++ compiler
-INCLUDE_DIR := ../../../include
+INCLUDE_DIR := ../../../../include
 GAME_LIB_DIR := $(INCLUDE_DIR)/re
 I_FLAGS := -I"${INCLUDE_DIR}" -I"${PYTHON_INCLUDE}"
 LIBRARIES := -L"${PYTHON_LIBS}"
@@ -55,3 +55,7 @@ run:
 
 format:
 	astyle -n --style=google --recursive src/*.cpp $(GAME_LIB_DIR)/*.cpp $(GAME_LIB_DIR)/*.h $(GAME_LIB_DIR)/*.hpp
+
+# Adds debug symbols for debugger
+debug-build: C_FLAGS +=  -g
+debug-build: build

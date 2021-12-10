@@ -25,7 +25,7 @@ class GameEngine {
     RenderContext *renderContext = nullptr;
     AssetManager *assetManager = nullptr;
     FPSCounter *fpsCounter = nullptr;
-    Renderer2D renderer2D;
+    Renderer2D* renderer2D = nullptr;
     Logger *logger = nullptr;
     InputManager *inputManager = nullptr;
 

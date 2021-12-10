@@ -8,6 +8,7 @@ GameEngine::GameEngine() :
     renderContext(RenderContext::GetInstance()),
     assetManager(AssetManager::GetInstance()),
     fpsCounter(FPSCounter::GetInstance()),
+    renderer2D(Renderer2D::GetInstance()),
     logger(Logger::GetInstance()),
     inputManager(InputManager::GetInstance()) {
     Initialize();
@@ -75,7 +76,7 @@ void GameEngine::InitializeRendering() {
     }
 
     renderContext->InitializeFont();
-    renderer2D.Initialize();
+    renderer2D->Initialize();
 
     // Temp Load Assets
     assetManager->LoadTexture("assets/images/melissa_walk_animation.png", "assets/images/melissa_walk_animation.png");
@@ -149,17 +150,17 @@ void GameEngine::Render() {
     static Texture *mellisaWalkTexture = assetManager->GetTexture("assets/images/melissa_walk_animation.png");
     static Rect2 drawSourceRect = Rect2(0, 0, 32, 32);
     static Rect2 drawDestinationRect = Rect2(windowCenter.x, windowCenter.y,32,32);
-    renderer2D.SubmitSpriteBatchItem(mellisaWalkTexture, drawSourceRect, drawDestinationRect, 0);
+    renderer2D->SubmitSpriteBatchItem(mellisaWalkTexture, drawSourceRect, drawDestinationRect, 0);
 
     // Render Text
     static Font *textFont = assetManager->GetFont("assets/fonts/verdana.ttf");
     static const std::string &text = "Hello World!";
     static Vector2 fontPosition = Vector2(windowCenter.x - 35.0f, windowCenter.y - 20.0f);
     static Color fontColor = Color(1.0f, 1.0f, 1.0f);
-    renderer2D.SubmitFontBatchItem(textFont, text, fontPosition.x, fontPosition.y, 0, 1.0f, fontColor);
+    renderer2D->SubmitFontBatchItem(textFont, text, fontPosition.x, fontPosition.y, 0, 1.0f, fontColor);
 
     // Flush
-    renderer2D.FlushBatches();
+    renderer2D->FlushBatches();
 
     SDL_GL_SwapWindow(renderContext->window);
 }
