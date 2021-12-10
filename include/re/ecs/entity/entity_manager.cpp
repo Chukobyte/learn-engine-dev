@@ -2,8 +2,6 @@
 
 #include "../../utils/helper.h"
 
-#include<ctype.h>
-
 EntityManager* EntityManager::GetInstance() {
     static EntityManager* instance = new EntityManager();
     return instance;

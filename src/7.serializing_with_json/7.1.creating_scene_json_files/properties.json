@@ -49,6 +49,18 @@
       "values": [
         "mb_left"
       ]
+    },
+    {
+      "name": "move_left",
+      "values": [
+        "left"
+      ]
+    },
+    {
+      "name": "move_right",
+      "values": [
+        "right"
+      ]
     }
   ]
 }

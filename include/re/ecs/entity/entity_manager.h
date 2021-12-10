@@ -27,8 +27,6 @@ class EntityManager {
     unsigned int entityIdCounter = 1;  // Starts at 1 as 0 is invalid
     unsigned int livingEntityCounter = 0;
     std::queue<Entity> availableEntityIds;
-    // TODO: Figure out if I want to store names here and use Node Component
-    std::unordered_map<std::string, Entity> nameToEntityMap;
     std::array<ComponentSignature, MAX_ENTITIES> signatures;
     std::array<ComponentSignature, MAX_ENTITIES> enabledSignatures;
     std::vector<Entity> entitiesToDelete;

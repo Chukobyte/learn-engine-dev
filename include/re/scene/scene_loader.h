@@ -53,10 +53,14 @@ class SceneNodeJsonParser {
         return name;
     }
 
-    SceneComponent GenerateSceneComponent(const std::string& nodeName, const SceneNode& parentSceneNode, std::vector<std::string> tags = {}) {
+    SceneComponent GenerateSceneComponent(const std::string& nodeName, const SceneNode& parentSceneNode, const nlohmann::json& nodeTagsJsonArray) {
+        std::vector<std::string> nodeTags = {};
+        for (auto& nodeTag : nodeTagsJsonArray) {
+            nodeTags.emplace_back(nodeTag);
+        }
         return SceneComponent{
             GetUniqueSceneNodeName(nodeName, parentSceneNode),
-            tags
+            nodeTags
         };
     }
 
@@ -177,11 +181,7 @@ class SceneNodeJsonParser {
         const std::string &nodeType = JsonHelper::Get<std::string>(nodeJson, "type");
         nlohmann::json nodeTagsJsonArray = JsonHelper::Get<nlohmann::json>(nodeJson, "tags");
         const std::string &nodeExternalSceneSource = JsonHelper::Get<std::string>(nodeJson, "external_scene_source");
-        std::vector<std::string> nodeTags = {};
-        for (auto& nodeTag : nodeTagsJsonArray) {
-            nodeTags.emplace_back(nodeTag);
-        }
-        componentManager->AddComponent(sceneNode.entity, GenerateSceneComponent(nodeName, parentSceneNode, nodeTags));
+        componentManager->AddComponent(sceneNode.entity, GenerateSceneComponent(nodeName, parentSceneNode, nodeTagsJsonArray));
 
         // Rest of components
         nlohmann::json nodeComponentJsonArray = JsonHelper::Get<nlohmann::json>(nodeJson, "components");
