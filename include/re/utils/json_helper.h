@@ -2,19 +2,20 @@
 #define JSON_HELPER_H
 
 #include <iostream>
-#include <fstream>
+#include <json/json.hpp>
 #include <cassert>
 
-#include <json/json.hpp>
+#include <fstream>
 
 class JsonHelper {
-  public:
-    static bool HasKey(const nlohmann::json& json, const std::string& key) {
+public:
+    static bool HasKey(const nlohmann::json &json, const std::string &key) {
         try {
             json.at(key);
             return true;
         } catch (nlohmann::json::type_error &te) {
         } catch (nlohmann::json::out_of_range &oor) {
+        } catch (std::exception &e) {
         }
         return false;
     }
@@ -39,7 +40,7 @@ class JsonHelper {
 };
 
 class JsonFileHelper {
-  public:
+public:
     static nlohmann::json LoadJsonFile(const std::string& filePath) {
         std::ifstream i(filePath);
         nlohmann::json json;

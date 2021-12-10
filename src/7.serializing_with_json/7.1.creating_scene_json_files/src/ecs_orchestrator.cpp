@@ -86,7 +86,7 @@ bool ECSOrchestrator::IsNodeInScene(Entity entity) const {
 }
 
 Scene* ECSOrchestrator::GetCurrentScene() {
-    sceneManager->GetCurrentScene();
+    return sceneManager->GetCurrentScene();
 }
 
 void ECSOrchestrator::UpdateSystems(float deltaTime) {

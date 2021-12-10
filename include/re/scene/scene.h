@@ -2,6 +2,7 @@
 #define SCENE_H
 
 #include <cassert>
+#include "unordered_map"
 
 #include "../ecs/entity/entity.h"
 #include "../ecs/component/components/scene_component.h"
