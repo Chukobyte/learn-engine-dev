@@ -9,20 +9,9 @@
 
 class JsonHelper {
 public:
-    static bool HasKey(const nlohmann::json &json, const std::string &key) {
-        try {
-            json.at(key);
-            return true;
-        } catch (nlohmann::json::type_error &te) {
-        } catch (nlohmann::json::out_of_range &oor) {
-        } catch (std::exception &e) {
-        }
-        return false;
-    }
-
     template<typename T>
     static T Get(const nlohmann::json& json, const std::string& key) {
-        if (HasKey(json, key)) {
+        if (json.contains(key)) {
             return json.at(key);
         }
         std::cerr << "Key '" << key << "' doesn't exist!" << std::endl;
@@ -32,7 +21,7 @@ public:
 
     template<typename T>
     static T GetDefault(const nlohmann::json& json, const std::string& key, T defaultValue) {
-        if (HasKey(json, key)) {
+        if (json.contains(key)) {
             return json.at(key);
         }
         return defaultValue;

@@ -84,9 +84,8 @@ void SceneNodeJsonParser::ParseTransform2DComponent(SceneNode &sceneNode, const 
         .ignoreCamera = nodeIgnoreCamera
     });
     auto signature = entityManager->GetEnabledSignature(sceneNode.entity);
-    //        bool isTransformComponentEnabled = JsonHelper::GetDefault<bool>(nodeComponentObjectJson, "enabled", true);
-    bool isTransformComponentEnabled = true;
-    signature.set(componentManager->GetComponentType<Transform2DComponent>(), isTransformComponentEnabled);
+    bool isTransformComponentEnabled = JsonHelper::GetDefault<bool>(nodeComponentObjectJson, "enabled", true);
+    signature.set(componentManager->GetComponentType<Transform2DComponent>(), true);
     entityManager->SetSignature(sceneNode.entity, signature);
     if (isTransformComponentEnabled) {
         entityManager->SetEnabledSignature(sceneNode.entity, signature);
@@ -121,8 +120,7 @@ void SceneNodeJsonParser::ParseSpriteComponent(SceneNode &sceneNode, const nlohm
     signature.set(componentManager->GetComponentType<SpriteComponent>(), true);
     entityManager->SetSignature(sceneNode.entity, signature);
     const bool isSpriteEnabled = !nodeTexturePath.empty();
-    //        bool isSpriteComponentEnabled = JsonHelper::GetDefault<bool>(nodeComponentObjectJson, "enabled", true);
-    bool isSpriteComponentEnabled = true;
+    bool isSpriteComponentEnabled = JsonHelper::GetDefault<bool>(nodeComponentObjectJson, "enabled", true);
     if (isSpriteEnabled && isSpriteComponentEnabled) {
         entityManager->SetEnabledSignature(sceneNode.entity, signature);
     }
@@ -148,10 +146,7 @@ void SceneNodeJsonParser::ParseTextLabelComponent(SceneNode& sceneNode, const nl
     signature.set(componentManager->GetComponentType<TextLabelComponent>(), true);
     entityManager->SetSignature(sceneNode.entity, signature);
     const bool isTextLabelEnabled = !nodeFontUID.empty();
-//    std::cout << "Hey" << std::endl;
-//    bool isTextLabelComponentEnabled = JsonHelper::GetDefault<bool>(nodeComponentObjectJson, "enabled", true);
-    bool isTextLabelComponentEnabled = true;
-//    std::cout << "isTextLabelComponentEnabled = " << isTextLabelComponentEnabled << std::endl;
+    bool isTextLabelComponentEnabled = JsonHelper::GetDefault<bool>(nodeComponentObjectJson, "enabled", true);
     if (isTextLabelEnabled && isTextLabelComponentEnabled) {
         entityManager->SetEnabledSignature(sceneNode.entity, signature);
     }
