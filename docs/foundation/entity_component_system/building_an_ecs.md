@@ -18,4 +18,4 @@ Entities will be placed in a scene.
 
 ## Source Code
 
-Source code for this section can be found [here](https://github.com/Chukobyte/learn-engine-dev/tree/main/src/6.entity_component_system/6.0.entity_component_system).
+Source code for this section can be found [here](https://github.com/Chukobyte/learn-engine-dev/tree/main/src/1.foundation/6.entity_component_system/6.0.entity_component_system).

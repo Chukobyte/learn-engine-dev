@@ -127,7 +127,7 @@ int main(int argv, char** args) {
 }
 ```
 
-This is similar to the code snippet we've created in the previous section, but instead of using `PyObject` we are using `CPyObject`.  `Py_BuildValue` builds a tuple of arguements that we can then pass to a python function.  With the argument defined, we can now call `PyObject_CallObject` with an argument.  If you would like to double check your code you can view the source code for this section [here](https://github.com/Chukobyte/learn-engine-dev/tree/main/src/1.embedding_python/1.2.using_pyhelper).
+This is similar to the code snippet we've created in the previous section, but instead of using `PyObject` we are using `CPyObject`.  `Py_BuildValue` builds a tuple of arguements that we can then pass to a python function.  With the argument defined, we can now call `PyObject_CallObject` with an argument.  If you would like to double check your code you can view the source code for this section [here](https://github.com/Chukobyte/learn-engine-dev/tree/main/src/1.foundation/1.embedding_python/1.2.using_pyhelper).
 
 ## Creating A Python Instance in C++
 

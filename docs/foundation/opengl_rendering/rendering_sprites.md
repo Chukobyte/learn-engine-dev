@@ -782,4 +782,4 @@ After executing the code, this will be rendered to the screen:
 
 ![Rendering Sprite Screenshot](https://github.com/Chukobyte/learn-engine-dev/blob/main/assets/images/screenshots/led_3_0.PNG?raw=true)
 
-The source code for this section can be found [here](https://github.com/Chukobyte/learn-engine-dev/tree/main/src/3.opengl_rendering/3.0.rendering_sprites).  Now that we have rendered a sprite it's now time to render font.
+The source code for this section can be found [here](https://github.com/Chukobyte/learn-engine-dev/tree/main/src/1.foundation/3.opengl_rendering/3.0.rendering_sprites).  Now that we have rendered a sprite it's now time to render font.

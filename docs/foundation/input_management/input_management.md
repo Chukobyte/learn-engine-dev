@@ -274,6 +274,6 @@ if (inputManager->IsActionJustPressed("play_sound")) {
 }
 ```
 
-If you run the engine now, you'll be able to exit out of the game by pressing the ESC key.  You can also trigger a sound effect to play by pressing the SPACE key.  All source code for this section can be found [here](https://github.com/Chukobyte/learn-engine-dev/tree/main/src/5.input_management/5.0.input_management).
+If you run the engine now, you'll be able to exit out of the game by pressing the ESC key.  You can also trigger a sound effect to play by pressing the SPACE key.  All source code for this section can be found [here](https://github.com/Chukobyte/learn-engine-dev/tree/main/src/1.foundation/5.input_management/5.0.input_management).
 
 Now that we have audio in place, it's time to expand further and build out our Entity Component System.

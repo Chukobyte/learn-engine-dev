@@ -100,7 +100,7 @@ Next we call `PyRun_SimpleString` to execute this python statement:
 print('hello world (from python)')
 ```
 
-Last but not least we terminate the python interpreter by calling `Py_Finalize()`.  Not too bad of a start but we can definitely do better!  You view the code by looking at the source [here](https://github.com/Chukobyte/learn-engine-dev/tree/main/src/1.embedding_python/1.0.hello_python).
+Last but not least we terminate the python interpreter by calling `Py_Finalize()`.  Not too bad of a start but we can definitely do better!  You view the code by looking at the source [here](https://github.com/Chukobyte/learn-engine-dev/tree/main/src/1.foundation/1.embedding_python/1.0.hello_python).
 
 We will want to execute scripts and python functions from ***Red Engine*** and also be able to call C++ functions from a python script.  Let's work on that next!
 
@@ -164,6 +164,6 @@ This adds the current path to the system path in order for python modules to be 
 
 Next we're getting a python string object with `PyUnicode_FromString` as we'll need that to import the python module from our script.  The folder path is `assets/scripts` and the python script is `game.py`.  After getting the module name we'll now import the module it's pointing to with `PyImport_Import`.  `Py_DECREF` is called as we'll need to decrement the reference count of python objects to delete them within python interpreter and prevent memory leaks!
 
-Now that we have imported the module we can get the reference to a function with `PyObject_GetAttrString`.  With this reference we'll call the function with `PyObject_CallObject`.  The function `play` returns an integer and we store this within `pValue`.  After that we just decrement the remaining python objects we no longer need.  The source for this section can be found [here](https://github.com/Chukobyte/learn-engine-dev/tree/main/src/1.embedding_python/1.1.calling_a_function).
+Now that we have imported the module we can get the reference to a function with `PyObject_GetAttrString`.  With this reference we'll call the function with `PyObject_CallObject`.  The function `play` returns an integer and we store this within `pValue`.  After that we just decrement the remaining python objects we no longer need.  The source for this section can be found [here](https://github.com/Chukobyte/learn-engine-dev/tree/main/src/1.foundation/1.embedding_python/1.1.calling_a_function).
 
 We're able to call a python function from c++ and receive its return value, but incrementing and decrementing the reference count will become tedious.  In the next section we will embed python further into ***Red Engine*** and create classes to generalize some of our usages of the Python API.

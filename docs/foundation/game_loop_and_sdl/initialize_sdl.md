@@ -352,4 +352,4 @@ Also in the `Initialize` function uncomment setting `GameEngineContext` running 
 engineContext->SetRunning(true);
 ```
 
-If we run ***Red Engine*** now, it should print to the terminal the fps of our game loop once per second.  All the source code for this chapter can be found [here](https://github.com/Chukobyte/learn-engine-dev/tree/main/src/2.game_loop_and_sdl/2.0.game_loop_and_sdl).  We have now finished setting up SDL2 and our game loop!  Next we'll tackle creating a renderer to draw things to the screen!
+If we run ***Red Engine*** now, it should print to the terminal the fps of our game loop once per second.  All the source code for this chapter can be found [here](https://github.com/Chukobyte/learn-engine-dev/tree/main/src/1.foundation/2.game_loop_and_sdl/2.0.game_loop_and_sdl).  We have now finished setting up SDL2 and our game loop!  Next we'll tackle creating a renderer to draw things to the screen!
