@@ -1,10 +1,10 @@
 #ifndef ECS_ORCHESTRATOR_H
 #define ECS_ORCHESTRATOR_H
 
-#include "./re/ecs/system/ec_system_manager.h"
-#include "./re/ecs/entity/entity_manager.h"
-#include "./re/ecs/component/component_manager.h"
-#include "./scene/scene_manager.h"
+#include <vector>
+
+#include "system/ec_system_manager.h"
+#include "../scene/scene_manager.h"
 
 class ECSOrchestrator {
   public:
@@ -28,7 +28,8 @@ class ECSOrchestrator {
         auto signature = entityManager->GetEnabledSignature(entity);
         signature.set(componentManager->GetComponentType<T>(), true);
         entityManager->SetSignature(entity, signature);
-        RefreshEntitySignature(entity);
+        entityManager->SetEnabledSignature(entity, signature);
+        RefreshEntitySignatureChanged(entity);
     }
 
     template<typename T>
@@ -39,25 +40,29 @@ class ECSOrchestrator {
     template<typename T>
     void RemoveComponent(Entity entity) {
         componentManager->RemoveComponent<T>(entity);
-        auto signature = entityManager->GetEnabledSignature(entity);
+        auto signature = entityManager->GetSignature(entity);
         signature.set(componentManager->GetComponentType<T>(), false);
         entityManager->SetSignature(entity, signature);
-        ecSystemManager->EntitySignatureChanged(entity, signature);
+
+        auto enabledSignature = entityManager->GetEnabledSignature(entity);
+        enabledSignature.set(componentManager->GetComponentType<T>(), false);
+        entityManager->SetEnabledSignature(entity, enabledSignature);
+        ecSystemManager->EntitySignatureChanged(entity, enabledSignature);
     }
 
     template<typename T>
     void EnableComponent(Entity entity) {
         auto signature = entityManager->GetEnabledSignature(entity);
         signature.set(componentManager->GetComponentType<T>(), true);
-        entityManager->SetSignature(entity, signature);
-        RefreshEntitySignature(entity);
+        entityManager->SetEnabledSignature(entity, signature);
+        ecSystemManager->EntitySignatureChanged(entity, signature);
     }
 
     template<typename T>
     void DisableComponent(Entity entity) {
         auto signature = entityManager->GetEnabledSignature(entity);
         signature.set(componentManager->GetComponentType<T>(), false);
-        entityManager->SetSignature(entity, signature);
+        entityManager->SetEnabledSignature(entity, signature);
         ecSystemManager->EntitySignatureChanged(entity, signature);
     }
 
@@ -85,8 +90,8 @@ class ECSOrchestrator {
 
     // EC System
     template<typename T>
-    T* RegisterSystem(ComponentSignature initialComponentSignature = {}) {
-        T *system = ecSystemManager->RegisterSystem<T>();
+    T* RegisterSystem(ComponentSignature initialComponentSignature = {}, ECSystemRegistration ecSystemRegistration = ECSystemRegistration::NONE) {
+        T *system = ecSystemManager->RegisterSystem<T>(ecSystemRegistration);
         SetSystemSignature<T>(initialComponentSignature);
         return system;
     }
@@ -108,24 +113,42 @@ class ECSOrchestrator {
 
     template<typename T>
     ComponentSignature GetSystemSignature() {
-        return ecSystemManager->GetEnabledSignature<T>();
+        return ecSystemManager->GetSignature<T>();
     }
 
+    // Event Hooks
+    void UpdateSystems(float deltaTime);
+    void PhysicsUpdateSystems(float deltaTime);
+    void RenderSystems();
+    void OnSceneStartSystems();
+    void OnSceneEndSystems();
+
     // Scene
-    void ChangeToEmptyScene();
+    void PrepareSceneChange(const std::string& filePath);
+    void ChangeToScene();
+    void DestroyScene();
+    bool HasSceneToCreate() const;
+    bool HasSceneToDestroy() const;
+    void RegisterLoadedSceneNodeComponents();
     void AddRootNode(Entity rootEntity);
     void AddChildNode(Entity child, Entity parent);
-    void DestroyEntity(Entity entity);
     bool IsNodeInScene(Entity entity) const;
+    void QueueDestroyEntity(Entity entity);
+    void DestroyQueuedEntities();
+    Scene* GetCurrentScene();
 
   private:
     ECSystemManager *ecSystemManager = nullptr;
     EntityManager *entityManager = nullptr;
     ComponentManager *componentManager = nullptr;
     SceneManager *sceneManager = nullptr;
+    std::string sceneToChangeFilePath;
+    bool shouldDestroySceneNextFrame = false;
+    std::vector<Entity> entitiesQueuedForDeletion;
 
     ECSOrchestrator();
-    void RefreshEntitySignature(Entity entity);
+    void RefreshEntitySignatureChanged(Entity entity);
+    void DestroyEntity(Entity entity);
 };
 
 #endif //ECS_ORCHESTRATOR_H

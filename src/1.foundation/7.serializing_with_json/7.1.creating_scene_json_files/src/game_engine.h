@@ -10,7 +10,7 @@
 #include "./re/utils/logger.h"
 #include "./re/input/input_manager.h"
 #include "./re/data/constants.h"
-#include "ecs_orchestrator.h"
+#include "./re/ecs/ecs_orchestrator.h"
 
 class GameEngine {
   public:

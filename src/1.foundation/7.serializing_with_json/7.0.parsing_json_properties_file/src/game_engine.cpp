@@ -154,7 +154,8 @@ bool GameEngine::InitializeECS() {
     ecsOrchestrator->RegisterSystem<TextRenderingECSystem>(textRenderingSignature);
 
     // Temp startup scene
-    ecsOrchestrator->ChangeToEmptyScene();
+    SceneManager* sceneManager = SceneManager::GetInstance();
+    sceneManager->ChangeToEmptyScene();
     // Temp setup entities
     const Vector2 windowCenter = Vector2(projectProperties->GetWindowWidth() / 2,
                                          projectProperties->GetWindowHeight() / 2);
