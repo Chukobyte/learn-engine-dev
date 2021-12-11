@@ -69,6 +69,10 @@ run:
 
 format:
     astyle -n --style=google --recursive src/*.cpp
+
+# Adds debug symbols for debugger
+debug-build: C_FLAGS +=  -g
+debug-build: build
 ```
 
 *Note: You can echo the full compile and linking commands to the console by removing `@` on lines 51 and 55.*

@@ -23,5 +23,4 @@ class GameEngine {
     bool InitializeSDL();
 };
 
-
 #endif //GAME_ENGINE_H

@@ -9,7 +9,8 @@ The `GameEngine` class will tie the game loop and engine systems together.
 #define GAME_ENGINE_H
 
 #include "game_engine_context.h"
-#include <game_lib/utils/logger.h>
+#include "fps_counter.h"
+#include "./re/utils/logger.h"
 
 class GameEngine {
   public:
@@ -22,10 +23,11 @@ class GameEngine {
 
   private:
     GameEngineContext *engineContext = nullptr;
+    FPSCounter *fpsCounter = nullptr;
     Logger *logger = nullptr;
 
-    void Initialize();
-    void InitializeSDL();
+    bool Initialize();
+    bool InitializeSDL();
 };
 
 #endif //GAME_ENGINE_H
@@ -37,9 +39,9 @@ class GameEngine {
 #include <SDL2/SDL.h>
 
 GameEngine::GameEngine() :
-        engineContext(GameEngineContext::GetInstance()),
-        fpsCounter(FPSCounter::GetInstance()),
-        logger(Logger::GetInstance()) {
+    engineContext(GameEngineContext::GetInstance()),
+    fpsCounter(FPSCounter::GetInstance()),
+    logger(Logger::GetInstance()) {
     Initialize();
 }
 
@@ -48,17 +50,22 @@ GameEngine::~GameEngine() {
     logger->Info("%s Engine has shut down!", engineContext->GetEngineName());
 }
 
-void GameEngine::Initialize() {
-    InitializeSDL();
+bool GameEngine::Initialize() {
+    if (!InitializeSDL()) {
+        logger->Error("Failed to initialize SDL!");
+        return false;
+    }
     logger->Info("%s Engine v%s", engineContext->GetEngineName(), engineContext->GetEngineVersion());
-//    engineContext->SetRunning(true);
+    engineContext->SetRunning(true);
+    return true;
 }
 
-void GameEngine::InitializeSDL() {
+bool GameEngine::InitializeSDL() {
     if (SDL_Init(SDL_INIT_EVERYTHING) != 0) {
         logger->Error("Error on initializing SDL\n%s", SDL_GetError());
-        return;
+        return false;
     }
+    return true;
 }
 
 void GameEngine::ProcessInput() {}
@@ -73,6 +80,8 @@ void GameEngine::Update() {
     if (timeToWait > 0 && timeToWait <= FRAME_TARGET_TIME) {
         SDL_Delay(timeToWait);
     }
+
+    fpsCounter->Update();
 
     lastFrameTime = SDL_GetTicks();
 }

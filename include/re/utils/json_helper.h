@@ -2,10 +2,10 @@
 #define JSON_HELPER_H
 
 #include <iostream>
-#include <json/json.hpp>
+#include <fstream>
 #include <cassert>
 
-#include <fstream>
+#include <json/json.hpp>
 
 class JsonHelper {
   public:

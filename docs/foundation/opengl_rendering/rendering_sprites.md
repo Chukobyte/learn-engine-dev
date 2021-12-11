@@ -698,7 +698,7 @@ GameEngine::GameEngine() :
 Implementing the private `InitializeRendering` function.
 
 ```c++
-void GameEngine::InitializeRendering() {
+bool GameEngine::InitializeRendering() {
     // OpenGL attributes
     SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
     SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);
@@ -721,12 +721,14 @@ void GameEngine::InitializeRendering() {
 
     if (!gladLoadGLLoader((GLADloadproc)SDL_GL_GetProcAddress)) {
         logger->Error("Couldn't initialize glad");
+        return false;
     }
 
     renderer2D.Initialize();
 
     // Temp Load Assets
     assetManager->LoadTexture("assets/images/melissa_walk_animation.png", "assets/images/melissa_walk_animation.png");
+    return true;
 }
 ```
 

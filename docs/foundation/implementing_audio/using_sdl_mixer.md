@@ -243,30 +243,41 @@ class AudioHelper {
 We'll need to make a few tweaks to the `GameEngine` class.
 
 ```c++
-void GameEngine::InitializeAudio() {
+bool GameEngine::InitializeAudio() {
     if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0) {
         logger->Error("SDL_mixer could not be initialized!");
-        return;
+        return false;
     }
 
     // Temp load assets
     assetManager->LoadMusic("test_music", "assets/audio/music/test_music.wav");
     assetManager->LoadSound("test_sound", "assets/audio/sound/test_sound_effect.wav");
+    return true;
 }
 ```
 
 ```c++
-void GameEngine::Initialize() {
+bool GameEngine::Initialize() {
     logger->Debug("Initializing...");
-    InitializeSDL();
-    InitializeAudio();
-    InitializeRendering();
+    if (!InitializeSDL()) {
+        logger->Error("Failed to initialize SDL!");
+        return false;
+    }
+    if (!InitializeAudio()) {
+        logger->Error("Failed to initialize audio!");
+        return false;
+    }
+    if (!InitializeRendering()) {
+        logger->Error("Failed to initialize rendering!");
+        return false;
+    }
     logger->Info("%s Engine v%s", engineContext->GetEngineName(), engineContext->GetEngineVersion());
     engineContext->SetRunning(true);
 
     // Temp play music
     AudioHelper::PlayMusic("test_music");
     AudioHelper::PlaySound("test_sound");
+    return true;
 }
 ```
 

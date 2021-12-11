@@ -235,28 +235,42 @@ GameEngine::GameEngine() :
 Adding new function `InitializeInput`.
 
 ```c++
-void GameEngine::InitializeInput() {
+bool GameEngine::InitializeInput() {
     inputManager->Initialize();
     // temp adding actions
     inputManager->AddAction("quit", "esc");
     inputManager->AddAction("play_sound", "space");
+    return true;
 }
 ```
 
 Call `InitializeInput` in `Initialize` function.
 
 ```c++
-void GameEngine::Initialize() {
+bool GameEngine::Initialize() {
     logger->Debug("Initializing...");
-    InitializeSDL();
-    InitializeAudio();
-    InitializeRendering();
-    InitializeInput();
+    if (!InitializeSDL()) {
+        logger->Error("Failed to initialize SDL!");
+        return false;
+    }
+    if (!InitializeAudio()) {
+        logger->Error("Failed to initialize audio!");
+        return false;
+    }
+    if (!InitializeRendering()) {
+        logger->Error("Failed to initialize rendering!");
+        return false;
+    }
+    if (!InitializeInput()) {
+        logger->Error("Failed to initialize input!");
+        return false;
+    }
     logger->Info("%s Engine v%s", engineContext->GetEngineName(), engineContext->GetEngineVersion());
     engineContext->SetRunning(true);
 
     // Temp play music
     AudioHelper::PlayMusic("test_music");
+    return true;
 }
 ```
 
