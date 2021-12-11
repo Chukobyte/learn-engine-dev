@@ -24,25 +24,31 @@ markdown_extensions:
 
 nav:
   - Introduction: index.md
-  - Embedding Python:
-      - Hello Python: embedding_python/hello_python.md
-      - Embedding Further: embedding_python/embedding_further.md
-      - Custom Python Module: embedding_python/custom_python_module.md
-  - Game Loop & SDL:
-      - Game Loop Introduction: game_loop_and_sdl/game_loop_introduction.md
-      - Initialize SDL: game_loop_and_sdl/initialize_sdl.md
-  - OpenGL Rendering:
-      - Asset Management: opengl_rendering/asset_management.md
-      - Rendering Sprites: opengl_rendering/rendering_sprites.md
-      - Rendering Text: opengl_rendering/rendering_text.md
-  - Implementing Audio:
-      - Using SDL_mixer: implementing_audio/using_sdl_mixer.md
-  - Input Management:
-      - Input Events: input_management/input_events.md
-      - Input Management: input_management/input_management.md
-  - Entity Component System:
-      - Building An ECS: entity_component_system/building_an_ecs.md
-  - Serializing With JSON:
-      - Parsing JSON: serializing_with_json/parsing_json.md
+  - 1. Foundation:
+    - Embedding Python:
+        - Hello Python: foundation/embedding_python/hello_python.md
+        - Embedding Further: foundation/embedding_python/embedding_further.md
+        - Custom Python Module: foundation/embedding_python/custom_python_module.md
+    - Game Loop & SDL:
+        - Game Loop Introduction: foundation/game_loop_and_sdl/game_loop_introduction.md
+        - Initialize SDL: foundation/game_loop_and_sdl/initialize_sdl.md
+    - OpenGL Rendering:
+        - Asset Management: foundation/opengl_rendering/asset_management.md
+        - Rendering Sprites: foundation/opengl_rendering/rendering_sprites.md
+        - Rendering Text: foundation/opengl_rendering/rendering_text.md
+    - Implementing Audio:
+        - Using SDL_mixer: foundation/implementing_audio/using_sdl_mixer.md
+    - Input Management:
+        - Input Events: foundation/input_management/input_events.md
+        - Input Management: foundation/input_management/input_management.md
+    - Entity Component System:
+        - Building An ECS: foundation/entity_component_system/building_an_ecs.md
+    - Serializing With JSON:
+        - Parsing JSON Properties File: foundation/serializing_with_json/parsing_json_properties_file.md
+        - Creating Scene Json Files: foundation/serializing_with_json/creating_scene_json_files.md
+  - 2. Engine API:
+      - About: engine_api/about.md
+  - 3. Games:
+      - About: games/about.md
   - Source Code: source_code/source_code.md
 

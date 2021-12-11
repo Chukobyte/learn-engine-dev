@@ -4,18 +4,19 @@
 #include <unordered_map>
 #include <string>
 
-#include <SDL2/SDL_mixer.h>
-
+#include "../audio/audio.h"
 #include "../utils/logger.h"
+#include "../utils/project_properties.h"
 #include "../rendering/texture.h"
 #include "../rendering/font.h"
 #include "../rendering/render_context.h"
+
 
 class AssetManager {
   public:
     static AssetManager* GetInstance();
     // Texture
-    void LoadTexture(const std::string &id, const std::string &filePath);
+    void LoadTexture(const std::string &id, const std::string &filePath, const std::string &wrapS, const std::string &wrapT, const std::string &filterMin, const std::string &filterMag);
     Texture* GetTexture(const std::string &id);
     bool HasTexture(const std::string &id) const;
     // Font
@@ -24,18 +25,21 @@ class AssetManager {
     bool HasFont(const std::string &fontId) const;
     // Music
     void LoadMusic(const std::string &musicId, const std::string &musicPath);
-    Mix_Music* GetMusic(const std::string &musicId);
+    Music* GetMusic(const std::string &musicId);
     bool HasMusic(const std::string &musicId) const;
     // Sound
     void LoadSound(const std::string &soundId, const std::string &soundPath);
-    Mix_Chunk* GetSound(const std::string &soundId);
+    SoundEffect* GetSound(const std::string &soundId);
     bool HasSound(const std::string &soundId) const;
+    std::unordered_map<std::string, SoundEffect*> GetAllSounds();
+    // All
+    void LoadProjectConfigurations(AssetConfigurations assetConfigurations);
 
   private:
     std::unordered_map<std::string, Texture*> textures;
     std::unordered_map<std::string, Font*> fonts;
-    std::unordered_map<std::string, Mix_Music*> music;
-    std::unordered_map<std::string, Mix_Chunk*> sounds;
+    std::unordered_map<std::string, Music*> music;
+    std::unordered_map<std::string, SoundEffect*> soundEffects;
     RenderContext *renderContext = nullptr;
     Logger *logger = nullptr;
 
