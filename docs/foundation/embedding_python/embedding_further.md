@@ -209,4 +209,4 @@ int main(int argv, char** args) {
 }
 ```
 
-There is even less code in `main` even though we're creating an instance!  The only thing to really point out is `PyObject_CallMethod` which calls a function on an instance of a class.  Source code for this section can be viewed [here](https://github.com/Chukobyte/learn-engine-dev/tree/main/src/1.embedding_python/1.3.create_python_instance).  Now that we have a solid grasp on how to create python instances and call functions on them it's time to create our own modules in C++ in order to call the ***Red Engine*** api from within python scripts.
+There is even less code in `main` even though we're creating an instance!  The only thing to really point out is `PyObject_CallMethod` which calls a function on an instance of a class.  Source code for this section can be viewed [here](https://github.com/Chukobyte/learn-engine-dev/tree/main/src/1.foundation/1.embedding_python/1.3.create_python_instance).  Now that we have a solid grasp on how to create python instances and call functions on them it's time to create our own modules in C++ in order to call the ***Red Engine*** api from within python scripts.
