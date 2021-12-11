@@ -29,11 +29,11 @@ class GameEngine {
     Logger *logger = nullptr;
     InputManager *inputManager = nullptr;
 
-    void Initialize();
-    void InitializeSDL();
-    void InitializeAudio();
-    void InitializeRendering();
-    void InitializeInput();
+    bool Initialize();
+    bool InitializeSDL();
+    bool InitializeAudio();
+    bool InitializeRendering();
+    bool InitializeInput();
 };
 
 #endif //GAME_ENGINE_H

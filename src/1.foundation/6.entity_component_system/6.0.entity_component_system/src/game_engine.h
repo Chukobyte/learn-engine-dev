@@ -31,12 +31,12 @@ class GameEngine {
     InputManager *inputManager = nullptr;
     ECSOrchestrator *ecsOrchestrator = nullptr;
 
-    void Initialize();
-    void InitializeSDL();
-    void InitializeAudio();
-    void InitializeRendering();
-    void InitializeInput();
-    void InitializeECS();
+    bool Initialize();
+    bool InitializeSDL();
+    bool InitializeAudio();
+    bool InitializeRendering();
+    bool InitializeInput();
+    bool InitializeECS();
 };
 
 #endif //GAME_ENGINE_H

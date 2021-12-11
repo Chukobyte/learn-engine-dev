@@ -14,17 +14,22 @@ GameEngine::~GameEngine() {
     logger->Info("%s Engine has shut down!", engineContext->GetEngineName());
 }
 
-void GameEngine::Initialize() {
-    InitializeSDL();
+bool GameEngine::Initialize() {
+    if (!InitializeSDL()) {
+        logger->Error("Failed to initialize SDL!");
+        return false;
+    }
     logger->Info("%s Engine v%s", engineContext->GetEngineName(), engineContext->GetEngineVersion());
     engineContext->SetRunning(true);
+    return true;
 }
 
-void GameEngine::InitializeSDL() {
+bool GameEngine::InitializeSDL() {
     if (SDL_Init(SDL_INIT_EVERYTHING) != 0) {
         logger->Error("Error on initializing SDL\n%s", SDL_GetError());
-        return;
+        return false;
     }
+    return true;
 }
 
 void GameEngine::ProcessInput() {}

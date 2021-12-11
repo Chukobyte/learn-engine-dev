@@ -19,22 +19,30 @@ GameEngine::~GameEngine() {
     logger->Info("%s Engine has shut down!", engineContext->GetEngineName());
 }
 
-void GameEngine::Initialize() {
+bool GameEngine::Initialize() {
     logger->Debug("Initializing...");
-    InitializeSDL();
-    InitializeRendering();
+    if (!InitializeSDL()) {
+        logger->Error("Failed to initialize SDL!");
+        return false;
+    }
+    if (!InitializeRendering()) {
+        logger->Error("Failed to initialize rendering!");
+        return false;
+    }
     logger->Info("%s Engine v%s", engineContext->GetEngineName(), engineContext->GetEngineVersion());
     engineContext->SetRunning(true);
+    return true;
 }
 
-void GameEngine::InitializeSDL() {
+bool GameEngine::InitializeSDL() {
     if (SDL_Init(SDL_INIT_EVERYTHING) != 0) {
         logger->Error("Error on initializing SDL\n%s", SDL_GetError());
-        return;
+        return false;
     }
+    return true;
 }
 
-void GameEngine::InitializeRendering() {
+bool GameEngine::InitializeRendering() {
     // OpenGL attributes
     SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
     SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);
@@ -57,12 +65,14 @@ void GameEngine::InitializeRendering() {
 
     if (!gladLoadGLLoader((GLADloadproc)SDL_GL_GetProcAddress)) {
         logger->Error("Couldn't initialize glad");
+        return false;
     }
 
     renderer2D.Initialize();
 
     // Temp Load Assets
     assetManager->LoadTexture("assets/images/melissa_walk_animation.png", "assets/images/melissa_walk_animation.png");
+    return true;
 }
 
 void GameEngine::ProcessInput() {

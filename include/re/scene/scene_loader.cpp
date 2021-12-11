@@ -65,11 +65,11 @@ void SceneNodeJsonParser::ParseTransform2DComponent(SceneNode &sceneNode, const 
     nlohmann::json nodeTransform2DPosition = JsonHelper::Get<nlohmann::json>(nodeComponentObjectJson, "position");
     nlohmann::json nodeTransform2DScale = JsonHelper::Get<nlohmann::json>(nodeComponentObjectJson, "scale");
     const Vector2 nodePosition = Vector2(
-            JsonHelper::Get<float>(nodeTransform2DPosition, "x"),
-            JsonHelper::Get<float>(nodeTransform2DPosition, "y"));
+                                     JsonHelper::Get<float>(nodeTransform2DPosition, "x"),
+                                     JsonHelper::Get<float>(nodeTransform2DPosition, "y"));
     const Vector2 nodeScale = Vector2(
-            JsonHelper::Get<float>(nodeTransform2DScale, "x"),
-            JsonHelper::Get<float>(nodeTransform2DScale, "y"));
+                                  JsonHelper::Get<float>(nodeTransform2DScale, "x"),
+                                  JsonHelper::Get<float>(nodeTransform2DScale, "y"));
     const float nodeRotation = JsonHelper::Get<float>(nodeComponentObjectJson, "rotation");
     const int nodeZIndex = JsonHelper::Get<int>(nodeComponentObjectJson, "z_index");
     const bool nodeZIndexIsRelativeToParent = JsonHelper::Get<bool>(nodeComponentObjectJson, "z_index_relative_to_parent");
@@ -103,11 +103,11 @@ void SceneNodeJsonParser::ParseSpriteComponent(SceneNode &sceneNode, const nlohm
     const bool nodeFlipY = JsonHelper::Get<bool>(nodeComponentObjectJson, "flip_x");
     nlohmann::json nodeModulateJson = JsonHelper::Get<nlohmann::json>(nodeComponentObjectJson, "modulate");
     const Color nodeModulate = Color::NormalizedColor(
-            JsonHelper::Get<int>(nodeModulateJson, "red"),
-            JsonHelper::Get<int>(nodeModulateJson, "green"),
-            JsonHelper::Get<int>(nodeModulateJson, "blue"),
-            JsonHelper::Get<int>(nodeModulateJson, "alpha")
-            );
+                                   JsonHelper::Get<int>(nodeModulateJson, "red"),
+                                   JsonHelper::Get<int>(nodeModulateJson, "green"),
+                                   JsonHelper::Get<int>(nodeModulateJson, "blue"),
+                                   JsonHelper::Get<int>(nodeModulateJson, "alpha")
+                               );
 
     componentManager->AddComponent(sceneNode.entity, SpriteComponent{
         .texture = nodeTexturePath.empty() ? nullptr : assetManager->GetTexture(nodeTexturePath),
@@ -131,11 +131,11 @@ void SceneNodeJsonParser::ParseTextLabelComponent(SceneNode& sceneNode, const nl
     const std::string &nodeFontUID = JsonHelper::Get<std::string>(nodeComponentObjectJson, "font_uid");
     nlohmann::json nodeColorJson = JsonHelper::Get<nlohmann::json>(nodeComponentObjectJson, "color");
     const Color nodeColor = Color::NormalizedColor(
-            JsonHelper::Get<int>(nodeColorJson, "red"),
-            JsonHelper::Get<int>(nodeColorJson, "green"),
-            JsonHelper::Get<int>(nodeColorJson, "blue"),
-            JsonHelper::Get<int>(nodeColorJson, "alpha")
-            );
+                                JsonHelper::Get<int>(nodeColorJson, "red"),
+                                JsonHelper::Get<int>(nodeColorJson, "green"),
+                                JsonHelper::Get<int>(nodeColorJson, "blue"),
+                                JsonHelper::Get<int>(nodeColorJson, "alpha")
+                            );
 
     componentManager->AddComponent(sceneNode.entity, TextLabelComponent{
         .text = nodeText,

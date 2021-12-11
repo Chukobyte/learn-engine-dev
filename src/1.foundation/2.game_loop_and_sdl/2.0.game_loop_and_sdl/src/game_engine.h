@@ -19,8 +19,8 @@ class GameEngine {
     FPSCounter *fpsCounter = nullptr;
     Logger *logger = nullptr;
 
-    void Initialize();
-    void InitializeSDL();
+    bool Initialize();
+    bool InitializeSDL();
 };
 
 

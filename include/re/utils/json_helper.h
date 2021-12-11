@@ -8,7 +8,7 @@
 #include <fstream>
 
 class JsonHelper {
-public:
+  public:
     template<typename T>
     static T Get(const nlohmann::json& json, const std::string& key) {
         if (json.contains(key)) {
@@ -29,7 +29,7 @@ public:
 };
 
 class JsonFileHelper {
-public:
+  public:
     static nlohmann::json LoadJsonFile(const std::string& filePath) {
         std::ifstream i(filePath);
         nlohmann::json json;

@@ -27,9 +27,9 @@ class GameEngine {
     Renderer2D renderer2D;
     Logger *logger = nullptr;
 
-    void Initialize();
-    void InitializeSDL();
-    void InitializeRendering();
+    bool Initialize();
+    bool InitializeSDL();
+    bool InitializeRendering();
 };
 
 

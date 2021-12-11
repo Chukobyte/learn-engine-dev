@@ -13,7 +13,7 @@
 #include "../utils/json_helper.h"
 
 class SceneNodeJsonParser {
-private:
+  private:
     EntityManager *entityManager = nullptr;
     ComponentManager *componentManager = nullptr;
     AssetManager *assetManager = nullptr;
@@ -26,17 +26,17 @@ private:
     void ParseSpriteComponent(SceneNode &sceneNode, const nlohmann::json& nodeComponentObjectJson);
     void ParseTextLabelComponent(SceneNode& sceneNode, const nlohmann::json& nodeComponentObjectJson);
 
-public:
+  public:
     SceneNodeJsonParser() :
-    entityManager(EntityManager::GetInstance()),
-    componentManager(ComponentManager::GetInstance()),
-    assetManager(AssetManager::GetInstance()) {}
+        entityManager(EntityManager::GetInstance()),
+        componentManager(ComponentManager::GetInstance()),
+        assetManager(AssetManager::GetInstance()) {}
 
     SceneNode ParseSceneJson(Scene* scene, const nlohmann::json& nodeJson, bool isRoot, const SceneNode& parentSceneNode = {});
 };
 
 class SceneLoader {
-public:
+  public:
     static Scene* LoadSceneFile(const std::string& filePath);
 };
 

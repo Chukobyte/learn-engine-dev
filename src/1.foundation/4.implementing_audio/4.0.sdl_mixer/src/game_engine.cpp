@@ -18,38 +18,50 @@ GameEngine::~GameEngine() {
     logger->Info("%s Engine has shut down!", engineContext->GetEngineName());
 }
 
-void GameEngine::Initialize() {
+bool GameEngine::Initialize() {
     logger->Debug("Initializing...");
-    InitializeSDL();
-    InitializeAudio();
-    InitializeRendering();
+    if (!InitializeSDL()) {
+        logger->Error("Failed to initialize SDL!");
+        return false;
+    }
+    if (!InitializeAudio()) {
+        logger->Error("Failed to initialize audio!");
+        return false;
+    }
+    if (!InitializeRendering()) {
+        logger->Error("Failed to initialize rendering!");
+        return false;
+    }
     logger->Info("%s Engine v%s", engineContext->GetEngineName(), engineContext->GetEngineVersion());
     engineContext->SetRunning(true);
 
     // Temp play music
     AudioHelper::PlayMusic("test_music");
     AudioHelper::PlaySound("test_sound");
+    return true;
 }
 
-void GameEngine::InitializeSDL() {
+bool GameEngine::InitializeSDL() {
     if (SDL_Init(SDL_INIT_EVERYTHING) != 0) {
         logger->Error("Error on initializing SDL\n%s", SDL_GetError());
-        return;
+        return false;
     }
+    return true;
 }
 
-void GameEngine::InitializeAudio() {
+bool GameEngine::InitializeAudio() {
     if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0) {
         logger->Error("SDL_mixer could not be initialized!");
-        return;
+        return false;
     }
 
     // Temp load assets
     assetManager->LoadMusic("test_music", "assets/audio/music/test_music.wav");
     assetManager->LoadSound("test_sound", "assets/audio/sound/test_sound_effect.wav");
+    return true;
 }
 
-void GameEngine::InitializeRendering() {
+bool GameEngine::InitializeRendering() {
     // OpenGL attributes
     SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
     SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);
@@ -72,6 +84,7 @@ void GameEngine::InitializeRendering() {
 
     if (!gladLoadGLLoader((GLADloadproc)SDL_GL_GetProcAddress)) {
         logger->Error("Couldn't initialize glad");
+        return false;
     }
 
     renderContext->InitializeFont();
@@ -80,6 +93,7 @@ void GameEngine::InitializeRendering() {
     // Temp Load Assets
     assetManager->LoadTexture("assets/images/melissa_walk_animation.png", "assets/images/melissa_walk_animation.png");
     assetManager->LoadFont("assets/fonts/verdana.ttf", "assets/fonts/verdana.ttf", 20);
+    return true;
 }
 
 void GameEngine::ProcessInput() {

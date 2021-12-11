@@ -27,10 +27,10 @@ class GameEngine {
     Renderer2D* renderer2D = nullptr;
     Logger *logger = nullptr;
 
-    void Initialize();
-    void InitializeSDL();
-    void InitializeAudio();
-    void InitializeRendering();
+    bool Initialize();
+    bool InitializeSDL();
+    bool InitializeAudio();
+    bool InitializeRendering();
 };
 
 #endif //GAME_ENGINE_H
