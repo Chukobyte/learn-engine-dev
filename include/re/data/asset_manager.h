@@ -6,7 +6,7 @@
 
 #include "../audio/audio.h"
 #include "../utils/logger.h"
-#include "../utils/project_properties.h"
+#include "re/project_properties.h"
 #include "../rendering/texture.h"
 #include "../rendering/font.h"
 #include "../rendering/render_context.h"

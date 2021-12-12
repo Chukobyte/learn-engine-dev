@@ -1,9 +1,9 @@
 #ifndef GAME_ENGINE_H
 #define GAME_ENGINE_H
 
-#include "game_engine_context.h"
-#include "fps_counter.h"
+#include "./re/game_engine_context.h"
 #include "./re/utils/logger.h"
+#include "fps_counter.h"
 
 class GameEngine {
   public:

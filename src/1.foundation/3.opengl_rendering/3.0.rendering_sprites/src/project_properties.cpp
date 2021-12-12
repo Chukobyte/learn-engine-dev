@@ -1,5 +1,5 @@
 #include "project_properties.h"
-#include "../../../../../include/re/utils/project_properties.h"
+#include "../../../../../include/re/project_properties.h"
 
 
 ProjectProperties* ProjectProperties::GetInstance() {

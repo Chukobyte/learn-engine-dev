@@ -1,13 +1,13 @@
 #ifndef GAME_ENGINE_H
 #define GAME_ENGINE_H
 
-#include "project_properties.h"
-#include "game_engine_context.h"
+#include "./re/game_engine_context.h"
+#include "./re/utils/fps_counter.h"
+#include "./re/project_properties.h"
+#include "./re/utils/logger.h"
 #include "render_context.h"
 #include "asset_manager.h"
 #include "renderer_2d.h"
-#include "./re/utils/fps_counter.h"
-#include "./re/utils/logger.h"
 
 class GameEngine {
   public:

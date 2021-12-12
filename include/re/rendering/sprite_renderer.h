@@ -8,7 +8,7 @@
 #include "color.h"
 #include "../math/math.h"
 
-#include "../utils/project_properties.h"
+#include "re/project_properties.h"
 
 static const std::string &OPENGL_SHADER_SOURCE_VERTEX_SPRITE =
     "#version 330 core\n"

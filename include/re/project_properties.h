@@ -4,8 +4,8 @@
 #include <string>
 #include <vector>
 
-#include "../rendering/color.h"
-#include "../utils/json_helper.h"
+#include "rendering/color.h"
+#include "utils/json_helper.h"
 
 struct TextureConfiguration {
     std::string filePath;

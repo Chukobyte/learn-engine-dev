@@ -21,7 +21,7 @@ I_FLAGS := -I"$(INCLUDE_DIR)" -I"${SDL2_INCLUDE}" -I"${PYTHON_INCLUDE}"
 LIBRARIES := -L"${SDL2_LIBS}" -L"${PYTHON_LIBS}"
 CPP_FLAGS := -w -Wfatal-errors -std=c++14
 
-SRC = $(wildcard src/*.cpp  $(GAME_LIB_DIR)/python/*.cpp $(GAME_LIB_DIR)/utils/logger.cpp $(GAME_LIB_DIR)/utils/timer.cpp)
+SRC = $(wildcard src/*.cpp $(GAME_LIB_DIR)/game_engine_context.cpp $(GAME_LIB_DIR)/python/*.cpp $(GAME_LIB_DIR)/utils/logger.cpp $(GAME_LIB_DIR)/utils/timer.cpp)
 
 OBJ = $(SRC:.cpp=.o)
 
