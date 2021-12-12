@@ -132,12 +132,12 @@ bool GameEngine::InitializeECS() {
     ComponentSignature spriteRenderingSignature;
     spriteRenderingSignature.set(ecsOrchestrator->GetComponentType<Transform2DComponent>(), true);
     spriteRenderingSignature.set(ecsOrchestrator->GetComponentType<SpriteComponent>(), true);
-    ecsOrchestrator->RegisterSystem<SpriteRenderingECSystem>(spriteRenderingSignature);
+    ecsOrchestrator->RegisterSystem<SpriteRenderingECSystem>(spriteRenderingSignature, ECSystemRegistration::RENDER);
 
     ComponentSignature textRenderingSignature;
     textRenderingSignature.set(ecsOrchestrator->GetComponentType<Transform2DComponent>(), true);
     textRenderingSignature.set(ecsOrchestrator->GetComponentType<TextLabelComponent>(), true);
-    ecsOrchestrator->RegisterSystem<TextRenderingECSystem>(textRenderingSignature);
+    ecsOrchestrator->RegisterSystem<TextRenderingECSystem>(textRenderingSignature, ECSystemRegistration::RENDER);
 
     // Temp scene start up
     SceneManager* sceneManager = SceneManager::GetInstance();
@@ -234,15 +234,7 @@ void GameEngine::Render() {
                  projectProperties->backgroundClearColor.a);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 
-    static const Vector2 windowCenter = Vector2(projectProperties->GetWindowWidth() / 2,
-                                        projectProperties->GetWindowHeight() / 2);
-
-    // Render Sprites
-    static SpriteRenderingECSystem *spriteRenderingSystem = ecsOrchestrator->GetSystem<SpriteRenderingECSystem>();
-    spriteRenderingSystem->Render();
-    // Render Text
-    static TextRenderingECSystem *textRenderingEcSystem = ecsOrchestrator->GetSystem<TextRenderingECSystem>();
-    textRenderingEcSystem->Render();
+    ecsOrchestrator->RenderSystems();
 
     // Flush
     renderer2D->FlushBatches();

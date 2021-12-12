@@ -25,6 +25,19 @@ A work in progress tutorial series for developing a cross platform game engine f
 | clean  | Deletes the executable and .o files.         |
 | format | Will format the source code via astyle.      |
 
+There is also a top level Makefile that can be used to run make targets for each section's source.  To run, define a `SECTION` parameter when executing make with the following syntax: `SECTION=[PART].[CHAPTER].[SECTION]`.
+
+#### Example
+
+```shell
+# Build Chapter 1 Section 0 (Hello Python)
+make build SECTION=1.1.0
+# Run Chapter 1 Section 1 (Hello Python)
+make run SECTION=1.1.0
+# Format Chapter 5 Section 1 (Input Management)
+make format SECTION=1.5.0
+```
+
 #### Environment Variables
 
 The makefiles for each section used the following environment variables for building:

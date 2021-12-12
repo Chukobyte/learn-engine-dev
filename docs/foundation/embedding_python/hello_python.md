@@ -65,10 +65,10 @@ else
 endif
 
 run:
-    ./$(BUILD_OBJECT)
+    @./$(BUILD_OBJECT)
 
 format:
-    astyle -n --style=google --recursive src/*.cpp
+    @astyle -n --style=google --recursive src/*.cpp
 
 # Adds debug symbols for debugger
 debug-build: C_FLAGS +=  -g
