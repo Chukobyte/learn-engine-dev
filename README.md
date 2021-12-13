@@ -4,13 +4,13 @@ A work in progress tutorial series for developing a cross platform game engine f
 
 ### Chapters
 
-- [1.0 Embedding Python](https://chukobyte.github.io/learn-engine-dev/foundation/embedding_python/hello_python/)
-- [2.0 Game Loop & SDL](https://chukobyte.github.io/learn-engine-dev/foundation/game_loop_and_sdl/game_loop_introduction/)
-- [3.0 OpenGL Rendering](https://chukobyte.github.io/learn-engine-dev/foundation/opengl_rendering/asset_management/)
-- [4.0 Implementing Audio](https://chukobyte.github.io/learn-engine-dev/foundation/implementing_audio/using_sdl_mixer/)
-- [5.0 Input Management](https://chukobyte.github.io/learn-engine-dev/foundation/input_management/input_events/)
-- [6.0 Entity Component System](https://chukobyte.github.io/learn-engine-dev/foundation/entity_component_system/building_an_ecs/)
-- [7.0 Serializing With JSON](https://chukobyte.github.io/learn-engine-dev/foundation/serializing_with_json/creating_scene_json_files/)
+- [1.0 Embedding Python](https://chukobyte.github.io/learn-engine-dev/1.foundation/1.embedding_python/hello_python/)
+- [2.0 Game Loop & SDL](https://chukobyte.github.io/learn-engine-dev/1.foundation/2.game_loop_and_sdl/game_loop_introduction/)
+- [3.0 OpenGL Rendering](https://chukobyte.github.io/learn-engine-dev/1.foundation/3.opengl_rendering/asset_management/)
+- [4.0 Implementing Audio](https://chukobyte.github.io/learn-engine-dev/1.foundation/4.implementing_audio/using_sdl_mixer/)
+- [5.0 Input Management](https://chukobyte.github.io/learn-engine-dev/1.foundation/5.input_management/input_events/)
+- [6.0 Entity Component System](https://chukobyte.github.io/learn-engine-dev/1.foundation/6.entity_component_system/building_an_ecs/)
+- [7.0 Serializing With JSON](https://chukobyte.github.io/learn-engine-dev/1.foundation/7.serializing_with_json/creating_scene_json_files/)
 
 *Note: Chapters are a work in progress and subject to change*
 
