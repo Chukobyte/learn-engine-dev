@@ -617,22 +617,30 @@
     <span class="n">std</span><span class="o">::</span><span class="n">set</span><span class="o">&lt;</span><span class="n">Entity</span><span class="o">&gt;</span> <span class="n">entities</span><span class="p">;</span>
 
   <span class="k">public</span><span class="o">:</span>
-    <span class="k">virtual</span> <span class="kt">void</span> <span class="n">Initialize</span><span class="p">()</span>  <span class="p">{}</span>
+    <span class="k">virtual</span> <span class="kt">void</span> <span class="n">Initialize</span><span class="p">()</span>  <span class="p">{</span>
+        <span class="n">enabled</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
+    <span class="p">}</span>
+
     <span class="k">virtual</span> <span class="kt">void</span> <span class="n">RegisterEntity</span><span class="p">(</span><span class="n">Entity</span> <span class="n">entity</span><span class="p">)</span> <span class="p">{</span>
         <span class="n">entities</span><span class="p">.</span><span class="n">insert</span><span class="p">(</span><span class="n">entity</span><span class="p">);</span>
     <span class="p">}</span>
+
     <span class="k">virtual</span> <span class="kt">void</span> <span class="n">UnregisterEntity</span><span class="p">(</span><span class="n">Entity</span> <span class="n">entity</span><span class="p">)</span> <span class="p">{</span>
         <span class="n">entities</span><span class="p">.</span><span class="n">erase</span><span class="p">(</span><span class="n">entity</span><span class="p">);</span>
     <span class="p">}</span>
+
     <span class="k">virtual</span> <span class="kt">void</span> <span class="n">Enable</span><span class="p">()</span> <span class="p">{</span>
         <span class="n">enabled</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
     <span class="p">}</span>
+
     <span class="k">virtual</span> <span class="kt">void</span> <span class="n">Disable</span><span class="p">()</span> <span class="p">{</span>
         <span class="n">enabled</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
     <span class="p">}</span>
+
     <span class="kt">bool</span> <span class="n">IsEnabled</span><span class="p">()</span> <span class="p">{</span>
         <span class="k">return</span> <span class="n">enabled</span><span class="p">;</span>
     <span class="p">}</span>
+
     <span class="c1">// Event hooks</span>
     <span class="k">virtual</span> <span class="kt">void</span> <span class="n">Update</span><span class="p">(</span><span class="kt">float</span> <span class="n">deltaTime</span><span class="p">)</span> <span class="p">{}</span>
     <span class="k">virtual</span> <span class="kt">void</span> <span class="n">PhysicsUpdate</span><span class="p">(</span><span class="kt">float</span> <span class="n">deltaTime</span><span class="p">)</span> <span class="p">{}</span>

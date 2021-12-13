@@ -721,11 +721,39 @@
 
     <span class="c1">// Temp play music</span>
     <span class="n">AudioHelper</span><span class="o">::</span><span class="n">PlayMusic</span><span class="p">(</span><span class="s">"test_music"</span><span class="p">);</span>
-    <span class="n">AudioHelper</span><span class="o">::</span><span class="n">PlaySound</span><span class="p">(</span><span class="s">"test_sound"</span><span class="p">);</span>
     <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
 <span class="p">}</span>
 </code></pre></div>
-<p>If you run the code, it should play a brief sound effect and a song once the engine is running.  The source code for this section can be found <a href="https://github.com/Chukobyte/learn-engine-dev/tree/main/src/1.foundation/4.implementing_audio/4.0.sdl_mixer">here</a>.  Now that we have music and sound effects implemented it's time to tackle handling input next!</p>
+<p>In the initialize function we are now calling <code>InitializeAudio</code>.  There is also a call to <code>AudioHelper::PlayMusic</code> to play music when the engine initializes.</p>
+<div class="highlight"><pre><span></span><code><span class="kt">void</span> <span class="nf">GameEngine::Update</span><span class="p">()</span> <span class="p">{</span>
+    <span class="c1">// Sleep until FRAME_TARGET_TIME has elapsed since last frame</span>
+    <span class="k">const</span> <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">MILLISECONDS_PER_TICK</span> <span class="o">=</span> <span class="mi">1000</span><span class="p">;</span>
+    <span class="k">const</span> <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">TARGET_FPS</span> <span class="o">=</span> <span class="mi">60</span><span class="p">;</span>
+    <span class="k">static</span> <span class="n">Uint32</span> <span class="n">lastFrameTime</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="k">const</span> <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">FRAME_TARGET_TIME</span> <span class="o">=</span> <span class="n">MILLISECONDS_PER_TICK</span> <span class="o">/</span> <span class="n">TARGET_FPS</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">timeToWait</span> <span class="o">=</span> <span class="n">FRAME_TARGET_TIME</span> <span class="o">-</span> <span class="p">(</span><span class="n">SDL_GetTicks</span><span class="p">()</span> <span class="o">-</span> <span class="n">lastFrameTime</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">timeToWait</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="n">timeToWait</span> <span class="o">&lt;=</span> <span class="n">FRAME_TARGET_TIME</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">SDL_Delay</span><span class="p">(</span><span class="n">timeToWait</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="n">fpsCounter</span><span class="o">-&gt;</span><span class="n">Update</span><span class="p">();</span>
+
+    <span class="c1">// Temporary timer to play sound after 3 seconds</span>
+    <span class="k">static</span> <span class="n">Timer</span> <span class="o">*</span><span class="n">timer</span> <span class="o">=</span> <span class="k">nullptr</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">timer</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">timer</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Timer</span><span class="p">(</span><span class="mf">3.0f</span><span class="p">);</span>
+        <span class="n">timer</span><span class="o">-&gt;</span><span class="n">Start</span><span class="p">();</span>
+    <span class="p">}</span>
+    <span class="k">static</span> <span class="kt">bool</span> <span class="n">hasPlayedSound</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">timer</span><span class="o">-&gt;</span><span class="n">HasReachedTimeOut</span><span class="p">()</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="n">hasPlayedSound</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">AudioHelper</span><span class="o">::</span><span class="n">PlaySound</span><span class="p">(</span><span class="s">"test_sound"</span><span class="p">);</span>
+        <span class="n">hasPlayedSound</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="n">lastFrameTime</span> <span class="o">=</span> <span class="n">SDL_GetTicks</span><span class="p">();</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>In the <code>Update</code> function, a timer is created to play a sound effect after 3 seconds.  If you run the code, it should play song and a brief sound effect after 3 seconds once the engine is running.  The source code for this section can be found <a href="https://github.com/Chukobyte/learn-engine-dev/tree/main/src/1.foundation/4.implementing_audio/4.0.sdl_mixer">here</a>.  Now that we have music and sound effects implemented it's time to tackle handling input next!</p>
 </article>
 </div>
 </div>

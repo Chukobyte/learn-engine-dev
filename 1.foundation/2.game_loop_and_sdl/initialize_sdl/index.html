@@ -604,9 +604,11 @@
 <span class="k">class</span> <span class="nc">Timer</span> <span class="p">{</span>
   <span class="k">public</span><span class="o">:</span>
     <span class="n">Timer</span><span class="p">(</span><span class="n">Uint32</span> <span class="n">waitTimeInMilliseconds</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">doesLoop</span> <span class="o">=</span> <span class="nb">false</span><span class="p">);</span>
+    <span class="n">Timer</span><span class="p">(</span><span class="kt">float</span> <span class="n">waitTimeInSeconds</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">doesLoop</span> <span class="o">=</span> <span class="nb">false</span><span class="p">);</span>
     <span class="n">Uint32</span> <span class="nf">GetWaitTime</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
     <span class="n">Uint32</span> <span class="nf">GetTimeLeft</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
     <span class="kt">void</span> <span class="nf">SetWaitTime</span><span class="p">(</span><span class="n">Uint32</span> <span class="n">waitTimeInMilliseconds</span><span class="p">);</span>
+    <span class="kt">void</span> <span class="nf">SetWaitTime</span><span class="p">(</span><span class="kt">float</span> <span class="n">waitTimeInSeconds</span><span class="p">);</span>
     <span class="kt">bool</span> <span class="nf">DoesLoop</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
     <span class="kt">void</span> <span class="nf">SetLoop</span><span class="p">(</span><span class="kt">bool</span> <span class="n">doesLoop</span><span class="p">);</span>
     <span class="kt">void</span> <span class="nf">Start</span><span class="p">();</span>
@@ -622,26 +624,21 @@
   <span class="k">private</span><span class="o">:</span>
     <span class="n">Uint32</span> <span class="n">waitTime</span><span class="p">;</span>
     <span class="kt">bool</span> <span class="n">loops</span><span class="p">;</span>
-    <span class="n">Uint32</span> <span class="n">startTicks</span><span class="p">;</span>
-    <span class="n">Uint32</span> <span class="n">pausedTicks</span><span class="p">;</span>
-    <span class="kt">bool</span> <span class="n">isPaused</span><span class="p">;</span>
-    <span class="kt">bool</span> <span class="n">hasStarted</span><span class="p">;</span>
+    <span class="n">Uint32</span> <span class="n">startTicks</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="n">Uint32</span> <span class="n">pausedTicks</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="kt">bool</span> <span class="n">isPaused</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
+    <span class="kt">bool</span> <span class="n">hasStarted</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
 <span class="p">};</span>
 
-<span class="cp">#endif</span>
+<span class="cp">#endif </span><span class="c1">//TIMER_H</span>
 </code></pre></div>
 <div class="highlight"><pre><span></span><code><span class="cp">#include</span> <span class="cpf">"timer.h"</span><span class="cp"></span>
 
 <span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp"></span>
 
-<span class="n">Timer</span><span class="o">::</span><span class="n">Timer</span><span class="p">(</span><span class="n">Uint32</span> <span class="n">waitTimeInMilliseconds</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">doesLoop</span><span class="p">)</span> <span class="p">{</span>
-    <span class="n">waitTime</span> <span class="o">=</span> <span class="n">waitTimeInMilliseconds</span><span class="p">;</span>
-    <span class="n">loops</span> <span class="o">=</span> <span class="n">doesLoop</span><span class="p">;</span>
-    <span class="n">startTicks</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-    <span class="n">pausedTicks</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-    <span class="n">isPaused</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
-    <span class="n">hasStarted</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
-<span class="p">}</span>
+<span class="n">Timer</span><span class="o">::</span><span class="n">Timer</span><span class="p">(</span><span class="n">Uint32</span> <span class="n">waitTimeInMilliseconds</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">doesLoop</span><span class="p">)</span> <span class="o">:</span> <span class="n">waitTime</span><span class="p">(</span><span class="n">waitTimeInMilliseconds</span><span class="p">),</span> <span class="n">loops</span><span class="p">(</span><span class="n">doesLoop</span><span class="p">)</span> <span class="p">{}</span>
+
+<span class="n">Timer</span><span class="o">::</span><span class="n">Timer</span><span class="p">(</span><span class="kt">float</span> <span class="n">waitTimeInSeconds</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">doesLoop</span><span class="p">)</span> <span class="o">:</span> <span class="n">Timer</span><span class="p">(</span><span class="k">static_cast</span><span class="o">&lt;</span><span class="n">Uint32</span><span class="o">&gt;</span><span class="p">(</span><span class="n">waitTimeInSeconds</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">),</span> <span class="n">doesLoop</span><span class="p">)</span> <span class="p">{}</span>
 
 <span class="n">Uint32</span> <span class="n">Timer</span><span class="o">::</span><span class="n">GetWaitTime</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span>
     <span class="k">return</span> <span class="n">waitTime</span><span class="p">;</span>
@@ -657,6 +654,10 @@
 
 <span class="kt">void</span> <span class="n">Timer</span><span class="o">::</span><span class="n">SetWaitTime</span><span class="p">(</span><span class="n">Uint32</span> <span class="n">waitTimeInMilliseconds</span><span class="p">)</span> <span class="p">{</span>
     <span class="n">waitTime</span> <span class="o">=</span> <span class="n">waitTimeInMilliseconds</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">Timer</span><span class="o">::</span><span class="n">SetWaitTime</span><span class="p">(</span><span class="kt">float</span> <span class="n">waitTimeInSeconds</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">SetWaitTime</span><span class="p">(</span><span class="k">static_cast</span><span class="o">&lt;</span><span class="n">Uint32</span><span class="o">&gt;</span><span class="p">(</span><span class="n">waitTimeInSeconds</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">));</span>
 <span class="p">}</span>
 
 <span class="kt">bool</span> <span class="n">Timer</span><span class="o">::</span><span class="n">DoesLoop</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span>
