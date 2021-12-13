@@ -276,9 +276,40 @@ bool GameEngine::Initialize() {
 
     // Temp play music
     AudioHelper::PlayMusic("test_music");
-    AudioHelper::PlaySound("test_sound");
     return true;
 }
 ```
 
-If you run the code, it should play a brief sound effect and a song once the engine is running.  The source code for this section can be found [here](https://github.com/Chukobyte/learn-engine-dev/tree/main/src/1.foundation/4.implementing_audio/4.0.sdl_mixer).  Now that we have music and sound effects implemented it's time to tackle handling input next!
+In the initialize function we are now calling `InitializeAudio`.  There is also a call to `AudioHelper::PlayMusic` to play music when the engine initializes.
+
+```c++
+void GameEngine::Update() {
+    // Sleep until FRAME_TARGET_TIME has elapsed since last frame
+    const unsigned int MILLISECONDS_PER_TICK = 1000;
+    const unsigned int TARGET_FPS = 60;
+    static Uint32 lastFrameTime = 0;
+    const unsigned int FRAME_TARGET_TIME = MILLISECONDS_PER_TICK / TARGET_FPS;
+    unsigned int timeToWait = FRAME_TARGET_TIME - (SDL_GetTicks() - lastFrameTime);
+    if (timeToWait > 0 && timeToWait <= FRAME_TARGET_TIME) {
+        SDL_Delay(timeToWait);
+    }
+
+    fpsCounter->Update();
+
+    // Temporary timer to play sound after 3 seconds
+    static Timer *timer = nullptr;
+    if (!timer) {
+        timer = new Timer(3.0f);
+        timer->Start();
+    }
+    static bool hasPlayedSound = false;
+    if (timer->HasReachedTimeOut() && !hasPlayedSound) {
+        AudioHelper::PlaySound("test_sound");
+        hasPlayedSound = true;
+    }
+
+    lastFrameTime = SDL_GetTicks();
+}
+```
+
+In the `Update` function, a timer is created to play a sound effect after 3 seconds.  If you run the code, it should play song and a brief sound effect after 3 seconds once the engine is running.  The source code for this section can be found [here](https://github.com/Chukobyte/learn-engine-dev/tree/main/src/1.foundation/4.implementing_audio/4.0.sdl_mixer).  Now that we have music and sound effects implemented it's time to tackle handling input next!

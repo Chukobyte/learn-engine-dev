@@ -6,9 +6,11 @@
 class Timer {
   public:
     Timer(Uint32 waitTimeInMilliseconds, bool doesLoop = false);
+    Timer(float waitTimeInSeconds, bool doesLoop = false);
     Uint32 GetWaitTime() const;
     Uint32 GetTimeLeft() const;
     void SetWaitTime(Uint32 waitTimeInMilliseconds);
+    void SetWaitTime(float waitTimeInSeconds);
     bool DoesLoop() const;
     void SetLoop(bool doesLoop);
     void Start();
@@ -24,10 +26,10 @@ class Timer {
   private:
     Uint32 waitTime;
     bool loops;
-    Uint32 startTicks;
-    Uint32 pausedTicks;
-    bool isPaused;
-    bool hasStarted;
+    Uint32 startTicks = 0;
+    Uint32 pausedTicks = 0;
+    bool isPaused = false;
+    bool hasStarted = false;
 };
 
-#endif
+#endif //TIMER_H

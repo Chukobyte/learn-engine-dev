@@ -1,5 +1,6 @@
 #include "game_engine.h"
 
+#include "./re/utils/timer.h"
 #include "audio_helper.h"
 
 GameEngine::GameEngine() :
@@ -37,7 +38,6 @@ bool GameEngine::Initialize() {
 
     // Temp play music
     AudioHelper::PlayMusic("test_music");
-    AudioHelper::PlaySound("test_sound");
     return true;
 }
 
@@ -128,6 +128,18 @@ void GameEngine::Update() {
     }
 
     fpsCounter->Update();
+
+    // Temporary timer to play sound after 3 seconds
+    static Timer *timer = nullptr;
+    if (!timer) {
+        timer = new Timer(3.0f);
+        timer->Start();
+    }
+    static bool hasPlayedSound = false;
+    if (timer->HasReachedTimeOut() && !hasPlayedSound) {
+        AudioHelper::PlaySound("test_sound");
+        hasPlayedSound = true;
+    }
 
     lastFrameTime = SDL_GetTicks();
 }

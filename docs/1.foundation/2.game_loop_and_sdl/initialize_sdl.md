@@ -143,9 +143,11 @@ The `Timer` class is straight forward.
 class Timer {
   public:
     Timer(Uint32 waitTimeInMilliseconds, bool doesLoop = false);
+    Timer(float waitTimeInSeconds, bool doesLoop = false);
     Uint32 GetWaitTime() const;
     Uint32 GetTimeLeft() const;
     void SetWaitTime(Uint32 waitTimeInMilliseconds);
+    void SetWaitTime(float waitTimeInSeconds);
     bool DoesLoop() const;
     void SetLoop(bool doesLoop);
     void Start();
@@ -161,13 +163,13 @@ class Timer {
   private:
     Uint32 waitTime;
     bool loops;
-    Uint32 startTicks;
-    Uint32 pausedTicks;
-    bool isPaused;
-    bool hasStarted;
+    Uint32 startTicks = 0;
+    Uint32 pausedTicks = 0;
+    bool isPaused = false;
+    bool hasStarted = false;
 };
 
-#endif
+#endif //TIMER_H
 ```
 
 ```c++
@@ -175,14 +177,9 @@ class Timer {
 
 #include <iostream>
 
-Timer::Timer(Uint32 waitTimeInMilliseconds, bool doesLoop) {
-    waitTime = waitTimeInMilliseconds;
-    loops = doesLoop;
-    startTicks = 0;
-    pausedTicks = 0;
-    isPaused = false;
-    hasStarted = false;
-}
+Timer::Timer(Uint32 waitTimeInMilliseconds, bool doesLoop) : waitTime(waitTimeInMilliseconds), loops(doesLoop) {}
+
+Timer::Timer(float waitTimeInSeconds, bool doesLoop) : Timer(static_cast<Uint32>(waitTimeInSeconds * 1000), doesLoop) {}
 
 Uint32 Timer::GetWaitTime() const {
     return waitTime;
@@ -198,6 +195,10 @@ Uint32 Timer::GetTimeLeft() const {
 
 void Timer::SetWaitTime(Uint32 waitTimeInMilliseconds) {
     waitTime = waitTimeInMilliseconds;
+}
+
+void Timer::SetWaitTime(float waitTimeInSeconds) {
+    SetWaitTime(static_cast<Uint32>(waitTimeInSeconds * 1000));
 }
 
 bool Timer::DoesLoop() const {

@@ -2,34 +2,12 @@
 
 #include <stb_image/stb_image.h>
 
-Texture::Texture(const char* filePath) : logger(Logger::GetInstance()) {
-    Initialize(filePath);
-}
-
 Texture::Texture(const char* filePath, unsigned int wrapS, unsigned int wrapT, unsigned int filterMin, unsigned int filterMag) :
     wrapS(wrapS),
     wrapT(wrapT),
     filterMin(filterMin),
     filterMag(filterMag),
     logger(Logger::GetInstance()) {
-    Initialize(filePath);
-}
-
-Texture::Texture(const char* filePath, const std::string &wrapS, const std::string &wrapT, const std::string &filterMin, const std::string &filterMag) :
-    wrapS(GetWrapFromString(wrapS)),
-    wrapT(GetWrapFromString(wrapT)),
-    filterMin(GetFilterFromString(filterMin)),
-    filterMag(GetFilterFromString(filterMag)),
-    logger(Logger::GetInstance()) {
-    Initialize(filePath);
-}
-
-Texture::~Texture() {
-    stbi_image_free(data);
-    data = nullptr;
-}
-
-void Texture::Initialize(const char* filePath) {
     fileName = std::string(filePath);
     // load image, create texture, and generate mipmaps
     stbi_set_flip_vertically_on_load(false);
@@ -39,6 +17,20 @@ void Texture::Initialize(const char* filePath) {
     } else {
         logger->Error("Texture failed to load at: %s", filePath);
     }
+}
+
+Texture::Texture(const char* filePath, const std::string &wrapS, const std::string &wrapT, const std::string &filterMin, const std::string &filterMag) :
+    Texture(
+        filePath,
+        GetWrapFromString(wrapS),
+        GetWrapFromString(wrapT),
+        GetFilterFromString(filterMin),
+        GetFilterFromString(filterMag)
+    ) {}
+
+Texture::~Texture() {
+    stbi_image_free(data);
+    data = nullptr;
 }
 
 void Texture::Generate() {

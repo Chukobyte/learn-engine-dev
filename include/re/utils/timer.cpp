@@ -2,14 +2,9 @@
 
 #include <iostream>
 
-Timer::Timer(Uint32 waitTimeInMilliseconds, bool doesLoop) {
-    waitTime = waitTimeInMilliseconds;
-    loops = doesLoop;
-    startTicks = 0;
-    pausedTicks = 0;
-    isPaused = false;
-    hasStarted = false;
-}
+Timer::Timer(Uint32 waitTimeInMilliseconds, bool doesLoop) : waitTime(waitTimeInMilliseconds), loops(doesLoop) {}
+
+Timer::Timer(float waitTimeInSeconds, bool doesLoop) : Timer(static_cast<Uint32>(waitTimeInSeconds * 1000), doesLoop) {}
 
 Uint32 Timer::GetWaitTime() const {
     return waitTime;
@@ -25,6 +20,10 @@ Uint32 Timer::GetTimeLeft() const {
 
 void Timer::SetWaitTime(Uint32 waitTimeInMilliseconds) {
     waitTime = waitTimeInMilliseconds;
+}
+
+void Timer::SetWaitTime(float waitTimeInSeconds) {
+    SetWaitTime(static_cast<Uint32>(waitTimeInSeconds * 1000));
 }
 
 bool Timer::DoesLoop() const {

@@ -7,8 +7,7 @@
 
 class Texture {
   public:
-    Texture(const char* filePath);
-    Texture(const char* filePath, unsigned int wrapS, unsigned int wrapT, unsigned int filterMin, unsigned int filterMag);
+    Texture(const char* filePath, unsigned int wrapS = GL_CLAMP_TO_BORDER, unsigned int wrapT = GL_CLAMP_TO_BORDER, unsigned int filterMin = GL_NEAREST, unsigned int filterMag = GL_NEAREST);
     Texture(const char* filePath, const std::string &wrapS, const std::string &wrapT, const std::string &filterMin, const std::string &filterMag);
     ~Texture();
     void Bind() const;
@@ -36,7 +35,6 @@ class Texture {
     unsigned int filterMin = GL_NEAREST;
     unsigned int filterMag = GL_NEAREST;
 
-    void Initialize(const char* filePath);
     void Generate();
     unsigned int GetWrapFromString(const std::string &wrap) const;
     unsigned int GetFilterFromString(const std::string &filter) const;

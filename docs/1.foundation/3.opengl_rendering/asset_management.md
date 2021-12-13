@@ -28,8 +28,7 @@ Instances of the `Texture` class will be used to render sprites to the screen.
 
 class Texture {
   public:
-    Texture(const char* filePath);
-    Texture(const char* filePath, unsigned int wrapS, unsigned int wrapT, unsigned int filterMin, unsigned int filterMag);
+    Texture(const char* filePath, unsigned int wrapS = GL_CLAMP_TO_BORDER, unsigned int wrapT = GL_CLAMP_TO_BORDER, unsigned int filterMin = GL_NEAREST, unsigned int filterMag = GL_NEAREST);
     Texture(const char* filePath, const std::string &wrapS, const std::string &wrapT, const std::string &filterMin, const std::string &filterMag);
     ~Texture();
     void Bind() const;
@@ -57,7 +56,6 @@ class Texture {
     unsigned int filterMin = GL_NEAREST;
     unsigned int filterMag = GL_NEAREST;
 
-    void Initialize(const char* filePath);
     void Generate();
     unsigned int GetWrapFromString(const std::string &wrap) const;
     unsigned int GetFilterFromString(const std::string &filter) const;
@@ -71,34 +69,12 @@ class Texture {
 
 #include <stb_image/stb_image.h>
 
-Texture::Texture(const char* filePath) : logger(Logger::GetInstance()) {
-    Initialize(filePath);
-}
-
 Texture::Texture(const char* filePath, unsigned int wrapS, unsigned int wrapT, unsigned int filterMin, unsigned int filterMag) :
     wrapS(wrapS),
     wrapT(wrapT),
     filterMin(filterMin),
     filterMag(filterMag),
     logger(Logger::GetInstance()) {
-    Initialize(filePath);
-}
-
-Texture::Texture(const char* filePath, const std::string &wrapS, const std::string &wrapT, const std::string &filterMin, const std::string &filterMag) :
-    wrapS(GetWrapFromString(wrapS)),
-    wrapT(GetWrapFromString(wrapT)),
-    filterMin(GetFilterFromString(filterMin)),
-    filterMag(GetFilterFromString(filterMag)),
-    logger(Logger::GetInstance()) {
-    Initialize(filePath);
-}
-
-Texture::~Texture() {
-    stbi_image_free(data);
-    data = nullptr;
-}
-
-void Texture::Initialize(const char* filePath) {
     fileName = std::string(filePath);
     // load image, create texture, and generate mipmaps
     stbi_set_flip_vertically_on_load(false);
@@ -108,6 +84,20 @@ void Texture::Initialize(const char* filePath) {
     } else {
         logger->Error("Texture failed to load at: %s", filePath);
     }
+}
+
+Texture::Texture(const char* filePath, const std::string &wrapS, const std::string &wrapT, const std::string &filterMin, const std::string &filterMag) :
+    Texture(
+        filePath,
+        GetWrapFromString(wrapS),
+        GetWrapFromString(wrapT),
+        GetFilterFromString(filterMin),
+        GetFilterFromString(filterMag)
+    ) {}
+
+Texture::~Texture() {
+    stbi_image_free(data);
+    data = nullptr;
 }
 
 void Texture::Generate() {
