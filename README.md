@@ -18,12 +18,13 @@ A work in progress tutorial series for developing a cross platform game engine f
 
 [Make](https://www.gnu.org/software/make/) is used to build the source code examples.  To build the code for a section, change directory to that folder's section (which contains a Makefile) and run the `build` target with `make build`.  Below is more information about targets defined in the Makefiles.
 
-| Name   | Description                                  |
-|:------:|:--------------------------------------------:|
-| build  | Compile and link the application.            |
-| run    | Will run the application.                    |
-| clean  | Deletes the executable and .o files.         |
-| format | Will format the source code via astyle.      |
+| Name        | Description                                  |
+|:-----------:|:--------------------------------------------:|
+| build       | Compile and link the application.            |
+| run         | Will run the application.                    |
+| clean       | Deletes the executable and .o files.         |
+| format      | Will format the source code via astyle.      |
+| debug-build | Same as `build` but adds debug symbols.      |
 
 There is also a top level Makefile that can be used to run make targets for each section's source.  To run, define a `SECTION` parameter when executing make with the following syntax: `SECTION=[PART].[CHAPTER].[SECTION]`.
 

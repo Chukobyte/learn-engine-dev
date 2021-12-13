@@ -62,6 +62,9 @@ run: validate-section-key
 format: validate-section-key
 	@$(MAKE) -C $(SECTION_DIR) format
 
+debug-build: validate-section-key
+	@$(MAKE) -C $(SECTION_DIR) debug-build
+
 validate-section-key:
 ifeq ($(SECTION_DIR),'')
 	@echo Not a valid section key! Sections keys have the following syntax [PART]-[CHAPTER].[SECTION] e.g. make build SECTION=1.1.0
