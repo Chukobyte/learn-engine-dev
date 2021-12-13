@@ -75,11 +75,11 @@ Example of `properties.json`.
   "assets": [
     {
       "type": "texture",
-      "file_path": "assets/images/seika_idle.png",
+      "file_path": "assets/images/melissa_walk_animation.png",
       "wrap_s": "clamp_to_border",
       "wrap_t": "clamp_to_border",
       "filter_min": "nearest",
-      "filter_mag": "nearest"
+      "filter_max": "nearest"
     },
     {
       "type": "font",
@@ -100,14 +100,19 @@ Example of `properties.json`.
     {
       "name": "quit",
       "values": [
-        "esc",
-        "joystick_button_back"
+        "esc"
       ]
     },
     {
-      "name": "mouse_left_click",
+      "name": "move_left",
       "values": [
-        "mb_left"
+        "left"
+      ]
+    },
+    {
+      "name": "move_right",
+      "values": [
+        "right"
       ]
     }
   ]
@@ -129,3 +134,44 @@ bool GameEngine::LoadProjectProperties() {
     return true;
 }
 ```
+
+We should now call this before everything else in the `Initialize` function.
+
+```c++
+bool GameEngine::Initialize() {
+    logger->Debug("Initializing...");
+    if (!LoadProjectProperties()) {
+        logger->Error("Failed to load project properties!");
+        return false;
+    }
+    if (!InitializeSDL()) {
+        logger->Error("Failed to initialize SDL!");
+        return false;
+    }
+    if (!InitializeAudio()) {
+        logger->Error("Failed to initialize audio!");
+        return false;
+    }
+    if (!InitializeRendering()) {
+        logger->Error("Failed to initialize rendering!");
+        return false;
+    }
+    if (!InitializeInput()) {
+        logger->Error("Failed to initialize input!");
+        return false;
+    }
+    if (!InitializeECS()) {
+        logger->Error("Failed to initialize ECS!");
+        return false;
+    }
+    assetManager->LoadProjectConfigurations(projectProperties->GetAssetConfigurations());
+    logger->Info("%s Engine v%s", engineContext->GetEngineName(), engineContext->GetEngineVersion());
+    engineContext->SetRunning(true);
+
+    // Temp play music
+    AudioHelper::PlayMusic("test_music");
+    return true;
+}
+```
+
+Now that we are initializing the project properties by passing in the data loading in from the json properties file.  Don't forget to remove the `LoadTexture`, `LoadMusic`, `LoadSound`, and `AddAction` function calls as these are no longer needed in `game_engine.cpp`.  The source code for this section can be found [here](https://github.com/Chukobyte/learn-engine-dev/tree/main/src/1.foundation/7.serializing_with_json/7.0.parsing_json_properties_file).

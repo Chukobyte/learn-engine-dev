@@ -5,6 +5,7 @@
 
 #include "../ecs/entity/entity_manager.h"
 #include "../ecs/component/component_manager.h"
+#include "../ecs/component/components/scene_component.h"
 #include "../ecs/component/components/transform2d_component.h"
 #include "../ecs/component/components/text_label_component.h"
 #include "../ecs/component/components/sprite_component.h"

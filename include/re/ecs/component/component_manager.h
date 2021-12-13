@@ -75,12 +75,7 @@ class ComponentManager {
         return GetComponentArray<T>()->HasData(entity);
     }
 
-    void EntityDestroyed(Entity entity) {
-        for (auto const &pair : componentArrays) {
-            auto const &component = pair.second;
-            component->EntityDestroyed(entity);
-        }
-    }
+    void EntityDestroyed(Entity entity);
 };
 
 #endif //COMPONENT_MANAGER_H

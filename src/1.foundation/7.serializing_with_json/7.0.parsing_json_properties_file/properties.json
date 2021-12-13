@@ -6,7 +6,7 @@
     "height": 600
   },
   "colliders_visible": true,
-  "target_fps": 66,
+  "target_fps": 60,
   "background_color": {
     "red": 50,
     "green": 50,
@@ -40,14 +40,19 @@
     {
       "name": "quit",
       "values": [
-        "esc",
-        "joystick_button_back"
+        "esc"
       ]
     },
     {
-      "name": "mouse_left_click",
+      "name": "move_left",
       "values": [
-        "mb_left"
+        "left"
+      ]
+    },
+    {
+      "name": "move_right",
+      "values": [
+        "right"
       ]
     }
   ]

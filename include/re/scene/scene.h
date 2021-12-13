@@ -1,11 +1,10 @@
 #ifndef SCENE_H
 #define SCENE_H
 
-#include <cassert>
-#include "unordered_map"
+#include <vector>
+#include <unordered_map>
 
 #include "../ecs/entity/entity.h"
-#include "../ecs/component/components/scene_component.h"
 #include "../utils/helper.h"
 
 struct SceneNode {

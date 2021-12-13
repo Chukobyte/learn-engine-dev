@@ -1,12 +1,12 @@
 #include "game_engine.h"
 
-#include "audio_helper.h"
 #include "./re/ecs/component/components/node_component.h"
 #include "./re/ecs/component/components/transform2d_component.h"
 #include "./re/ecs/component/components/sprite_component.h"
 #include "./re/ecs/component/components/text_label_component.h"
 #include "./re/ecs/system/systems/sprite_rendering_ec_system.h"
 #include "./re/ecs/system/systems/text_rendering_ec_system.h"
+#include "./re/audio/audio_helper.h"
 
 GameEngine::GameEngine() :
     projectProperties(ProjectProperties::GetInstance()),
@@ -52,6 +52,7 @@ bool GameEngine::Initialize() {
         logger->Error("Failed to initialize ECS!");
         return false;
     }
+    assetManager->LoadProjectConfigurations(projectProperties->GetAssetConfigurations());
     logger->Info("%s Engine v%s", engineContext->GetEngineName(), engineContext->GetEngineVersion());
     engineContext->SetRunning(true);
 
@@ -83,10 +84,6 @@ bool GameEngine::InitializeAudio() {
         logger->Error("SDL_mixer could not be initialized!");
         return false;
     }
-
-    // Temp load assets
-    assetManager->LoadMusic("test_music", "assets/audio/music/test_music.wav");
-    assetManager->LoadSound("test_sound", "assets/audio/sound/test_sound_effect.wav");
     return true;
 }
 
@@ -118,21 +115,11 @@ bool GameEngine::InitializeRendering() {
 
     renderContext->InitializeFont();
     renderer2D->Initialize();
-
-    // Temp Load Assets
-    assetManager->LoadTexture("assets/images/melissa_walk_animation.png", "assets/images/melissa_walk_animation.png");
-    assetManager->LoadFont("assets/fonts/verdana.ttf", "assets/fonts/verdana.ttf", 20);
     return true;
 }
 
 bool GameEngine::InitializeInput() {
     inputManager->Initialize();
-    // temp adding actions
-    inputManager->AddAction("quit", "esc");
-    inputManager->AddAction("move_left", "left");
-    inputManager->AddAction("move_left", "a");
-    inputManager->AddAction("move_right", "right");
-    inputManager->AddAction("move_right", "d");
     return true;
 }
 
