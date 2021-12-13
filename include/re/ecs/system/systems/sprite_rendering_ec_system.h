@@ -13,9 +13,7 @@ class SpriteRenderingECSystem : public ECSystem {
     ComponentManager *componentManager = nullptr;
 
   public:
-    SpriteRenderingECSystem() : renderer2D(Renderer2D::GetInstance()), componentManager(ComponentManager::GetInstance()) {
-        enabled = true;
-    }
+    SpriteRenderingECSystem() : renderer2D(Renderer2D::GetInstance()), componentManager(ComponentManager::GetInstance()) {}
 
     void Render() override {
         if (IsEnabled()) {

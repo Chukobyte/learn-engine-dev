@@ -13,9 +13,7 @@ class TextRenderingECSystem : public ECSystem {
     ComponentManager *componentManager = nullptr;
 
   public:
-    TextRenderingECSystem() : renderer2D(Renderer2D::GetInstance()), componentManager(ComponentManager::GetInstance()) {
-        enabled = true;
-    }
+    TextRenderingECSystem() : renderer2D(Renderer2D::GetInstance()), componentManager(ComponentManager::GetInstance()) {}
 
     void Render() override {
         if (IsEnabled()) {
