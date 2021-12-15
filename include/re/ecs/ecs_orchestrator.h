@@ -11,6 +11,9 @@ class ECSOrchestrator {
     ~ECSOrchestrator();
     static ECSOrchestrator* GetInstance();
 
+    void DestroyEntity(Entity entity);
+    void DeleteEntitiesQueuedForDeletion();
+
     // Entity
     Entity CreateEntity() {
         return entityManager->CreateEntity();

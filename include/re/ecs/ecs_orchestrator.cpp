@@ -20,6 +20,14 @@ ECSOrchestrator* ECSOrchestrator::GetInstance() {
     return instance;
 }
 
+void ECSOrchestrator::DestroyEntity(Entity entity) {
+    entityManager->DestroyEntity(entity);
+}
+
+void ECSOrchestrator::DeleteEntitiesQueuedForDeletion() {
+    entityManager->DeleteEntitiesQueuedForDeletion();
+}
+
 void ECSOrchestrator::RefreshEntitySignatureChanged(Entity entity) {
     ecSystemManager->EntitySignatureChanged(entity, entityManager->GetEnabledSignature(entity));
 }

@@ -224,6 +224,9 @@ void GameEngine::Update() {
     fpsCounter->Update();
 
     inputManager->ClearInputFlags();
+
+    ecsOrchestrator->DeleteEntitiesQueuedForDeletion();
+
     lastFrameTime = SDL_GetTicks();
 }
 
