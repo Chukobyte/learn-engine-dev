@@ -1,6 +1,8 @@
 ## Learn Engine Dev
 
-A work in progress tutorial series for developing a cross platform game engine from scratch.  The source code for all tutorials will be maintained in this repo and can be accessed [here](https://chukobyte.github.io/learn-engine-dev/).  A list of engine features can be found [here](https://chukobyte.github.io/learn-engine-dev/#features).
+![Test Game Screenshot](https://github.com/Chukobyte/learn-engine-dev/blob/main/assets/images/screenshots/led_3_1.PNG?raw=true)
+
+A work in progress tutorial series for developing a cross platform game engine from scratch.  The source code for all tutorials will be maintained in this repo and can be accessed [here](https://chukobyte.github.io/learn-engine-dev/).
 
 ### Chapters
 
@@ -13,6 +15,21 @@ A work in progress tutorial series for developing a cross platform game engine f
 - [7.0 Serializing With JSON](https://chukobyte.github.io/learn-engine-dev/1.foundation/7.serializing_with_json/creating_scene_json_files/)
 
 *Note: Chapters are a work in progress and subject to change*
+
+### Features
+
+- [x] Sprite Rendering
+- [x] Font Rendering
+- [x] Keyboard, mouse, and gamepad input
+- [x] Entity Component System
+- [x] Scene Management
+- [x] Json Serialization of project properties and scene data
+- [x] Python Scripting
+- [ ] Animation
+- [ ] Python Engine API
+- [ ] Collisions
+- [ ] Camera System
+- [ ] Example Games
 
 ### Building
 
