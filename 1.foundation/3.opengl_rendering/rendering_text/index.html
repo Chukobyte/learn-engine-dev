@@ -534,6 +534,7 @@
 <h3 id="freetype-library">Freetype Library</h3>
 <p><strong><em>Red Engine</em></strong> uses the <a href="https://freetype.org/">FreeType</a> to help render font.</p>
 <h3 id="font-class">Font Class</h3>
+<p>Before we render text to the screen, we need to first define the concept of a font within <strong><em>Red Engine</em></strong>.</p>
 <div class="highlight"><pre><span></span><code><span class="cp">#ifndef FONT_H</span>
 <span class="cp">#define FONT_H</span>
 
@@ -699,10 +700,36 @@
     <span class="n">rendererBatcher</span><span class="p">.</span><span class="n">BatchDrawFont</span><span class="p">(</span><span class="n">fontBatchItem</span><span class="p">,</span> <span class="n">zIndex</span><span class="p">);</span>
 <span class="p">}</span>
 </code></pre></div>
-<p>Next is a function to draw font.</p>
-<div class="highlight"><pre><span></span><code><span class="kt">void</span> <span class="nf">Renderer2D::DrawFont</span><span class="p">(</span><span class="n">Font</span> <span class="o">*</span><span class="n">font</span><span class="p">,</span> <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">text</span><span class="p">,</span> <span class="kt">float</span> <span class="n">x</span><span class="p">,</span> <span class="kt">float</span> <span class="n">y</span><span class="p">,</span> <span class="kt">float</span> <span class="n">scale</span><span class="p">,</span> <span class="n">Color</span> <span class="n">color</span><span class="p">)</span> <span class="p">{}</span>
+<p>Next is to update the <code>FlushBatches</code> function to draw font.</p>
+<div class="highlight"><pre><span></span><code><span class="kt">void</span> <span class="nf">Renderer2D::FlushBatches</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">assert</span><span class="p">(</span><span class="n">spriteRenderer</span> <span class="o">!=</span> <span class="k">nullptr</span> <span class="o">&amp;&amp;</span> <span class="s">"SpriteRenderer is NULL, initialize the Renderer2D before using!"</span><span class="p">);</span>
+
+    <span class="k">const</span> <span class="n">RenderFlushFunction</span> <span class="o">&amp;</span><span class="n">renderFlushFunction</span> <span class="o">=</span> <span class="p">[</span><span class="k">this</span><span class="p">]</span> <span class="p">(</span><span class="k">const</span> <span class="kt">int</span> <span class="n">zIndex</span><span class="p">,</span> <span class="k">const</span> <span class="n">ZIndexDrawBatch</span> <span class="o">&amp;</span><span class="n">zIndexDrawBatch</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1">// Draw Sprites</span>
+        <span class="k">for</span> <span class="p">(</span><span class="k">const</span> <span class="n">SpriteBatchItem</span> <span class="o">&amp;</span><span class="nl">spriteBatchItem</span> <span class="p">:</span> <span class="n">zIndexDrawBatch</span><span class="p">.</span><span class="n">spriteDrawBatches</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">spriteRenderer</span><span class="o">-&gt;</span><span class="n">Draw</span><span class="p">(</span><span class="n">spriteBatchItem</span><span class="p">.</span><span class="n">texture2D</span><span class="p">,</span>
+                                 <span class="n">spriteBatchItem</span><span class="p">.</span><span class="n">sourceRectangle</span><span class="p">,</span>
+                                 <span class="n">spriteBatchItem</span><span class="p">.</span><span class="n">destinationRectangle</span><span class="p">,</span>
+                                 <span class="n">spriteBatchItem</span><span class="p">.</span><span class="n">rotation</span><span class="p">,</span>
+                                 <span class="n">spriteBatchItem</span><span class="p">.</span><span class="n">color</span><span class="p">,</span>
+                                 <span class="n">spriteBatchItem</span><span class="p">.</span><span class="n">flipX</span><span class="p">,</span>
+                                 <span class="n">spriteBatchItem</span><span class="p">.</span><span class="n">flipY</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="c1">// Draw Font</span>
+        <span class="k">for</span> <span class="p">(</span><span class="k">const</span> <span class="n">FontBatchItem</span> <span class="o">&amp;</span><span class="nl">fontBatchItem</span> <span class="p">:</span> <span class="n">zIndexDrawBatch</span><span class="p">.</span><span class="n">fontDrawBatches</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">fontRenderer</span><span class="o">-&gt;</span><span class="n">Draw</span><span class="p">(</span><span class="n">fontBatchItem</span><span class="p">.</span><span class="n">font</span><span class="p">,</span>
+                               <span class="n">fontBatchItem</span><span class="p">.</span><span class="n">text</span><span class="p">,</span>
+                               <span class="n">fontBatchItem</span><span class="p">.</span><span class="n">x</span><span class="p">,</span>
+                               <span class="n">fontBatchItem</span><span class="p">.</span><span class="n">y</span><span class="p">,</span>
+                               <span class="n">fontBatchItem</span><span class="p">.</span><span class="n">scale</span><span class="p">,</span>
+                               <span class="n">fontBatchItem</span><span class="p">.</span><span class="n">color</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">};</span>
+    <span class="n">rendererBatcher</span><span class="p">.</span><span class="n">Flush</span><span class="p">(</span><span class="n">renderFlushFunction</span><span class="p">);</span>
+<span class="p">}</span>
 </code></pre></div>
 <h3 id="render-context">Render Context</h3>
+<p>We then add this to the render context to initialize the FreeType library.</p>
 <div class="highlight"><pre><span></span><code><span class="n">FT_Library</span> <span class="n">freeTypeLibrary</span><span class="p">;</span>
 
 <span class="kt">void</span> <span class="nf">InitializeFont</span><span class="p">()</span> <span class="p">{</span>

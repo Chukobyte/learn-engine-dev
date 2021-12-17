@@ -928,6 +928,40 @@
 <p>First, the <code>OpenGLShaderSourceCode</code> struct is used to hold a string representation of the shader code.  The <code>Shader</code> class has two constructors, one that accepts <code>OpenGLShaderSourceCode</code> and another that accepts the file paths of the vertex and fragment shaders file paths as parameters which we won't use for this tutorial series.</p>
 <p>The <code>Compile</code> function compiles the vertex and fragment shaders, attaches the shader objects to the shader program, and links the shader program.  We will call the <code>Use</code> function whenever we need to install a shader for use which we'll see an example of later.  Other than that, the last thing to mention is the multiple <code>Set$TYPE</code> functions.  These are used to set <a href="https://www.khronos.org/opengl/wiki/Uniform_(GLSL)">uniform variables</a> within the shaders and we will see how they are used in the next section.</p>
 <h3 id="spriterenderer">SpriteRenderer</h3>
+<h4 id="shader-code">Shader Code</h4>
+<p>The first thing to point out is the GLSL shader code for the vertex and fragment shaders.</p>
+<p><strong>Vertex</strong></p>
+<p>The vec4 variable <code>vertex</code> is a <a href="https://www.khronos.org/opengl/wiki/Vertex_Shader#Inputs">vertex attribute</a> that contains data for the sprites position and texture coordinates.  Next is the out variable for <code>texCoord</code> which we'll read from our vertex attribute and pass to the fragment shader.  Next are the two uniform variables for the projection and model matrices.  The <code>main</code> function simply set's the value for <code>texCoord</code> and set's the position of the vertex via <code>gl_Position</code>.</p>
+<div class="highlight"><pre><span></span><code><span class="cp">#version 330 core</span>
+
+<span class="k">layout</span> <span class="p">(</span><span class="n">location</span> <span class="o">=</span> <span class="mo">0</span><span class="p">)</span> <span class="k">in</span> <span class="kt">vec4</span> <span class="n">vertex</span><span class="p">;</span>
+
+<span class="k">out</span> <span class="kt">vec2</span> <span class="n">texCoord</span>
+
+<span class="k">uniform</span> <span class="kt">mat4</span> <span class="n">projection</span><span class="p">;</span>
+<span class="k">uniform</span> <span class="kt">mat4</span> <span class="n">model</span><span class="p">;</span>
+
+<span class="kt">void</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">texCoord</span> <span class="o">=</span> <span class="n">vertex</span><span class="p">.</span><span class="n">zw</span><span class="p">;</span>
+    <span class="nb">gl_Position</span> <span class="o">=</span> <span class="n">projection</span> <span class="o">*</span> <span class="n">model</span> <span class="o">*</span> <span class="kt">vec4</span><span class="p">(</span><span class="n">vertex</span><span class="p">.</span><span class="n">xy</span><span class="p">,</span> <span class="mf">0.0</span><span class="n">f</span><span class="p">,</span> <span class="mf">1.0</span><span class="n">f</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div>
+<p><strong>Fragment</strong></p>
+<p>The fragment shader is even simpler than the vertex as we're only setting the color of the fragment! We get the color of the texture with the <a href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/texture.xhtml">texture</a> function.  We then take the color from the texture and blend it with the <code>spriteColor</code> passed in as a uniform variable.</p>
+<div class="highlight"><pre><span></span><code><span class="cp">#version 330 core</span>
+
+<span class="k">in</span> <span class="kt">vec2</span> <span class="n">texCoord</span><span class="p">;</span>
+<span class="k">out</span> <span class="kt">vec4</span> <span class="n">color</span><span class="p">;</span>
+
+<span class="k">uniform</span> <span class="kt">sampler2D</span> <span class="n">sprite</span><span class="p">;</span>
+<span class="k">uniform</span> <span class="kt">vec4</span> <span class="n">spriteColor</span><span class="p">;</span>
+
+<span class="kt">void</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">color</span> <span class="o">=</span> <span class="n">spriteColor</span> <span class="o">*</span> <span class="n">texture</span><span class="p">(</span><span class="n">sprite</span><span class="p">,</span> <span class="n">texCoord</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div>
+<h4 id="spriterenderer-class">SpriteRenderer Class</h4>
+<p>The next thing to tackle it to write the renderer class for sprites!</p>
 <div class="highlight"><pre><span></span><code><span class="cp">#ifndef SPRITE_RENDERER_H</span>
 <span class="cp">#define SPRITE_RENDERER_H</span>
 
@@ -1097,38 +1131,9 @@
     <span class="n">glBindVertexArray</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
 <span class="p">}</span>
 </code></pre></div>
-<h4 id="shader-code">Shader Code</h4>
-<p>Vertex</p>
-<div class="highlight"><pre><span></span><code><span class="cp">#version 330 core</span>
-
-<span class="k">layout</span> <span class="p">(</span><span class="n">location</span> <span class="o">=</span> <span class="mo">0</span><span class="p">)</span> <span class="k">in</span> <span class="kt">vec4</span> <span class="n">vertex</span><span class="p">;</span>
-
-<span class="k">out</span> <span class="kt">vec2</span> <span class="n">texCoord</span>
-
-<span class="k">uniform</span> <span class="kt">mat4</span> <span class="n">projection</span><span class="p">;</span>
-<span class="k">uniform</span> <span class="kt">mat4</span> <span class="n">model</span><span class="p">;</span>
-
-<span class="kt">void</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
-    <span class="n">texCoord</span> <span class="o">=</span> <span class="n">vertex</span><span class="p">.</span><span class="n">zw</span><span class="p">;</span>
-    <span class="nb">gl_Position</span> <span class="o">=</span> <span class="n">projection</span> <span class="o">*</span> <span class="n">model</span> <span class="o">*</span> <span class="kt">vec4</span><span class="p">(</span><span class="n">vertex</span><span class="p">.</span><span class="n">xy</span><span class="p">,</span> <span class="mf">0.0</span><span class="n">f</span><span class="p">,</span> <span class="mf">1.0</span><span class="n">f</span><span class="p">);</span>
-<span class="p">}</span>
-</code></pre></div>
-<p>Fragment</p>
-<div class="highlight"><pre><span></span><code><span class="cp">#version 330 core</span>
-
-<span class="k">in</span> <span class="kt">vec2</span> <span class="n">texCoord</span><span class="p">;</span>
-<span class="k">out</span> <span class="kt">vec4</span> <span class="n">color</span><span class="p">;</span>
-
-<span class="k">uniform</span> <span class="kt">sampler2D</span> <span class="n">sprite</span><span class="p">;</span>
-<span class="k">uniform</span> <span class="kt">vec4</span> <span class="n">spriteColor</span><span class="p">;</span>
-
-<span class="kt">void</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
-    <span class="n">color</span> <span class="o">=</span> <span class="n">spriteColor</span> <span class="o">*</span> <span class="n">texture</span><span class="p">(</span><span class="n">sprite</span><span class="p">,</span> <span class="n">texCoord</span><span class="p">);</span>
-<span class="p">}</span>
-</code></pre></div>
-<h4 id="spriterenderer-class">SpriteRenderer Class</h4>
-<p>Explanation coming soon...</p>
+<p>Will explain soon...</p>
 <h3 id="renderer2d">Renderer2D</h3>
+<p>We have a <code>SpriteRenderer</code> and now it's time to define the top level 2d renderer class.</p>
 <div class="highlight"><pre><span></span><code><span class="cp">#ifndef RENDERER_2D_H</span>
 <span class="cp">#define RENDERER_2D_H</span>
 
@@ -1201,7 +1206,7 @@
     <span class="n">rendererBatcher</span><span class="p">.</span><span class="n">Flush</span><span class="p">(</span><span class="n">renderFlushFunction</span><span class="p">);</span>
 <span class="p">}</span>
 </code></pre></div>
-<p>Explanation coming soon...</p>
+<p>The <code>Initialize</code> function is straightforward as it initialized things for the renderer.  <code>SubmitSpriteBatchItem</code> function will submit a sprite batch item to be rendered at a later time.  Last but not least the <code>FlushBatches</code> will flush all queued draw batches and render them to the screen.</p>
 <h2 id="render-sprites">Render Sprites</h2>
 <p>Updating constructor to initialize member pointer variables.</p>
 <div class="highlight"><pre><span></span><code><span class="n">GameEngine</span><span class="o">::</span><span class="n">GameEngine</span><span class="p">()</span> <span class="o">:</span>
