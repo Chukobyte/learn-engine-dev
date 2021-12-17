@@ -8,6 +8,8 @@
 
 ### Font Class
 
+Before we render text to the screen, we need to first define the concept of a font within ***Red Engine***.
+
 ```c++
 #ifndef FONT_H
 #define FONT_H
@@ -187,13 +189,40 @@ void Renderer2D::SubmitFontBatchItem(Font *font, const std::string &text, float 
 }
 ```
 
-Next is a function to draw font.
+Next is to update the `FlushBatches` function to draw font.
 
 ```c++
-void Renderer2D::DrawFont(Font *font, const std::string &text, float x, float y, float scale, Color color) {}
+void Renderer2D::FlushBatches() {
+    assert(spriteRenderer != nullptr && "SpriteRenderer is NULL, initialize the Renderer2D before using!");
+
+    const RenderFlushFunction &renderFlushFunction = [this] (const int zIndex, const ZIndexDrawBatch &zIndexDrawBatch) {
+        // Draw Sprites
+        for (const SpriteBatchItem &spriteBatchItem : zIndexDrawBatch.spriteDrawBatches) {
+            spriteRenderer->Draw(spriteBatchItem.texture2D,
+                                 spriteBatchItem.sourceRectangle,
+                                 spriteBatchItem.destinationRectangle,
+                                 spriteBatchItem.rotation,
+                                 spriteBatchItem.color,
+                                 spriteBatchItem.flipX,
+                                 spriteBatchItem.flipY);
+        }
+        // Draw Font
+        for (const FontBatchItem &fontBatchItem : zIndexDrawBatch.fontDrawBatches) {
+            fontRenderer->Draw(fontBatchItem.font,
+                               fontBatchItem.text,
+                               fontBatchItem.x,
+                               fontBatchItem.y,
+                               fontBatchItem.scale,
+                               fontBatchItem.color);
+        }
+    };
+    rendererBatcher.Flush(renderFlushFunction);
+}
 ```
 
 ### Render Context
+
+We then add this to the render context to initialize the FreeType library.
 
 ```c++
 FT_Library freeTypeLibrary;

@@ -178,6 +178,8 @@ I haven't included the entire `asset_manager.cpp` file to reduce lines.
 
 ## Audio Helper
 
+The `AudioHelper` class contains static functions used to interact with music and sound effects.
+
 ```c++
 #ifndef AUDIO_HELPER_H
 #define AUDIO_HELPER_H

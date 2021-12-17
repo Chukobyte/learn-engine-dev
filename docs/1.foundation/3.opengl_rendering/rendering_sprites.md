@@ -386,6 +386,52 @@ The `Compile` function compiles the vertex and fragment shaders, attaches the sh
 
 ### SpriteRenderer
 
+#### Shader Code
+
+The first thing to point out is the GLSL shader code for the vertex and fragment shaders.
+
+**Vertex**
+
+The vec4 variable `vertex` is a [vertex attribute](https://www.khronos.org/opengl/wiki/Vertex_Shader#Inputs) that contains data for the sprites position and texture coordinates.  Next is the out variable for `texCoord` which we'll read from our vertex attribute and pass to the fragment shader.  Next are the two uniform variables for the projection and model matrices.  The `main` function simply set's the value for `texCoord` and set's the position of the vertex via `gl_Position`.
+
+```glsl
+#version 330 core
+
+layout (location = 0) in vec4 vertex;
+
+out vec2 texCoord
+
+uniform mat4 projection;
+uniform mat4 model;
+
+void main() {
+    texCoord = vertex.zw;
+    gl_Position = projection * model * vec4(vertex.xy, 0.0f, 1.0f);
+}
+```
+
+**Fragment**
+
+The fragment shader is even simpler than the vertex as we're only setting the color of the fragment! We get the color of the texture with the [texture](https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/texture.xhtml) function.  We then take the color from the texture and blend it with the `spriteColor` passed in as a uniform variable.
+
+```glsl
+#version 330 core
+
+in vec2 texCoord;
+out vec4 color;
+
+uniform sampler2D sprite;
+uniform vec4 spriteColor;
+
+void main() {
+    color = spriteColor * texture(sprite, texCoord);
+}
+```
+
+#### SpriteRenderer Class
+
+The next thing to tackle it to write the renderer class for sprites!
+
 ```c++
 #ifndef SPRITE_RENDERER_H
 #define SPRITE_RENDERER_H
@@ -559,47 +605,11 @@ SpriteRenderer::Draw(Texture *texture2D, const Rect2 &sourceRectangle, const Rec
 }
 ```
 
-#### Shader Code
-
-Vertex
-
-```glsl
-#version 330 core
-
-layout (location = 0) in vec4 vertex;
-
-out vec2 texCoord
-
-uniform mat4 projection;
-uniform mat4 model;
-
-void main() {
-    texCoord = vertex.zw;
-    gl_Position = projection * model * vec4(vertex.xy, 0.0f, 1.0f);
-}
-```
-
-Fragment
-
-```glsl
-#version 330 core
-
-in vec2 texCoord;
-out vec4 color;
-
-uniform sampler2D sprite;
-uniform vec4 spriteColor;
-
-void main() {
-    color = spriteColor * texture(sprite, texCoord);
-}
-```
-
-#### SpriteRenderer Class
-
-Explanation coming soon...
+Will explain soon...
 
 ### Renderer2D
+
+We have a `SpriteRenderer` and now it's time to define the top level 2d renderer class.
 
 ```c++
 #ifndef RENDERER_2D_H
@@ -677,7 +687,7 @@ void Renderer2D::FlushBatches() {
 }
 ```
 
-Explanation coming soon...
+The `Initialize` function is straightforward as it initialized things for the renderer.  `SubmitSpriteBatchItem` function will submit a sprite batch item to be rendered at a later time.  Last but not least the `FlushBatches` will flush all queued draw batches and render them to the screen.
 
 ## Render Sprites
 
