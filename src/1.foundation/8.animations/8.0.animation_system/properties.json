@@ -1,0 +1,66 @@
+{
+  "game_title": "2D Test",
+  "initial_scene": "scenes/main.json",
+  "base_resolution": {
+    "width": 800,
+    "height": 600
+  },
+  "colliders_visible": false,
+  "target_fps": 60,
+  "background_color": {
+    "red": 50,
+    "green": 50,
+    "blue": 50
+  },
+  "assets": [
+    {
+      "type": "texture",
+      "file_path": "assets/images/melissa_walk_animation.png",
+      "wrap_s": "clamp_to_border",
+      "wrap_t": "clamp_to_border",
+      "filter_min": "nearest",
+      "filter_max": "nearest"
+    },
+    {
+      "type": "font",
+      "uid": "verdana-20",
+      "file_path": "assets/fonts/verdana.ttf",
+      "size": 20
+    },
+    {
+      "type": "music",
+      "file_path": "assets/audio/music/test_music.wav"
+    },
+    {
+      "type": "sound",
+      "file_path": "assets/audio/sound/test_sound_effect.wav"
+    }
+  ],
+  "input_actions": [
+    {
+      "name": "quit",
+      "values": [
+        "esc",
+        "joystick_button_back"
+      ]
+    },
+    {
+      "name": "mouse_left_click",
+      "values": [
+        "mb_left"
+      ]
+    },
+    {
+      "name": "move_left",
+      "values": [
+        "left"
+      ]
+    },
+    {
+      "name": "move_right",
+      "values": [
+        "right"
+      ]
+    }
+  ]
+}

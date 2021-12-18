@@ -7,6 +7,8 @@ CHAPTER_4_DIR = src/1.foundation/4.implementing_audio
 CHAPTER_5_DIR = src/1.foundation/5.input_management
 CHAPTER_6_DIR = src/1.foundation/6.entity_component_system
 CHAPTER_7_DIR = src/1.foundation/7.serializing_with_json
+CHAPTER_8_DIR = src/1.foundation/8.animations
+CHAPTER_9_DIR = src/1.foundation/9.collisions
 
 # Maps to proper section directories
 # CHAPTER 1
@@ -42,6 +44,12 @@ else ifeq ($(SECTION),1.7.0)
     SECTION_DIR = $(CHAPTER_7_DIR)/7.0.parsing_json_properties_file
 else ifeq ($(SECTION),1.7.1)
     SECTION_DIR = $(CHAPTER_7_DIR)/7.1.creating_scene_json_files
+# CHAPTER 8
+else ifeq ($(SECTION),1.8.0)
+    SECTION_DIR = $(CHAPTER_8_DIR)/8.0.animation_system
+# CHAPTER 9
+else ifeq ($(SECTION),1.9.0)
+    SECTION_DIR = $(CHAPTER_9_DIR)/9.0.collision_system
 else
 	SECTION_DIR = ''
 endif
