@@ -1,5 +1,3 @@
-#ifndef PYHELPER_HPP
-#define PYHELPER_HPP
 #pragma once
 
 #define PY_SSIZE_T_CLEAN
@@ -72,5 +70,3 @@ class CPyObject {
   private:
     PyObject* pyObj;
 };
-
-#endif //PYHELPER_HPP

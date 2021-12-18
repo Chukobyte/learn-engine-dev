@@ -1,5 +1,4 @@
-#ifndef GAME_ENGINE_H
-#define GAME_ENGINE_H
+#pragma once
 
 #include "./re/game_engine_context.h"
 #include "./re/utils/logger.h"
@@ -22,5 +21,3 @@ class GameEngine {
     bool Initialize();
     bool InitializeSDL();
 };
-
-#endif //GAME_ENGINE_H

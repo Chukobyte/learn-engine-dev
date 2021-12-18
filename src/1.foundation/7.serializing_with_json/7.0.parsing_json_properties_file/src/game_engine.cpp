@@ -44,6 +44,7 @@ bool GameEngine::Initialize() {
         logger->Error("Failed to initialize rendering!");
         return false;
     }
+    assetManager->LoadProjectConfigurations(projectProperties->GetAssetConfigurations());
     if (!InitializeInput()) {
         logger->Error("Failed to initialize input!");
         return false;
@@ -52,12 +53,11 @@ bool GameEngine::Initialize() {
         logger->Error("Failed to initialize ECS!");
         return false;
     }
-    assetManager->LoadProjectConfigurations(projectProperties->GetAssetConfigurations());
     logger->Info("%s Engine v%s", engineContext->GetEngineName(), engineContext->GetEngineVersion());
     engineContext->SetRunning(true);
 
     // Temp play music
-    AudioHelper::PlayMusic("test_music");
+    AudioHelper::PlayMusic("assets/audio/music/test_music.wav");
     return true;
 }
 
@@ -120,6 +120,7 @@ bool GameEngine::InitializeRendering() {
 
 bool GameEngine::InitializeInput() {
     inputManager->Initialize();
+    inputManager->LoadInputActionConfigurations(projectProperties->GetInputActionsConfigurations());
     return true;
 }
 
@@ -165,7 +166,7 @@ bool GameEngine::InitializeECS() {
     ecsOrchestrator->AddComponent<Transform2DComponent>(textEntity, textEntityTransform);
     TextLabelComponent textEntityTextLabelComponent = TextLabelComponent{
         "Hello World",
-        assetManager->GetFont("assets/fonts/verdana.ttf"),
+        assetManager->GetFont("verdana-32"),
         Color(1.0f, 1.0f, 1.0f)
     };
     ecsOrchestrator->AddComponent<TextLabelComponent>(textEntity, textEntityTextLabelComponent);

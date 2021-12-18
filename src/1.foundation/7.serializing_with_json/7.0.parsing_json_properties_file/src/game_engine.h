@@ -1,7 +1,6 @@
-#ifndef GAME_ENGINE_H
-#define GAME_ENGINE_H
+#pragma once
 
-#include "asset_manager.h"
+#include "./re/data/asset_manager.h"
 #include "./re/game_engine_context.h"
 #include "./re/project_properties.h"
 #include "./re/rendering/renderer_2d.h"
@@ -39,5 +38,3 @@ class GameEngine {
     bool InitializeECS();
     bool LoadProjectProperties();
 };
-
-#endif //GAME_ENGINE_H

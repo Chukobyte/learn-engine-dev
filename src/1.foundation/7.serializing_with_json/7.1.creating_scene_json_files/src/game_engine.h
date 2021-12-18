@@ -1,5 +1,4 @@
-#ifndef GAME_ENGINE_H
-#define GAME_ENGINE_H
+#pragma once
 
 #include "./re/game_engine_context.h"
 #include "./re/data/asset_manager.h"
@@ -41,5 +40,3 @@ class GameEngine {
     bool LoadProjectProperties();
     void PhysicsUpdate(); // Fixed time step
 };
-
-#endif //GAME_ENGINE_H

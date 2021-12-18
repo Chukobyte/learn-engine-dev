@@ -1,5 +1,4 @@
-#ifndef AUDIO_HELPER_H
-#define AUDIO_HELPER_H
+#pragma once
 
 #include "./re/audio/audio.h"
 #include "./re/utils/helper.h"
@@ -53,5 +52,3 @@ class AudioHelper {
         SetSoundVolume(volume);
     }
 };
-
-#endif //AUDIO_HELPER_H

@@ -1,5 +1,4 @@
-#ifndef FPS_COUNTER_H
-#define FPS_COUNTER_H
+#pragma once
 
 #include "./re/utils/timer.h"
 
@@ -17,6 +16,3 @@ class FPSCounter {
 
     FPSCounter();
 };
-
-
-#endif //FPS_COUNTER_H

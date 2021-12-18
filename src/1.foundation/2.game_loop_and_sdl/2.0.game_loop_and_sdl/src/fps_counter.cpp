@@ -2,7 +2,7 @@
 
 #include "./re/utils/logger.h"
 
-FPSCounter::FPSCounter() : timer(new Timer(1000, true)) {
+FPSCounter::FPSCounter() : timer(new Timer((Uint32) 1000, true)) {
     timer->Start();
 }
 

@@ -1,5 +1,4 @@
-#ifndef SPRITE_RENDERER_H
-#define SPRITE_RENDERER_H
+#pragma once
 
 #include <glad/glad.h>
 
@@ -7,8 +6,7 @@
 #include "./re/rendering/texture.h"
 #include "./re/rendering/color.h"
 #include "./re/math/math.h"
-
-#include "project_properties.h"
+#include "./re/project_properties.h"
 
 static const std::string &OPENGL_SHADER_SOURCE_VERTEX_SPRITE =
     "#version 330 core\n"
@@ -57,6 +55,3 @@ class SpriteRenderer {
     GLuint quadVBO;
     ProjectProperties *projectProperties = nullptr;
 };
-
-
-#endif //SPRITE_RENDERER_H

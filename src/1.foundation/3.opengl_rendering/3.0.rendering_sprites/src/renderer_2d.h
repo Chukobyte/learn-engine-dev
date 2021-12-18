@@ -1,5 +1,4 @@
-#ifndef RENDERER_2D_H
-#define RENDERER_2D_H
+#pragma once
 
 #include "renderer_batcher.h"
 #include "sprite_renderer.h"
@@ -16,6 +15,3 @@ class Renderer2D {
     RendererBatcher rendererBatcher;
     SpriteRenderer *spriteRenderer = nullptr;
 };
-
-
-#endif //RENDERER_2D_H

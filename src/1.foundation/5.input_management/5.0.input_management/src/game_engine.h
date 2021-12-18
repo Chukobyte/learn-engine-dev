@@ -1,5 +1,4 @@
-#ifndef GAME_ENGINE_H
-#define GAME_ENGINE_H
+#pragma once
 
 #include "./re/game_engine_context.h"
 #include "./re/project_properties.h"
@@ -35,5 +34,3 @@ class GameEngine {
     bool InitializeRendering();
     bool InitializeInput();
 };
-
-#endif //GAME_ENGINE_H

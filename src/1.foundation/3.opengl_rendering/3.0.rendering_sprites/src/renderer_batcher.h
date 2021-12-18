@@ -1,5 +1,4 @@
-#ifndef RENDERER_BATCHER_H
-#define RENDERER_BATCHER_H
+#pragma once
 
 #include <vector>
 #include <map>
@@ -34,5 +33,3 @@ class RendererBatcher {
   private:
     std::map<int, ZIndexDrawBatch> drawBatches;
 };
-
-#endif //RENDERER_BATCHER_H

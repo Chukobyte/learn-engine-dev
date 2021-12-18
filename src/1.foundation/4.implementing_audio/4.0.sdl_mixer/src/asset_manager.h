@@ -1,5 +1,4 @@
-#ifndef ASSET_MANAGER_H
-#define ASSET_MANAGER_H
+#pragma once
 
 #include <unordered_map>
 #include <string>
@@ -42,5 +41,3 @@ class AssetManager {
 
     AssetManager();
 };
-
-#endif //ASSET_MANAGER_H
