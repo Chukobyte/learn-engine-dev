@@ -1,5 +1,6 @@
 #pragma once
 
+#include "./re/scene/scene.h"
 #include "./re/ecs/entity/entity_manager.h"
 #include "./re/ecs/component/component_manager.h"
 #include "./re/ecs/component/components/scene_component.h"
@@ -10,7 +11,6 @@
 #include "./re/utils/json_helper.h"
 
 #include "../asset_manager.h"
-#include "scene.h"
 
 class SceneNodeJsonParser {
   private:
