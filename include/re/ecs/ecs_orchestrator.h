@@ -1,5 +1,4 @@
-#ifndef ECS_ORCHESTRATOR_H
-#define ECS_ORCHESTRATOR_H
+#pragma once
 
 #include <vector>
 
@@ -152,5 +151,3 @@ class ECSOrchestrator {
     ECSOrchestrator();
     void RefreshEntitySignatureChanged(Entity entity);
 };
-
-#endif //ECS_ORCHESTRATOR_H

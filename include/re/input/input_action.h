@@ -1,5 +1,4 @@
-#ifndef INPUT_ACTION_H
-#define INPUT_ACTION_H
+#pragma once
 
 #include <vector>
 #include <algorithm>
@@ -86,5 +85,3 @@ class InputAction {
     }
 
 };
-
-#endif //INPUT_ACTION_H

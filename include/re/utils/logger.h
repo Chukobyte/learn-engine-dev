@@ -1,5 +1,4 @@
-#ifndef LOGGER_H
-#define LOGGER_H
+#pragma once
 
 #include <string>
 
@@ -26,5 +25,3 @@ class Logger {
 
     LogLevel logLevel = LogLevel::DEBUG;
 };
-
-#endif //LOGGER_H

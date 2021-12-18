@@ -1,5 +1,4 @@
-#ifndef SCENE_MANAGER_H
-#define SCENE_MANAGER_H
+#pragma once
 
 #include <vector>
 #include <unordered_map>
@@ -25,5 +24,3 @@ class SceneManager {
 
     SceneManager();
 };
-
-#endif //SCENE_MANAGER_H

@@ -1,5 +1,4 @@
-#ifndef TRANSFORM2D_COMPONENT_H
-#define TRANSFORM2D_COMPONENT_H
+#pragma once
 
 #include "../../../math/math.h"
 
@@ -11,5 +10,3 @@ struct Transform2DComponent {
     bool isZIndexRelativeToParent = true;
     bool ignoreCamera = false;
 };
-
-#endif //TRANSFORM2D_COMPONENT_H

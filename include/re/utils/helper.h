@@ -1,5 +1,4 @@
-#ifndef HELPER_H
-#define HELPER_H
+#pragma once
 
 #include <string>
 #include <sstream>
@@ -48,5 +47,3 @@ class Helper {
         return value;
     }
 };
-
-#endif //HELPER_H

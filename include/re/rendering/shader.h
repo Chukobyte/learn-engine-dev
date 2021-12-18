@@ -1,5 +1,4 @@
-#ifndef SHADER_H
-#define SHADER_H
+#pragma once
 
 #include <string>
 #include <fstream>
@@ -45,5 +44,3 @@ class Shader {
     bool IsShaderFilesValid(const std::string &vertexPath, const std::string &fragmentPath);
     void CheckCompileErrors(unsigned int shader, const std::string &type);
 };
-
-#endif //SHADER_H

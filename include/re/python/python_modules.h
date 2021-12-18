@@ -1,5 +1,4 @@
-#ifndef PYTHON_MODULES_H
-#define PYTHON_MODULES_H
+#pragma once
 
 #define PY_SSIZE_T_CLEAN
 
@@ -35,5 +34,3 @@ static char *enginePrintLogKWList[] = {"message", nullptr};
 static PyObject* PyInit_engine(void) {
     return PyModule_Create(&engineModuleDefinition);
 }
-
-#endif //PYTHON_MODULES_H

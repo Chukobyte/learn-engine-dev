@@ -1,5 +1,4 @@
-#ifndef FONT_RENDERER_H
-#define FONT_RENDERER_H
+#pragma once
 
 #include <glad/glad.h>
 
@@ -63,5 +62,3 @@ class FontRenderer {
         return (((input - inputLow) / (inputHigh - inputLow)) * (outputHigh - outputLow) + outputLow);
     }
 };
-
-#endif //FONT_RENDERER_H

@@ -1,5 +1,4 @@
-#ifndef EC_SYSTEM_MANAGER_H
-#define EC_SYSTEM_MANAGER_H
+#pragma once
 
 #include <iostream>
 #include <cassert>
@@ -187,5 +186,3 @@ class ECSystemManager {
         }
     }
 };
-
-#endif //EC_SYSTEM_MANAGER_H

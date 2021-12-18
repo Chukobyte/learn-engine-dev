@@ -1,5 +1,4 @@
-#ifndef FILE_HELPER_H
-#define FILE_HELPER_H
+#pragma once
 
 #include <sys/stat.h>
 #include <experimental/filesystem>
@@ -15,5 +14,3 @@ class FileHelper {
         std::experimental::filesystem::current_path(newDirectory);
     }
 };
-
-#endif //FILE_HELPER_H

@@ -1,5 +1,4 @@
-#ifndef RENDER_CONTEXT_H
-#define RENDER_CONTEXT_H
+#pragma once
 
 #include <glad/glad.h>
 #include <SDL2/SDL.h>
@@ -25,5 +24,3 @@ class RenderContext {
   private:
     RenderContext() = default;
 };
-
-#endif //RENDER_CONTEXT_H

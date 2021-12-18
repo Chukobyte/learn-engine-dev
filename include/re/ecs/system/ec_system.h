@@ -1,5 +1,4 @@
-#ifndef EC_SYSTEM_H
-#define EC_SYSTEM_H
+#pragma once
 
 #include <set>
 
@@ -45,5 +44,3 @@ class ECSystem {
     virtual void OnSceneStart(Scene* scene) {}
     virtual void OnSceneEnd(Scene* scene) {}
 };
-
-#endif //EC_SYSTEM_H

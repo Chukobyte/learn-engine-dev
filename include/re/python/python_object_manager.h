@@ -1,5 +1,4 @@
-#ifndef PYTHON_OBJECT_MANAGER_H
-#define PYTHON_OBJECT_MANAGER_H
+#pragma once
 
 #include <string>
 #include <unordered_map>
@@ -43,5 +42,3 @@ class PythonObjectManager {
         return modules[classPath].classes[className];
     }
 };
-
-#endif // PYTHON_OBJECT_MANAGER_H

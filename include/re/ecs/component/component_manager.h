@@ -1,5 +1,4 @@
-#ifndef COMPONENT_MANAGER_H
-#define COMPONENT_MANAGER_H
+#pragma once
 
 #include <unordered_map>
 #include <memory>
@@ -77,5 +76,3 @@ class ComponentManager {
 
     void EntityDestroyed(Entity entity);
 };
-
-#endif //COMPONENT_MANAGER_H

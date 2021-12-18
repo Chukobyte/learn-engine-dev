@@ -1,5 +1,4 @@
-#ifndef SPRITE_RENDERING_EC_SYSTEM_H
-#define SPRITE_RENDERING_EC_SYSTEM_H
+#pragma once
 
 #include "../ec_system.h"
 
@@ -36,5 +35,3 @@ class SpriteRenderingECSystem : public ECSystem {
         }
     }
 };
-
-#endif //SPRITE_RENDERING_EC_SYSTEM_H

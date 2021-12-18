@@ -1,5 +1,4 @@
-#ifndef INPUT_MANAGER_H
-#define INPUT_MANAGER_H
+#pragma once
 
 #include <unordered_map>
 
@@ -32,6 +31,3 @@ class InputManager {
 
     InputManager();
 };
-
-
-#endif //INPUT_MANAGER_H

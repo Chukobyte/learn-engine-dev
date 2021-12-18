@@ -1,5 +1,4 @@
-#ifndef JSON_HELPER_H
-#define JSON_HELPER_H
+#pragma once
 
 #include <iostream>
 #include <fstream>
@@ -38,5 +37,3 @@ class JsonFileHelper {
     }
 
 };
-
-#endif //JSON_HELPER_H

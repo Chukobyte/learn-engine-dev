@@ -1,5 +1,4 @@
-#ifndef JOYSTICK_INPUT_H
-#define JOYSTICK_INPUT_H
+#pragma once
 
 #include <string>
 #include <vector>
@@ -228,5 +227,3 @@ class JoystickAction {
     JoystickInput *joystickInput = nullptr;
     std::vector<std::string> joystickValues;
 };
-
-#endif //JOYSTICK_INPUT_H

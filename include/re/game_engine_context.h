@@ -1,5 +1,4 @@
-#ifndef GAME_ENGINE_CONTEXT_H
-#define GAME_ENGINE_CONTEXT_H
+#pragma once
 
 class GameEngineContext {
   public:
@@ -16,5 +15,3 @@ class GameEngineContext {
 
     GameEngineContext() = default;
 };
-
-#endif //GAME_ENGINE_CONTEXT_H

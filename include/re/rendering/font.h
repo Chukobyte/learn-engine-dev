@@ -1,5 +1,4 @@
-#ifndef FONT_H
-#define FONT_H
+#pragma once
 
 #include <iostream>
 
@@ -120,5 +119,3 @@ class Font {
         glBindVertexArray(0);
     }
 };
-
-#endif //FONT_H

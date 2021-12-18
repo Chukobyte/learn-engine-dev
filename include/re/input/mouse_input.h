@@ -1,5 +1,4 @@
-#ifndef MOUSE_INPUT_H
-#define MOUSE_INPUT_H
+#pragma once
 
 #include <string>
 #include <vector>
@@ -91,5 +90,3 @@ class MouseAction {
     std::vector<std::string> mouseValues;
     MouseInput *mouseInput = nullptr;
 };
-
-#endif //MOUSE_INPUT_H

@@ -1,5 +1,4 @@
-#ifndef TEXT_RENDERING_EC_SYSTEM_H
-#define TEXT_RENDERING_EC_SYSTEM_H
+#pragma once
 
 #include "../ec_system.h"
 
@@ -33,5 +32,3 @@ class TextRenderingECSystem : public ECSystem {
         }
     }
 };
-
-#endif //TEXT_RENDERING_EC_SYSTEM_H

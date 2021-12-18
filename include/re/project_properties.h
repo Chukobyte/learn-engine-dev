@@ -1,5 +1,4 @@
-#ifndef PROJECT_PROPERTIES_H
-#define PROJECT_PROPERTIES_H
+#pragma once
 
 #include <string>
 #include <vector>
@@ -73,6 +72,3 @@ class ProjectProperties {
     AssetConfigurations LoadProjectAssets(const nlohmann::json& assetsJsonArray);
     InputActionsConfigurations LoadProjectInputActions(const nlohmann::json& inputActionsJsonArray);
 };
-
-
-#endif //PROJECT_PROPERTIES_H

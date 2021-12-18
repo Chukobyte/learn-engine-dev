@@ -1,5 +1,4 @@
-#ifndef ASSET_MANAGER_H
-#define ASSET_MANAGER_H
+#pragma once
 
 #include <unordered_map>
 #include <string>
@@ -10,7 +9,6 @@
 #include "../rendering/texture.h"
 #include "../rendering/font.h"
 #include "../rendering/render_context.h"
-
 
 class AssetManager {
   public:
@@ -45,5 +43,3 @@ class AssetManager {
 
     AssetManager();
 };
-
-#endif //ASSET_MANAGER_H

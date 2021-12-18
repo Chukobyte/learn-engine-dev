@@ -1,5 +1,4 @@
-#ifndef SPRITE_RENDERER_H
-#define SPRITE_RENDERER_H
+#pragma once
 
 #include <glad/glad.h>
 
@@ -58,6 +57,3 @@ class SpriteRenderer {
     void Draw(Texture *texture2D, const Rect2 &sourceRectangle, const Rect2 &destinationRectangle, float rotation,
               const Color &color, bool flipX, bool flipY);
 };
-
-
-#endif //SPRITE_RENDERER_H

@@ -1,5 +1,4 @@
-#ifndef CONSTANTS_H
-#define CONSTANTS_H
+#pragma once
 
 namespace Timing {
 namespace Update {
@@ -10,5 +9,3 @@ const float DELTA_TIME = 0.01f;
 const Uint32 MAX_FRAME_TIME = 250;
 }
 }
-
-#endif //CONSTANTS_H

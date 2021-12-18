@@ -1,5 +1,4 @@
-#ifndef SCENE_H
-#define SCENE_H
+#pragma once
 
 #include <vector>
 #include <unordered_map>
@@ -17,5 +16,3 @@ struct Scene {
     SceneNode rootNode = {};
     std::unordered_map<Entity, SceneNode> sceneNodes = {};
 };
-
-#endif //SCENE_H

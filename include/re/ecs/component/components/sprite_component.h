@@ -1,5 +1,4 @@
-#ifndef SPRITE_COMPONENT_H
-#define SPRITE_COMPONENT_H
+#pragma once
 
 #include "../component.h"
 #include "../../../rendering/texture.h"
@@ -14,5 +13,3 @@ struct SpriteComponent {
     Color modulate = Color(1.0f, 1.0f, 1.0f, 1.0f);
     Rect2 drawDestination; // Updated when drawing to position
 };
-
-#endif //SPRITE_COMPONENT_H

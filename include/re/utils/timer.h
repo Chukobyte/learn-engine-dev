@@ -1,5 +1,4 @@
-#ifndef TIMER_H
-#define TIMER_H
+#pragma once
 
 #include <SDL2/SDL.h>
 
@@ -31,5 +30,3 @@ class Timer {
     bool isPaused = false;
     bool hasStarted = false;
 };
-
-#endif //TIMER_H

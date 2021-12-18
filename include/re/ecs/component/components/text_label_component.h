@@ -1,5 +1,4 @@
-#ifndef TEXT_LABEL_COMPONENT_H
-#define TEXT_LABEL_COMPONENT_H
+#pragma once
 
 #include "../../../rendering/font.h"
 #include "../../../rendering/color.h"
@@ -9,5 +8,3 @@ struct TextLabelComponent {
     Font *font = nullptr;
     Color color;
 };
-
-#endif //TEXT_LABEL_COMPONENT_H

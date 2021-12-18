@@ -1,5 +1,4 @@
-#ifndef SCENE_LOADER_H
-#define SCENE_LOADER_H
+#pragma once
 
 #include "scene.h"
 
@@ -40,5 +39,3 @@ class SceneLoader {
   public:
     static Scene* LoadSceneFile(const std::string& filePath);
 };
-
-#endif //SCENE_LOADER_H

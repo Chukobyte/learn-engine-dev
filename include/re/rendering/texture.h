@@ -1,5 +1,4 @@
-#ifndef TEXTURE_H
-#define TEXTURE_H
+#pragma once
 
 #include <glad/glad.h>
 
@@ -39,5 +38,3 @@ class Texture {
     unsigned int GetWrapFromString(const std::string &wrap) const;
     unsigned int GetFilterFromString(const std::string &filter) const;
 };
-
-#endif //TEXTURE_H

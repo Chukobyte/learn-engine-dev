@@ -1,5 +1,4 @@
-#ifndef COLOR_H
-#define COLOR_H
+#pragma once
 
 #include <glad/glad.h>
 
@@ -26,5 +25,3 @@ class Color {
         return Color(this->r * value, this->g * value, this->b * value, this->a);
     }
 };
-
-#endif //COLOR_H

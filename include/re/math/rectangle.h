@@ -1,5 +1,4 @@
-#ifndef RECTANGLE_H
-#define RECTANGLE_H
+#pragma once
 
 #include <iostream>
 
@@ -27,5 +26,3 @@ class Rectangle {
 
     friend std::ostream& operator<<(std::ostream& os, const Rectangle &r);
 };
-
-#endif //RECTANGLE_H

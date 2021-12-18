@@ -1,5 +1,4 @@
-#ifndef AUDIO_H
-#define AUDIO_H
+#pragma once
 
 #include <SDL2/SDL_mixer.h>
 
@@ -66,5 +65,3 @@ class SoundEffect {
   private:
     Mix_Chunk *mixChunk = nullptr;
 };
-
-#endif //AUDIO_H

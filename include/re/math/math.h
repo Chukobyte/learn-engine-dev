@@ -1,5 +1,4 @@
-#ifndef MATH_H
-#define MATH_H
+#pragma once
 
 #include "rectangle.h"
 
@@ -8,5 +7,3 @@ using IVector2 = glm::ivec2;
 using Vector3 = glm::vec3;
 using Matrix4 = glm::mat4;
 using Rect2 = Rectangle;
-
-#endif //MATH_H

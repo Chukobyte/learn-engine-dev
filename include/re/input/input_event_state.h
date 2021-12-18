@@ -1,5 +1,4 @@
-#ifndef INPUT_EVENT_STATE_H
-#define INPUT_EVENT_STATE_H
+#pragma once
 
 #include <SDL2/SDL.h>
 
@@ -82,5 +81,3 @@ class InputEventState {
         return inputEvent;
     }
 };
-
-#endif //INPUT_EVENT_STATE_H

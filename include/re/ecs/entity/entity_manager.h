@@ -1,5 +1,4 @@
-#ifndef ENTITY_MANAGER_H
-#define ENTITY_MANAGER_H
+#pragma once
 
 #include <array>
 #include <vector>
@@ -34,5 +33,3 @@ class EntityManager {
     EntityManager() = default;
     Entity GetUniqueEntityId();
 };
-
-#endif //ENTITY_MANAGER_H

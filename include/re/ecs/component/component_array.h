@@ -1,5 +1,4 @@
-#ifndef COMPONENT_ARRAY_H
-#define COMPONENT_ARRAY_H
+#pragma once
 
 #include <unordered_map>
 #include <cassert>
@@ -74,5 +73,3 @@ class ComponentArray : public IComponentArray {
     std::unordered_map<size_t, Entity> indexToEntityMap;
     size_t size = 0;
 };
-
-#endif //COMPONENT_ARRAY_H
