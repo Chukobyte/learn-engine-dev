@@ -151,7 +151,6 @@ class ECSOrchestrator {
 
     ECSOrchestrator();
     void RefreshEntitySignatureChanged(Entity entity);
-    void DestroyEntity(Entity entity);
 };
 
 #endif //ECS_ORCHESTRATOR_H

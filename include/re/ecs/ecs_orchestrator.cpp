@@ -20,10 +20,6 @@ ECSOrchestrator* ECSOrchestrator::GetInstance() {
     return instance;
 }
 
-void ECSOrchestrator::DestroyEntity(Entity entity) {
-    entityManager->DestroyEntity(entity);
-}
-
 void ECSOrchestrator::DeleteEntitiesQueuedForDeletion() {
     entityManager->DeleteEntitiesQueuedForDeletion();
 }
@@ -85,6 +81,7 @@ void ECSOrchestrator::DestroyQueuedEntities() {
 
 void ECSOrchestrator::DestroyEntity(Entity entity) {
     sceneManager->DeleteNode(entity);
+    entityManager->DestroyEntity(entity);
     componentManager->EntityDestroyed(entity);
     ecSystemManager->EntityDestroyed(entity);
 }
