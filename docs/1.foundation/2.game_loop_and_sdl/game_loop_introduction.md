@@ -19,8 +19,7 @@ In the next section we will define a `GameEngine` class, but we have a few more 
 As we add more functionality and systems to the game it will be useful to make logging statements for debugging, error, etc...  The `Logger` class will be used for this purpose throughout ***Red Engine***.
 
 ```cpp
-#ifndef LOGGER_H
-#define LOGGER_H
+#pragma once
 
 #include <string>
 
@@ -46,8 +45,6 @@ class Logger {
   private:
     Logger() = default;
 };
-
-#endif //LOGGER_H
 ```
 
 ```c++
@@ -145,8 +142,7 @@ Using log levels with a higher priority will print all logs for that level and b
 `EngineContext` will store engine related properties and state.  There will be parts of ***Red Engine*** that need access to properties such as if the game engine is running or the engine's name.  We wouldn't want to have to pass the top level `GameEngine` class (that we haven't defined yet) to places that need it, so we're going to separate engine properties and state into it's own class `GameEngineContext`.  `GameEngineContext` will also be a singleton just like our `Logger` class.
 
 ```c++
-#ifndef GAME_ENGINE_CONTEXT_H
-#define GAME_ENGINE_CONTEXT_H
+#pragma once
 
 class GameEngineContext {
   public:
@@ -163,8 +159,6 @@ class GameEngineContext {
 
     GameEngineContext() = default;
 };
-
-#endif //GAME_ENGINE_CONTEXT_H
 ```
 
 ```c++

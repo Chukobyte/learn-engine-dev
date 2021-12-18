@@ -11,8 +11,7 @@
 Before we render text to the screen, we need to first define the concept of a font within ***Red Engine***.
 
 ```c++
-#ifndef FONT_H
-#define FONT_H
+#pragma once
 
 #include <iostream>
 
@@ -133,8 +132,6 @@ class Font {
         glBindVertexArray(0);
     }
 };
-
-#endif //FONT_H
 ```
 
 ## Update Rendering

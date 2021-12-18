@@ -3,8 +3,7 @@
 ## Input Event State
 
 ```c++
-#ifndef INPUT_EVENT_STATE_H
-#define INPUT_EVENT_STATE_H
+#pragma once
 
 #include <SDL2/SDL.h>
 
@@ -87,16 +86,12 @@ class InputEventState {
         return inputEvent;
     }
 };
-
-#endif //INPUT_EVENT_STATE_H
-
 ```
 
 ## Keyboard
 
 ```c++
-#ifndef KEYBOARD_INPUT_H
-#define KEYBOARD_INPUT_H
+#pragma once
 
 #include <string>
 #include <map>
@@ -204,15 +199,12 @@ class KeyboardAction {
         }
     }
 };
-
-#endif //KEYBOARD_INPUT_H
 ```
 
 ## Mouse
 
 ```c++
-#ifndef MOUSE_INPUT_H
-#define MOUSE_INPUT_H
+#pragma once
 
 #include <string>
 #include <vector>
@@ -304,8 +296,6 @@ class MouseAction {
     std::vector<std::string> mouseValues;
     MouseInput *mouseInput = nullptr;
 };
-
-#endif //MOUSE_INPUT_H
 ```
 
 ```c++
@@ -364,8 +354,7 @@ void MouseInput::ProcessSDLEvent(InputEvent &inputEvent) {
 ## Joystick
 
 ```c++
-#ifndef JOYSTICK_INPUT_H
-#define JOYSTICK_INPUT_H
+#pragma once
 
 #include <string>
 #include <vector>
@@ -594,8 +583,6 @@ class JoystickAction {
     JoystickInput *joystickInput = nullptr;
     std::vector<std::string> joystickValues;
 };
-
-#endif //JOYSTICK_INPUT_H
 ```
 
 ```c++

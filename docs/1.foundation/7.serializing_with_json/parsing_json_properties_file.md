@@ -9,8 +9,7 @@
 The `JsonHelper` class will be used to help validate json fields and the `JsonFileHelper` to load json files.
 
 ```c++
-#ifndef JSON_HELPER_H
-#define JSON_HELPER_H
+#pragma once
 
 #include <iostream>
 #include <fstream>
@@ -49,8 +48,6 @@ class JsonFileHelper {
     }
 
 };
-
-#endif //JSON_HELPER_H
 ```
 
 ## Project Properties

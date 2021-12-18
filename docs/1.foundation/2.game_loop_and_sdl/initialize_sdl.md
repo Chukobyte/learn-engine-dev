@@ -5,8 +5,7 @@
 The `GameEngine` class will tie the game loop and engine systems together.
 
 ```c++
-#ifndef GAME_ENGINE_H
-#define GAME_ENGINE_H
+#pragma once
 
 #include "game_engine_context.h"
 #include "fps_counter.h"
@@ -29,8 +28,6 @@ class GameEngine {
     bool Initialize();
     bool InitializeSDL();
 };
-
-#endif //GAME_ENGINE_H
 ```
 
 ```c++
@@ -135,8 +132,7 @@ Last but not least, we should check performance to ensure we are getting the fra
 The `Timer` class is straight forward.
 
 ```c++
-#ifndef TIMER_H
-#define TIMER_H
+#pragma once
 
 #include <SDL2/SDL.h>
 
@@ -168,8 +164,6 @@ class Timer {
     bool isPaused = false;
     bool hasStarted = false;
 };
-
-#endif //TIMER_H
 ```
 
 ```c++
@@ -277,8 +271,7 @@ bool Timer::IsPaused() const {
 ### FPS Counter
 
 ```c++
-#ifndef FPS_COUNTER_H
-#define FPS_COUNTER_H
+#pragma once
 
 #include "./re/utils/timer.h"
 
@@ -296,8 +289,6 @@ class FPSCounter {
 
     FPSCounter();
 };
-
-#endif //FPS_COUNTER_H
 ```
 
 ```c++

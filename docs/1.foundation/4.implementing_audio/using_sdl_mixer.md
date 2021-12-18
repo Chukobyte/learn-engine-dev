@@ -5,8 +5,7 @@
 Creating `Music` and `SoundEffect` classes.
 
 ```c++
-#ifndef AUDIO_H
-#define AUDIO_H
+#pragma once
 
 #include <SDL2/SDL_mixer.h>
 
@@ -73,8 +72,6 @@ class SoundEffect {
   private:
     Mix_Chunk *mixChunk = nullptr;
 };
-
-#endif //AUDIO_H
 ```
 
 ## Asset Manager
@@ -82,8 +79,7 @@ class SoundEffect {
 Will need to add functions for `Music` and `SoundEffect` in the `AssetManager` class.
 
 ```c++
-#ifndef ASSET_MANAGER_H
-#define ASSET_MANAGER_H
+#pragma once
 
 #include <unordered_map>
 #include <string>
@@ -126,8 +122,6 @@ class AssetManager {
 
     AssetManager();
 };
-
-#endif //ASSET_MANAGER_H
 ```
 
 ```c++
@@ -181,8 +175,7 @@ I haven't included the entire `asset_manager.cpp` file to reduce lines.
 The `AudioHelper` class contains static functions used to interact with music and sound effects.
 
 ```c++
-#ifndef AUDIO_HELPER_H
-#define AUDIO_HELPER_H
+#pragma once
 
 #include "./re/audio/audio.h"
 #include "./re/utils/helper.h"
@@ -236,8 +229,6 @@ class AudioHelper {
         SetSoundVolume(volume);
     }
 };
-
-#endif //AUDIO_HELPER_H
 ```
 
 ## Using Audio

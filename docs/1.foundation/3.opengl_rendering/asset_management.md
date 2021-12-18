@@ -19,8 +19,7 @@ SRC_C = $(wildcard $(INCLUDE_DIR)/glad/glad.c)
 Instances of the `Texture` class will be used to render sprites to the screen.
 
 ```c++
-#ifndef TEXTURE_H
-#define TEXTURE_H
+#pragma once
 
 #include <glad/glad.h>
 
@@ -60,8 +59,6 @@ class Texture {
     unsigned int GetWrapFromString(const std::string &wrap) const;
     unsigned int GetFilterFromString(const std::string &filter) const;
 };
-
-#endif //TEXTURE_H
 ```
 
 ```c++
@@ -210,8 +207,7 @@ If the texture is loaded successfully, the `Generate` function is called.  This 
 Now that we have the concept of a texture defined in ***Red Engine***, we will need something to maintain textures as well as other assets.
 
 ```c++
-#ifndef ASSET_MANAGER_H
-#define ASSET_MANAGER_H
+#pragma once
 
 #include <unordered_map>
 #include <string>
@@ -233,8 +229,6 @@ class AssetManager {
 
     AssetManager();
 };
-
-#endif //ASSET_MANAGER_H
 ```
 
 ```c++

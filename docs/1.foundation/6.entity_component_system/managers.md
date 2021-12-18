@@ -3,8 +3,7 @@
 ## Entity Manager
 
 ```c++
-#ifndef ENTITY_MANAGER_H
-#define ENTITY_MANAGER_H
+#pragma once
 
 #include <array>
 #include <vector>
@@ -39,8 +38,6 @@ class EntityManager {
     EntityManager() = default;
     Entity GetUniqueEntityId();
 };
-
-#endif //ENTITY_MANAGER_H
 ```
 
 ```c++
@@ -113,8 +110,7 @@ Entity EntityManager::GetUniqueEntityId() {
 ## Component Manager
 
 ```c++
-#ifndef COMPONENT_MANAGER_H
-#define COMPONENT_MANAGER_H
+#pragma once
 
 #include <unordered_map>
 #include <memory>
@@ -192,8 +188,6 @@ class ComponentManager {
 
     void EntityDestroyed(Entity entity);
 };
-
-#endif //COMPONENT_MANAGER_H
 ```
 
 ```c++
@@ -215,6 +209,7 @@ void ComponentManager::EntityDestroyed(Entity entity) {
 ## EC System Manager
 
 ```c++
+#pragma once
 #ifndef ENTITY_MANAGER_H
 #define ENTITY_MANAGER_H
 
@@ -251,8 +246,6 @@ class EntityManager {
     EntityManager() = default;
     Entity GetUniqueEntityId();
 };
-
-#endif //ENTITY_MANAGER_H
 ```
 
 ```c++

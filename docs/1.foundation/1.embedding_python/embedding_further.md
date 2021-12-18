@@ -12,8 +12,6 @@ So far we need to:
 With that said, let's create `PyHelper.hpp` which encapsulates this functionality.
 
 ```c++
-#ifndef PYHELPER_HPP
-#define PYHELPER_HPP
 #pragma once
 
 #define PY_SSIZE_T_CLEAN
@@ -86,9 +84,6 @@ class CPyObject {
   private:
     PyObject* pyObj;
 };
-
-#endif //PYHELPER_HPP
-
 ```
 
 There are two classes created in `PyHelper.hpp`.  `CPyInstance` responsibility is to initialize the python interpreter, perform any additional setup, and shutdown the intepreter once finished.  `CPyObject` is a wrapper class for `PyObject` which is a python object.  Instead of having to explicitly decrement with `Py_DECREF` we instead use this `CPyObject` which decrements the reference count once the object is out of scope.
@@ -134,8 +129,7 @@ This is similar to the code snippet we've created in the previous section, but i
 We're able to import modules and call functions, but there may be times where we'll want to interact with an instance of a python class.  Furthermore, we don't want to have to import a module and query its attributes each time we want to use a function as that will affect performance.  In this section we'll create a class to manage active python objects.
 
 ```c++
-#ifndef PYTHON_OBJECT_MANAGER_H
-#define PYTHON_OBJECT_MANAGER_H
+#pragma once
 
 #include <string>
 #include <unordered_map>
@@ -179,8 +173,6 @@ class PythonObjectManager {
         return modules[classPath].classes[className];
     }
 };
-
-#endif // PYTHON_OBJECT_MANAGER_H
 ```
 
 Within `python_object_manager.h` we first create `PythonModuleObject` which is a struct to hold a python module's object data.  It will hold all the python class objects loaded for the module.

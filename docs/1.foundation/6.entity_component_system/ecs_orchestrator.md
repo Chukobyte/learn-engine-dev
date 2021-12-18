@@ -3,8 +3,7 @@
 ## ECS Orchestrator Class
 
 ```c++
-#ifndef ECS_ORCHESTRATOR_H
-#define ECS_ORCHESTRATOR_H
+#pragma once
 
 #include <vector>
 
@@ -155,8 +154,6 @@ class ECSOrchestrator {
     void RefreshEntitySignatureChanged(Entity entity);
     void DestroyEntity(Entity entity);
 };
-
-#endif //ECS_ORCHESTRATOR_H
 ```
 
 ```c++

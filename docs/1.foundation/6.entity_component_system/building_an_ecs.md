@@ -5,15 +5,12 @@
 An `Entity` will represented as an `unsigned int`.
 
 ```c++
-#ifndef ENTITY_H
-#define ENTITY_H
+#pragma once
 
 using Entity = unsigned int;
 
 const Entity MAX_ENTITIES = 20000;
 const Entity NULL_ENTITY = 0;
-
-#endif //ENTITY_H
 ```
 
 ## Component
@@ -23,8 +20,7 @@ Components will add functionality for an entity.
 ### Component Class
 
 ```c++
-#ifndef COMPONENT_H
-#define COMPONENT_H
+#pragma once
 
 #include <bitset>
 
@@ -32,15 +28,12 @@ const std::uint32_t MAX_COMPONENT_TYPES = 32;
 
 using ComponentType = std::uint32_t;
 using ComponentSignature = std::bitset<MAX_COMPONENT_TYPES>;
-
-#endif //COMPONENT_H
 ```
 
 ### Component Array
 
 ```c++
-#ifndef COMPONENT_ARRAY_H
-#define COMPONENT_ARRAY_H
+#pragma once
 
 #include <unordered_map>
 #include <cassert>
@@ -115,8 +108,6 @@ class ComponentArray : public IComponentArray {
     std::unordered_map<size_t, Entity> indexToEntityMap;
     size_t size = 0;
 };
-
-#endif //COMPONENT_ARRAY_H
 ```
 
 ## System
@@ -124,8 +115,7 @@ class ComponentArray : public IComponentArray {
 Systems will process components for an entity based on a signature.
 
 ```c++
-#ifndef EC_SYSTEM_H
-#define EC_SYSTEM_H
+#pragma once
 
 #include <set>
 
@@ -171,8 +161,6 @@ class ECSystem {
     virtual void OnSceneStart(Scene* scene) {}
     virtual void OnSceneEnd(Scene* scene) {}
 };
-
-#endif //EC_SYSTEM_H
 ```
 
 ## Scene
@@ -180,8 +168,7 @@ class ECSystem {
 Entities will be placed in a scene.
 
 ```c++
-#ifndef SCENE_H
-#define SCENE_H
+#pragma once
 
 #include <vector>
 #include <unordered_map>
@@ -199,6 +186,4 @@ struct Scene {
     SceneNode rootNode = {};
     std::unordered_map<Entity, SceneNode> sceneNodes = {};
 };
-
-#endif //SCENE_H
 ```

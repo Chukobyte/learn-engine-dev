@@ -11,8 +11,7 @@
 The `Rectangle` class will mostly be used for defining the bounds of a sprite's draw source and draw destination which we'll get to later.
 
 ```c++
-#ifndef RECTANGLE_H
-#define RECTANGLE_H
+#pragma once
 
 #include <iostream>
 
@@ -40,8 +39,6 @@ class Rectangle {
 
     friend std::ostream& operator<<(std::ostream& os, const Rectangle &r);
 };
-
-#endif //RECTANGLE_H
 ```
 
 ```c++
@@ -58,8 +55,7 @@ std::ostream& operator<<(std::ostream& os, const Rectangle &r) {
 ***Red Engine*** will use GLM, but we may want to use another math library or write our own in the future.  To make this easier, will we define [type aliases](https://en.cppreference.com/w/cpp/language/type_alias) for math related classes.
 
 ```c++
-#ifndef MATH_H
-#define MATH_H
+#pragma once
 
 #include "rectangle.h"
 
@@ -68,8 +64,6 @@ using IVector2 = glm::ivec2;
 using Vector3 = glm::vec3;
 using Matrix4 = glm::mat4;
 using Rect2 = Rectangle;
-
-#endif //MATH_H
 ```
 
 ## Color
@@ -77,8 +71,7 @@ using Rect2 = Rectangle;
 Not much to explain other than needing a concept of color within the engine.
 
 ```c++
-#ifndef COLOR_H
-#define COLOR_H
+#pragma once
 
 #include <glad/glad.h>
 
@@ -97,8 +90,6 @@ class Color {
         return Color(this->r * value, this->g * value, this->b * value, this->a);
     }
 };
-
-#endif //COLOR_H
 ```
 
 ## Renderer Batcher
@@ -106,8 +97,7 @@ class Color {
 The `RendererBatcher` class will be used to take draw calls and batch them to be used during rendering.  Typically, batching is done to limit draw calls for efficiency and performance reasons but for simplicity’s sake this batcher will be designed to just defer and submit draw calls during the `Render` phase.
 
 ```c++
-#ifndef RENDERER_BATCHER_H
-#define RENDERER_BATCHER_H
+#pragma once
 
 #include <vector>
 #include <map>
@@ -142,8 +132,6 @@ class RendererBatcher {
   private:
     std::map<int, ZIndexDrawBatch> drawBatches;
 };
-
-#endif //RENDERER_BATCHER_H
 ```
 
 ```c++
@@ -179,8 +167,7 @@ What are shaders?  They are simply GPU programs, in the case of OpenGL written i
 A shader can be written for each of the [shader stages](https://www.khronos.org/opengl/wiki/Shader#Stages), but we will only use vertex and fragment shaders in ***Red Engine***.
 
 ```c++
-#ifndef SHADER_H
-#define SHADER_H
+#pragma once
 
 #include <string>
 #include <fstream>
@@ -226,8 +213,6 @@ class Shader {
     bool IsShaderFilesValid(const std::string &vertexPath, const std::string &fragmentPath);
     void CheckCompileErrors(unsigned int shader, const std::string &type);
 };
-
-#endif //SHADER_H
 ```
 
 ```c++
@@ -433,8 +418,7 @@ void main() {
 The next thing to tackle it to write the renderer class for sprites!
 
 ```c++
-#ifndef SPRITE_RENDERER_H
-#define SPRITE_RENDERER_H
+#pragma once
 
 #include <glad/glad.h>
 
@@ -492,8 +476,6 @@ class SpriteRenderer {
     GLuint quadVBO;
     ProjectProperties *projectProperties = nullptr;
 };
-
-#endif //SPRITE_RENDERER_H
 ```
 
 ```c++
@@ -612,8 +594,7 @@ Will explain soon...
 We have a `SpriteRenderer` and now it's time to define the top level 2d renderer class.
 
 ```c++
-#ifndef RENDERER_2D_H
-#define RENDERER_2D_H
+#pragma once
 
 #include "renderer_batcher.h"
 #include "sprite_renderer.h"
@@ -630,8 +611,6 @@ class Renderer2D {
     RendererBatcher rendererBatcher;
     SpriteRenderer *spriteRenderer = nullptr;
 };
-
-#endif //RENDERER_2D_H
 ```
 
 ```c++
