@@ -455,8 +455,7 @@
 <article class="md-content__inner md-typeset">
 <h1 id="managers">Managers</h1>
 <h2 id="entity-manager">Entity Manager</h2>
-<div class="highlight"><pre><span></span><code><span class="cp">#ifndef ENTITY_MANAGER_H</span>
-<span class="cp">#define ENTITY_MANAGER_H</span>
+<div class="highlight"><pre><span></span><code><span class="cp">#pragma once</span>
 
 <span class="cp">#include</span> <span class="cpf">&lt;array&gt;</span><span class="cp"></span>
 <span class="cp">#include</span> <span class="cpf">&lt;vector&gt;</span><span class="cp"></span>
@@ -491,8 +490,6 @@
     <span class="n">EntityManager</span><span class="p">()</span> <span class="o">=</span> <span class="k">default</span><span class="p">;</span>
     <span class="n">Entity</span> <span class="nf">GetUniqueEntityId</span><span class="p">();</span>
 <span class="p">};</span>
-
-<span class="cp">#endif </span><span class="c1">//ENTITY_MANAGER_H</span>
 </code></pre></div>
 <div class="highlight"><pre><span></span><code><span class="cp">#include</span> <span class="cpf">"entity_manager.h"</span><span class="cp"></span>
 
@@ -560,8 +557,7 @@
 <span class="p">}</span>
 </code></pre></div>
 <h2 id="component-manager">Component Manager</h2>
-<div class="highlight"><pre><span></span><code><span class="cp">#ifndef COMPONENT_MANAGER_H</span>
-<span class="cp">#define COMPONENT_MANAGER_H</span>
+<div class="highlight"><pre><span></span><code><span class="cp">#pragma once</span>
 
 <span class="cp">#include</span> <span class="cpf">&lt;unordered_map&gt;</span><span class="cp"></span>
 <span class="cp">#include</span> <span class="cpf">&lt;memory&gt;</span><span class="cp"></span>
@@ -639,8 +635,6 @@
 
     <span class="kt">void</span> <span class="n">EntityDestroyed</span><span class="p">(</span><span class="n">Entity</span> <span class="n">entity</span><span class="p">);</span>
 <span class="p">};</span>
-
-<span class="cp">#endif </span><span class="c1">//COMPONENT_MANAGER_H</span>
 </code></pre></div>
 <div class="highlight"><pre><span></span><code><span class="cp">#include</span> <span class="cpf">"component_manager.h"</span><span class="cp"></span>
 
@@ -657,7 +651,8 @@
 <span class="p">}</span>
 </code></pre></div>
 <h2 id="ec-system-manager">EC System Manager</h2>
-<div class="highlight"><pre><span></span><code><span class="cp">#ifndef ENTITY_MANAGER_H</span>
+<div class="highlight"><pre><span></span><code><span class="cp">#pragma once</span>
+<span class="cp">#ifndef ENTITY_MANAGER_H</span>
 <span class="cp">#define ENTITY_MANAGER_H</span>
 
 <span class="cp">#include</span> <span class="cpf">&lt;array&gt;</span><span class="cp"></span>
@@ -693,8 +688,6 @@
     <span class="n">EntityManager</span><span class="p">()</span> <span class="o">=</span> <span class="k">default</span><span class="p">;</span>
     <span class="n">Entity</span> <span class="nf">GetUniqueEntityId</span><span class="p">();</span>
 <span class="p">};</span>
-
-<span class="cp">#endif </span><span class="c1">//ENTITY_MANAGER_H</span>
 </code></pre></div>
 <div class="highlight"><pre><span></span><code><span class="cp">#include</span> <span class="cpf">"entity_manager.h"</span><span class="cp"></span>
 

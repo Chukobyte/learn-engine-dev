@@ -535,8 +535,7 @@
 <p><strong><em>Red Engine</em></strong> uses the <a href="https://freetype.org/">FreeType</a> to help render font.</p>
 <h3 id="font-class">Font Class</h3>
 <p>Before we render text to the screen, we need to first define the concept of a font within <strong><em>Red Engine</em></strong>.</p>
-<div class="highlight"><pre><span></span><code><span class="cp">#ifndef FONT_H</span>
-<span class="cp">#define FONT_H</span>
+<div class="highlight"><pre><span></span><code><span class="cp">#pragma once</span>
 
 <span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp"></span>
 
@@ -657,8 +656,6 @@
         <span class="n">glBindVertexArray</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
     <span class="p">}</span>
 <span class="p">};</span>
-
-<span class="cp">#endif </span><span class="c1">//FONT_H</span>
 </code></pre></div>
 <h2 id="update-rendering">Update Rendering</h2>
 <h3 id="renderer-batcher">Renderer Batcher</h3>

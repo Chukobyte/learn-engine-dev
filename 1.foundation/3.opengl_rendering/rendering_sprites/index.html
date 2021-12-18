@@ -583,8 +583,7 @@
 <p><a href="https://github.com/g-truc/glm">GLM</a> is a header only math library based on the OpenGL Shading Language (GLSL) specifications.  Most things related to math such as vectors, matrices, etc... will be handled by GLM.</p>
 <h3 id="rectangle">Rectangle</h3>
 <p>The <code>Rectangle</code> class will mostly be used for defining the bounds of a sprite's draw source and draw destination which we'll get to later.</p>
-<div class="highlight"><pre><span></span><code><span class="cp">#ifndef RECTANGLE_H</span>
-<span class="cp">#define RECTANGLE_H</span>
+<div class="highlight"><pre><span></span><code><span class="cp">#pragma once</span>
 
 <span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp"></span>
 
@@ -612,8 +611,6 @@
 
     <span class="k">friend</span> <span class="n">std</span><span class="o">::</span><span class="n">ostream</span><span class="o">&amp;</span> <span class="k">operator</span><span class="o">&lt;&lt;</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">ostream</span><span class="o">&amp;</span> <span class="n">os</span><span class="p">,</span> <span class="k">const</span> <span class="n">Rectangle</span> <span class="o">&amp;</span><span class="n">r</span><span class="p">);</span>
 <span class="p">};</span>
-
-<span class="cp">#endif </span><span class="c1">//RECTANGLE_H</span>
 </code></pre></div>
 <div class="highlight"><pre><span></span><code><span class="cp">#include</span> <span class="cpf">"rectangle.h"</span><span class="cp"></span>
 
@@ -624,8 +621,7 @@
 </code></pre></div>
 <h3 id="custom-math-header">Custom Math Header</h3>
 <p><strong><em>Red Engine</em></strong> will use GLM, but we may want to use another math library or write our own in the future.  To make this easier, will we define <a href="https://en.cppreference.com/w/cpp/language/type_alias">type aliases</a> for math related classes.</p>
-<div class="highlight"><pre><span></span><code><span class="cp">#ifndef MATH_H</span>
-<span class="cp">#define MATH_H</span>
+<div class="highlight"><pre><span></span><code><span class="cp">#pragma once</span>
 
 <span class="cp">#include</span> <span class="cpf">"rectangle.h"</span><span class="cp"></span>
 
@@ -634,13 +630,10 @@
 <span class="k">using</span> <span class="n">Vector3</span> <span class="o">=</span> <span class="n">glm</span><span class="o">::</span><span class="n">vec3</span><span class="p">;</span>
 <span class="k">using</span> <span class="n">Matrix4</span> <span class="o">=</span> <span class="n">glm</span><span class="o">::</span><span class="n">mat4</span><span class="p">;</span>
 <span class="k">using</span> <span class="n">Rect2</span> <span class="o">=</span> <span class="n">Rectangle</span><span class="p">;</span>
-
-<span class="cp">#endif </span><span class="c1">//MATH_H</span>
 </code></pre></div>
 <h2 id="color">Color</h2>
 <p>Not much to explain other than needing a concept of color within the engine.</p>
-<div class="highlight"><pre><span></span><code><span class="cp">#ifndef COLOR_H</span>
-<span class="cp">#define COLOR_H</span>
+<div class="highlight"><pre><span></span><code><span class="cp">#pragma once</span>
 
 <span class="cp">#include</span> <span class="cpf">&lt;glad/glad.h&gt;</span><span class="cp"></span>
 
@@ -659,13 +652,10 @@
         <span class="k">return</span> <span class="n">Color</span><span class="p">(</span><span class="k">this</span><span class="o">-&gt;</span><span class="n">r</span> <span class="o">*</span> <span class="n">value</span><span class="p">,</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">g</span> <span class="o">*</span> <span class="n">value</span><span class="p">,</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">b</span> <span class="o">*</span> <span class="n">value</span><span class="p">,</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">a</span><span class="p">);</span>
     <span class="p">}</span>
 <span class="p">};</span>
-
-<span class="cp">#endif </span><span class="c1">//COLOR_H</span>
 </code></pre></div>
 <h2 id="renderer-batcher">Renderer Batcher</h2>
 <p>The <code>RendererBatcher</code> class will be used to take draw calls and batch them to be used during rendering.  Typically, batching is done to limit draw calls for efficiency and performance reasons but for simplicity’s sake this batcher will be designed to just defer and submit draw calls during the <code>Render</code> phase.</p>
-<div class="highlight"><pre><span></span><code><span class="cp">#ifndef RENDERER_BATCHER_H</span>
-<span class="cp">#define RENDERER_BATCHER_H</span>
+<div class="highlight"><pre><span></span><code><span class="cp">#pragma once</span>
 
 <span class="cp">#include</span> <span class="cpf">&lt;vector&gt;</span><span class="cp"></span>
 <span class="cp">#include</span> <span class="cpf">&lt;map&gt;</span><span class="cp"></span>
@@ -700,8 +690,6 @@
   <span class="k">private</span><span class="o">:</span>
     <span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span><span class="kt">int</span><span class="p">,</span> <span class="n">ZIndexDrawBatch</span><span class="o">&gt;</span> <span class="n">drawBatches</span><span class="p">;</span>
 <span class="p">};</span>
-
-<span class="cp">#endif </span><span class="c1">//RENDERER_BATCHER_H</span>
 </code></pre></div>
 <div class="highlight"><pre><span></span><code><span class="cp">#include</span> <span class="cpf">"./renderer_batcher.h"</span><span class="cp"></span>
 
@@ -727,8 +715,7 @@
 <h3 id="shaders">Shaders</h3>
 <p>What are shaders?  They are simply GPU programs, in the case of OpenGL written in <a href="https://www.khronos.org/opengl/wiki/OpenGL_Shading_Language">GLSL</a> (OpenGL Shading Language).  Before we write the renderer for <strong><em>Red Engine</em></strong> we'll first implement the <code>Shader</code> class which will compile shaders, install the shaders for use, and set <a href="https://www.khronos.org/opengl/wiki/Uniform_(GLSL)">uniform variables</a>.</p>
 <p>A shader can be written for each of the <a href="https://www.khronos.org/opengl/wiki/Shader#Stages">shader stages</a>, but we will only use vertex and fragment shaders in <strong><em>Red Engine</em></strong>.</p>
-<div class="highlight"><pre><span></span><code><span class="cp">#ifndef SHADER_H</span>
-<span class="cp">#define SHADER_H</span>
+<div class="highlight"><pre><span></span><code><span class="cp">#pragma once</span>
 
 <span class="cp">#include</span> <span class="cpf">&lt;string&gt;</span><span class="cp"></span>
 <span class="cp">#include</span> <span class="cpf">&lt;fstream&gt;</span><span class="cp"></span>
@@ -774,8 +761,6 @@
     <span class="kt">bool</span> <span class="nf">IsShaderFilesValid</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">vertexPath</span><span class="p">,</span> <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">fragmentPath</span><span class="p">);</span>
     <span class="kt">void</span> <span class="nf">CheckCompileErrors</span><span class="p">(</span><span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">shader</span><span class="p">,</span> <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">type</span><span class="p">);</span>
 <span class="p">};</span>
-
-<span class="cp">#endif </span><span class="c1">//SHADER_H</span>
 </code></pre></div>
 <div class="highlight"><pre><span></span><code><span class="cp">#include</span> <span class="cpf">"shader.h"</span><span class="cp"></span>
 
@@ -962,8 +947,7 @@
 </code></pre></div>
 <h4 id="spriterenderer-class">SpriteRenderer Class</h4>
 <p>The next thing to tackle it to write the renderer class for sprites!</p>
-<div class="highlight"><pre><span></span><code><span class="cp">#ifndef SPRITE_RENDERER_H</span>
-<span class="cp">#define SPRITE_RENDERER_H</span>
+<div class="highlight"><pre><span></span><code><span class="cp">#pragma once</span>
 
 <span class="cp">#include</span> <span class="cpf">&lt;glad/glad.h&gt;</span><span class="cp"></span>
 
@@ -1021,8 +1005,6 @@
     <span class="n">GLuint</span> <span class="n">quadVBO</span><span class="p">;</span>
     <span class="n">ProjectProperties</span> <span class="o">*</span><span class="n">projectProperties</span> <span class="o">=</span> <span class="k">nullptr</span><span class="p">;</span>
 <span class="p">};</span>
-
-<span class="cp">#endif </span><span class="c1">//SPRITE_RENDERER_H</span>
 </code></pre></div>
 <div class="highlight"><pre><span></span><code><span class="cp">#include</span> <span class="cpf">"sprite_renderer.h"</span><span class="cp"></span>
 
@@ -1134,8 +1116,7 @@
 <p>Will explain soon...</p>
 <h3 id="renderer2d">Renderer2D</h3>
 <p>We have a <code>SpriteRenderer</code> and now it's time to define the top level 2d renderer class.</p>
-<div class="highlight"><pre><span></span><code><span class="cp">#ifndef RENDERER_2D_H</span>
-<span class="cp">#define RENDERER_2D_H</span>
+<div class="highlight"><pre><span></span><code><span class="cp">#pragma once</span>
 
 <span class="cp">#include</span> <span class="cpf">"renderer_batcher.h"</span><span class="cp"></span>
 <span class="cp">#include</span> <span class="cpf">"sprite_renderer.h"</span><span class="cp"></span>
@@ -1152,8 +1133,6 @@
     <span class="n">RendererBatcher</span> <span class="n">rendererBatcher</span><span class="p">;</span>
     <span class="n">SpriteRenderer</span> <span class="o">*</span><span class="n">spriteRenderer</span> <span class="o">=</span> <span class="k">nullptr</span><span class="p">;</span>
 <span class="p">};</span>
-
-<span class="cp">#endif </span><span class="c1">//RENDERER_2D_H</span>
 </code></pre></div>
 <div class="highlight"><pre><span></span><code><span class="cp">#include</span> <span class="cpf">"renderer_2d.h"</span><span class="cp"></span>
 

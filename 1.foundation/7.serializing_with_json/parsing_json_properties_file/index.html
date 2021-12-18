@@ -468,8 +468,7 @@
 <p><strong><em>Red Engine</em></strong> will use the <a href="https://github.com/nlohmann/json">nlohmann json</a> library to help with parsing json files.</p>
 <h2 id="json-helper">Json Helper</h2>
 <p>The <code>JsonHelper</code> class will be used to help validate json fields and the <code>JsonFileHelper</code> to load json files.</p>
-<div class="highlight"><pre><span></span><code><span class="cp">#ifndef JSON_HELPER_H</span>
-<span class="cp">#define JSON_HELPER_H</span>
+<div class="highlight"><pre><span></span><code><span class="cp">#pragma once</span>
 
 <span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp"></span>
 <span class="cp">#include</span> <span class="cpf">&lt;fstream&gt;</span><span class="cp"></span>
@@ -508,8 +507,6 @@
     <span class="p">}</span>
 
 <span class="p">};</span>
-
-<span class="cp">#endif </span><span class="c1">//JSON_HELPER_H</span>
 </code></pre></div>
 <h2 id="project-properties">Project Properties</h2>
 <p>Example of <code>properties.json</code>.</p>

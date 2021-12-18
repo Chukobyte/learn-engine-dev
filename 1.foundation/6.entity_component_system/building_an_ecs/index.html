@@ -494,21 +494,17 @@
 <h1 id="building-an-ecs">Building An ECS</h1>
 <h2 id="entity">Entity</h2>
 <p>An <code>Entity</code> will represented as an <code>unsigned int</code>.</p>
-<div class="highlight"><pre><span></span><code><span class="cp">#ifndef ENTITY_H</span>
-<span class="cp">#define ENTITY_H</span>
+<div class="highlight"><pre><span></span><code><span class="cp">#pragma once</span>
 
 <span class="k">using</span> <span class="n">Entity</span> <span class="o">=</span> <span class="kt">unsigned</span> <span class="kt">int</span><span class="p">;</span>
 
 <span class="k">const</span> <span class="n">Entity</span> <span class="n">MAX_ENTITIES</span> <span class="o">=</span> <span class="mi">20000</span><span class="p">;</span>
 <span class="k">const</span> <span class="n">Entity</span> <span class="n">NULL_ENTITY</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-
-<span class="cp">#endif </span><span class="c1">//ENTITY_H</span>
 </code></pre></div>
 <h2 id="component">Component</h2>
 <p>Components will add functionality for an entity.</p>
 <h3 id="component-class">Component Class</h3>
-<div class="highlight"><pre><span></span><code><span class="cp">#ifndef COMPONENT_H</span>
-<span class="cp">#define COMPONENT_H</span>
+<div class="highlight"><pre><span></span><code><span class="cp">#pragma once</span>
 
 <span class="cp">#include</span> <span class="cpf">&lt;bitset&gt;</span><span class="cp"></span>
 
@@ -516,12 +512,9 @@
 
 <span class="k">using</span> <span class="n">ComponentType</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="kt">uint32_t</span><span class="p">;</span>
 <span class="k">using</span> <span class="n">ComponentSignature</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">bitset</span><span class="o">&lt;</span><span class="n">MAX_COMPONENT_TYPES</span><span class="o">&gt;</span><span class="p">;</span>
-
-<span class="cp">#endif </span><span class="c1">//COMPONENT_H</span>
 </code></pre></div>
 <h3 id="component-array">Component Array</h3>
-<div class="highlight"><pre><span></span><code><span class="cp">#ifndef COMPONENT_ARRAY_H</span>
-<span class="cp">#define COMPONENT_ARRAY_H</span>
+<div class="highlight"><pre><span></span><code><span class="cp">#pragma once</span>
 
 <span class="cp">#include</span> <span class="cpf">&lt;unordered_map&gt;</span><span class="cp"></span>
 <span class="cp">#include</span> <span class="cpf">&lt;cassert&gt;</span><span class="cp"></span>
@@ -596,13 +589,10 @@
     <span class="n">std</span><span class="o">::</span><span class="n">unordered_map</span><span class="o">&lt;</span><span class="kt">size_t</span><span class="p">,</span> <span class="n">Entity</span><span class="o">&gt;</span> <span class="n">indexToEntityMap</span><span class="p">;</span>
     <span class="kt">size_t</span> <span class="n">size</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
 <span class="p">};</span>
-
-<span class="cp">#endif </span><span class="c1">//COMPONENT_ARRAY_H</span>
 </code></pre></div>
 <h2 id="system">System</h2>
 <p>Systems will process components for an entity based on a signature.</p>
-<div class="highlight"><pre><span></span><code><span class="cp">#ifndef EC_SYSTEM_H</span>
-<span class="cp">#define EC_SYSTEM_H</span>
+<div class="highlight"><pre><span></span><code><span class="cp">#pragma once</span>
 
 <span class="cp">#include</span> <span class="cpf">&lt;set&gt;</span><span class="cp"></span>
 
@@ -648,13 +638,10 @@
     <span class="k">virtual</span> <span class="kt">void</span> <span class="n">OnSceneStart</span><span class="p">(</span><span class="n">Scene</span><span class="o">*</span> <span class="n">scene</span><span class="p">)</span> <span class="p">{}</span>
     <span class="k">virtual</span> <span class="kt">void</span> <span class="n">OnSceneEnd</span><span class="p">(</span><span class="n">Scene</span><span class="o">*</span> <span class="n">scene</span><span class="p">)</span> <span class="p">{}</span>
 <span class="p">};</span>
-
-<span class="cp">#endif </span><span class="c1">//EC_SYSTEM_H</span>
 </code></pre></div>
 <h2 id="scene">Scene</h2>
 <p>Entities will be placed in a scene.</p>
-<div class="highlight"><pre><span></span><code><span class="cp">#ifndef SCENE_H</span>
-<span class="cp">#define SCENE_H</span>
+<div class="highlight"><pre><span></span><code><span class="cp">#pragma once</span>
 
 <span class="cp">#include</span> <span class="cpf">&lt;vector&gt;</span><span class="cp"></span>
 <span class="cp">#include</span> <span class="cpf">&lt;unordered_map&gt;</span><span class="cp"></span>
@@ -672,8 +659,6 @@
     <span class="n">SceneNode</span> <span class="n">rootNode</span> <span class="o">=</span> <span class="p">{};</span>
     <span class="n">std</span><span class="o">::</span><span class="n">unordered_map</span><span class="o">&lt;</span><span class="n">Entity</span><span class="p">,</span> <span class="n">SceneNode</span><span class="o">&gt;</span> <span class="n">sceneNodes</span> <span class="o">=</span> <span class="p">{};</span>
 <span class="p">};</span>
-
-<span class="cp">#endif </span><span class="c1">//SCENE_H</span>
 </code></pre></div>
 </article>
 </div>

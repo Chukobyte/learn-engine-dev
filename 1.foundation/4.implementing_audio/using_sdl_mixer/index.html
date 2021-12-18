@@ -466,8 +466,7 @@
 <h1 id="using-sdl_mixer">Using SDL_mixer</h1>
 <h2 id="audio">Audio</h2>
 <p>Creating <code>Music</code> and <code>SoundEffect</code> classes.</p>
-<div class="highlight"><pre><span></span><code><span class="cp">#ifndef AUDIO_H</span>
-<span class="cp">#define AUDIO_H</span>
+<div class="highlight"><pre><span></span><code><span class="cp">#pragma once</span>
 
 <span class="cp">#include</span> <span class="cpf">&lt;SDL2/SDL_mixer.h&gt;</span><span class="cp"></span>
 
@@ -534,13 +533,10 @@
   <span class="k">private</span><span class="o">:</span>
     <span class="n">Mix_Chunk</span> <span class="o">*</span><span class="n">mixChunk</span> <span class="o">=</span> <span class="k">nullptr</span><span class="p">;</span>
 <span class="p">};</span>
-
-<span class="cp">#endif </span><span class="c1">//AUDIO_H</span>
 </code></pre></div>
 <h2 id="asset-manager">Asset Manager</h2>
 <p>Will need to add functions for <code>Music</code> and <code>SoundEffect</code> in the <code>AssetManager</code> class.</p>
-<div class="highlight"><pre><span></span><code><span class="cp">#ifndef ASSET_MANAGER_H</span>
-<span class="cp">#define ASSET_MANAGER_H</span>
+<div class="highlight"><pre><span></span><code><span class="cp">#pragma once</span>
 
 <span class="cp">#include</span> <span class="cpf">&lt;unordered_map&gt;</span><span class="cp"></span>
 <span class="cp">#include</span> <span class="cpf">&lt;string&gt;</span><span class="cp"></span>
@@ -583,8 +579,6 @@
 
     <span class="n">AssetManager</span><span class="p">();</span>
 <span class="p">};</span>
-
-<span class="cp">#endif </span><span class="c1">//ASSET_MANAGER_H</span>
 </code></pre></div>
 <div class="highlight"><pre><span></span><code><span class="kt">void</span> <span class="nf">AssetManager::LoadMusic</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">musicId</span><span class="p">,</span> <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">musicPath</span><span class="p">)</span> <span class="p">{</span>
     <span class="k">if</span> <span class="p">(</span><span class="n">HasMusic</span><span class="p">(</span><span class="n">musicId</span><span class="p">))</span> <span class="p">{</span>
@@ -631,8 +625,7 @@
 <p>I haven't included the entire <code>asset_manager.cpp</code> file to reduce lines.</p>
 <h2 id="audio-helper">Audio Helper</h2>
 <p>The <code>AudioHelper</code> class contains static functions used to interact with music and sound effects.</p>
-<div class="highlight"><pre><span></span><code><span class="cp">#ifndef AUDIO_HELPER_H</span>
-<span class="cp">#define AUDIO_HELPER_H</span>
+<div class="highlight"><pre><span></span><code><span class="cp">#pragma once</span>
 
 <span class="cp">#include</span> <span class="cpf">"./re/audio/audio.h"</span><span class="cp"></span>
 <span class="cp">#include</span> <span class="cpf">"./re/utils/helper.h"</span><span class="cp"></span>
@@ -686,8 +679,6 @@
         <span class="n">SetSoundVolume</span><span class="p">(</span><span class="n">volume</span><span class="p">);</span>
     <span class="p">}</span>
 <span class="p">};</span>
-
-<span class="cp">#endif </span><span class="c1">//AUDIO_HELPER_H</span>
 </code></pre></div>
 <h2 id="using-audio">Using Audio</h2>
 <p>We'll need to make a few tweaks to the <code>GameEngine</code> class.</p>

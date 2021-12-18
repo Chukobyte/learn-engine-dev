@@ -445,8 +445,7 @@
 <article class="md-content__inner md-typeset">
 <h1 id="creating-scene-json-files">Creating Scene Json Files</h1>
 <h2 id="scene-loader">Scene Loader</h2>
-<div class="highlight"><pre><span></span><code><span class="cp">#ifndef SCENE_LOADER_H</span>
-<span class="cp">#define SCENE_LOADER_H</span>
+<div class="highlight"><pre><span></span><code><span class="cp">#pragma once</span>
 
 <span class="cp">#include</span> <span class="cpf">"scene.h"</span><span class="cp"></span>
 
@@ -487,8 +486,6 @@
   <span class="k">public</span><span class="o">:</span>
     <span class="k">static</span> <span class="n">Scene</span><span class="o">*</span> <span class="n">LoadSceneFile</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span> <span class="n">filePath</span><span class="p">);</span>
 <span class="p">};</span>
-
-<span class="cp">#endif </span><span class="c1">//SCENE_LOADER_H</span>
 </code></pre></div>
 <div class="highlight"><pre><span></span><code><span class="cp">#include</span> <span class="cpf">"scene_loader.h"</span><span class="cp"></span>
 

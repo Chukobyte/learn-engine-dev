@@ -453,9 +453,7 @@
 <li>Close the python interpreter once we're finished with it.</li>
 </ul>
 <p>With that said, let's create <code>PyHelper.hpp</code> which encapsulates this functionality.</p>
-<div class="highlight"><pre><span></span><code><span class="cp">#ifndef PYHELPER_HPP</span>
-<span class="cp">#define PYHELPER_HPP</span>
-<span class="cp">#pragma once</span>
+<div class="highlight"><pre><span></span><code><span class="cp">#pragma once</span>
 
 <span class="cp">#define PY_SSIZE_T_CLEAN</span>
 <span class="cp">#include</span> <span class="cpf">&lt;Python.h&gt;</span><span class="cp"></span>
@@ -527,8 +525,6 @@
   <span class="k">private</span><span class="o">:</span>
     <span class="n">PyObject</span><span class="o">*</span> <span class="n">pyObj</span><span class="p">;</span>
 <span class="p">};</span>
-
-<span class="cp">#endif </span><span class="c1">//PYHELPER_HPP</span>
 </code></pre></div>
 <p>There are two classes created in <code>PyHelper.hpp</code>.  <code>CPyInstance</code> responsibility is to initialize the python interpreter, perform any additional setup, and shutdown the intepreter once finished.  <code>CPyObject</code> is a wrapper class for <code>PyObject</code> which is a python object.  Instead of having to explicitly decrement with <code>Py_DECREF</code> we instead use this <code>CPyObject</code> which decrements the reference count once the object is out of scope.</p>
 <p>Now that we have a helper class, let's put it to use.</p>
@@ -560,8 +556,7 @@
 <p>This is similar to the code snippet we've created in the previous section, but instead of using <code>PyObject</code> we are using <code>CPyObject</code>.  <code>Py_BuildValue</code> builds a tuple of arguements that we can then pass to a python function.  With the argument defined, we can now call <code>PyObject_CallObject</code> with an argument.  If you would like to double check your code you can view the source code for this section <a href="https://github.com/Chukobyte/learn-engine-dev/tree/main/src/1.foundation/1.embedding_python/1.2.using_pyhelper">here</a>.</p>
 <h2 id="creating-a-python-instance-in-c">Creating A Python Instance in C++</h2>
 <p>We're able to import modules and call functions, but there may be times where we'll want to interact with an instance of a python class.  Furthermore, we don't want to have to import a module and query its attributes each time we want to use a function as that will affect performance.  In this section we'll create a class to manage active python objects.</p>
-<div class="highlight"><pre><span></span><code><span class="cp">#ifndef PYTHON_OBJECT_MANAGER_H</span>
-<span class="cp">#define PYTHON_OBJECT_MANAGER_H</span>
+<div class="highlight"><pre><span></span><code><span class="cp">#pragma once</span>
 
 <span class="cp">#include</span> <span class="cpf">&lt;string&gt;</span><span class="cp"></span>
 <span class="cp">#include</span> <span class="cpf">&lt;unordered_map&gt;</span><span class="cp"></span>
@@ -605,8 +600,6 @@
         <span class="k">return</span> <span class="n">modules</span><span class="p">[</span><span class="n">classPath</span><span class="p">].</span><span class="n">classes</span><span class="p">[</span><span class="n">className</span><span class="p">];</span>
     <span class="p">}</span>
 <span class="p">};</span>
-
-<span class="cp">#endif </span><span class="c1">// PYTHON_OBJECT_MANAGER_H</span>
 </code></pre></div>
 <p>Within <code>python_object_manager.h</code> we first create <code>PythonModuleObject</code> which is a struct to hold a python module's object data.  It will hold all the python class objects loaded for the module.</p>
 <p>Next is the main class which is <code>PythonObjectManager</code>.  The <code>GetClass</code> function will return a class object for a module.  We use this within <code>CreateClassInstance</code> to create a python instance of a class.</p>

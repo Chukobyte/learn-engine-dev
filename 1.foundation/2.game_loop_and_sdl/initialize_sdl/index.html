@@ -484,8 +484,7 @@
 <h1 id="initialize-sdl">Initialize SDL</h1>
 <h2 id="gameengine-class">GameEngine Class</h2>
 <p>The <code>GameEngine</code> class will tie the game loop and engine systems together.</p>
-<div class="highlight"><pre><span></span><code><span class="cp">#ifndef GAME_ENGINE_H</span>
-<span class="cp">#define GAME_ENGINE_H</span>
+<div class="highlight"><pre><span></span><code><span class="cp">#pragma once</span>
 
 <span class="cp">#include</span> <span class="cpf">"game_engine_context.h"</span><span class="cp"></span>
 <span class="cp">#include</span> <span class="cpf">"fps_counter.h"</span><span class="cp"></span>
@@ -508,8 +507,6 @@
     <span class="kt">bool</span> <span class="nf">Initialize</span><span class="p">();</span>
     <span class="kt">bool</span> <span class="nf">InitializeSDL</span><span class="p">();</span>
 <span class="p">};</span>
-
-<span class="cp">#endif </span><span class="c1">//GAME_ENGINE_H</span>
 </code></pre></div>
 <div class="highlight"><pre><span></span><code><span class="cp">#include</span> <span class="cpf">"game_engine.h"</span><span class="cp"></span>
 
@@ -596,8 +593,7 @@
 <p>Last but not least, we should check performance to ensure we are getting the frames per second that we are expecting.  We will first start by defining a <code>Timer</code> class that will be used by the <code>FPSCounter</code> and other classes.</p>
 <h3 id="timer">Timer</h3>
 <p>The <code>Timer</code> class is straight forward.</p>
-<div class="highlight"><pre><span></span><code><span class="cp">#ifndef TIMER_H</span>
-<span class="cp">#define TIMER_H</span>
+<div class="highlight"><pre><span></span><code><span class="cp">#pragma once</span>
 
 <span class="cp">#include</span> <span class="cpf">&lt;SDL2/SDL.h&gt;</span><span class="cp"></span>
 
@@ -629,8 +625,6 @@
     <span class="kt">bool</span> <span class="n">isPaused</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
     <span class="kt">bool</span> <span class="n">hasStarted</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
 <span class="p">};</span>
-
-<span class="cp">#endif </span><span class="c1">//TIMER_H</span>
 </code></pre></div>
 <div class="highlight"><pre><span></span><code><span class="cp">#include</span> <span class="cpf">"timer.h"</span><span class="cp"></span>
 
@@ -732,8 +726,7 @@
 </code></pre></div>
 <p><code>waitTime</code> refers to how long the timer will run for and <code>loops</code> determines if the timer restarts after timing out.  I think all the functions are self-explanatory and we will see the <code>Timer</code> class in use next!</p>
 <h3 id="fps-counter">FPS Counter</h3>
-<div class="highlight"><pre><span></span><code><span class="cp">#ifndef FPS_COUNTER_H</span>
-<span class="cp">#define FPS_COUNTER_H</span>
+<div class="highlight"><pre><span></span><code><span class="cp">#pragma once</span>
 
 <span class="cp">#include</span> <span class="cpf">"./re/utils/timer.h"</span><span class="cp"></span>
 
@@ -751,8 +744,6 @@
 
     <span class="n">FPSCounter</span><span class="p">();</span>
 <span class="p">};</span>
-
-<span class="cp">#endif </span><span class="c1">//FPS_COUNTER_H</span>
 </code></pre></div>
 <div class="highlight"><pre><span></span><code><span class="cp">#include</span> <span class="cpf">"fps_counter.h"</span><span class="cp"></span>
 

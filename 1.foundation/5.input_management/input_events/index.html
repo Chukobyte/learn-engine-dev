@@ -465,8 +465,7 @@
 <article class="md-content__inner md-typeset">
 <h1 id="input-events">Input Events</h1>
 <h2 id="input-event-state">Input Event State</h2>
-<div class="highlight"><pre><span></span><code><span class="cp">#ifndef INPUT_EVENT_STATE_H</span>
-<span class="cp">#define INPUT_EVENT_STATE_H</span>
+<div class="highlight"><pre><span></span><code><span class="cp">#pragma once</span>
 
 <span class="cp">#include</span> <span class="cpf">&lt;SDL2/SDL.h&gt;</span><span class="cp"></span>
 
@@ -549,12 +548,9 @@
         <span class="k">return</span> <span class="n">inputEvent</span><span class="p">;</span>
     <span class="p">}</span>
 <span class="p">};</span>
-
-<span class="cp">#endif </span><span class="c1">//INPUT_EVENT_STATE_H</span>
 </code></pre></div>
 <h2 id="keyboard">Keyboard</h2>
-<div class="highlight"><pre><span></span><code><span class="cp">#ifndef KEYBOARD_INPUT_H</span>
-<span class="cp">#define KEYBOARD_INPUT_H</span>
+<div class="highlight"><pre><span></span><code><span class="cp">#pragma once</span>
 
 <span class="cp">#include</span> <span class="cpf">&lt;string&gt;</span><span class="cp"></span>
 <span class="cp">#include</span> <span class="cpf">&lt;map&gt;</span><span class="cp"></span>
@@ -662,12 +658,9 @@
         <span class="p">}</span>
     <span class="p">}</span>
 <span class="p">};</span>
-
-<span class="cp">#endif </span><span class="c1">//KEYBOARD_INPUT_H</span>
 </code></pre></div>
 <h2 id="mouse">Mouse</h2>
-<div class="highlight"><pre><span></span><code><span class="cp">#ifndef MOUSE_INPUT_H</span>
-<span class="cp">#define MOUSE_INPUT_H</span>
+<div class="highlight"><pre><span></span><code><span class="cp">#pragma once</span>
 
 <span class="cp">#include</span> <span class="cpf">&lt;string&gt;</span><span class="cp"></span>
 <span class="cp">#include</span> <span class="cpf">&lt;vector&gt;</span><span class="cp"></span>
@@ -759,8 +752,6 @@
     <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">mouseValues</span><span class="p">;</span>
     <span class="n">MouseInput</span> <span class="o">*</span><span class="n">mouseInput</span> <span class="o">=</span> <span class="k">nullptr</span><span class="p">;</span>
 <span class="p">};</span>
-
-<span class="cp">#endif </span><span class="c1">//MOUSE_INPUT_H</span>
 </code></pre></div>
 <div class="highlight"><pre><span></span><code><span class="cp">#include</span> <span class="cpf">"mouse_input.h"</span><span class="cp"></span>
 
@@ -814,8 +805,7 @@
 <span class="p">}</span>
 </code></pre></div>
 <h2 id="joystick">Joystick</h2>
-<div class="highlight"><pre><span></span><code><span class="cp">#ifndef JOYSTICK_INPUT_H</span>
-<span class="cp">#define JOYSTICK_INPUT_H</span>
+<div class="highlight"><pre><span></span><code><span class="cp">#pragma once</span>
 
 <span class="cp">#include</span> <span class="cpf">&lt;string&gt;</span><span class="cp"></span>
 <span class="cp">#include</span> <span class="cpf">&lt;vector&gt;</span><span class="cp"></span>
@@ -1044,8 +1034,6 @@
     <span class="n">JoystickInput</span> <span class="o">*</span><span class="n">joystickInput</span> <span class="o">=</span> <span class="k">nullptr</span><span class="p">;</span>
     <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">joystickValues</span><span class="p">;</span>
 <span class="p">};</span>
-
-<span class="cp">#endif </span><span class="c1">//JOYSTICK_INPUT_H</span>
 </code></pre></div>
 <div class="highlight"><pre><span></span><code><span class="cp">#include</span> <span class="cpf">"joystick_input.h"</span><span class="cp"></span>
 

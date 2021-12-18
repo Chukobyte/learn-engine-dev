@@ -491,8 +491,7 @@
 <p><a href="https://github.com/nothings/stb/blob/master/stb_image.h">stb_image</a> is an image loading library which is part of a larger library named <a href="https://github.com/nothings/stb">stb</a>.  All functions from the <a href="https://github.com/nothings/stb/blob/master/stb_image.h">stb_image</a> library will have the prefix <code>stbi_</code>.</p>
 <h3 id="texture-class">Texture Class</h3>
 <p>Instances of the <code>Texture</code> class will be used to render sprites to the screen.</p>
-<div class="highlight"><pre><span></span><code><span class="cp">#ifndef TEXTURE_H</span>
-<span class="cp">#define TEXTURE_H</span>
+<div class="highlight"><pre><span></span><code><span class="cp">#pragma once</span>
 
 <span class="cp">#include</span> <span class="cpf">&lt;glad/glad.h&gt;</span><span class="cp"></span>
 
@@ -532,8 +531,6 @@
     <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">GetWrapFromString</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">wrap</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
     <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">GetFilterFromString</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">filter</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
 <span class="p">};</span>
-
-<span class="cp">#endif </span><span class="c1">//TEXTURE_H</span>
 </code></pre></div>
 <div class="highlight"><pre><span></span><code><span class="cp">#include</span> <span class="cpf">"texture.h"</span><span class="cp"></span>
 
@@ -679,8 +676,7 @@
 <p>If the texture is loaded successfully, the <code>Generate</code> function is called.  This function configures the texture for OpenGL.  The only other function to point out is the <code>Bind</code> function which we'll get into once we start rendering textures.</p>
 <h2 id="asset-manager">Asset Manager</h2>
 <p>Now that we have the concept of a texture defined in <strong><em>Red Engine</em></strong>, we will need something to maintain textures as well as other assets.</p>
-<div class="highlight"><pre><span></span><code><span class="cp">#ifndef ASSET_MANAGER_H</span>
-<span class="cp">#define ASSET_MANAGER_H</span>
+<div class="highlight"><pre><span></span><code><span class="cp">#pragma once</span>
 
 <span class="cp">#include</span> <span class="cpf">&lt;unordered_map&gt;</span><span class="cp"></span>
 <span class="cp">#include</span> <span class="cpf">&lt;string&gt;</span><span class="cp"></span>
@@ -702,8 +698,6 @@
 
     <span class="n">AssetManager</span><span class="p">();</span>
 <span class="p">};</span>
-
-<span class="cp">#endif </span><span class="c1">//ASSET_MANAGER_H</span>
 </code></pre></div>
 <div class="highlight"><pre><span></span><code><span class="cp">#include</span> <span class="cpf">"asset_manager.h"</span><span class="cp"></span>
 <span class="cp">#include</span> <span class="cpf">&lt;cassert&gt;</span><span class="cp"></span>
