@@ -27,13 +27,13 @@ class Texture {
     int height = 0;
     int nrChannels = 0;
     // format
-    unsigned int internalFormat = GL_RGBA;
-    unsigned int imageFormat = GL_RGBA;
+    GLint internalFormat = GL_RGBA;
+    GLint imageFormat = GL_RGBA;
     // configuration
-    unsigned int wrapS = GL_CLAMP_TO_BORDER;
-    unsigned int wrapT = GL_CLAMP_TO_BORDER;
-    unsigned int filterMin = GL_NEAREST;
-    unsigned int filterMag = GL_NEAREST;
+    GLint wrapS = GL_CLAMP_TO_BORDER;
+    GLint wrapT = GL_CLAMP_TO_BORDER;
+    GLint filterMin = GL_NEAREST;
+    GLint filterMag = GL_NEAREST;
 
     void Generate();
     unsigned int GetWrapFromString(const std::string &wrap) const;

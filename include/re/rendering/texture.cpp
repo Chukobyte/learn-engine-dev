@@ -29,22 +29,18 @@ Texture::Texture(const char* filePath, const std::string &wrapS, const std::stri
     ) {}
 
 Texture::Texture(unsigned int width, unsigned int height, unsigned int colorValue) :
-    wrapS(GL_CLAMP_TO_BORDER),
-    wrapT(GL_CLAMP_TO_BORDER),
-    filterMin(GL_LINEAR),
-    filterMag(GL_LINEAR),
     nrChannels(4),
     width(width),
     height(height),
     logger(Logger::GetInstance()) {
-    data = new unsigned char[width * height * sizeof(unsigned char)];
-    for(int i = 0; i < (int)(width * height * sizeof(unsigned char)); i++) {
+    data = new unsigned char[width * height * 4];
+    for(int i = 0; i < (int)(width * height * 4); i++) {
         data[i] = colorValue;
     }
     if(IsValid()) {
         Generate();
     } else {
-        logger->Error("Failed to load color texture");
+        logger->Error("Failed to load colored texture");
     }
 }
 

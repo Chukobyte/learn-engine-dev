@@ -52,10 +52,13 @@ bool ECSOrchestrator::HasSceneToDestroy() const {
 
 void ECSOrchestrator::RegisterLoadedSceneNodeComponents() {
     Scene* currentScene = sceneManager->GetCurrentScene();
-    RefreshEntitySignatureChanged(currentScene->rootNode.entity);
-    for (SceneNode childSceneNode : currentScene->rootNode.children) {
-        RefreshEntitySignatureChanged(childSceneNode.entity);
-    }
+    const std::function<void(const SceneNode& sceneNode)> registerNodeFunc = [this, &registerNodeFunc](const SceneNode& sceneNode) {
+        RefreshEntitySignatureChanged(sceneNode.entity);
+        for (const SceneNode& childNode : sceneNode.children) {
+            registerNodeFunc(childNode);
+        }
+    };
+    registerNodeFunc(currentScene->rootNode);
 }
 
 void ECSOrchestrator::AddRootNode(Entity rootEntity) {
