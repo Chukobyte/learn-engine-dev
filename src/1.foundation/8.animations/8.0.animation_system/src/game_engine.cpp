@@ -1,8 +1,8 @@
 #include "game_engine.h"
 
-#include "./re/ecs/component/components/node_component.h"
 #include "./re/ecs/system/systems/sprite_rendering_ec_system.h"
 #include "./re/ecs/system/systems/text_rendering_ec_system.h"
+#include "./re/ecs/system/systems/animated_sprite_rendering_ec_system.h"
 #include "./re/audio/audio_helper.h"
 
 GameEngine::GameEngine() :
@@ -131,6 +131,7 @@ bool GameEngine::InitializeECS() {
     ecsOrchestrator->RegisterComponent<Transform2DComponent>();
     ecsOrchestrator->RegisterComponent<SpriteComponent>();
     ecsOrchestrator->RegisterComponent<TextLabelComponent>();
+    ecsOrchestrator->RegisterComponent<AnimatedSpriteComponent>();
     // Register EC Systems to ECS
     ComponentSignature spriteRenderingSignature;
     spriteRenderingSignature.set(ecsOrchestrator->GetComponentType<Transform2DComponent>(), true);
@@ -141,6 +142,11 @@ bool GameEngine::InitializeECS() {
     textRenderingSignature.set(ecsOrchestrator->GetComponentType<Transform2DComponent>(), true);
     textRenderingSignature.set(ecsOrchestrator->GetComponentType<TextLabelComponent>(), true);
     ecsOrchestrator->RegisterSystem<TextRenderingECSystem>(textRenderingSignature, ECSystemRegistration::RENDER);
+
+    ComponentSignature animatedSpriteRenderingSignature;
+    animatedSpriteRenderingSignature.set(ecsOrchestrator->GetComponentType<Transform2DComponent>(), true);
+    animatedSpriteRenderingSignature.set(ecsOrchestrator->GetComponentType<AnimatedSpriteComponent>(), true);
+    ecsOrchestrator->RegisterSystem<AnimatedSpriteRenderingECSystem>(animatedSpriteRenderingSignature, ECSystemRegistration::RENDER);
     return true;
 }
 
