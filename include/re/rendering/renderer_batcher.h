@@ -8,7 +8,7 @@
 #include "./texture.h"
 #include "./font.h"
 #include "./color.h"
-#include "./re/math/math.h"
+#include "./re/math/redmath.h"
 
 struct SpriteBatchItem {
     Texture *texture2D = nullptr;

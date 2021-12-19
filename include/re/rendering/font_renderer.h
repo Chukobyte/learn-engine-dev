@@ -5,7 +5,7 @@
 #include "shader.h"
 #include "color.h"
 #include "font.h"
-#include "../math/math.h"
+#include "re/math/redmath.h"
 #include "re/project_properties.h"
 
 static const std::string &OPENGL_SHADER_SOURCE_VERTEX_FONT =

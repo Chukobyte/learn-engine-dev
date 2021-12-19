@@ -2,6 +2,7 @@
 
 #include "../ec_system.h"
 
+#include "../../../scene/scene_node_utils.h"
 #include "../../component/components/transform2d_component.h"
 #include "../../component/components/sprite_component.h"
 #include "../../../rendering/renderer_2d.h"
@@ -17,16 +18,16 @@ class SpriteRenderingECSystem : public ECSystem {
     void Render() override {
         if (IsEnabled()) {
             for (Entity entity : entities) {
-                Transform2DComponent transform2DComponent = componentManager->GetComponent<Transform2DComponent>(entity);
+                Transform2DComponent translatedTransform = SceneNodeUtils::TranslateEntityTransformIntoWorld(entity);
                 SpriteComponent spriteComponent = componentManager->GetComponent<SpriteComponent>(entity);
-                Vector2 drawDestinationSize = Vector2(spriteComponent.drawSource.w * transform2DComponent.scale.x, spriteComponent.drawSource.h * transform2DComponent.scale.y);
-                spriteComponent.drawDestination = Rect2(transform2DComponent.position, drawDestinationSize);
+                Vector2 drawDestinationSize = Vector2(spriteComponent.drawSource.w * translatedTransform.scale.x, spriteComponent.drawSource.h * translatedTransform.scale.y);
+                spriteComponent.drawDestination = Rect2(translatedTransform.position, drawDestinationSize);
                 renderer2D->SubmitSpriteBatchItem(
                     spriteComponent.texture,
                     spriteComponent.drawSource,
                     spriteComponent.drawDestination,
-                    transform2DComponent.zIndex,
-                    transform2DComponent.rotation,
+                    translatedTransform.zIndex,
+                    translatedTransform.rotation,
                     spriteComponent.modulate,
                     spriteComponent.flipX,
                     spriteComponent.flipY

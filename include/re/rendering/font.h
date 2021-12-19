@@ -10,7 +10,7 @@
 
 #include <glad/glad.h>
 
-#include "../math/math.h"
+#include "re/math/redmath.h"
 #include "../utils/file_helper.h"
 #include "../utils/logger.h"
 

@@ -1,5 +1,7 @@
 #include "scene_loader.h"
 
+#include <cassert>
+
 unsigned int SceneNodeJsonParser::GetEntityNameCount(const std::string& name, const SceneNode& parentSceneNode) {
     unsigned int enitityNameCount = 0;
     for (const SceneNode& childrenSceneNode : parentSceneNode.children) {
@@ -57,6 +59,8 @@ void SceneNodeJsonParser::ParseComponentArray(SceneNode &sceneNode, const nlohma
             ParseSpriteComponent(sceneNode, nodeComponentObjectJson);
         } else if (nodeComponentType == "text_label") {
             ParseTextLabelComponent(sceneNode, nodeComponentObjectJson);
+        } else if (nodeComponentType == "animated_sprite") {
+            ParseAnimatedSpriteComponent(sceneNode, nodeComponentObjectJson);
         }
     }
 }
@@ -148,6 +152,72 @@ void SceneNodeJsonParser::ParseTextLabelComponent(SceneNode& sceneNode, const nl
     const bool isTextLabelEnabled = !nodeFontUID.empty();
     bool isTextLabelComponentEnabled = JsonHelper::GetDefault<bool>(nodeComponentObjectJson, "enabled", true);
     if (isTextLabelEnabled && isTextLabelComponentEnabled) {
+        entityManager->SetEnabledSignature(sceneNode.entity, signature);
+    }
+}
+
+void SceneNodeJsonParser::ParseAnimatedSpriteComponent(SceneNode& sceneNode, const nlohmann::json& nodeComponentObjectJson) {
+    const std::string& currentAnimationName = JsonHelper::Get<std::string>(nodeComponentObjectJson, "current_animation");
+    const bool isPlaying = JsonHelper::Get<bool>(nodeComponentObjectJson, "is_playing");
+    const bool flipX = JsonHelper::Get<bool>(nodeComponentObjectJson, "flip_x");
+    const bool flipY = JsonHelper::Get<bool>(nodeComponentObjectJson, "flip_y");
+    const nlohmann::json& modulateJson = JsonHelper::Get<nlohmann::json>(nodeComponentObjectJson, "modulate");
+    const Color modulateColor = Color::NormalizedColor(
+                                    JsonHelper::Get<int>(modulateJson, "red"),
+                                    JsonHelper::Get<int>(modulateJson, "green"),
+                                    JsonHelper::Get<int>(modulateJson, "blue"),
+                                    JsonHelper::Get<int>(modulateJson, "alpha")
+                                );
+    const nlohmann::json& animationsJson = JsonHelper::Get<nlohmann::json>(nodeComponentObjectJson, "animations");
+
+    // Setup Animations
+    static AssetManager* assetManager = AssetManager::GetInstance();
+    std::unordered_map<std::string, Animation> nodeAnimations = {};
+    for (const nlohmann::json& animationJson : animationsJson) {
+        const std::string& nodeAnimationName = JsonHelper::Get<std::string>(animationJson, "name");
+        const int nodeAnimationSpeed = JsonHelper::Get<int>(animationJson, "speed");
+        nlohmann::json nodeAnimationFramesJsonArray = JsonHelper::Get<nlohmann::json>(animationJson, "frames");
+        std::unordered_map<unsigned int, AnimationFrame> animationFrames;
+        for (nlohmann::json nodeAnimationFrameJson : nodeAnimationFramesJsonArray) {
+            const int nodeAnimationFrameNumber = JsonHelper::Get<int>(nodeAnimationFrameJson, "frame");
+            const std::string &nodeAnimationTexturePath = JsonHelper::Get<std::string>(nodeAnimationFrameJson, "texture_path");
+            nlohmann::json nodeAnimationFrameDrawSourceJson = JsonHelper::Get<nlohmann::json>(nodeAnimationFrameJson, "draw_source");
+            const float nodeAnimationFrameDrawSourceX = JsonHelper::Get<float>(nodeAnimationFrameDrawSourceJson, "x");
+            const float nodeAnimationFrameDrawSourceY = JsonHelper::Get<float>(nodeAnimationFrameDrawSourceJson, "y");
+            const float nodeAnimationFrameDrawSourceWidth = JsonHelper::Get<float>(nodeAnimationFrameDrawSourceJson, "width");
+            const float nodeAnimationFrameDrawSourceHeight = JsonHelper::Get<float>(nodeAnimationFrameDrawSourceJson, "height");
+            AnimationFrame nodeAnimationFrame = {
+                .texture = assetManager->GetTexture(nodeAnimationTexturePath),
+                .drawSource = Rect2(nodeAnimationFrameDrawSourceX, nodeAnimationFrameDrawSourceY, nodeAnimationFrameDrawSourceWidth, nodeAnimationFrameDrawSourceHeight),
+                .frame = nodeAnimationFrameNumber
+            };
+            animationFrames.emplace(nodeAnimationFrame.frame, nodeAnimationFrame);
+        }
+
+        Animation nodeAnimation = {
+            .name = nodeAnimationName,
+            .speed = nodeAnimationSpeed,
+            .animationFrames = animationFrames,
+            .frames = static_cast<unsigned int>(animationFrames.size())
+        };
+        nodeAnimations.emplace(nodeAnimation.name, nodeAnimation);
+    }
+
+    assert(nodeAnimations.count(currentAnimationName) > 0 && "Trying to set current animation to an animation that doesn't exist!");
+    componentManager->AddComponent(sceneNode.entity, AnimatedSpriteComponent{
+        nodeAnimations,
+        nodeAnimations[currentAnimationName],
+        isPlaying,
+        flipX,
+        flipY,
+        modulateColor
+    });
+
+    auto signature = entityManager->GetEnabledSignature(sceneNode.entity);
+    signature.set(componentManager->GetComponentType<AnimatedSpriteComponent>(), true);
+    entityManager->SetSignature(sceneNode.entity, signature);
+    bool isAnimatedSpriteComponentEnabled = JsonHelper::GetDefault<bool>(nodeComponentObjectJson, "enabled", true);
+    if (isAnimatedSpriteComponentEnabled) {
         entityManager->SetEnabledSignature(sceneNode.entity, signature);
     }
 }

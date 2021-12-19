@@ -1,0 +1,166 @@
+{
+  "name": "Main",
+  "type": "Node2D",
+  "tags": [],
+  "external_scene_source": "",
+  "components": [
+    {
+      "transform2D": {
+        "position": {
+          "x": 0.0,
+          "y": 0.0
+        },
+        "scale": {
+          "x": 1.0,
+          "y": 1.0
+        },
+        "rotation": 0.0,
+        "z_index": 0,
+        "z_index_relative_to_parent": true,
+        "ignore_camera": false
+      }
+    }
+  ],
+  "children": [
+    {
+      "name": "Witch",
+      "type": "AnimatedSprite",
+      "tags": [],
+      "external_scene_source": "",
+      "components": [
+        {
+          "transform2D": {
+            "position": {
+              "x": 400.0,
+              "y": 300.0
+            },
+            "scale": {
+              "x": 1.0,
+              "y": 1.0
+            },
+            "rotation": 0.0,
+            "z_index": 0,
+            "z_index_relative_to_parent": true,
+            "ignore_camera": false
+          }
+        },
+        {
+          "animated_sprite": {
+            "current_animation": "idle",
+            "is_playing": true,
+            "flip_x": false,
+            "flip_y": false,
+            "modulate": {
+              "red": 255,
+              "blue": 255,
+              "green": 255,
+              "alpha": 255
+            },
+            "animations": [
+              {
+                "name": "idle",
+                "speed": 100,
+                "frames": [
+                  {
+                    "frame": 0,
+                    "texture_path": "assets/images/melissa_walk_animation.png",
+                    "draw_source": {
+                      "x": 0,
+                      "y": 0,
+                      "width": 32,
+                      "height": 32
+                    }
+                  }
+                ]
+              },
+              {
+                "name": "walk",
+                "speed": 100,
+                "frames": [
+                  {
+                    "frame": 0,
+                    "texture_path": "assets/images/melissa_walk_animation.png",
+                    "draw_source": {
+                      "x": 0,
+                      "y": 0,
+                      "width": 32,
+                      "height": 32
+                    }
+                  },
+                  {
+                    "frame": 1,
+                    "texture_path": "assets/images/melissa_walk_animation.png",
+                    "draw_source": {
+                      "x": 32,
+                      "y": 0,
+                      "width": 32,
+                      "height": 32
+                    }
+                  },
+                  {
+                    "frame": 2,
+                    "texture_path": "assets/images/melissa_walk_animation.png",
+                    "draw_source": {
+                      "x": 64,
+                      "y": 0,
+                      "width": 32,
+                      "height": 32
+                    }
+                  },
+                  {
+                    "frame": 3,
+                    "texture_path": "assets/images/melissa_walk_animation.png",
+                    "draw_source": {
+                      "x": 96,
+                      "y": 0,
+                      "width": 32,
+                      "height": 32
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ],
+      "children": []
+    },
+    {
+      "name": "GameText",
+      "type": "TextLabel",
+      "tags": [],
+      "external_scene_source": "",
+      "components": [
+        {
+          "transform2D": {
+            "position": {
+              "x": 365.0,
+              "y": 280.0
+            },
+            "scale": {
+              "x": 1.0,
+              "y": 1.0
+            },
+            "rotation": 0.0,
+            "z_index": 0,
+            "z_index_relative_to_parent": true,
+            "ignore_camera": true
+          }
+        },
+        {
+          "text_label": {
+            "text": "Hello World",
+            "font_uid": "verdana-20",
+            "color": {
+              "red": 255,
+              "green": 255,
+              "blue": 255,
+              "alpha": 255
+            }
+          }
+        }
+      ],
+      "children": []
+    }
+  ]
+}

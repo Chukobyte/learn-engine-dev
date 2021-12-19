@@ -6,7 +6,7 @@
 
 #include <SDL2/SDL.h>
 
-#include "../math/math.h"
+#include "re/math/redmath.h"
 
 #include "input_event_state.h"
 

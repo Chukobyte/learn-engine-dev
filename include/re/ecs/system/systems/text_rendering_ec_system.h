@@ -2,6 +2,7 @@
 
 #include "../ec_system.h"
 
+#include "../../../scene/scene_node_utils.h"
 #include "../../component/components/transform2d_component.h"
 #include "../../component/components/text_label_component.h"
 #include "../../../rendering/renderer_2d.h"
@@ -17,15 +18,15 @@ class TextRenderingECSystem : public ECSystem {
     void Render() override {
         if (IsEnabled()) {
             for (Entity entity : entities) {
-                Transform2DComponent transform2DComponent = componentManager->GetComponent<Transform2DComponent>(entity);
+                Transform2DComponent translatedTransform = SceneNodeUtils::TranslateEntityTransformIntoWorld(entity);
                 TextLabelComponent textLabelComponent = componentManager->GetComponent<TextLabelComponent>(entity);
                 renderer2D->SubmitFontBatchItem(
                     textLabelComponent.font,
                     textLabelComponent.text,
-                    transform2DComponent.position.x,
-                    transform2DComponent.position.y,
-                    transform2DComponent.zIndex,
-                    transform2DComponent.scale.x,
+                    translatedTransform.position.x,
+                    translatedTransform.position.y,
+                    translatedTransform.zIndex,
+                    translatedTransform.scale.x,
                     textLabelComponent.color
                 );
             }
