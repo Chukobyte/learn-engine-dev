@@ -73,7 +73,7 @@ class SceneNodeUtils {
                 transformA.scale / transformB.scale,
                 transformA.rotation - transformB.rotation,
                 transformA.zIndex - transformB.zIndex,
-                };
+            };
         };
         // Impl
         SceneNode sceneNode = sceneManager->GetCurrentScene()->GetSceneNode(entity);
