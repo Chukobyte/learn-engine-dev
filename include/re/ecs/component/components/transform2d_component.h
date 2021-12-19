@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../../../math/math.h"
+#include "re/math/redmath.h"
 
 struct Transform2DComponent {
     Vector2 position = Vector2(0.0f, 0.0f);

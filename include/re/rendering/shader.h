@@ -7,7 +7,7 @@
 
 #include <glad/glad.h>
 
-#include "../math/math.h"
+#include "re/math/redmath.h"
 #include "./color.h"
 #include "../utils/logger.h"
 

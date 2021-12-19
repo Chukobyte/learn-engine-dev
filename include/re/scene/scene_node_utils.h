@@ -7,7 +7,7 @@
 #include "../ecs/component/component_manager.h"
 #include "../ecs/component/components/scene_component.h"
 #include "../ecs/component/components/transform2d_component.h"
-#include "../math/math.h"
+#include "re/math/redmath.h"
 
 using CombineTransform2DFunction = std::function<Transform2DComponent(const Transform2DComponent& transformA, const Transform2DComponent& transformB)>;
 

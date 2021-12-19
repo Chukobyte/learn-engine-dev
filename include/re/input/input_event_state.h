@@ -2,7 +2,7 @@
 
 #include <SDL2/SDL.h>
 
-#include "../math/math.h"
+#include "re/math/redmath.h"
 
 enum class InputEventType {
     MOUSE,

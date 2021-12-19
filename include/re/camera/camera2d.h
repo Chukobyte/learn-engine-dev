@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../math/math.h"
+#include "re/math/redmath.h"
 
 struct Camera2D {
     Vector2 viewport = Vector2(0.0f, 0.0f);

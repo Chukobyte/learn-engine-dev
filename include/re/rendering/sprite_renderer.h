@@ -5,7 +5,7 @@
 #include "shader.h"
 #include "texture.h"
 #include "color.h"
-#include "../math/math.h"
+#include "re/math/redmath.h"
 
 #include "re/project_properties.h"
 

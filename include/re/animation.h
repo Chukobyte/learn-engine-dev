@@ -3,7 +3,7 @@
 #include <unordered_map>
 
 #include "rendering/texture.h"
-#include "math/math.h"
+#include "re/math/redmath.h"
 
 struct AnimationFrame {
     Texture *texture = nullptr;

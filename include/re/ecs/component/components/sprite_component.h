@@ -3,7 +3,7 @@
 #include "../component.h"
 #include "../../../rendering/texture.h"
 #include "../../../rendering/color.h"
-#include "../../../math/math.h"
+#include "re/math/redmath.h"
 
 struct SpriteComponent {
     Texture* texture = nullptr;
