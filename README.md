@@ -27,7 +27,7 @@ A work in progress tutorial series for developing a cross platform game engine f
 - [x] Python Scripting
 - [x] Camera System
 - [x] Animation
-- [ ] Collisions
+- [x] Collisions
 - [ ] Python Engine API
 - [ ] Example Games
 

@@ -46,6 +46,9 @@ class CollisionECSystem : public ECSystem {
     CollisionResult GetEntityCollisionResult(Entity entity) {
         std::vector<Entity> collidedEntities = {};
         for (Entity targetEntity : entities) {
+            if (entity == targetEntity) {
+                continue;
+            }
             if (!collisionContext->IsTargetCollisionEntityInExceptionList(entity, targetEntity)) {
                 Rect2 sourceCollisionRectangle = collisionContext->GetCollisionRectangle(entity);
                 Rect2 targetCollisionRectangle = collisionContext->GetCollisionRectangle(targetEntity);

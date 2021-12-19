@@ -125,7 +125,7 @@
       ],
       "children": [
         {
-          "name": "CollisionShape2D",
+          "name": "WitchCollider",
           "type": "CollisionShape2D",
           "tags": [],
           "external_scene_source": "",
@@ -166,6 +166,47 @@
           "children": []
         }
       ]
+    },
+    {
+      "name": "CollisionShape2D",
+      "type": "CollisionShape2D",
+      "tags": [],
+      "external_scene_source": "",
+      "components": [
+        {
+          "transform2D": {
+            "position": {
+              "x": 300.0,
+              "y": 300.0
+            },
+            "scale": {
+              "x": 1.0,
+              "y": 1.0
+            },
+            "rotation": 0,
+            "z_index": 0,
+            "z_index_relative_to_parent": false,
+            "ignore_camera": false
+          }
+        },
+        {
+          "collider": {
+            "rectangle": {
+              "x": 0.0,
+              "y": 0.0,
+              "width": 32.0,
+              "height": 32.0
+            },
+            "color": {
+              "red": 95,
+              "green": 205,
+              "blue": 228,
+              "alpha": 190
+            }
+          }
+        }
+      ],
+      "children": []
     },
     {
       "name": "GameText",

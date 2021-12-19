@@ -6,6 +6,10 @@
 #include "./re/ecs/system/systems/collision_ec_system.h"
 #include "./re/audio/audio_helper.h"
 #include "./re/animation/animation_utils.h"
+#include "./re/collision/collision_utils.h"
+
+const Entity WITCH_ENTITY = 2;
+const Entity WITCH_COLLIDER_ENTITY = 3;
 
 GameEngine::GameEngine() :
     projectProperties(ProjectProperties::GetInstance()),
@@ -186,17 +190,16 @@ void GameEngine::ProcessInput() {
     // Temp moving left or right
     const bool moveLeftPressed = inputManager->IsActionPressed("move_left");
     const bool moveRightPressed = inputManager->IsActionPressed("move_right");
-    const Entity witchEntity = 2;
     if (moveLeftPressed || moveRightPressed) {
-        Transform2DComponent witchTransformComponent = ecsOrchestrator->GetComponent<Transform2DComponent>(witchEntity);
+        Transform2DComponent witchTransformComponent = ecsOrchestrator->GetComponent<Transform2DComponent>(WITCH_ENTITY);
         witchTransformComponent.position.x += moveRightPressed ? 1 : -1;
-        ecsOrchestrator->UpdateComponent<Transform2DComponent>(witchEntity, witchTransformComponent);
-        AnimatedSpriteComponent witchAnimatedSpriteComponent = ecsOrchestrator->GetComponent<AnimatedSpriteComponent>(witchEntity);
+        ecsOrchestrator->UpdateComponent<Transform2DComponent>(WITCH_ENTITY, witchTransformComponent);
+        AnimatedSpriteComponent witchAnimatedSpriteComponent = ecsOrchestrator->GetComponent<AnimatedSpriteComponent>(WITCH_ENTITY);
         witchAnimatedSpriteComponent.flipX = !moveRightPressed;
-        ecsOrchestrator->UpdateComponent<AnimatedSpriteComponent>(witchEntity, witchAnimatedSpriteComponent);
-        AnimationUtils::PlayAnimation(witchEntity, "walk");
+        ecsOrchestrator->UpdateComponent<AnimatedSpriteComponent>(WITCH_ENTITY, witchAnimatedSpriteComponent);
+        AnimationUtils::PlayAnimation(WITCH_ENTITY, "walk");
     } else {
-        AnimationUtils::PlayAnimation(witchEntity, "idle");
+        AnimationUtils::PlayAnimation(WITCH_ENTITY, "idle");
     }
 }
 
@@ -240,6 +243,17 @@ void GameEngine::Update() {
 
     const float variableDeltaTime = (currentTime - lastFrameTime) / static_cast<float>(Timing::Update::MILLISECONDS_PER_TICK);
     ecsOrchestrator->UpdateSystems(variableDeltaTime);
+
+    // temp collision check
+    static bool hasCollidedPreviously = false;
+    CollisionResult collisionResult = CollisionUtils::GetEntityCollisionResult(WITCH_COLLIDER_ENTITY);
+    const bool hasCollided = !collisionResult.collidedEntities.empty();
+    if (hasCollided && !hasCollidedPreviously) {
+        logger->Debug("Colliders intersecting!");
+    } else if (!hasCollided && hasCollidedPreviously) {
+        logger->Debug("Colliders no longer intersecting!");
+    }
+    hasCollidedPreviously = hasCollided;
 
     PhysicsUpdate();
 
