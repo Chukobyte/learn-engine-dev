@@ -24,7 +24,7 @@
   "children": [
     {
       "name": "Witch",
-      "type": "Sprite",
+      "type": "AnimatedSprite",
       "tags": [],
       "external_scene_source": "",
       "components": [
@@ -45,14 +45,9 @@
           }
         },
         {
-          "sprite": {
-            "texture_path": "assets/images/melissa_walk_animation.png",
-            "draw_source": {
-              "x": 0.0,
-              "y": 0.0,
-              "width": 32.0,
-              "height": 32.0
-            },
+          "animated_sprite": {
+            "current_animation": "idle",
+            "is_playing": true,
             "flip_x": false,
             "flip_y": false,
             "modulate": {
@@ -60,11 +55,117 @@
               "blue": 255,
               "green": 255,
               "alpha": 255
-            }
+            },
+            "animations": [
+              {
+                "name": "idle",
+                "speed": 100,
+                "frames": [
+                  {
+                    "frame": 0,
+                    "texture_path": "assets/images/melissa_walk_animation.png",
+                    "draw_source": {
+                      "x": 0,
+                      "y": 0,
+                      "width": 32,
+                      "height": 32
+                    }
+                  }
+                ]
+              },
+              {
+                "name": "walk",
+                "speed": 100,
+                "frames": [
+                  {
+                    "frame": 0,
+                    "texture_path": "assets/images/melissa_walk_animation.png",
+                    "draw_source": {
+                      "x": 0,
+                      "y": 0,
+                      "width": 32,
+                      "height": 32
+                    }
+                  },
+                  {
+                    "frame": 1,
+                    "texture_path": "assets/images/melissa_walk_animation.png",
+                    "draw_source": {
+                      "x": 32,
+                      "y": 0,
+                      "width": 32,
+                      "height": 32
+                    }
+                  },
+                  {
+                    "frame": 2,
+                    "texture_path": "assets/images/melissa_walk_animation.png",
+                    "draw_source": {
+                      "x": 64,
+                      "y": 0,
+                      "width": 32,
+                      "height": 32
+                    }
+                  },
+                  {
+                    "frame": 3,
+                    "texture_path": "assets/images/melissa_walk_animation.png",
+                    "draw_source": {
+                      "x": 96,
+                      "y": 0,
+                      "width": 32,
+                      "height": 32
+                    }
+                  }
+                ]
+              }
+            ]
           }
         }
       ],
-      "children": []
+      "children": [
+        {
+          "name": "CollisionShape2D",
+          "type": "CollisionShape2D",
+          "tags": [],
+          "external_scene_source": "",
+          "components": [
+            {
+              "transform2D": {
+                "position": {
+                  "x": 0.0,
+                  "y": 0.0
+                },
+                "scale": {
+                  "x": 1.0,
+                  "y": 1.0
+                },
+                "rotation": 0,
+                "z_index": 0,
+                "z_index_relative_to_parent": false,
+                "ignore_camera": false
+              }
+            },
+            {
+              "collider": {
+                "rectangle": {
+                  "x": 0.0,
+                  "y": 0.0,
+                  "width": 32.0,
+                  "height": 32.0
+                },
+                "color": {
+                  "red": 95,
+                  "green": 205,
+                  "blue": 228,
+                  "alpha": 190
+                }
+              }
+            }
+          ],
+          "children": []
+        }
+      ]
     },
     {
       "name": "GameText",
