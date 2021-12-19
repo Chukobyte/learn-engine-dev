@@ -2,6 +2,7 @@
 
 #include "../ec_system.h"
 
+#include "../../../scene/scene_node_utils.h"
 #include "../../component/components/transform2d_component.h"
 #include "../../component/components/animated_sprite_component.h"
 #include "../../../rendering/renderer_2d.h"
@@ -35,8 +36,9 @@ class AnimatedSpriteRenderingECSystem : public ECSystem {
                     }
                 }
                 // Submit draw batch
-                Vector2 drawDestinationSize = Vector2(currentFrame.drawSource.w * transform2DComponent.scale.x, currentFrame.drawSource.h * transform2DComponent.scale.y);
-                Rect2 drawDestination = Rect2(transform2DComponent.position, drawDestinationSize);
+                Transform2DComponent translatedTransform = SceneNodeUtils::TranslateEntityTransform(entity);
+                Vector2 drawDestinationSize = Vector2(currentFrame.drawSource.w * translatedTransform.scale.x, currentFrame.drawSource.h * translatedTransform.scale.y);
+                Rect2 drawDestination = Rect2(translatedTransform.position, drawDestinationSize);
                 renderer2D->SubmitSpriteBatchItem(
                     currentFrame.texture,
                     currentFrame.drawSource,
