@@ -51,7 +51,7 @@ class SceneNodeUtils {
         return translatedTransform;
     }
 
-    static Transform2DComponent TranslateEntityTransform(Entity entity) {
+    static Transform2DComponent TranslateEntityTransformIntoWorld(Entity entity) {
         static ComponentManager* componentManager = ComponentManager::GetInstance();
         Transform2DComponent entityTransform = GetEntityCombinedParentsTransforms(entity);
         SceneComponent sceneComponent = componentManager->GetComponent<SceneComponent>(entity);

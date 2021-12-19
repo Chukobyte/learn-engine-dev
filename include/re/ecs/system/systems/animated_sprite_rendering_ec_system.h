@@ -36,7 +36,7 @@ class AnimatedSpriteRenderingECSystem : public ECSystem {
                     }
                 }
                 // Submit draw batch
-                Transform2DComponent translatedTransform = SceneNodeUtils::TranslateEntityTransform(entity);
+                Transform2DComponent translatedTransform = SceneNodeUtils::TranslateEntityTransformIntoWorld(entity);
                 Vector2 drawDestinationSize = Vector2(currentFrame.drawSource.w * translatedTransform.scale.x, currentFrame.drawSource.h * translatedTransform.scale.y);
                 Rect2 drawDestination = Rect2(translatedTransform.position, drawDestinationSize);
                 renderer2D->SubmitSpriteBatchItem(
