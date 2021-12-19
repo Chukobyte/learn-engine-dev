@@ -2,6 +2,7 @@
 
 #include "../ec_system.h"
 
+#include "../../../math/physics.h"
 #include "../../../collision/collision_context.h"
 #include "../../../scene/scene_node_utils.h"
 #include "../../component/components/transform2d_component.h"
@@ -29,16 +30,14 @@ class CollisionECSystem : public ECSystem {
                 ColliderComponent colliderComponent = componentManager->GetComponent<ColliderComponent>(entity);
                 Vector2 drawDestinationSize = Vector2(colliderComponent.collider.w * translatedTransform.scale.x, colliderComponent.collider.h * translatedTransform.scale.y);
                 Rect2 drawDestination = Rect2(translatedTransform.position, drawDestinationSize);
-                static const drawSourceRect = Rect2(0, 0, 1, 1);
+                static const Rect2 drawSourceRect = Rect2(0, 0, 1, 1);
                 renderer2D->SubmitSpriteBatchItem(
-                        collisionBaseTexture,
-                        drawSourceRect,
-                        drawDestination,
-                        translatedTransform.zIndex,
-                        translatedTransform.rotation,
-                        colliderComponent.color,
-                        spriteComponent.flipX,
-                        spriteComponent.flipY
+                    collisionBaseTexture,
+                    drawSourceRect,
+                    drawDestination,
+                    translatedTransform.zIndex,
+                    translatedTransform.rotation,
+                    colliderComponent.color
                 );
             }
         }
@@ -47,8 +46,8 @@ class CollisionECSystem : public ECSystem {
     CollisionResult GetEntityCollisionResult(Entity entity) {
         std::vector<Entity> collidedEntities = {};
         for (Entity targetEntity : entities) {
-            if (!collisionContext->IsTargetCollisionEntityInExceptionList(sourceEntity, targetEntity)) {
-                Rect2 sourceCollisionRectangle = collisionContext->GetCollisionRectangle(sourceEntity);
+            if (!collisionContext->IsTargetCollisionEntityInExceptionList(entity, targetEntity)) {
+                Rect2 sourceCollisionRectangle = collisionContext->GetCollisionRectangle(entity);
                 Rect2 targetCollisionRectangle = collisionContext->GetCollisionRectangle(targetEntity);
                 if (RedMath::Collision::AABB(sourceCollisionRectangle, targetCollisionRectangle)) {
                     collidedEntities.emplace_back(targetEntity);

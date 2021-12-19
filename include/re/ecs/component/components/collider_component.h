@@ -25,7 +25,7 @@ enum class CollisionGroup : unsigned int {
 struct ColliderComponent {
   public:
     Rect2 collider = Rect2();
-    std::vector<Entity> collisionExceptions;
     Color color = DEFAULT_COLLIDER_COMPONENT_COLOR;
     CollisionGroup group = CollisionGroup::ONE;
+    std::vector<Entity> collisionExceptions;
 };

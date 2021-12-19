@@ -11,10 +11,10 @@ static bool IsFloatGreaterOrEqual(float a, float b) {
 
 namespace Collision {
 static bool AABB(Rect2 source, Rect2 target) {
-    return IsFloatGreaterOrEqual(sourceRect.x + sourceRect.w, targetRect.x) &&
-           IsFloatGreaterOrEqual(targetRect.x + targetRect.w, sourceRect.x) &&
-           IsFloatGreaterOrEqual(sourceRect.y + sourceRect.h, targetRect.y) &&
-           IsFloatGreaterOrEqual(targetRect.y + targetRect.h, sourceRect.y);
+    return IsFloatGreaterOrEqual(source.x + source.w, target.x) &&
+           IsFloatGreaterOrEqual(target.x + target.w, source.x) &&
+           IsFloatGreaterOrEqual(source.y + source.h, target.y) &&
+           IsFloatGreaterOrEqual(target.y + target.h, source.y);
 }
 }
 }

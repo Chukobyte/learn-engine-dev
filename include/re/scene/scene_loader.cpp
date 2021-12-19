@@ -61,6 +61,8 @@ void SceneNodeJsonParser::ParseComponentArray(SceneNode &sceneNode, const nlohma
             ParseTextLabelComponent(sceneNode, nodeComponentObjectJson);
         } else if (nodeComponentType == "animated_sprite") {
             ParseAnimatedSpriteComponent(sceneNode, nodeComponentObjectJson);
+        } else if (nodeComponentType == "collider") {
+            ParseColliderComponent(sceneNode, nodeComponentObjectJson);
         }
     }
 }
@@ -218,6 +220,35 @@ void SceneNodeJsonParser::ParseAnimatedSpriteComponent(SceneNode& sceneNode, con
     entityManager->SetSignature(sceneNode.entity, signature);
     bool isAnimatedSpriteComponentEnabled = JsonHelper::GetDefault<bool>(nodeComponentObjectJson, "enabled", true);
     if (isAnimatedSpriteComponentEnabled) {
+        entityManager->SetEnabledSignature(sceneNode.entity, signature);
+    }
+}
+
+void SceneNodeJsonParser::ParseColliderComponent(SceneNode& sceneNode, const nlohmann::json& nodeComponentObjectJson) {
+    const nlohmann::json& rectangleJson = JsonHelper::Get<nlohmann::json>(nodeComponentObjectJson, "rectangle");
+    const float rectX = JsonHelper::Get<float>(rectangleJson, "x");
+    const float rectY = JsonHelper::Get<float>(rectangleJson, "y");
+    const float rectWidth = JsonHelper::Get<float>(rectangleJson, "width");
+    const float rectHeight = JsonHelper::Get<float>(rectangleJson, "height");
+    Rect2 colliderRect = Rect2(rectX, rectY, rectWidth, rectHeight);
+    const nlohmann::json& colorJson = JsonHelper::Get<nlohmann::json>(nodeComponentObjectJson, "color");
+    const Color colliderColor = Color::NormalizedColor(
+                                    JsonHelper::Get<int>(colorJson, "red"),
+                                    JsonHelper::Get<int>(colorJson, "green"),
+                                    JsonHelper::Get<int>(colorJson, "blue"),
+                                    JsonHelper::Get<int>(colorJson, "alpha")
+                                );
+
+    componentManager->AddComponent(sceneNode.entity, ColliderComponent{
+        colliderRect,
+        colliderColor
+    });
+
+    auto signature = entityManager->GetEnabledSignature(sceneNode.entity);
+    signature.set(componentManager->GetComponentType<ColliderComponent>(), true);
+    entityManager->SetSignature(sceneNode.entity, signature);
+    bool isColliderComponentEnabled = JsonHelper::GetDefault<bool>(nodeComponentObjectJson, "enabled", true);
+    if (isColliderComponentEnabled) {
         entityManager->SetEnabledSignature(sceneNode.entity, signature);
     }
 }

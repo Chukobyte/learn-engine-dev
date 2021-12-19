@@ -2,6 +2,7 @@
 
 #include <vector>
 
+#include "../math/redmath.h"
 #include "../ecs/component/component_manager.h"
 
 struct CollisionResult {
@@ -11,7 +12,7 @@ struct CollisionResult {
 
 class CollisionContext {
   public:
-    CollisionContext* GetInstance();
+    static CollisionContext* GetInstance();
     Rect2 GetCollisionRectangle(Entity entity);
     bool IsTargetCollisionEntityInExceptionList(Entity sourceEntity, Entity targetEntity);
 
