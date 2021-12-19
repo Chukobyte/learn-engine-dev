@@ -174,9 +174,9 @@ void SceneNodeJsonParser::ParseAnimatedSpriteComponent(SceneNode& sceneNode, con
     static AssetManager* assetManager = AssetManager::GetInstance();
     std::unordered_map<std::string, Animation> nodeAnimations = {};
     for (const nlohmann::json& animationJson : animationsJson) {
-        const std::string& nodeAnimationName = JsonHelper::Get<std::string>(animationsJson, "name");
-        const int nodeAnimationSpeed = JsonHelper::Get<int>(animationsJson, "speed");
-        nlohmann::json nodeAnimationFramesJsonArray = JsonHelper::Get<nlohmann::json>(animationsJson, "frames");
+        const std::string& nodeAnimationName = JsonHelper::Get<std::string>(animationJson, "name");
+        const int nodeAnimationSpeed = JsonHelper::Get<int>(animationJson, "speed");
+        nlohmann::json nodeAnimationFramesJsonArray = JsonHelper::Get<nlohmann::json>(animationJson, "frames");
         std::unordered_map<unsigned int, AnimationFrame> animationFrames;
         for (nlohmann::json nodeAnimationFrameJson : nodeAnimationFramesJsonArray) {
             const int nodeAnimationFrameNumber = JsonHelper::Get<int>(nodeAnimationFrameJson, "frame");

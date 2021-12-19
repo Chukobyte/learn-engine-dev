@@ -7,11 +7,13 @@ class AnimationUtils {
   public:
     static void SetAnimation(Entity entity, const std::string& animationName, bool setPlayingOnNewAnim = false) {
         static ECSOrchestrator* ecsOrchestrator = ECSOrchestrator::GetInstance();
-        AnimatedSpriteComponent animatedSpriteComponent = ecsOrchestrator->GetComponent<AnimatedSpriteComponent>(entity);
-        if (animatedSpriteComponent.animations.count(animationName) > 0 && animatedSpriteComponent.currentAnimation.name != animationName) {
-            animatedSpriteComponent.currentAnimation = animatedSpriteComponent.animations[animationName];
-            animatedSpriteComponent.isPlaying = setPlayingOnNewAnim;
-            ecsOrchestrator->UpdateComponent(entity, animatedSpriteComponent);
+        if (ecsOrchestrator->HasComponent<AnimatedSpriteComponent>(entity)) {
+            AnimatedSpriteComponent animatedSpriteComponent = ecsOrchestrator->GetComponent<AnimatedSpriteComponent>(entity);
+            if (animatedSpriteComponent.animations.count(animationName) > 0 && animatedSpriteComponent.currentAnimation.name != animationName) {
+                animatedSpriteComponent.currentAnimation = animatedSpriteComponent.animations[animationName];
+                animatedSpriteComponent.isPlaying = setPlayingOnNewAnim;
+                ecsOrchestrator->UpdateComponent(entity, animatedSpriteComponent);
+            }
         }
     }
 

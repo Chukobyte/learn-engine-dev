@@ -4,6 +4,7 @@
 #include "./re/ecs/system/systems/text_rendering_ec_system.h"
 #include "./re/ecs/system/systems/animated_sprite_rendering_ec_system.h"
 #include "./re/audio/audio_helper.h"
+#include "./re/animation/animation_utils.h"
 
 GameEngine::GameEngine() :
     projectProperties(ProjectProperties::GetInstance()),
@@ -177,14 +178,17 @@ void GameEngine::ProcessInput() {
     // Temp moving left or right
     const bool moveLeftPressed = inputManager->IsActionPressed("move_left");
     const bool moveRightPressed = inputManager->IsActionPressed("move_right");
+    const Entity witchEntity = 2;
     if (moveLeftPressed || moveRightPressed) {
-        const Entity witchEntity = 2;
         Transform2DComponent witchTransformComponent = ecsOrchestrator->GetComponent<Transform2DComponent>(witchEntity);
         witchTransformComponent.position.x += moveRightPressed ? 1 : -1;
         ecsOrchestrator->UpdateComponent<Transform2DComponent>(witchEntity, witchTransformComponent);
-        SpriteComponent witchSpriteComponent = ecsOrchestrator->GetComponent<SpriteComponent>(witchEntity);
-        witchSpriteComponent.flipX = !moveRightPressed;
-        ecsOrchestrator->UpdateComponent<SpriteComponent>(witchEntity, witchSpriteComponent);
+        AnimatedSpriteComponent witchAnimatedSpriteComponent = ecsOrchestrator->GetComponent<AnimatedSpriteComponent>(witchEntity);
+        witchAnimatedSpriteComponent.flipX = !moveRightPressed;
+        ecsOrchestrator->UpdateComponent<AnimatedSpriteComponent>(witchEntity, witchAnimatedSpriteComponent);
+        AnimationUtils::PlayAnimation(witchEntity, "walk");
+    } else {
+        AnimationUtils::PlayAnimation(witchEntity, "idle");
     }
 }
 
