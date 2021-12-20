@@ -156,6 +156,7 @@ bool GameEngine::InitializeECS() {
     ecsOrchestrator->RegisterSystem<AnimatedSpriteRenderingECSystem>(animatedSpriteRenderingSignature, ECSystemRegistration::RENDER);
 
     ComponentSignature collisionSignature;
+//    collisionSignature.set(ecsOrchestrator->GetComponentType<SceneComponent>(), true);
     collisionSignature.set(ecsOrchestrator->GetComponentType<Transform2DComponent>(), true);
     collisionSignature.set(ecsOrchestrator->GetComponentType<ColliderComponent>(), true);
     ECSystemRegistration colliderSystemRegistration = projectProperties->areColliderVisible ? ECSystemRegistration::RENDER : ECSystemRegistration::NONE;
@@ -246,7 +247,8 @@ void GameEngine::Update() {
 
     // temp collision check
     static bool hasCollidedPreviously = false;
-    CollisionResult collisionResult = CollisionUtils::GetEntityCollisionResult(WITCH_COLLIDER_ENTITY);
+//    CollisionResult collisionResult = CollisionUtils::GetEntityCollisionResult(WITCH_COLLIDER_ENTITY);
+    CollisionResult collisionResult = CollisionUtils::GetEntityCollisionResultByTag(WITCH_COLLIDER_ENTITY, "test");
     const bool hasCollided = !collisionResult.collidedEntities.empty();
     if (hasCollided && !hasCollidedPreviously) {
         logger->Debug("Colliders intersecting!");

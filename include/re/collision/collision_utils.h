@@ -9,4 +9,9 @@ class CollisionUtils {
         static CollisionECSystem* collisionSystem = ECSOrchestrator::GetInstance()->GetSystem<CollisionECSystem>();
         return collisionSystem->GetEntityCollisionResult(entity);
     }
+
+    static CollisionResult GetEntityCollisionResultByTag(Entity entity, const std::string& tag) {
+        static CollisionECSystem* collisionSystem = ECSOrchestrator::GetInstance()->GetSystem<CollisionECSystem>();
+        return collisionSystem->GetEntityCollisionResultByTag(entity, tag);
+    }
 };

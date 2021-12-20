@@ -170,7 +170,7 @@
     {
       "name": "CollisionShape2D",
       "type": "CollisionShape2D",
-      "tags": [],
+      "tags": ["test"],
       "external_scene_source": "",
       "components": [
         {
