@@ -20,6 +20,7 @@ enum class ECSystemRegistration : int {
     ON_ENTITY_TAGS_UPDATED = 64,
     ALL = UPDATE | PHYSICS_UPDATE | RENDER | ON_SCENE_START | ON_SCENE_END | ON_ENTITY_TAGS_UPDATED,
 };
+GENERATE_ENUM_CLASS_OPERATORS(ECSystemRegistration)
 
 class ECSystemManager {
   private:
@@ -37,22 +38,22 @@ class ECSystemManager {
         if (ecSystemRegistration == ECSystemRegistration::NONE) {
             return;
         }
-        if (Helper::CompareEnumClass(ecSystemRegistration, ECSystemRegistration::UPDATE)) {
+        if ((ecSystemRegistration & ECSystemRegistration::UPDATE) == ECSystemRegistration::UPDATE) {
             updateSystems.emplace_back(system);
         }
-        if (Helper::CompareEnumClass(ecSystemRegistration, ECSystemRegistration::PHYSICS_UPDATE)) {
+        if ((ecSystemRegistration & ECSystemRegistration::PHYSICS_UPDATE) == ECSystemRegistration::PHYSICS_UPDATE) {
             physicsUpdateSystems.emplace_back(system);
         }
-        if (Helper::CompareEnumClass(ecSystemRegistration, ECSystemRegistration::RENDER)) {
+        if ((ecSystemRegistration & ECSystemRegistration::RENDER) == ECSystemRegistration::RENDER) {
             renderSystems.emplace_back(system);
         }
-        if (Helper::CompareEnumClass(ecSystemRegistration, ECSystemRegistration::ON_SCENE_START)) {
+        if ((ecSystemRegistration & ECSystemRegistration::ON_SCENE_START) == ECSystemRegistration::ON_SCENE_START) {
             onSceneStartSystems.emplace_back(system);
         }
-        if (Helper::CompareEnumClass(ecSystemRegistration, ECSystemRegistration::ON_SCENE_END)) {
+        if ((ecSystemRegistration & ECSystemRegistration::ON_SCENE_END) == ECSystemRegistration::ON_SCENE_END) {
             onSceneEndSystems.emplace_back(system);
         }
-        if (Helper::CompareEnumClass(ecSystemRegistration, ECSystemRegistration::ON_ENTITY_TAGS_UPDATED)) {
+        if ((ecSystemRegistration & ECSystemRegistration::ON_ENTITY_TAGS_UPDATED) == ECSystemRegistration::ON_ENTITY_TAGS_UPDATED) {
             onEntityTagsUpdatedSystems.emplace_back(system);
         }
     }

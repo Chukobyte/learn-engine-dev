@@ -1,7 +1,5 @@
 #include "ecs_orchestrator.h"
 
-
-
 ECSOrchestrator::ECSOrchestrator() :
     ecSystemManager(new ECSystemManager()),
     entityManager(EntityManager::GetInstance()),
