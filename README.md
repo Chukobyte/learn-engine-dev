@@ -13,6 +13,8 @@ A work in progress tutorial series for developing a cross platform game engine f
 - [5.0 Input Management](https://chukobyte.github.io/learn-engine-dev/1.foundation/5.input_management/input_events/)
 - [6.0 Entity Component System](https://chukobyte.github.io/learn-engine-dev/1.foundation/6.entity_component_system/building_an_ecs/)
 - [7.0 Serializing With JSON](https://chukobyte.github.io/learn-engine-dev/1.foundation/7.serializing_with_json/creating_scene_json_files/)
+- [8.0 Animations](https://chukobyte.github.io/learn-engine-dev/1.foundation/8.animations/animation_systems/)
+- [9.0 Collisions](https://chukobyte.github.io/learn-engine-dev/1.foundation/9.collisions/collision_systems/)
 
 *Note: Chapters are a work in progress and subject to change*
 
