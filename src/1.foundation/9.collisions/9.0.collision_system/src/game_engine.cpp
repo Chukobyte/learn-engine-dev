@@ -8,9 +8,6 @@
 #include "./re/animation/animation_utils.h"
 #include "./re/collision/collision_utils.h"
 
-const Entity WITCH_ENTITY = 2;
-const Entity WITCH_COLLIDER_ENTITY = 3;
-
 GameEngine::GameEngine() :
     projectProperties(ProjectProperties::GetInstance()),
     engineContext(GameEngineContext::GetInstance()),
@@ -189,6 +186,7 @@ void GameEngine::ProcessInput() {
         engineContext->SetRunning(false);
     }
     // Temp moving left or right
+    const Entity WITCH_ENTITY = 2;
     const bool moveLeftPressed = inputManager->IsActionPressed("move_left");
     const bool moveRightPressed = inputManager->IsActionPressed("move_right");
     if (moveLeftPressed || moveRightPressed) {
@@ -246,6 +244,7 @@ void GameEngine::Update() {
     ecsOrchestrator->UpdateSystems(variableDeltaTime);
 
     // temp collision check
+    const Entity WITCH_COLLIDER_ENTITY = 3;
     static bool hasCollidedPreviously = false;
 //    CollisionResult collisionResult = CollisionUtils::GetEntityCollisionResult(WITCH_COLLIDER_ENTITY);
     CollisionResult collisionResult = CollisionUtils::GetEntityCollisionResultByTag(WITCH_COLLIDER_ENTITY, "test");
