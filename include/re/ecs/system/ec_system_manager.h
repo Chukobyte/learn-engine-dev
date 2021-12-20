@@ -17,7 +17,8 @@ enum class ECSystemRegistration : int {
     RENDER = 8,
     ON_SCENE_START = 16,
     ON_SCENE_END = 32,
-    ALL = UPDATE | PHYSICS_UPDATE | RENDER | ON_SCENE_START | ON_SCENE_END,
+    ON_ENTITY_TAGS_UPDATED = 64,
+    ALL = UPDATE | PHYSICS_UPDATE | RENDER | ON_SCENE_START | ON_SCENE_END | ON_ENTITY_TAGS_UPDATED,
 };
 
 class ECSystemManager {
@@ -29,6 +30,7 @@ class ECSystemManager {
     std::vector<ECSystem*> renderSystems{};
     std::vector<ECSystem*> onSceneStartSystems{};
     std::vector<ECSystem*> onSceneEndSystems{};
+    std::vector<ECSystem*> onEntityTagsUpdatedSystems{};
     Logger *logger = nullptr;
 
     void ProcessSystemRegistration(ECSystem* system, ECSystemRegistration ecSystemRegistration) {
@@ -49,6 +51,9 @@ class ECSystemManager {
         }
         if (Helper::CompareEnumClass(ecSystemRegistration, ECSystemRegistration::ON_SCENE_END)) {
             onSceneEndSystems.emplace_back(system);
+        }
+        if (Helper::CompareEnumClass(ecSystemRegistration, ECSystemRegistration::ON_ENTITY_TAGS_UPDATED)) {
+            onEntityTagsUpdatedSystems.emplace_back(system);
         }
     }
 
@@ -133,10 +138,13 @@ class ECSystemManager {
         }
     }
 
-    void EntityDestroyed(Entity entity) {
+    void EntityDestroyed(Entity entity, const std::vector<std::string>& tags) {
         for (auto const& pair : systems) {
             auto const& system = pair.second;
             system->UnregisterEntity(entity);
+        }
+        for (ECSystem* entityTagUpdateSystem : onEntityTagsUpdatedSystems) {
+            entityTagUpdateSystem->OnEntityTagsRemoved(entity, tags);
         }
     }
 
@@ -183,6 +191,14 @@ class ECSystemManager {
     void OnSceneEndSystems(Scene* scene) {
         for (ECSystem* sceneEndSystem : onSceneEndSystems) {
             sceneEndSystem->OnSceneEnd(scene);
+        }
+    }
+
+    void OnEntityTagsUpdatedSystems(Entity entity, const std::vector<std::string>& oldTags, const std::vector<std::string>& newTags) {
+        for (ECSystem* sceneEndSystem : onEntityTagsUpdatedSystems) {
+            if (sceneEndSystem->HasEntity(entity)) {
+                sceneEndSystem->OnEntityTagsUpdated(entity, oldTags, newTags);
+            }
         }
     }
 };

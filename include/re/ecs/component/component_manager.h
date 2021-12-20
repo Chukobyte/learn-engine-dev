@@ -70,6 +70,14 @@ class ComponentManager {
     }
 
     template<typename T>
+    T& GetComponentDefault(Entity entity, T defaultComponent) {
+        if (HasComponent<T>(entity)) {
+            return GetComponentArray<T>()->GetData(entity);
+        }
+        return defaultComponent;
+    }
+
+    template<typename T>
     bool HasComponent(Entity entity) {
         return GetComponentArray<T>()->HasData(entity);
     }

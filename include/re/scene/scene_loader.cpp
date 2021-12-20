@@ -267,6 +267,10 @@ SceneNode SceneNodeJsonParser::ParseSceneJson(Scene* scene, const nlohmann::json
     nlohmann::json nodeTagsJsonArray = JsonHelper::Get<nlohmann::json>(nodeJson, "tags");
     const std::string &nodeExternalSceneSource = JsonHelper::Get<std::string>(nodeJson, "external_scene_source");
     componentManager->AddComponent(sceneNode.entity, GenerateSceneComponent(nodeName, parentSceneNode, nodeTagsJsonArray));
+    auto signature = entityManager->GetEnabledSignature(sceneNode.entity);
+    signature.set(componentManager->GetComponentType<SceneComponent>(), true);
+    entityManager->SetSignature(sceneNode.entity, signature);
+    entityManager->SetEnabledSignature(sceneNode.entity, signature);
 
     // Rest of components
     nlohmann::json nodeComponentJsonArray = JsonHelper::Get<nlohmann::json>(nodeJson, "components");
