@@ -7,11 +7,11 @@
 <meta content="width=device-width,initial-scale=1" name="viewport"/>
 <meta content="Learn Engine Dev is tutorial series for developing a cross platform game engine from scratch." name="description"/>
 <meta content="Chukobyte" name="author"/>
-<link href="assets/images/favicon.png" rel="icon"/>
+<link href="../../../assets/images/favicon.png" rel="icon"/>
 <meta content="mkdocs-1.1.2, mkdocs-material-7.1.4" name="generator"/>
-<title>Learn Engine Dev</title>
-<link href="assets/stylesheets/main.bde7dde4.min.css" rel="stylesheet"/>
-<link href="assets/stylesheets/palette.ef6f36e2.min.css" rel="stylesheet"/>
+<title>Collision System - Learn Engine Dev</title>
+<link href="../../../assets/stylesheets/main.bde7dde4.min.css" rel="stylesheet"/>
+<link href="../../../assets/stylesheets/palette.ef6f36e2.min.css" rel="stylesheet"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&amp;display=fallback" rel="stylesheet"/>
 <style>:root{--md-text-font-family:"Roboto";--md-code-font-family:"Roboto Mono"}</style>
@@ -40,12 +40,12 @@
 </script>
 </head>
 <body data-md-color-accent="none" data-md-color-primary="none" data-md-color-scheme="" dir="ltr">
-<script>function __prefix(e){return new URL(".",location).pathname+"."+e}function __get(e,t=localStorage){return JSON.parse(t.getItem(__prefix(e)))}</script>
+<script>function __prefix(e){return new URL("../../..",location).pathname+"."+e}function __get(e,t=localStorage){return JSON.parse(t.getItem(__prefix(e)))}</script>
 <input autocomplete="off" class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/>
 <input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
 <label class="md-overlay" for="__drawer"></label>
 <div data-md-component="skip">
-<a class="md-skip" href="#welcome-to-learn-engine-dev">
+<a class="md-skip" href="#collision-system">
           Skip to content
         </a>
 </div>
@@ -53,7 +53,7 @@
 </div>
 <header class="md-header" data-md-component="header">
 <nav aria-label="Header" class="md-header__inner md-grid">
-<a aria-label="Learn Engine Dev" class="md-header__button md-logo" data-md-component="logo" href="." title="Learn Engine Dev">
+<a aria-label="Learn Engine Dev" class="md-header__button md-logo" data-md-component="logo" href="../../.." title="Learn Engine Dev">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"></path></svg>
 </a>
 <label class="md-header__button md-icon" for="__drawer">
@@ -69,7 +69,7 @@
 <div class="md-header__topic" data-md-component="header-topic">
 <span class="md-ellipsis">
             
-              Introduction
+              Collision System
             
           </span>
 </div>
@@ -123,7 +123,7 @@
 <div class="md-sidebar__inner">
 <nav aria-label="Navigation" class="md-nav md-nav--primary" data-md-level="0">
 <label class="md-nav__title" for="__drawer">
-<a aria-label="Learn Engine Dev" class="md-nav__button md-logo" data-md-component="logo" href="." title="Learn Engine Dev">
+<a aria-label="Learn Engine Dev" class="md-nav__button md-logo" data-md-component="logo" href="../../.." title="Learn Engine Dev">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"></path></svg>
 </a>
     Learn Engine Dev
@@ -139,61 +139,13 @@
 </a>
 </div>
 <ul class="md-nav__list" data-md-scrollfix="">
-<li class="md-nav__item md-nav__item--active">
-<input class="md-nav__toggle md-toggle" data-md-toggle="toc" id="__toc" type="checkbox"/>
-<label class="md-nav__link md-nav__link--active" for="__toc">
-          Introduction
-          <span class="md-nav__icon md-icon"></span>
-</label>
-<a class="md-nav__link md-nav__link--active" href=".">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../..">
         Introduction
       </a>
-<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
-<label class="md-nav__title" for="__toc">
-<span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
-<li class="md-nav__item">
-<a class="md-nav__link" href="#about">
-    About
-  </a>
 </li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#purpose">
-    Purpose
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#prerequisites">
-    Prerequisites
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#structure">
-    Structure
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#tech-stack">
-    Tech Stack
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#work-in-progress">
-    Work In Progress
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#feedback">
-    Feedback
-  </a>
-</li>
-</ul>
-</nav>
-</li>
-<li class="md-nav__item md-nav__item--nested">
-<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" id="__nav_2" type="checkbox"/>
+<li class="md-nav__item md-nav__item--active md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" id="__nav_2" type="checkbox"/>
 <label class="md-nav__link" for="__nav_2">
         1. Foundation
         <span class="md-nav__icon md-icon"></span>
@@ -217,17 +169,17 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="1.foundation/1.embedding_python/hello_python/">
+<a class="md-nav__link" href="../../1.embedding_python/hello_python/">
         Hello Python
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="1.foundation/1.embedding_python/embedding_further/">
+<a class="md-nav__link" href="../../1.embedding_python/embedding_further/">
         Embedding Further
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="1.foundation/1.embedding_python/custom_python_module/">
+<a class="md-nav__link" href="../../1.embedding_python/custom_python_module/">
         Custom Python Module
       </a>
 </li>
@@ -247,12 +199,12 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="1.foundation/2.game_loop_and_sdl/game_loop_introduction/">
+<a class="md-nav__link" href="../../2.game_loop_and_sdl/game_loop_introduction/">
         Game Loop Introduction
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="1.foundation/2.game_loop_and_sdl/initialize_sdl/">
+<a class="md-nav__link" href="../../2.game_loop_and_sdl/initialize_sdl/">
         Initialize SDL
       </a>
 </li>
@@ -272,17 +224,17 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="1.foundation/3.opengl_rendering/asset_management/">
+<a class="md-nav__link" href="../../3.opengl_rendering/asset_management/">
         Asset Management
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="1.foundation/3.opengl_rendering/rendering_sprites/">
+<a class="md-nav__link" href="../../3.opengl_rendering/rendering_sprites/">
         Rendering Sprites
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="1.foundation/3.opengl_rendering/rendering_text/">
+<a class="md-nav__link" href="../../3.opengl_rendering/rendering_text/">
         Rendering Text
       </a>
 </li>
@@ -302,7 +254,7 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="1.foundation/4.implementing_audio/using_sdl_mixer/">
+<a class="md-nav__link" href="../../4.implementing_audio/using_sdl_mixer/">
         Using SDL_mixer
       </a>
 </li>
@@ -322,12 +274,12 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="1.foundation/5.input_management/input_events/">
+<a class="md-nav__link" href="../../5.input_management/input_events/">
         Input Events
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="1.foundation/5.input_management/input_management/">
+<a class="md-nav__link" href="../../5.input_management/input_management/">
         Input Management
       </a>
 </li>
@@ -347,17 +299,17 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="1.foundation/6.entity_component_system/building_an_ecs/">
+<a class="md-nav__link" href="../../6.entity_component_system/building_an_ecs/">
         Building An ECS
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="1.foundation/6.entity_component_system/managers/">
+<a class="md-nav__link" href="../../6.entity_component_system/managers/">
         Managers
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="1.foundation/6.entity_component_system/ecs_orchestrator/">
+<a class="md-nav__link" href="../../6.entity_component_system/ecs_orchestrator/">
         ECS Orchestrator
       </a>
 </li>
@@ -377,12 +329,12 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="1.foundation/7.serializing_with_json/parsing_json_properties_file/">
+<a class="md-nav__link" href="../../7.serializing_with_json/parsing_json_properties_file/">
         Parsing JSON Properties File
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="1.foundation/7.serializing_with_json/creating_scene_json_files/">
+<a class="md-nav__link" href="../../7.serializing_with_json/creating_scene_json_files/">
         Creating Scene Json Files
       </a>
 </li>
@@ -402,15 +354,15 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="1.foundation/8.animations/animation_system/">
+<a class="md-nav__link" href="../../8.animations/animation_system/">
         Animation System
       </a>
 </li>
 </ul>
 </nav>
 </li>
-<li class="md-nav__item md-nav__item--nested">
-<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_9" id="__nav_2_9" type="checkbox"/>
+<li class="md-nav__item md-nav__item--active md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_9" id="__nav_2_9" type="checkbox"/>
 <label class="md-nav__link" for="__nav_2_9">
         Collisions
         <span class="md-nav__icon md-icon"></span>
@@ -421,10 +373,28 @@
           Collisions
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
-<li class="md-nav__item">
-<a class="md-nav__link" href="1.foundation/9.collisions/collision_system/">
+<li class="md-nav__item md-nav__item--active">
+<input class="md-nav__toggle md-toggle" data-md-toggle="toc" id="__toc" type="checkbox"/>
+<label class="md-nav__link md-nav__link--active" for="__toc">
+          Collision System
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<a class="md-nav__link md-nav__link--active" href="./">
         Collision System
       </a>
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#coming-soon">
+    Coming Soon
+  </a>
+</li>
+</ul>
+</nav>
 </li>
 </ul>
 </nav>
@@ -445,7 +415,7 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="2.engine_api/about/">
+<a class="md-nav__link" href="../../../2.engine_api/about/">
         Defining Red Engine API
       </a>
 </li>
@@ -465,7 +435,7 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="3.games/about/">
+<a class="md-nav__link" href="../../../3.games/about/">
         Making Games
       </a>
 </li>
@@ -473,7 +443,7 @@
 </nav>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="source_code/source_code/">
+<a class="md-nav__link" href="../../../source_code/source_code/">
         Source Code
       </a>
 </li>
@@ -492,38 +462,8 @@
     </label>
 <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="#about">
-    About
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#purpose">
-    Purpose
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#prerequisites">
-    Prerequisites
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#structure">
-    Structure
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#tech-stack">
-    Tech Stack
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#work-in-progress">
-    Work In Progress
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#feedback">
-    Feedback
+<a class="md-nav__link" href="#coming-soon">
+    Coming Soon
   </a>
 </li>
 </ul>
@@ -533,47 +473,35 @@
 </div>
 <div class="md-content" data-md-component="content">
 <article class="md-content__inner md-typeset">
-<h1 id="welcome-to-learn-engine-dev">Welcome To Learn Engine Dev</h1>
-<h2 id="about">About</h2>
-<p>Welcome to a tutorial series for creating a simple game engine, named <strong><em>Red Engine</em></strong>, from scratch!  Making a game engine is no easy task and each system we create could have multiple tutorials of its own.  But fear not, we will walk through building an engine each system at a time.  This tutorial series currently supports windows and linux, but may expand to other platforms in the future.</p>
-<h2 id="purpose">Purpose</h2>
-<p>The purpose of this tutorial series is to provide a step-by-step approach to building a game engine.  The end goal is to have a fully functional game engine that can be reused for multiple projects.  There's a popular saying floating around that goes "Make games, not engines".  To not disappoint the folks that usually mention this quote, we will be making 3 games with <strong><em>Red Engine</em></strong> to test it out!</p>
-<h2 id="prerequisites">Prerequisites</h2>
-<p>Programming and technical skills of all levels are welcome, but to get the most out of this tutorial series you should have the following:</p>
-<ul>
-<li>A basic understanding of C++.  This includes compiling and writing code.</li>
-<li>Proficiency with writing code in Python.</li>
-<li>A high level understanding of OpenGL.</li>
-</ul>
-<h2 id="structure">Structure</h2>
-<p>There are a total of three parts to this tutorial series which are split in multiple chapters.  Each chapter is further broken up into sections which can be navigated to via the menu on the left.  Each chapter and section has source code attributed to it which can be found within the <a href="https://github.com/Chukobyte/learn-engine-dev">github repo</a>.  Code will need to be shared between each project folder and a game library will be created in <code>include/re</code>.  Typically, code that is created within a chapter is moved into the game library once it's implementation is completed within the sections.</p>
-<h2 id="tech-stack">Tech Stack</h2>
-<p><strong><em>Red Engine</em></strong> will be built with the following technologies:</p>
-<ul>
-<li><strong>C++ 14</strong> - Core engine</li>
-<li><strong>OpenGL 3.3</strong> - Graphics API</li>
-<li><strong>SDL2</strong> - Windowing and input</li>
-<li><strong>SDL2_mixer</strong> - Audio</li>
-<li><strong>Python 3.7</strong> - Scripting language for game logic</li>
-<li><strong>AStyle</strong> - Used for formatting C++ code</li>
-</ul>
-<h2 id="work-in-progress">Work In Progress</h2>
-<p>This tutorial series is not yet complete so expect incomplete chapters and sections.  The source code for each chapter will come first followed by more detailed descriptions and information for each section.  Also builds for windows are typically done first before linux, so expect delays in updating the Makefiles for linux in later chapters.</p>
-<h2 id="feedback">Feedback</h2>
-<p>Feedback is greatly appreciated!  One way to submit feedback is to open up an <a href="https://github.com/Chukobyte/learn-engine-dev/issues">issue</a> in github and apply an appropriate label.  If you like what this project is doing consider starring the Learn Engine Dev <a href="https://github.com/Chukobyte/learn-engine-dev">github repo</a>.</p>
+<h1 id="collision-system">Collision System</h1>
+<h2 id="coming-soon">Coming Soon</h2>
+<p>Source for this section can be found <a href="https://github.com/Chukobyte/learn-engine-dev/tree/main/src/1.foundation/9.collisions/9.0.collision_system">here</a>.</p>
 </article>
 </div>
 </div>
 </main>
 <footer class="md-footer">
 <nav aria-label="Footer" class="md-footer__inner md-grid">
-<a class="md-footer__link md-footer__link--next" href="1.foundation/1.embedding_python/hello_python/" rel="next">
+<a class="md-footer__link md-footer__link--prev" href="../../8.animations/animation_system/" rel="prev">
+<div class="md-footer__button md-icon">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"></path></svg>
+</div>
+<div class="md-footer__title">
+<div class="md-ellipsis">
+<span class="md-footer__direction">
+                Previous
+              </span>
+              Animation System
+            </div>
+</div>
+</a>
+<a class="md-footer__link md-footer__link--next" href="../../../2.engine_api/about/" rel="next">
 <div class="md-footer__title">
 <div class="md-ellipsis">
 <span class="md-footer__direction">
                 Next
               </span>
-              Hello Python
+              Defining Red Engine API
             </div>
 </div>
 <div class="md-footer__button md-icon">
@@ -600,7 +528,7 @@
 <div class="md-dialog" data-md-component="dialog">
 <div class="md-dialog__inner md-typeset"></div>
 </div>
-<script id="__config" type="application/json">{"base": ".", "features": [], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}, "search": "assets/javascripts/workers/search.4fa0e4ee.min.js", "version": null}</script>
-<script src="assets/javascripts/bundle.1d3bfcf1.min.js"></script>
+<script id="__config" type="application/json">{"base": "../../..", "features": [], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}, "search": "../../../assets/javascripts/workers/search.4fa0e4ee.min.js", "version": null}</script>
+<script src="../../../assets/javascripts/bundle.1d3bfcf1.min.js"></script>
 </body>
 </html>
