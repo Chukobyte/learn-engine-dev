@@ -1,9 +1,12 @@
 #include "game_engine.h"
 
-#include "./re/ecs/component/components/node_component.h"
 #include "./re/ecs/system/systems/sprite_rendering_ec_system.h"
 #include "./re/ecs/system/systems/text_rendering_ec_system.h"
+#include "./re/ecs/system/systems/animated_sprite_rendering_ec_system.h"
+#include "./re/ecs/system/systems/collision_ec_system.h"
 #include "./re/audio/audio_helper.h"
+#include "./re/animation/animation_utils.h"
+#include "./re/collision/collision_utils.h"
 
 GameEngine::GameEngine() :
     projectProperties(ProjectProperties::GetInstance()),
@@ -131,6 +134,8 @@ bool GameEngine::InitializeECS() {
     ecsOrchestrator->RegisterComponent<Transform2DComponent>();
     ecsOrchestrator->RegisterComponent<SpriteComponent>();
     ecsOrchestrator->RegisterComponent<TextLabelComponent>();
+    ecsOrchestrator->RegisterComponent<AnimatedSpriteComponent>();
+    ecsOrchestrator->RegisterComponent<ColliderComponent>();
     // Register EC Systems to ECS
     ComponentSignature spriteRenderingSignature;
     spriteRenderingSignature.set(ecsOrchestrator->GetComponentType<Transform2DComponent>(), true);
@@ -141,6 +146,18 @@ bool GameEngine::InitializeECS() {
     textRenderingSignature.set(ecsOrchestrator->GetComponentType<Transform2DComponent>(), true);
     textRenderingSignature.set(ecsOrchestrator->GetComponentType<TextLabelComponent>(), true);
     ecsOrchestrator->RegisterSystem<TextRenderingECSystem>(textRenderingSignature, ECSystemRegistration::RENDER);
+
+    ComponentSignature animatedSpriteRenderingSignature;
+    animatedSpriteRenderingSignature.set(ecsOrchestrator->GetComponentType<Transform2DComponent>(), true);
+    animatedSpriteRenderingSignature.set(ecsOrchestrator->GetComponentType<AnimatedSpriteComponent>(), true);
+    ecsOrchestrator->RegisterSystem<AnimatedSpriteRenderingECSystem>(animatedSpriteRenderingSignature, ECSystemRegistration::RENDER);
+
+    ComponentSignature collisionSignature;
+    collisionSignature.set(ecsOrchestrator->GetComponentType<SceneComponent>(), true);
+    collisionSignature.set(ecsOrchestrator->GetComponentType<Transform2DComponent>(), true);
+    collisionSignature.set(ecsOrchestrator->GetComponentType<ColliderComponent>(), true);
+    ECSystemRegistration colliderSystemRegistration = projectProperties->areColliderVisible ? ECSystemRegistration::RENDER | ECSystemRegistration::ON_ENTITY_TAGS_UPDATED : ECSystemRegistration::ON_ENTITY_TAGS_UPDATED;
+    ecsOrchestrator->RegisterSystem<CollisionECSystem>(collisionSignature, colliderSystemRegistration);
     return true;
 }
 
@@ -169,16 +186,19 @@ void GameEngine::ProcessInput() {
         engineContext->SetRunning(false);
     }
     // Temp moving left or right
+    const Entity WITCH_ENTITY = 2;
     const bool moveLeftPressed = inputManager->IsActionPressed("move_left");
     const bool moveRightPressed = inputManager->IsActionPressed("move_right");
     if (moveLeftPressed || moveRightPressed) {
-        const Entity witchEntity = 2;
-        Transform2DComponent witchTransformComponent = ecsOrchestrator->GetComponent<Transform2DComponent>(witchEntity);
+        Transform2DComponent witchTransformComponent = ecsOrchestrator->GetComponent<Transform2DComponent>(WITCH_ENTITY);
         witchTransformComponent.position.x += moveRightPressed ? 1 : -1;
-        ecsOrchestrator->UpdateComponent<Transform2DComponent>(witchEntity, witchTransformComponent);
-        SpriteComponent witchSpriteComponent = ecsOrchestrator->GetComponent<SpriteComponent>(witchEntity);
-        witchSpriteComponent.flipX = !moveRightPressed;
-        ecsOrchestrator->UpdateComponent<SpriteComponent>(witchEntity, witchSpriteComponent);
+        ecsOrchestrator->UpdateComponent<Transform2DComponent>(WITCH_ENTITY, witchTransformComponent);
+        AnimatedSpriteComponent witchAnimatedSpriteComponent = ecsOrchestrator->GetComponent<AnimatedSpriteComponent>(WITCH_ENTITY);
+        witchAnimatedSpriteComponent.flipX = !moveRightPressed;
+        ecsOrchestrator->UpdateComponent<AnimatedSpriteComponent>(WITCH_ENTITY, witchAnimatedSpriteComponent);
+        AnimationUtils::PlayAnimation(WITCH_ENTITY, "walk");
+    } else {
+        AnimationUtils::PlayAnimation(WITCH_ENTITY, "idle");
     }
 }
 
@@ -222,6 +242,19 @@ void GameEngine::Update() {
 
     const float variableDeltaTime = (currentTime - lastFrameTime) / static_cast<float>(Timing::Update::MILLISECONDS_PER_TICK);
     ecsOrchestrator->UpdateSystems(variableDeltaTime);
+
+    // temp collision check
+    const Entity WITCH_COLLIDER_ENTITY = 3;
+    static bool hasCollidedPreviously = false;
+//    CollisionResult collisionResult = CollisionUtils::GetEntityCollisionResult(WITCH_COLLIDER_ENTITY);
+    CollisionResult collisionResult = CollisionUtils::GetEntityCollisionResultByTag(WITCH_COLLIDER_ENTITY, "test");
+    const bool hasCollided = !collisionResult.collidedEntities.empty();
+    if (hasCollided && !hasCollidedPreviously) {
+        logger->Debug("Colliders intersecting!");
+    } else if (!hasCollided && hasCollidedPreviously) {
+        logger->Debug("Colliders no longer intersecting!");
+    }
+    hasCollidedPreviously = hasCollided;
 
     PhysicsUpdate();
 

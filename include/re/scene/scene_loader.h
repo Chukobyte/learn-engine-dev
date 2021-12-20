@@ -9,6 +9,7 @@
 #include "../ecs/component/components/text_label_component.h"
 #include "../ecs/component/components/sprite_component.h"
 #include "../ecs/component/components/animated_sprite_component.h"
+#include "../ecs/component/components/collider_component.h"
 #include "../data/asset_manager.h"
 #include "../utils/file_helper.h"
 #include "../utils/json_helper.h"
@@ -27,6 +28,7 @@ class SceneNodeJsonParser {
     void ParseSpriteComponent(SceneNode &sceneNode, const nlohmann::json& nodeComponentObjectJson);
     void ParseTextLabelComponent(SceneNode& sceneNode, const nlohmann::json& nodeComponentObjectJson);
     void ParseAnimatedSpriteComponent(SceneNode& sceneNode, const nlohmann::json& nodeComponentObjectJson);
+    void ParseColliderComponent(SceneNode& sceneNode, const nlohmann::json& nodeComponentObjectJson);
 
   public:
     SceneNodeJsonParser() :

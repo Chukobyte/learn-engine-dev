@@ -61,6 +61,8 @@ void SceneNodeJsonParser::ParseComponentArray(SceneNode &sceneNode, const nlohma
             ParseTextLabelComponent(sceneNode, nodeComponentObjectJson);
         } else if (nodeComponentType == "animated_sprite") {
             ParseAnimatedSpriteComponent(sceneNode, nodeComponentObjectJson);
+        } else if (nodeComponentType == "collider") {
+            ParseColliderComponent(sceneNode, nodeComponentObjectJson);
         }
     }
 }
@@ -222,6 +224,35 @@ void SceneNodeJsonParser::ParseAnimatedSpriteComponent(SceneNode& sceneNode, con
     }
 }
 
+void SceneNodeJsonParser::ParseColliderComponent(SceneNode& sceneNode, const nlohmann::json& nodeComponentObjectJson) {
+    const nlohmann::json& rectangleJson = JsonHelper::Get<nlohmann::json>(nodeComponentObjectJson, "rectangle");
+    const float rectX = JsonHelper::Get<float>(rectangleJson, "x");
+    const float rectY = JsonHelper::Get<float>(rectangleJson, "y");
+    const float rectWidth = JsonHelper::Get<float>(rectangleJson, "width");
+    const float rectHeight = JsonHelper::Get<float>(rectangleJson, "height");
+    Rect2 colliderRect = Rect2(rectX, rectY, rectWidth, rectHeight);
+    const nlohmann::json& colorJson = JsonHelper::Get<nlohmann::json>(nodeComponentObjectJson, "color");
+    const Color colliderColor = Color::NormalizedColor(
+                                    JsonHelper::Get<int>(colorJson, "red"),
+                                    JsonHelper::Get<int>(colorJson, "green"),
+                                    JsonHelper::Get<int>(colorJson, "blue"),
+                                    JsonHelper::Get<int>(colorJson, "alpha")
+                                );
+
+    componentManager->AddComponent(sceneNode.entity, ColliderComponent{
+        colliderRect,
+        colliderColor
+    });
+
+    auto signature = entityManager->GetEnabledSignature(sceneNode.entity);
+    signature.set(componentManager->GetComponentType<ColliderComponent>(), true);
+    entityManager->SetSignature(sceneNode.entity, signature);
+    bool isColliderComponentEnabled = JsonHelper::GetDefault<bool>(nodeComponentObjectJson, "enabled", true);
+    if (isColliderComponentEnabled) {
+        entityManager->SetEnabledSignature(sceneNode.entity, signature);
+    }
+}
+
 SceneNode SceneNodeJsonParser::ParseSceneJson(Scene* scene, const nlohmann::json& nodeJson, bool isRoot, const SceneNode& parentSceneNode) {
     SceneNode sceneNode;
     if (parentSceneNode.entity != NULL_ENTITY) {
@@ -236,6 +267,10 @@ SceneNode SceneNodeJsonParser::ParseSceneJson(Scene* scene, const nlohmann::json
     nlohmann::json nodeTagsJsonArray = JsonHelper::Get<nlohmann::json>(nodeJson, "tags");
     const std::string &nodeExternalSceneSource = JsonHelper::Get<std::string>(nodeJson, "external_scene_source");
     componentManager->AddComponent(sceneNode.entity, GenerateSceneComponent(nodeName, parentSceneNode, nodeTagsJsonArray));
+    auto signature = entityManager->GetEnabledSignature(sceneNode.entity);
+    signature.set(componentManager->GetComponentType<SceneComponent>(), true);
+    entityManager->SetSignature(sceneNode.entity, signature);
+    entityManager->SetEnabledSignature(sceneNode.entity, signature);
 
     // Rest of components
     nlohmann::json nodeComponentJsonArray = JsonHelper::Get<nlohmann::json>(nodeJson, "components");

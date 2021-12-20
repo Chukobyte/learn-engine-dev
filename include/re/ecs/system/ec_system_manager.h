@@ -17,8 +17,10 @@ enum class ECSystemRegistration : int {
     RENDER = 8,
     ON_SCENE_START = 16,
     ON_SCENE_END = 32,
-    ALL = UPDATE | PHYSICS_UPDATE | RENDER | ON_SCENE_START | ON_SCENE_END,
+    ON_ENTITY_TAGS_UPDATED = 64,
+    ALL = UPDATE | PHYSICS_UPDATE | RENDER | ON_SCENE_START | ON_SCENE_END | ON_ENTITY_TAGS_UPDATED,
 };
+GENERATE_ENUM_CLASS_OPERATORS(ECSystemRegistration)
 
 class ECSystemManager {
   private:
@@ -29,26 +31,30 @@ class ECSystemManager {
     std::vector<ECSystem*> renderSystems{};
     std::vector<ECSystem*> onSceneStartSystems{};
     std::vector<ECSystem*> onSceneEndSystems{};
+    std::vector<ECSystem*> onEntityTagsUpdatedSystems{};
     Logger *logger = nullptr;
 
     void ProcessSystemRegistration(ECSystem* system, ECSystemRegistration ecSystemRegistration) {
         if (ecSystemRegistration == ECSystemRegistration::NONE) {
             return;
         }
-        if (Helper::CompareEnumClass(ecSystemRegistration, ECSystemRegistration::UPDATE)) {
+        if ((ecSystemRegistration & ECSystemRegistration::UPDATE) == ECSystemRegistration::UPDATE) {
             updateSystems.emplace_back(system);
         }
-        if (Helper::CompareEnumClass(ecSystemRegistration, ECSystemRegistration::PHYSICS_UPDATE)) {
+        if ((ecSystemRegistration & ECSystemRegistration::PHYSICS_UPDATE) == ECSystemRegistration::PHYSICS_UPDATE) {
             physicsUpdateSystems.emplace_back(system);
         }
-        if (Helper::CompareEnumClass(ecSystemRegistration, ECSystemRegistration::RENDER)) {
+        if ((ecSystemRegistration & ECSystemRegistration::RENDER) == ECSystemRegistration::RENDER) {
             renderSystems.emplace_back(system);
         }
-        if (Helper::CompareEnumClass(ecSystemRegistration, ECSystemRegistration::ON_SCENE_START)) {
+        if ((ecSystemRegistration & ECSystemRegistration::ON_SCENE_START) == ECSystemRegistration::ON_SCENE_START) {
             onSceneStartSystems.emplace_back(system);
         }
-        if (Helper::CompareEnumClass(ecSystemRegistration, ECSystemRegistration::ON_SCENE_END)) {
+        if ((ecSystemRegistration & ECSystemRegistration::ON_SCENE_END) == ECSystemRegistration::ON_SCENE_END) {
             onSceneEndSystems.emplace_back(system);
+        }
+        if ((ecSystemRegistration & ECSystemRegistration::ON_ENTITY_TAGS_UPDATED) == ECSystemRegistration::ON_ENTITY_TAGS_UPDATED) {
+            onEntityTagsUpdatedSystems.emplace_back(system);
         }
     }
 
@@ -133,10 +139,13 @@ class ECSystemManager {
         }
     }
 
-    void EntityDestroyed(Entity entity) {
+    void EntityDestroyed(Entity entity, const std::vector<std::string>& tags) {
         for (auto const& pair : systems) {
             auto const& system = pair.second;
             system->UnregisterEntity(entity);
+        }
+        for (ECSystem* entityTagUpdateSystem : onEntityTagsUpdatedSystems) {
+            entityTagUpdateSystem->OnEntityTagsRemoved(entity, tags);
         }
     }
 
@@ -183,6 +192,14 @@ class ECSystemManager {
     void OnSceneEndSystems(Scene* scene) {
         for (ECSystem* sceneEndSystem : onSceneEndSystems) {
             sceneEndSystem->OnSceneEnd(scene);
+        }
+    }
+
+    void OnEntityTagsUpdatedSystems(Entity entity, const std::vector<std::string>& oldTags, const std::vector<std::string>& newTags) {
+        for (ECSystem* sceneEndSystem : onEntityTagsUpdatedSystems) {
+            if (sceneEndSystem->HasEntity(entity)) {
+                sceneEndSystem->OnEntityTagsUpdated(entity, oldTags, newTags);
+            }
         }
     }
 };

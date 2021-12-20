@@ -3,6 +3,26 @@
 #include <string>
 #include <sstream>
 
+#define GENERATE_ENUM_CLASS_OPERATORS(EnumClass) \
+inline EnumClass operator | (EnumClass lhs, EnumClass rhs) { \
+    using T = std::underlying_type_t <EnumClass>; \
+    return static_cast<EnumClass>(static_cast<T>(lhs) | static_cast<T>(rhs)); \
+} \
+ \
+inline EnumClass& operator |= (EnumClass& lhs, EnumClass rhs) { \
+    lhs = lhs | rhs; \
+    return lhs; \
+} \
+inline EnumClass operator & (EnumClass lhs, EnumClass rhs) { \
+    using T = std::underlying_type_t <EnumClass>; \
+    return static_cast<EnumClass>(static_cast<T>(lhs) & static_cast<T>(rhs)); \
+} \
+\
+inline EnumClass& operator &= (EnumClass& lhs, EnumClass rhs) { \
+    lhs = lhs & rhs; \
+    return lhs; \
+}
+
 class Helper {
   public:
     template<typename T>
@@ -10,11 +30,6 @@ class Helper {
         value = std::min(value, min);
         value = std::max(value, max);
         return value;
-    }
-
-    template<typename EnumClass, typename CastType = int>
-    static bool CompareEnumClass(EnumClass flagA, EnumClass flagB) {
-        return ((CastType) flagA & (CastType) flagB) == (CastType) flagB;
     }
 
     static std::string GetNumberFromEndOfString(const std::string& text) {

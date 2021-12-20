@@ -52,20 +52,29 @@ bool ECSOrchestrator::HasSceneToDestroy() const {
 
 void ECSOrchestrator::RegisterLoadedSceneNodeComponents() {
     Scene* currentScene = sceneManager->GetCurrentScene();
-    RefreshEntitySignatureChanged(currentScene->rootNode.entity);
-    for (SceneNode childSceneNode : currentScene->rootNode.children) {
-        RefreshEntitySignatureChanged(childSceneNode.entity);
-    }
+    const std::function<void(const SceneNode& sceneNode)> registerNodeFunc = [this, &registerNodeFunc](const SceneNode& sceneNode) {
+        RefreshEntitySignatureChanged(sceneNode.entity);
+        SceneComponent sceneComponent = componentManager->GetComponentDefault<SceneComponent>(sceneNode.entity, {});
+        ecSystemManager->OnEntityTagsUpdatedSystems(sceneNode.entity, {}, sceneComponent.tags);
+        for (const SceneNode& childNode : sceneNode.children) {
+            registerNodeFunc(childNode);
+        }
+    };
+    registerNodeFunc(currentScene->rootNode);
 }
 
 void ECSOrchestrator::AddRootNode(Entity rootEntity) {
     sceneManager->AddRootNode(rootEntity);
     RefreshEntitySignatureChanged(rootEntity);
+    SceneComponent sceneComponent = componentManager->GetComponentDefault<SceneComponent>(rootEntity, {});
+    ecSystemManager->OnEntityTagsUpdatedSystems(rootEntity, {}, sceneComponent.tags);
 }
 
 void ECSOrchestrator::AddChildNode(Entity child, Entity parent) {
     sceneManager->AddChildNode(child, parent);
     RefreshEntitySignatureChanged(child);
+    SceneComponent sceneComponent = componentManager->GetComponentDefault<SceneComponent>(child, {});
+    ecSystemManager->OnEntityTagsUpdatedSystems(child, {}, sceneComponent.tags);
 }
 
 void ECSOrchestrator::QueueDestroyEntity(Entity entity) {
@@ -82,8 +91,9 @@ void ECSOrchestrator::DestroyQueuedEntities() {
 void ECSOrchestrator::DestroyEntity(Entity entity) {
     sceneManager->DeleteNode(entity);
     entityManager->DestroyEntity(entity);
+    SceneComponent sceneComponent = componentManager->GetComponentDefault<SceneComponent>(entity, {});
+    ecSystemManager->EntityDestroyed(entity, sceneComponent.tags);
     componentManager->EntityDestroyed(entity);
-    ecSystemManager->EntityDestroyed(entity);
 }
 
 bool ECSOrchestrator::IsNodeInScene(Entity entity) const {

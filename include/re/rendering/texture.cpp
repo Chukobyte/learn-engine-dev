@@ -28,6 +28,22 @@ Texture::Texture(const char* filePath, const std::string &wrapS, const std::stri
         GetFilterFromString(filterMag)
     ) {}
 
+Texture::Texture(unsigned int width, unsigned int height, unsigned int colorValue) :
+    nrChannels(4),
+    width(width),
+    height(height),
+    logger(Logger::GetInstance()) {
+    data = new unsigned char[width * height * 4];
+    for(int i = 0; i < (int)(width * height * 4); i++) {
+        data[i] = colorValue;
+    }
+    if(IsValid()) {
+        Generate();
+    } else {
+        logger->Error("Failed to load colored texture");
+    }
+}
+
 Texture::~Texture() {
     stbi_image_free(data);
     data = nullptr;

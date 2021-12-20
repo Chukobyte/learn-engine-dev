@@ -48,6 +48,10 @@ nav:
     - Serializing With JSON:
         - Parsing JSON Properties File: 1.foundation/7.serializing_with_json/parsing_json_properties_file.md
         - Creating Scene Json Files: 1.foundation/7.serializing_with_json/creating_scene_json_files.md
+    - Animations:
+        - Animation System: 1.foundation/8.animations/animation_system.md
+    - Collisions:
+        - Collision System: 1.foundation/9.collisions/collision_system.md
   - 2. Engine API:
       - Defining Red Engine API: 2.engine_api/about.md
   - 3. Games:

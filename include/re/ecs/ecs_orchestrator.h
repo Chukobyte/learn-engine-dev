@@ -131,9 +131,12 @@ class ECSOrchestrator {
     void DestroyScene();
     bool HasSceneToCreate() const;
     bool HasSceneToDestroy() const;
-    void RegisterLoadedSceneNodeComponents();
-    void AddRootNode(Entity rootEntity);
-    void AddChildNode(Entity child, Entity parent);
+
+    // Triggered when an entity enters a scene
+    void RegisterLoadedSceneNodeComponents(); // From scene json
+    void AddRootNode(Entity rootEntity); // From script
+    void AddChildNode(Entity child, Entity parent); // from script
+
     bool IsNodeInScene(Entity entity) const;
     void QueueDestroyEntity(Entity entity);
     void DestroyQueuedEntities();
