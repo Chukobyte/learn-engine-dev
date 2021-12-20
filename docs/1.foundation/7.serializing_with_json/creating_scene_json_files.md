@@ -307,4 +307,4 @@ bool GameEngine::Initialize() {
 }
 ```
 
-If we now run ***Red Engine*** it should work as expected with no changes.  The source code for this section can be found [here](https://github.com/Chukobyte/learn-engine-dev/tree/main/src/1.foundation/7.serializing_with_json/7.1.creating_scene_json_files).  Now that we have scene loading with json it's time to start defining our engine api as well as implement more functionality.
+If we now run ***Red Engine*** it should work as expected with no changes.  The source code for this section can be found [here](https://github.com/Chukobyte/learn-engine-dev/tree/main/src/1.foundation/7.serializing_with_json/7.1.creating_scene_json_files).  Now that we have scene loading with json it's time to start working on an animation system!

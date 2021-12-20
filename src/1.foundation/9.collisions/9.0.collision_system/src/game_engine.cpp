@@ -156,10 +156,10 @@ bool GameEngine::InitializeECS() {
     ecsOrchestrator->RegisterSystem<AnimatedSpriteRenderingECSystem>(animatedSpriteRenderingSignature, ECSystemRegistration::RENDER);
 
     ComponentSignature collisionSignature;
-//    collisionSignature.set(ecsOrchestrator->GetComponentType<SceneComponent>(), true);
+    collisionSignature.set(ecsOrchestrator->GetComponentType<SceneComponent>(), true);
     collisionSignature.set(ecsOrchestrator->GetComponentType<Transform2DComponent>(), true);
     collisionSignature.set(ecsOrchestrator->GetComponentType<ColliderComponent>(), true);
-    ECSystemRegistration colliderSystemRegistration = projectProperties->areColliderVisible ? ECSystemRegistration::RENDER : ECSystemRegistration::NONE;
+    ECSystemRegistration colliderSystemRegistration = projectProperties->areColliderVisible ? ECSystemRegistration::RENDER | ECSystemRegistration::ON_ENTITY_TAGS_UPDATED : ECSystemRegistration::ON_ENTITY_TAGS_UPDATED;
     ecsOrchestrator->RegisterSystem<CollisionECSystem>(collisionSignature, colliderSystemRegistration);
     return true;
 }
