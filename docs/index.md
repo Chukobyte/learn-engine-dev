@@ -31,18 +31,6 @@ There are a total of three parts to this tutorial series which are split in mult
 - **Python 3.7** - Scripting language for game logic
 - **AStyle** - Used for formatting C++ code
 
-## Features
-
-***Red Engine*** will have the following features:
-
-- Sprite rendering
-- Font rendering
-- Keyboard, mouse, and joystick input management
-- Python scripting
-- Entity Component System
-- Scene management
-- Json serialization of project properties and scene data
-
 ## Work In Progress
 
 This tutorial series is not yet complete so expect incomplete chapters and sections.  The source code for each chapter will come first followed by more detailed descriptions and information for each section.  Also builds for windows are typically done first before linux, so expect delays in updating the Makefiles for linux in later chapters.
