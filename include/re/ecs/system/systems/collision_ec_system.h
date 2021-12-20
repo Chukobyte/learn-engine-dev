@@ -95,6 +95,11 @@ class CollisionECSystem : public ECSystem {
         };
     }
 
+    void RefreshEntityTags(Entity entity) {
+        RemoveEntityTags(entity);
+        AddEntityTags(entity);
+    }
+
   private:
     CollisionContext* collisionContext = nullptr;
     Renderer2D* renderer2D = nullptr;
