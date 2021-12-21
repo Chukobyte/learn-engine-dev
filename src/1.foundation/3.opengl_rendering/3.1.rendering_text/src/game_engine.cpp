@@ -2,7 +2,7 @@
 
 #include <SDL2/SDL.h>
 
-#include "./re/math/math.h"
+#include "./re/math/redmath.h"
 
 GameEngine::GameEngine() :
     projectProperties(ProjectProperties::GetInstance()),

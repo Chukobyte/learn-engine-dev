@@ -7,7 +7,7 @@
 
 #include "./re/rendering/color.h"
 #include "./re/rendering/texture.h"
-#include "./re/math/math.h"
+#include "./re/math/redmath.h"
 
 struct SpriteBatchItem {
     Texture *texture2D = nullptr;

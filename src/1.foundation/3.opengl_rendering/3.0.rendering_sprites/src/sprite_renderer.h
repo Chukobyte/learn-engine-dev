@@ -5,7 +5,7 @@
 #include "./re/rendering/shader.h"
 #include "./re/rendering/texture.h"
 #include "./re/rendering/color.h"
-#include "./re/math/math.h"
+#include "./re/math/redmath.h"
 #include "./re/project_properties.h"
 
 static const std::string &OPENGL_SHADER_SOURCE_VERTEX_SPRITE =
