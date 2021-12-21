@@ -1,6 +1,6 @@
 #include "game_engine.h"
 
-#include "./re/ecs/component/components/node_component.h"
+#include "./re/ecs/component/components/scene_component.h"
 #include "./re/ecs/component/components/transform2d_component.h"
 #include "./re/ecs/component/components/sprite_component.h"
 #include "./re/ecs/component/components/text_label_component.h"
@@ -126,7 +126,7 @@ bool GameEngine::InitializeInput() {
 
 bool GameEngine::InitializeECS() {
     // Register Components to ECS
-    ecsOrchestrator->RegisterComponent<NodeComponent>();
+    ecsOrchestrator->RegisterComponent<SceneComponent>();
     ecsOrchestrator->RegisterComponent<Transform2DComponent>();
     ecsOrchestrator->RegisterComponent<SpriteComponent>();
     ecsOrchestrator->RegisterComponent<TextLabelComponent>();
@@ -141,6 +141,7 @@ bool GameEngine::InitializeECS() {
     textRenderingSignature.set(ecsOrchestrator->GetComponentType<TextLabelComponent>(), true);
     ecsOrchestrator->RegisterSystem<TextRenderingECSystem>(textRenderingSignature, ECSystemRegistration::RENDER);
 
+
     // Temp startup scene
     SceneManager* sceneManager = SceneManager::GetInstance();
     sceneManager->ChangeToEmptyScene();
@@ -149,9 +150,15 @@ bool GameEngine::InitializeECS() {
                                          projectProperties->GetWindowHeight() / 2);
     // Main
     Entity mainEntity = ecsOrchestrator->CreateEntity();
+    ecsOrchestrator->AddComponent<SceneComponent>(mainEntity, SceneComponent{
+        "Main"
+    });
     ecsOrchestrator->AddRootNode(mainEntity);
     // Sprite
     Entity witchEntity = ecsOrchestrator->CreateEntity();
+    ecsOrchestrator->AddComponent<SceneComponent>(witchEntity, SceneComponent{
+        "Witch"
+    });
     Transform2DComponent witchEntityTransform = Transform2DComponent{ windowCenter };
     ecsOrchestrator->AddComponent<Transform2DComponent>(witchEntity, witchEntityTransform);
     SpriteComponent witchEntitySpriteComponent = SpriteComponent{
@@ -162,6 +169,9 @@ bool GameEngine::InitializeECS() {
     ecsOrchestrator->AddChildNode(witchEntity, mainEntity);
     // Text Label
     Entity textEntity = ecsOrchestrator->CreateEntity();
+    ecsOrchestrator->AddComponent<SceneComponent>(textEntity, SceneComponent{
+        "TextLabel"
+    });
     Transform2DComponent textEntityTransform = Transform2DComponent{ Vector2(windowCenter.x - 35.0f, windowCenter.y - 20.0f) };
     ecsOrchestrator->AddComponent<Transform2DComponent>(textEntity, textEntityTransform);
     TextLabelComponent textEntityTextLabelComponent = TextLabelComponent{
