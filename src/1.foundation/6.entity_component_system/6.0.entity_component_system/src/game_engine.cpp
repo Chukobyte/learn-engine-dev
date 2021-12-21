@@ -147,9 +147,15 @@ bool GameEngine::InitializeECS() {
                                          projectProperties->GetWindowHeight() / 2);
     // Main
     Entity mainEntity = ecsOrchestrator->CreateEntity();
+    ecsOrchestrator->AddComponent<SceneComponent>(mainEntity, SceneComponent{
+        "Main"
+    });
     ecsOrchestrator->AddRootNode(mainEntity);
     // Sprite
     Entity witchEntity = ecsOrchestrator->CreateEntity();
+    ecsOrchestrator->AddComponent<SceneComponent>(witchEntity, SceneComponent{
+        "Witch"
+    });
     Transform2DComponent witchEntityTransform = Transform2DComponent{ windowCenter };
     ecsOrchestrator->AddComponent<Transform2DComponent>(witchEntity, witchEntityTransform);
     SpriteComponent witchEntitySpriteComponent = SpriteComponent{
@@ -160,6 +166,9 @@ bool GameEngine::InitializeECS() {
     ecsOrchestrator->AddChildNode(witchEntity, mainEntity);
     // Text Label
     Entity textEntity = ecsOrchestrator->CreateEntity();
+    ecsOrchestrator->AddComponent<SceneComponent>(textEntity, SceneComponent{
+        "TextLabel"
+    });
     Transform2DComponent textEntityTransform = Transform2DComponent{ Vector2(windowCenter.x - 35.0f, windowCenter.y - 20.0f) };
     ecsOrchestrator->AddComponent<Transform2DComponent>(textEntity, textEntityTransform);
     TextLabelComponent textEntityTextLabelComponent = TextLabelComponent{

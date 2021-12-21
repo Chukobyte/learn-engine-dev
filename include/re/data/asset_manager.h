@@ -14,7 +14,7 @@ class AssetManager {
   public:
     static AssetManager* GetInstance();
     // Texture
-    void LoadTexture(const std::string &id, const std::string &filePath, const std::string &wrapS, const std::string &wrapT, const std::string &filterMin, const std::string &filterMag);
+    void LoadTexture(const std::string &id, const std::string &filePath, const std::string &wrapS = "clamp_to_border", const std::string &wrapT = "clamp_to_border", const std::string &filterMin = "nearest", const std::string &filterMag = "nearest");
     Texture* GetTexture(const std::string &id);
     bool HasTexture(const std::string &id) const;
     // Font

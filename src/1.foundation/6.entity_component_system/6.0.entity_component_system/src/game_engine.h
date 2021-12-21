@@ -7,8 +7,8 @@
 #include "./re/utils/fps_counter.h"
 #include "./re/utils/logger.h"
 #include "./re/input/input_manager.h"
+#include "./re/data/asset_manager.h"
 
-#include "asset_manager.h"
 #include "ecs_orchestrator.h"
 
 class GameEngine {

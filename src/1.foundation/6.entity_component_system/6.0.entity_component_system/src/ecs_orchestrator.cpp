@@ -83,7 +83,7 @@ void ECSOrchestrator::DestroyEntity(Entity entity) {
     sceneManager->DeleteNode(entity);
     entityManager->DestroyEntity(entity);
     componentManager->EntityDestroyed(entity);
-    ecSystemManager->EntityDestroyed(entity);
+    ecSystemManager->EntityDestroyed(entity, {});
 }
 
 bool ECSOrchestrator::IsNodeInScene(Entity entity) const {

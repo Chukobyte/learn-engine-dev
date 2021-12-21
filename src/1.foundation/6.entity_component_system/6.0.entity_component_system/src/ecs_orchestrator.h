@@ -3,7 +3,7 @@
 #include <vector>
 
 #include "./re/ecs/system/ec_system_manager.h"
-#include "scene/scene_manager.h"
+#include "./re/scene/scene_manager.h"
 
 class ECSOrchestrator {
   public:
