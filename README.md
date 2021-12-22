@@ -60,7 +60,7 @@ make format SECTION=1.5.0
 
 #### Environment Variables
 
-The makefiles for each section used the following environment variables for building:
+The makefiles for each section uses the following environment variables for building:
 
 | Name             | Description                                |
 |:----------------:|:------------------------------------------:|
