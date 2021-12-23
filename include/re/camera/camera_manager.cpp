@@ -1,10 +1,5 @@
 #include "camera_manager.h"
 
-CameraManager* CameraManager::GetInstance() {
-    static CameraManager* instance = new CameraManager();
-    return instance;
-}
-
 Camera2D CameraManager::GetCurrentCamera() {
     return camera2D;
 }

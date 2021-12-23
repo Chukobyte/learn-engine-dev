@@ -1,5 +1,7 @@
 #pragma once
 
+#include "utils/singleton.h"
+
 #include <string>
 #include <vector>
 
@@ -44,12 +46,12 @@ struct InputActionsConfigurations {
     std::vector<InputConfiguration> configurations;
 };
 
-class ProjectProperties {
+class ProjectProperties : public Singleton<ProjectProperties> {
   public:
     Color backgroundClearColor = Color::NormalizedColor(50, 50, 50);
     bool areColliderVisible = false;
 
-    static ProjectProperties* GetInstance();
+    ProjectProperties(singleton) {}
     std::string GetGameTitle() const;
     std::string GetInitialScenePath() const;
     unsigned int GetWindowWidth() const;
@@ -57,9 +59,9 @@ class ProjectProperties {
     unsigned int GetTargetFPS() const;
     AssetConfigurations GetAssetConfigurations();
     InputActionsConfigurations GetInputActionsConfigurations();
-    void SetProjectProperties(const nlohmann::json& propertiesJson);
 
-  private:
+    void SetProjectProperties(const nlohmann::json& propertiesJson);
+private:
     std::string gameTitle;
     std::string initialScenePath;
     unsigned int windowWidth = 800;
@@ -68,7 +70,6 @@ class ProjectProperties {
     AssetConfigurations assetConfigurations;
     InputActionsConfigurations inputActionsConfigurations;
 
-    ProjectProperties() = default;
     AssetConfigurations LoadProjectAssets(const nlohmann::json& assetsJsonArray);
     InputActionsConfigurations LoadProjectInputActions(const nlohmann::json& inputActionsJsonArray);
 };

@@ -1,18 +1,18 @@
 #pragma once
 
-#include "./re/utils/timer.h"
+#include "singleton.h"
 
-class FPSCounter {
+#include "timer.h"
+
+class FPSCounter : public Singleton<FPSCounter> {
   public:
     ~FPSCounter();
-    static FPSCounter* GetInstance();
+    FPSCounter(singleton);
     void Update();
     unsigned int GetFPS() const;
-
-  private:
+private:
     unsigned int fps;
     unsigned int fpsCount;
-    Timer *timer = nullptr;
 
-    FPSCounter();
+    Timer *timer = nullptr;
 };

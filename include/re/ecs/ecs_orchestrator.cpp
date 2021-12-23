@@ -1,6 +1,6 @@
 #include "ecs_orchestrator.h"
 
-ECSOrchestrator::ECSOrchestrator() :
+ECSOrchestrator::ECSOrchestrator(singleton) :
     ecSystemManager(new ECSystemManager()),
     entityManager(EntityManager::GetInstance()),
     componentManager(ComponentManager::GetInstance()),
@@ -13,11 +13,6 @@ ECSOrchestrator::~ECSOrchestrator() {
     if (entityManager) {
         delete entityManager;
     }
-}
-
-ECSOrchestrator* ECSOrchestrator::GetInstance() {
-    static ECSOrchestrator *instance = new ECSOrchestrator();
-    return instance;
 }
 
 void ECSOrchestrator::DeleteEntitiesQueuedForDeletion() {

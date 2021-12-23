@@ -2,11 +2,6 @@
 
 #include <bits/stdc++.h>
 
-Logger* Logger::GetInstance() {
-    static Logger *instance = new Logger();
-    return instance;
-}
-
 void Logger::SetLogLevel(LogLevel level) {
     logLevel = level;
 }

@@ -1,5 +1,7 @@
 #pragma once
 
+#include "../../utils/singleton.h"
+
 #include <unordered_map>
 #include <memory>
 #include <iostream>
@@ -7,13 +9,11 @@
 #include "component.h"
 #include "component_array.h"
 
-class ComponentManager {
+class ComponentManager : public Singleton<ComponentManager> {
   private:
     std::unordered_map<const char*, ComponentType> componentTypes;
     std::unordered_map<const char*, IComponentArray*> componentArrays;
     unsigned int componentIndex = 0;
-
-    ComponentManager() = default;
 
     template<typename T>
     ComponentArray<T>* GetComponentArray() {
@@ -25,7 +25,7 @@ class ComponentManager {
     }
 
   public:
-    static ComponentManager* GetInstance();
+    ComponentManager(singleton) {}
 
     template<typename T>
     void RegisterComponent() {

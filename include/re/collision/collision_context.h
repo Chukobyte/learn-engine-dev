@@ -1,5 +1,7 @@
 #pragma once
 
+#include "../utils/singleton.h"
+
 #include <vector>
 
 #include "../math/redmath.h"
@@ -10,15 +12,13 @@ struct CollisionResult {
     std::vector<Entity> collidedEntities;
 };
 
-class CollisionContext {
+class CollisionContext : public Singleton<CollisionContext> {
   public:
-    static CollisionContext* GetInstance();
+    CollisionContext(singleton);
     Rect2 GetCollisionRectangle(Entity entity);
     bool IsTargetCollisionEntityInExceptionList(Entity sourceEntity, Entity targetEntity);
 
   private:
-    CollisionContext();
-
     ComponentManager* componentManager = nullptr;
 
 };

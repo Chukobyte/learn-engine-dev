@@ -1,5 +1,7 @@
 #pragma once
 
+#include "../utils/singleton.h"
+
 #include <unordered_map>
 #include <string>
 
@@ -10,9 +12,9 @@
 #include "../rendering/font.h"
 #include "../rendering/render_context.h"
 
-class AssetManager {
+class AssetManager : public Singleton<AssetManager> {
   public:
-    static AssetManager* GetInstance();
+    AssetManager(singleton);
     // Texture
     void LoadTexture(const std::string &id, const std::string &filePath, const std::string &wrapS = "clamp_to_border", const std::string &wrapT = "clamp_to_border", const std::string &filterMin = "nearest", const std::string &filterMag = "nearest");
     Texture* GetTexture(const std::string &id);
@@ -40,6 +42,4 @@ class AssetManager {
     std::unordered_map<std::string, SoundEffect*> soundEffects;
     RenderContext *renderContext = nullptr;
     Logger *logger = nullptr;
-
-    AssetManager();
 };

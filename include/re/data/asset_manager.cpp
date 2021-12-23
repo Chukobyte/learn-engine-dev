@@ -2,12 +2,7 @@
 
 #include <cassert>
 
-AssetManager::AssetManager() : renderContext(RenderContext::GetInstance()), logger(Logger::GetInstance()) {}
-
-AssetManager* AssetManager::GetInstance() {
-    static AssetManager *instance = new AssetManager();
-    return instance;
-}
+AssetManager::AssetManager(singleton) : renderContext(RenderContext::GetInstance()), logger(Logger::GetInstance()) {}
 
 void AssetManager::LoadTexture(const std::string &id, const std::string &filePath, const std::string &wrapS, const std::string &wrapT, const std::string &filterMin, const std::string &filterMag) {
     if (HasTexture(id)) {

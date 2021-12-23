@@ -1,5 +1,7 @@
 #pragma once
 
+#include "../../utils/singleton.h"
+
 #include <array>
 #include <vector>
 #include <queue>
@@ -9,9 +11,9 @@
 #include "entity.h"
 #include "../component/component.h"
 
-class EntityManager {
+class EntityManager : public Singleton<EntityManager> {
   public:
-    static EntityManager* GetInstance();
+    EntityManager(singleton) {}
     Entity CreateEntity();
     void DestroyEntity(Entity entity);
     void DeleteEntitiesQueuedForDeletion();
@@ -30,6 +32,5 @@ class EntityManager {
     std::array<ComponentSignature, MAX_ENTITIES> enabledSignatures;
     std::vector<Entity> entitiesToDelete;
 
-    EntityManager() = default;
     Entity GetUniqueEntityId();
 };

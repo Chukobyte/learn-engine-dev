@@ -5,12 +5,7 @@
 #include "scene_loader.h"
 #include "../utils/file_helper.h"
 
-SceneManager::SceneManager() : logger(Logger::GetInstance()) {}
-
-SceneManager* SceneManager::GetInstance() {
-    static SceneManager *instance = new SceneManager();
-    return instance;
-}
+SceneManager::SceneManager(singleton) : logger(Logger::GetInstance()) {}
 
 void SceneManager::ChangeToEmptyScene() {
     if (currentScene) {

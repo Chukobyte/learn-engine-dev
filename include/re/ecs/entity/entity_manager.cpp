@@ -1,12 +1,5 @@
 #include "entity_manager.h"
 
-#include "../../utils/helper.h"
-
-EntityManager* EntityManager::GetInstance() {
-    static EntityManager* instance = new EntityManager();
-    return instance;
-}
-
 Entity EntityManager::CreateEntity() {
     assert(livingEntityCounter < MAX_ENTITIES && "Too many entities to create!");
 

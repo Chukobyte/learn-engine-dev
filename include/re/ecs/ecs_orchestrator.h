@@ -1,14 +1,16 @@
 #pragma once
 
+#include "../utils/singleton.h"
+
 #include <vector>
 
 #include "system/ec_system_manager.h"
 #include "../scene/scene_manager.h"
 
-class ECSOrchestrator {
+class ECSOrchestrator : public Singleton<ECSOrchestrator> {
   public:
+    ECSOrchestrator(singleton);
     ~ECSOrchestrator();
-    static ECSOrchestrator* GetInstance();
 
     void DestroyEntity(Entity entity);
     void DeleteEntitiesQueuedForDeletion();
@@ -151,6 +153,5 @@ class ECSOrchestrator {
     bool shouldDestroySceneNextFrame = false;
     std::vector<Entity> entitiesQueuedForDeletion;
 
-    ECSOrchestrator();
     void RefreshEntitySignatureChanged(Entity entity);
 };

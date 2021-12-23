@@ -1,5 +1,7 @@
 #pragma once
 
+#include "singleton.h"
+
 #include <string>
 
 enum class LogLevel : unsigned int {
@@ -9,12 +11,11 @@ enum class LogLevel : unsigned int {
     ERROR = 3,
 };
 
-class Logger {
-  private:
+class Logger : public Singleton<Logger> {
+  protected:
     Logger() = default;
-
   public:
-    static Logger* GetInstance();
+    Logger(singleton) {};
     void SetLogLevel(LogLevel level);
     bool SetLogLevelFromString(std::string logLevelString);
     LogLevel GetLogLevel() const;

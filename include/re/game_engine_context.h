@@ -1,17 +1,19 @@
 #pragma once
 
-class GameEngineContext {
+#include "utils/singleton.h"
+
+class GameEngineContext : public Singleton<GameEngineContext> {
   public:
-    static GameEngineContext* GetInstance();
+    GameEngineContext(singleton) {}
     const char* GetEngineVersion() const;
     const char* GetEngineName() const;
     void SetRunning(bool value);
     bool IsRunning() const;
 
-  private:
+
+private:
     const char *engineVersion = "0.1.0";
     const char *engineName = "Red";
-    bool running = false;
 
-    GameEngineContext() = default;
+    bool running = false;
 };

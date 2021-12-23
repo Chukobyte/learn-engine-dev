@@ -4,12 +4,7 @@
 #include "../ecs/component/components/transform2d_component.h"
 #include "../scene/scene_node_utils.h"
 
-CollisionContext::CollisionContext() : componentManager(ComponentManager::GetInstance()) {}
-
-CollisionContext* CollisionContext::GetInstance() {
-    static CollisionContext* instance = new CollisionContext();
-    return instance;
-}
+CollisionContext::CollisionContext(singleton) : componentManager(ComponentManager::GetInstance()) {}
 
 Rect2 CollisionContext::GetCollisionRectangle(Entity entity) {
     ColliderComponent colliderComponent = componentManager->GetComponent<ColliderComponent>(entity);
