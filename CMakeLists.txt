@@ -6,7 +6,7 @@ set(CMAKE_C_STANDARD 11)
 include(FetchContent)
 
 # Dependencies
-set(SEIKA_STATIC_LIB OFF)
+set(SEIKA_STATIC_LIB ON)
 FetchContent_Declare(
         seika_content
         GIT_REPOSITORY https://github.com/Chukobyte/seika.git
