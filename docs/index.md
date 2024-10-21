@@ -30,6 +30,10 @@ There are a total of three parts to this tutorial series which are split in mult
 - **Miniaudio** - Audio
 - **Pocketpy** - Library used to embed python for scripting
 
+## Build
+
+Cmake is used for cross platforming building.  Each chapter and section is a project that can be built separately.
+
 ## Work In Progress
 
 This tutorial series is not yet complete so expect incomplete chapters and sections.  The source code for each chapter will come first followed by more detailed descriptions and information for each section.  Also builds for windows are typically done first before linux, so expect delays in updating the Makefiles for linux in later chapters.
