@@ -42,7 +42,6 @@ void re_update() {
     static uint64 currentTime = 0;
     static uint64 accumulator = 0;
 
-    currentTime = SDL_GetTicks();
     const uint64 newTime = SDL_GetTicks();
     const uint64 deltaTime = newTime - currentTime;
     currentTime = newTime;
