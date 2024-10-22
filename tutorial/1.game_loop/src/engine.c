@@ -3,23 +3,35 @@
 #include <stdlib.h>
 #include <SDL3/SDL.h>
 
-#include <seika/defines.h>
+#include <seika/logger.h>
 
-#include "seika/logger.h"
-
-// #define DELAY_IN_UPDATE
-
+// Instance of the red engine
 typedef struct REEngine {
     bool isRunning;
     int32 FPS;
+    REGameProperties gameProps;
+    uint64 targetFPS;
+    uint64 fixedUpdateInterval;
 } REEgine;
 
 static REEgine engine = { .isRunning = false, .FPS = 0 };
 
-int re_run() {
+bool re_run(REGameProperties props) {
     engine.isRunning = true;
-    const uint64 TARGET_FPS = 60;
-    const uint64 FIXED_UPDATE_INTERVAL = 1000 / TARGET_FPS; // 16 ms per update
+    engine.gameProps = props;
+    engine.targetFPS = props.targetFPS != NULL ? *props.targetFPS : 60;
+    engine.fixedUpdateInterval = 1000 / engine.targetFPS; // 16 ms per update when targetFPS is 60
+    return true;
+}
+
+bool re_is_running() {
+    return engine.isRunning;
+}
+
+void re_update() {
+    // Don't update if not running
+    if (!re_is_running()) { return; }
+
     uint64 currentTime = SDL_GetTicks();
     uint64 lastTime = currentTime;
     uint64 accumulator = 0;
@@ -32,10 +44,10 @@ int re_run() {
         currentTime = newTime;
 
         accumulator += deltaTime;
-        while (accumulator >= FIXED_UPDATE_INTERVAL) {
+        while (accumulator >= engine.fixedUpdateInterval) {
             // fixed update
             fixedFrames++;
-            accumulator -= FIXED_UPDATE_INTERVAL;
+            accumulator -= engine.fixedUpdateInterval;
         }
 
         // update
@@ -50,16 +62,14 @@ int re_run() {
             lastTime = currentTime;
         }
 
-#ifdef DELAY_IN_UPDATE
-        // See if delay is needed
-        const uint64 frameTime = SDL_GetTicks() - currentTime;
-        if (frameTime < FIXED_UPDATE_INTERVAL) {
-            SDL_Delay(FIXED_UPDATE_INTERVAL - frameTime);
+        if (engine.gameProps.delayCPU) {
+            // See if delay is needed
+            const uint64 frameTime = SDL_GetTicks() - currentTime;
+            if (frameTime < engine.fixedUpdateInterval) {
+                SDL_Delay(engine.fixedUpdateInterval - frameTime);
+            }
         }
-#endif
-
     }
-
-    return EXIT_SUCCESS;
 }
 
+void re_render() {}

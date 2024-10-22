@@ -1,3 +1,14 @@
 #pragma once
 
-int re_run();
+#include <seika/defines.h>
+
+typedef struct REGameProperties {
+    const char* name;
+    uint32* targetFPS;
+    bool delayCPU;
+} REGameProperties;
+
+bool re_run(REGameProperties props);
+bool re_is_running();
+void re_update();
+void re_render();
