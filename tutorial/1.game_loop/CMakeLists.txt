@@ -15,5 +15,6 @@ FetchContent_Declare(
 )
 FetchContent_MakeAvailable(seika_content)
 
-add_executable(${PROJECT_NAME} main.c engine.h engine.c)
+file(GLOB_RECURSE LESSON_SRC ./*.c ./*.h)
+add_executable(${PROJECT_NAME} ${LESSON_SRC})
 target_link_libraries(${PROJECT_NAME} seika)

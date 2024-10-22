@@ -8,5 +8,5 @@ option(BUILD_CHAPTER01 "Build Chapter 01" ON)
 include(FetchContent)
 
 if (BUILD_CHAPTER01)
-    add_subdirectory(src2/1.game_loop)
+    add_subdirectory(tutorial/1.game_loop)
 endif ()
