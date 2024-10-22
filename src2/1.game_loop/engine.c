@@ -7,7 +7,7 @@
 
 #include "seika/logger.h"
 
-#define MIN(a, b) ((a) < (b) ? (a) : (b))
+// #define DELAY_IN_UPDATE
 
 typedef struct REEngine {
     bool isRunning;
@@ -24,6 +24,7 @@ int re_run() {
     uint64 lastTime = currentTime;
     uint64 accumulator = 0;
     int32 frames = 0;
+    int32 fixedFrames = 0;
     while (engine.isRunning) {
         const uint64 newTime = SDL_GetTicks();
         // const uint64 deltaTime = MIN(newTime - currentTime, 250);
@@ -33,6 +34,7 @@ int re_run() {
         accumulator += deltaTime;
         while (accumulator >= FIXED_UPDATE_INTERVAL) {
             // fixed update
+            fixedFrames++;
             accumulator -= FIXED_UPDATE_INTERVAL;
         }
 
@@ -42,15 +44,20 @@ int re_run() {
         if (currentTime - lastTime >= 1000) {
             engine.FPS = frames;
             ska_logger_error("FPS: %d", engine.FPS);
+            ska_logger_error("FPS (fixed): %d", fixedFrames);
             frames = 0;
+            fixedFrames = 0;
             lastTime = currentTime;
         }
 
+#ifdef DELAY_IN_UPDATE
         // See if delay is needed
         const uint64 frameTime = SDL_GetTicks() - currentTime;
         if (frameTime < FIXED_UPDATE_INTERVAL) {
             SDL_Delay(FIXED_UPDATE_INTERVAL - frameTime);
         }
+#endif
+
     }
 
     return EXIT_SUCCESS;
