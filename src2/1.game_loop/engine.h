@@ -1,3 +1,3 @@
 #pragma once
 
-void re_run();
+int re_run();
