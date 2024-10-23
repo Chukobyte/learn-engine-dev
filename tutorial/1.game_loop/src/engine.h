@@ -2,6 +2,8 @@
 
 #include <seika/defines.h>
 
+#define RE_REF(TYPE, VALUE) (&(TYPE){(VALUE)})
+
 typedef struct REGameProperties {
     const char* name;
     uint32* targetFPS;

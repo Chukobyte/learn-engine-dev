@@ -25,5 +25,5 @@ markdown_extensions:
 nav:
   - Introduction: index.md
   - Game Loop:
-      - Hello Loop: game_loop/hello_loop.md
+      - Hello Loop: 1.game_loop/hello_loop.md
   - Source Code: source_code/source_code.md

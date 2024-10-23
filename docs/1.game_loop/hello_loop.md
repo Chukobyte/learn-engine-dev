@@ -1,3 +1,29 @@
+# Hello Loop
+
+## What is a game loop?
+
+The very first things we are going to create for our game engine is a game loop.  But what is a game loop?  A game loop is the core control mechanism of a game engine that continuously runs throughout the life the game.  The game loop is responsible for updating the game state, processing inputs, rendering graphics to the screen among other things.
+
+*engine.h*
+```c
+#pragma once
+
+#include <seika/defines.h>
+
+typedef struct REGameProperties {
+    const char* name;
+    uint32* targetFPS;
+    bool limitFPS;
+} REGameProperties;
+
+bool re_run(REGameProperties props);
+bool re_is_running();
+void re_update();
+void re_render();
+```
+
+*engine.c*
+```c
 #include "engine.h"
 
 #include <stdlib.h>
@@ -95,3 +121,30 @@ void engine_update(f32 deltaTime) {}
 void engine_fixed_update() {}
 
 void re_render() {}
+
+```
+
+Now that we have define the logic for our engine instance and game loop, let's actually use it.
+
+*main.c*
+```c
+#include <stdlib.h>
+
+#include "engine.h"
+
+int main(int argv, char** args) {
+    re_run((REGameProperties){
+        .name =  "lesson 1",
+        .targetFPS = NULL,
+        .limitFPS = false,
+    });
+
+    while (re_is_running()) {
+        re_update();
+
+        re_render();
+    }
+
+    return EXIT_SUCCESS;
+}
+```
