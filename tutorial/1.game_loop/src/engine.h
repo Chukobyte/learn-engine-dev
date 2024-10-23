@@ -5,7 +5,7 @@
 typedef struct REGameProperties {
     const char* name;
     uint32* targetFPS;
-    bool delayCPU;
+    bool limitFPS;
 } REGameProperties;
 
 bool re_run(REGameProperties props);

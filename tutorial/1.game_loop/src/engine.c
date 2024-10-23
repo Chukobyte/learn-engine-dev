@@ -5,22 +5,30 @@
 
 #include <seika/logger.h>
 
-static void internal_track_stats();
-static void internal_update(f32 deltaTime);
-static void internal_fixed_update();
+// Internal engine functions
+
+static void update_average_fps();
+static void engine_update(f32 deltaTime);
+static void engine_fixed_update();
 
 // Instance of the red engine
-typedef struct REEngine {
+struct REEngine {
     bool isRunning;
-    int32 FPS;
-    int32 fixedFPS;
     REGameProperties gameProps;
     uint64 targetFPS;
     uint64 fixedUpdateInterval;
     f32 fixedDeltaTime;
-} REEgine;
+};
 
-static REEgine engine = { .isRunning = false, .FPS = 0, .fixedFPS = 0 };
+struct REFPSTracker {
+    int32 FPS;
+    int32 fixedFPS;
+    int32 averageFPS;
+    int32 averageFixedFPS;
+};
+
+static struct REEngine engine = {0};
+static struct REFPSTracker fpsTracker = {0};
 
 bool re_run(REGameProperties props) {
     engine.isRunning = true;
@@ -36,8 +44,7 @@ bool re_is_running() {
 }
 
 void re_update() {
-    // Don't update if not running
-    if (!re_is_running()) { return; }
+    if (!re_is_running()) { return; } // Don't update if not running
 
     static uint64 currentTime = 0;
     static uint64 accumulator = 0;
@@ -48,19 +55,18 @@ void re_update() {
 
     accumulator += deltaTime;
     while (accumulator >= engine.fixedUpdateInterval) {
-        internal_fixed_update();
-        engine.fixedFPS++;
+        engine_fixed_update();
+        fpsTracker.fixedFPS++;
         accumulator -= engine.fixedUpdateInterval;
     }
 
     const f32 deltaTimeSeconds = (f32)deltaTime / 1000.f;
-    internal_update(deltaTimeSeconds);
-    engine.FPS++;
+    engine_update(deltaTimeSeconds);
+    fpsTracker.FPS++;
 
-    internal_track_stats();
+    update_average_fps();
 
-    if (engine.gameProps.delayCPU) {
-        // See if delay is needed
+    if (engine.gameProps.limitFPS) {
         const uint64 frameTime = SDL_GetTicks() - currentTime;
         if (frameTime < engine.fixedUpdateInterval) {
             SDL_Delay(engine.fixedUpdateInterval - frameTime);
@@ -68,21 +74,23 @@ void re_update() {
     }
 }
 
-void internal_track_stats() {
+void update_average_fps() {
     static uint64 lastTime = 0;
     const uint64 currentTime = SDL_GetTicks();
 
     if (currentTime - lastTime >= 1000) {
-        ska_logger_error("FPS: %d", engine.FPS);
-        ska_logger_error("FPS (fixed): %d", engine.fixedFPS);
-        engine.FPS = 0;
-        engine.fixedFPS = 0;
+        ska_logger_message("FPS: %d", fpsTracker.FPS);
+        ska_logger_message("FPS (fixed): %d", fpsTracker.fixedFPS);
+        fpsTracker.averageFPS = fpsTracker.FPS;
+        fpsTracker.averageFixedFPS = fpsTracker.fixedFPS;
+        fpsTracker.FPS = 0;
+        fpsTracker.fixedFPS = 0;
         lastTime = currentTime;
     }
 }
 
-void internal_update(f32 deltaTime) {}
+void engine_update(f32 deltaTime) {}
 
-void internal_fixed_update() {}
+void engine_fixed_update() {}
 
 void re_render() {}

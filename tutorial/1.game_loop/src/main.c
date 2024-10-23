@@ -6,7 +6,7 @@ int main(int argv, char** args) {
     re_run((REGameProperties){
         .name =  "lesson 1",
         .targetFPS = NULL,
-        .delayCPU = false,
+        .limitFPS = false,
     });
 
     while (re_is_running()) {
