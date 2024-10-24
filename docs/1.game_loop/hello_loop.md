@@ -4,6 +4,8 @@
 
 The very first things we are going to create for our game engine is a game loop.  But what is a game loop?  A game loop is the core control mechanism of a game engine that continuously runs throughout the life the game.  The game loop is responsible for updating the game state, processing inputs, rendering graphics to the screen among other things.
 
+With that being said, we are going to tackle each main part of the loop within each chapter in this order: Rendering, input, and audio.
+
 *engine.h*
 ```c
 #pragma once
