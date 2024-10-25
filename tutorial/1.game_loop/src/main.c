@@ -6,12 +6,11 @@ int main(int argv, char** args) {
     re_run((REGameProperties){
         .name =  "lesson 1",
         .targetFPS = NULL,
-        .limitFPS = false,
+        .targetFixedFPS = NULL,
     });
 
     while (re_is_running()) {
         re_update();
-
         re_render();
     }
 
