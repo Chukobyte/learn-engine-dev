@@ -13,11 +13,11 @@ struct REEngine {
     // The properties that are used to run the current game
     REGameProperties gameProps;
     // Target FPS for the engine's game loop
-    uint64 targetFPS;
+    uint32 targetFPS;
     // Actual update interval for the game loop
-    uint64 updateInterval;
+    uint32 updateInterval;
     // The update interval used when doing an internal fixed update
-    uint64 fixedUpdateInterval;
+    uint32 fixedUpdateInterval;
     // Fixed delta time that can be used for fixed update calculations
     f32 fixedDeltaTime;
 };
@@ -98,8 +98,7 @@ void update_average_fps() {
     const uint64 currentTime = SDL_GetTicks();
     const uint64 elapsedTime = currentTime - lastTime;
     if (elapsedTime >= 1000) {
-        ska_logger_message("FPS: %d", fpsTracker.FPS);
-        ska_logger_message("FPS (fixed): %d", fpsTracker.fixedFPS);
+        ska_logger_message("FPS: %d\nFPS (fixed): %d", fpsTracker.FPS, fpsTracker.fixedFPS);
         gameStats.averageFPS = fpsTracker.FPS;
         gameStats.averageFixedFPS = fpsTracker.fixedFPS;
         fpsTracker.FPS = 0;
