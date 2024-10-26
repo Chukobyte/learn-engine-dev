@@ -16,9 +16,9 @@ With that being said, let's define the logic for the game loop.
 typedef struct REGameProperties {
     // The name of the game
     const char* name;
-    // Will limit internal updates to match 'targetFPS'
+    // (Optional) Will limit internal updates to match 'targetFPS'
     uint32* targetFPS;
-    // Will limit internal fixed updates to match 'targetFixedFPS'
+    // (Optional) Will limit internal fixed updates to match 'targetFixedFPS'
     uint32* targetFixedFPS;
 } REGameProperties;
 
@@ -169,7 +169,7 @@ const REGameStats* re_get_stats() {
 }
 ```
 
-Now that we have define the logic for our engine instance and game loop, let's actually use it.
+Now that we have defined the logic for our engine instance and game loop, let's actually use it.
 
 *main.c*
 ```c

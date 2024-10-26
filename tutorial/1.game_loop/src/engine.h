@@ -6,9 +6,9 @@
 typedef struct REGameProperties {
     // The name of the game
     const char* name;
-    // Will limit internal updates to match 'targetFPS'
+    // (Optional) Will limit internal updates to match 'targetFPS'
     uint32* targetFPS;
-    // Will limit internal fixed updates to match 'targetFixedFPS'
+    // (Optional) Will limit internal fixed updates to match 'targetFixedFPS'
     uint32* targetFixedFPS;
 } REGameProperties;
 
